@@ -1,0 +1,19 @@
+# settings
+.settings/
+target/
+
+# vscode
+.vscode/
+
+# eclipse
+.classpath
+.project
+.springBeans
+
+# security
+*.properties
+
+# file
+*.jpg
+*.png
+*.jpeg
