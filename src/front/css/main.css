@@ -137,7 +137,7 @@ select{
     color: #ffffff;
     padding: 30px 270px;
     font-size: 12px;
-    font-family: 'Apple SD Gothic NeoL', sans-serif;
+    font-family: 'Apaple SD Gothic NeoL', sans-serif;
     bottom: 0;
 }
 .link-container{
@@ -146,4 +146,10 @@ select{
     gap: 10px;
     font-size: 14px;
     font-weight: 300;
+}
+.icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    vertical-align: middle;
 }
