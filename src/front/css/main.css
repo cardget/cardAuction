@@ -44,12 +44,27 @@ body {
     padding: 0; 
     font-weight: 500;
 }
-
-.category-item {
+.main-category-box {
+    display: flex;
+    gap: 60px; 
+    margin: 0; 
+    padding: 0; 
+    font-weight: 1000;
+    font-size: 18px;
+}
+.sub-category-box {
+    display: flex;
+    gap: 100px; 
+    margin: 0; 
+    padding: 0; 
+    font-weight: 500;
+    font-size: 16px;
+}
+.category-item, .main-category-item, .sub-category-item {
     list-style: none;
     text-align: center;
 }
-.category-item a{
+.category-item a, .main-category-item a, .sub-category-item a{
     text-decoration: none;
     color: #2c2c2c;
 }
@@ -152,4 +167,22 @@ select{
     height: 16px;
     margin-right: 5px;
     vertical-align: middle;
+}
+.alarmIcon {
+    width: 20px;
+    height: 22px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+/*서브카테고리*/
+.sub-category{
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    padding: 0 270px;
+    gap: 80px;
+    padding-bottom: 10px;
+    border-bottom:1px solid #E1E6EC ;
 }
