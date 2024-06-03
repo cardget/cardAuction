@@ -15,7 +15,6 @@ async function asyncMarkupData() {
       }
     });
   }
-  
   asyncMarkupData()
   .then(() => {
     return loadItems();

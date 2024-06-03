@@ -60,11 +60,11 @@ body {
     font-weight: 500;
     font-size: 16px;
 }
-.category-item, .main-category-item, .sub-category-item {
+.category-item, .main-category-item, .sub-category-item, .sort-item {
     list-style: none;
     text-align: center;
 }
-.category-item a, .main-category-item a, .sub-category-item a{
+.category-item a, .main-category-item a, .sub-category-item a, .sort-item a{
     text-decoration: none;
     color: #2c2c2c;
 }
@@ -185,4 +185,24 @@ select{
     gap: 80px;
     padding-bottom: 10px;
     border-bottom:1px solid #E1E6EC ;
+}
+.sort-container{
+    padding: 20px 270px;
+    font-size: 14px;
+    font-weight: 300;
+}
+.sort-box {
+    display: flex;
+    justify-content: space-between;
+    margin: 0; 
+    padding: 0; 
+    font-weight: 500;
+}
+.sort-select{
+    border: none;
+    width: 80px;
+    font-size: 14px;
+        -webkit-appearance: none;
+        background:url('../icon/fullArrow.png') no-repeat 85% 50%/16px auto;
+        cursor: pointer;
 }
