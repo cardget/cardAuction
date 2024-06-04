@@ -227,11 +227,13 @@ select {
     font-size: 14px;
     font-weight: 300;
 }
-.option-item{
+.option-item, .deck-item{
     align-items: center;
+    display: flex;
+    justify-content: space-between;
 }
 
-.sort-box, .option-box {
+.sort-box, .option-box, .deck-box{
     display: flex;
     justify-content: space-between;
     margin: 0;
@@ -292,4 +294,12 @@ select {
     vertical-align: middle;
     cursor: pointer;
     font-weight: 600;
+}
+.row-deck-content{
+    gap: 95px;
+    margin-top: 100px;
+    display: flex;
+}
+.deckType{
+    gap: 50px;
 }
