@@ -27,7 +27,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 16px;
+    font-size: 14px;
     padding: 0 270px;
     height: 60px;
     box-sizing: border-box;
@@ -47,7 +47,7 @@ body {
 
 .main-category-box {
     display: flex;
-    gap: 60px;
+    gap: 100px;
     margin: 0;
     padding: 0;
     font-weight: 1000;
@@ -81,7 +81,7 @@ body {
 
 .container {
     padding: 60px 270px 0;
-    margin-bottom: 200px;
+    margin-bottom: 80px;
     flex: 1;
 }
 
@@ -279,6 +279,7 @@ select {
     background-color: #fff;
     vertical-align: middle;
     cursor: pointer;
+    margin-left: 10px;
     a{
     text-decoration: none;
     color: #2c2c2c;
@@ -295,11 +296,94 @@ select {
     cursor: pointer;
     font-weight: 600;
 }
-.row-deck-content{
-    gap: 95px;
-    margin-top: 100px;
+.row-deck-content {
     display: flex;
+    flex-wrap: wrap;
+    gap: 80px;
+    justify-content: space-between;
+    margin-top: 100px;
 }
 .deckType{
     gap: 50px;
 }
+/*페이지네이션*/
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    margin: 20px 0;
+}
+.pagination a {
+    color: #007FFF;
+    font-size: 14px;
+    float: left;
+    padding: 8px 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    border: none;
+    margin: 0 4px;
+    border-radius: 5px;
+}
+
+.pagination a.active {
+    background-color: #007FFF;
+    color: white;
+    border: 1px solid #007FFF;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+}
+.deck-detail-image{
+    display: flex;
+    justify-content: center;
+    margin-top: 80px;
+}
+/* .banner-overlay{
+
+} */
+/*카드움직이기*/
+.container {
+    width: 220px;
+    height: 310px;
+    transition: all 0.1s;
+    position: relative;
+  }
+
+  .overlay {
+    position: absolute;
+    width: 220px;
+    height: 310px;
+    background: linear-gradient(105deg,
+        transparent 40%,
+        rgba(255, 219, 112, 0.8) 45%,
+        rgba(132, 50, 255, 0.6) 50%,
+        transparent 54%);
+    filter: brightness(1.1) opacity(0.8);
+    mix-blend-mode: color-dodge;
+    background-size: 150% 150%;
+    background-position: 100%;
+    transition: all 0.1s;
+  }
+
+  .card {
+    width: 220px;
+    height: 310px;
+    background-image: url(XY1X022.jpg);
+    background-size: cover;
+  }
+
+  .area {
+    border: 1px solid #000;
+    padding: 10px;
+    width: 240px;
+    height: 330px;
+  }
+  /*카드움직이기 html
+  <div class="area">
+    <div class="container">
+      <div class="overlay"></div> <!-- 빛비침효과 -->
+      <div class="card"></div>
+    </div>
+  </div>
+  */
