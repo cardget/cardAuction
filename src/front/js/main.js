@@ -17,10 +17,37 @@ async function asyncMarkupData() {
 }
 asyncMarkupData()
   .then(() => {
-    return loadItems();
   });
-  
-/*카드 움직이기 */
+
+/*아코디언메뉴 */
+document.addEventListener('DOMContentLoaded', function () {
+  const accordionHeaders = document.querySelectorAll('.accordion-header');
+  accordionHeaders.forEach(header => {
+    header.addEventListener('click', () => {
+      const accordionContent = header.nextElementSibling;
+      accordionContent.classList.toggle('active');
+    });
+  });
+  //사이드바 고정
+    const sidebar = document.querySelector('.sidebar');
+    const originalOffsetTop = sidebar.offsetTop;
+    const offset = 300;  // 스크롤 높이 300 
+
+    window.addEventListener('scroll', function () {
+        const scrollY = window.scrollY;
+
+        if (scrollY > offset) {
+            sidebar.classList.add('fixed-sidebar');
+            sidebar.style.top = '100px';
+        } else {
+            sidebar.classList.remove('fixed-sidebar');
+            sidebar.style.top = ''; 
+        }
+    });
+});
+
+
+/*카드 움직이기 
 var container = document.querySelector('.container')
 var overlay = document.querySelector('.overlay')
 container.addEventListener('mousemove', function (e) {
@@ -38,6 +65,5 @@ container.addEventListener('mousemove', function (e) {
 container.addEventListener('mouseout', function () {
   overlay.style = 'filter : opacity(0)'
   container.style = 'transform : perspective(350px) rotateY(0deg) rotateX(0deg)'
-})
-
+})*/
 

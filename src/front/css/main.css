@@ -80,6 +80,12 @@ body {
 }
 
 .container {
+    display: flex;
+    padding: 60px 270px 0;
+    margin-bottom: 80px;
+    flex: 1;
+}
+.main-container{
     padding: 60px 270px 0;
     margin-bottom: 80px;
     flex: 1;
@@ -116,7 +122,7 @@ ul {
 }
 
 .search-area .main-select,
-.search-box{
+.search-box {
     background-color: #fff;
     margin-top: 50px;
     border: 1px solid #007FFF;
@@ -220,20 +226,25 @@ select {
     font-size: 14px;
     font-weight: 300;
 }
-.option-container{
+
+.option-container {
     border-bottom: 1px solid #E1E6EC;
     padding: 10px 0 0 0;
     margin: 0 270px;
     font-size: 14px;
     font-weight: 300;
 }
-.option-item, .deck-item{
+
+.option-item,
+.deck-item {
     align-items: center;
     display: flex;
     justify-content: space-between;
 }
 
-.sort-box, .option-box, .deck-box{
+.sort-box,
+.option-box,
+.deck-box {
     display: flex;
     justify-content: space-between;
     margin: 0;
@@ -264,15 +275,19 @@ select {
     cursor: pointer;
     border-radius: 2px;
 }
-.option-search{
+
+.option-search {
     border: 1px solid #E1E6EC;
     width: 180px;
     height: 28px;
 }
-.option-box{
+
+.option-box {
     padding: 10px 0;
 }
-.search-btn-default{ /*기본검색버튼*/
+
+.search-btn-default {
+    /*기본검색버튼*/
     width: 60px;
     height: 28px;
     border: 1px solid #E1E6EC;
@@ -280,12 +295,14 @@ select {
     vertical-align: middle;
     cursor: pointer;
     margin-left: 10px;
-    a{
-    text-decoration: none;
-    color: #2c2c2c;
+
+    a {
+        text-decoration: none;
+        color: #2c2c2c;
     }
 }
-.create-deck{
+
+.create-deck {
     width: 70px;
     height: 28px;
     border: 1px solid #007FFF;
@@ -296,6 +313,7 @@ select {
     cursor: pointer;
     font-weight: 600;
 }
+
 .row-deck-content {
     display: flex;
     flex-wrap: wrap;
@@ -303,9 +321,11 @@ select {
     justify-content: space-between;
     margin-top: 100px;
 }
-.deckType{
+
+.deckType {
     gap: 50px;
 }
+
 /*페이지네이션*/
 .pagination {
     display: flex;
@@ -313,6 +333,7 @@ select {
     padding: 20px 0;
     margin: 20px 0;
 }
+
 .pagination a {
     color: #007FFF;
     font-size: 14px;
@@ -334,15 +355,98 @@ select {
 .pagination a:hover:not(.active) {
     background-color: #ddd;
 }
-.deck-detail-image{
+
+.deck-detail-image {
     display: flex;
     justify-content: center;
     margin-top: 80px;
 }
-/* .banner-overlay{
 
-} */
-/*카드움직이기*/
+/*덱리스트 상세*/
+.sidebar {
+    width: 270px;
+    top: 300px;
+}
+
+.main-content {
+    position: relative;
+    margin-left: 100px;
+    flex: 1;
+    overflow-y: auto;
+    height: 700px;
+    width: 1000px;
+}
+
+.card-info {
+    position: sticky;
+    top: 20px;
+}
+
+.card-img {
+    width: 100%;
+    height: auto;
+}
+
+.accordion {
+    width: 100%;
+}
+
+.accordion-item {
+    border: none;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    border-bottom: 1px solid #E1E6EC;
+}
+
+.accordion-header {
+    color: #2c2c2c;
+    cursor: pointer;
+    padding: 10px 10px 10px 20px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.accordion-content {
+    display: none;
+    padding: 10px;
+    border-top: 1px solid #E1E6EC;
+}
+
+.accordion-content.active {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+}
+
+.banner-overlay{
+    position: absolute;
+    left: 300px;
+    padding: 20px;
+    color: #fff;
+    font-weight: 1000;
+}
+.makerInfo{
+    display: flex;
+    gap: 20px;
+    padding-top: 120px;
+    font-weight: 100;
+}
+.count-overlay{
+    position: absolute;
+    margin: 10px;
+    color: #fff;
+    text-align: center;
+    .count-circle{
+        background-color: #007FFF;
+        padding: 5px;
+        border-radius: 20px;
+        width: 20px;
+        height: 20px;
+        margin: 125px 0 0 70px;
+    }
+}
+/*카드움직이기 참고만 -->css겹칠 수 있음 조심!
 .container {
     width: 220px;
     height: 310px;
@@ -351,7 +455,6 @@ select {
   }
 
   .overlay {
-    position: absolute;
     width: 220px;
     height: 310px;
     background: linear-gradient(105deg,
@@ -379,7 +482,8 @@ select {
     width: 240px;
     height: 330px;
   }
-  /*카드움직이기 html
+  */
+/*카드움직이기 html
   <div class="area">
     <div class="container">
       <div class="overlay"></div> <!-- 빛비침효과 -->
