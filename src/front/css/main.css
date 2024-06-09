@@ -446,6 +446,36 @@ select {
         margin: 125px 0 0 70px;
     }
 }
+.deck-list {
+    width: 350px;
+    height: 540px;
+    position: relative;
+    background: url('../image/makerframe.png') no-repeat center center ;
+    background-size: contain;
+    overflow: hidden;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.deckList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 98%;
+    height: 100%;
+    overflow-y: auto;
+    margin-top: 0;
+}
+.makerCard {
+    margin-bottom: 10px;
+}
+.makeList{
+    width: 282px;
+    height: 40px;
+    margin-right: 10px;
+}
+.listCard, .card-count{
+    cursor: pointer;
+}
 /*카드움직이기 참고만 -->css겹칠 수 있음 조심!
 .container {
     width: 220px;

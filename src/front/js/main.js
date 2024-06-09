@@ -46,7 +46,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-
 /*카드 움직이기 
 var container = document.querySelector('.container')
 var overlay = document.querySelector('.overlay')
