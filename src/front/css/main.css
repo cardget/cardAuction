@@ -129,16 +129,15 @@ ul {
     height: 42px;
     border-radius: 30px;
 }
+.search-box{
+    width: 500px;
+    padding: 0 20px;
+    margin-left: 10px;
+}
 
 .main-select {
     width: 120px;
     padding: 0 20px;
-}
-
-input {
-    width: 500px;
-    padding: 0 20px;
-    margin-left: 10px;
 }
 
 .search-icon {
@@ -389,10 +388,9 @@ select {
     height: auto;
 }
 
-.accordion {
+.accordion{
     width: 100%;
 }
-
 .accordion-item {
     border: none;
     border-radius: 4px;
@@ -487,6 +485,29 @@ select {
 }
 .listCard, .card-count{
     cursor: pointer;
+}
+/*코멘트박스*/
+.comment{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.commentBox{
+    width: 97%;
+    height: 150px;
+    text-align:start;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+.regist-btn{
+    padding: 10px 30px;
+    background-color: #F8C501;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+    font-weight: 1000;
+    font-size: 14px;
 }
 /*카드움직이기 참고만 -->css겹칠 수 있음 조심!
 .container {

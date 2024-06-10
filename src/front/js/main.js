@@ -29,22 +29,83 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
   //사이드바 고정
-    const sidebar = document.querySelector('.sidebar');
-    const originalOffsetTop = sidebar.offsetTop;
-    var offset = 300;  // 스크롤 높이 300 
+  const sidebar = document.querySelector('.sidebar');
+  const originalOffsetTop = sidebar.offsetTop;
+  var offset = 300;  // 스크롤 높이 300 
 
-    window.addEventListener('scroll', function () {
-        const scrollY = window.scrollY;
+  window.addEventListener('scroll', function () {
+    const scrollY = window.scrollY;
 
-        if (scrollY > offset) {
-            sidebar.classList.add('fixed-sidebar');
-            sidebar.style.top = '100px';
-        } else {
-            sidebar.classList.remove('fixed-sidebar');
-            sidebar.style.top = ''; 
-        }
-    });
+    if (scrollY > offset) {
+      sidebar.classList.add('fixed-sidebar');
+      sidebar.style.top = '100px';
+    } else {
+      sidebar.classList.remove('fixed-sidebar');
+      sidebar.style.top = '';
+    }
+  });
 });
+/*덱리스트 카드추가 js*/
+const accordionImages = document.querySelectorAll('.accordion-content .listCard');
+const deckListImages = document.querySelectorAll('.deckList .makerCard');
+
+// 이미지 선택 상태를 저장할 Set
+const selectedValues = new Set();
+
+// accordion 이미지를 클릭해도 선택 해제되지 않도록 처리
+accordionImages.forEach(image => {
+  image.addEventListener('click', () => {
+    const selectedValue = image.getAttribute('value');
+    // 선택한 이미지를 Set에 추가
+    if (!selectedValues.has(selectedValue)) {
+      selectedValues.add(selectedValue);
+    }
+    updateDeckList();
+    updateBorder();
+  });
+});
+// deckList 이미지를 클릭하면 선택 해제
+deckListImages.forEach(image => {
+  image.addEventListener('click', () => {
+    const selectedValue = image.getAttribute('value');
+    // 선택 해제
+    if (selectedValues.has(selectedValue)) {
+      selectedValues.delete(selectedValue);
+      updateDeckList();
+      updateBorder();
+    }
+  });
+});
+// 리스트 보이게
+function updateDeckList() {
+  deckListImages.forEach(deckImage => {
+    if (selectedValues.has(deckImage.getAttribute('value'))) {
+      deckImage.parentElement.style.display = 'block';
+
+    } else {
+      deckImage.parentElement.style.display = 'none';
+    }
+  });
+}
+//선택된 카드 테두리
+function updateBorder(){
+  accordionImages.forEach(image =>{
+    if(selectedValues.has(image.getAttribute('value'))){
+      image.style.border = '3px solid #F8C501';
+      image.style.borderRadius = '8px';
+    }else{
+      image.style.border = 'none';
+    }
+    image.style.boxSizing = 'border-box';
+  });
+}
+// 기본적으로 이미지 안보이게
+window.addEventListener('DOMContentLoaded', () => {
+  deckListImages.forEach(deckImage => {
+    deckImage.parentElement.style.display = 'none';
+  });
+});
+/*---덱리스트 카드추가 js---*/
 
 /*카드 움직이기 
 var container = document.querySelector('.container')
