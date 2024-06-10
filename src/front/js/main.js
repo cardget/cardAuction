@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
   //사이드바 고정
     const sidebar = document.querySelector('.sidebar');
     const originalOffsetTop = sidebar.offsetTop;
-    const offset = 300;  // 스크롤 높이 300 
+    var offset = 300;  // 스크롤 높이 300 
 
     window.addEventListener('scroll', function () {
         const scrollY = window.scrollY;

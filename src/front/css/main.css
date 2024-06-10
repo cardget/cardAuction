@@ -319,11 +319,6 @@ select {
     flex-wrap: wrap;
     gap: 80px;
     justify-content: space-between;
-    margin-top: 100px;
-}
-
-.deckType {
-    gap: 50px;
 }
 
 /*페이지네이션*/
@@ -376,6 +371,13 @@ select {
     height: 700px;
     width: 1000px;
 }
+.main-content-2 {
+    position: relative;
+    flex: 1;
+    overflow-y: auto;
+    height: 700px;
+    width: 1000px;
+}
 
 .card-info {
     position: sticky;
@@ -409,14 +411,14 @@ select {
 
 .accordion-content {
     display: none;
-    padding: 10px;
+    padding: 7px;
     border-top: 1px solid #E1E6EC;
 }
 
 .accordion-content.active {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    gap: 10px;
+    gap: 7px;
 }
 
 .banner-overlay{
@@ -455,6 +457,16 @@ select {
     overflow: hidden;
     padding: 10px;
     box-sizing: border-box;
+    ::-webkit-scrollbar{ /*덱리스트 스크롤바 디자인*/
+        border-radius: 10px;
+        background-color: #949494;
+        width: 13px;
+    }
+    ::-webkit-scrollbar-thumb{
+        background-color: #F8C501;
+        border-radius: 6px;
+        border: 3px solid #949494;
+    }
 }
 .deckList {
     display: flex;
