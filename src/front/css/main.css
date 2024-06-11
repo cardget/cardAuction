@@ -138,6 +138,20 @@ ul {
     width: 100px;
     height: 46px;
     margin: 6px 0 0 200px;
+    background-color: #007FFF;
+    border: 1px solid #fff;
+    color: #fff;
+    border-radius: 30px;
+    font-weight: 500;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.filter-icon{
+    width: 14px;
+    height: 14px;
+    margin: 0 5px 0 0;
 }
 .search-area .main-select,
 .search-box {
@@ -516,7 +530,7 @@ select {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 98%;
+    width: calc(100% - 8px);
     height: 100%;
     overflow-y: auto;
     margin-top: 0;
@@ -537,6 +551,10 @@ select {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+.builder-comment{
+    margin-left: 20px;
+    font-weight: 1000;
 }
 .commentBox{
     width: 97%;
