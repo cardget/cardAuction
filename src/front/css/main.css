@@ -7,6 +7,9 @@ body {
     flex-direction: column;
     min-height: 100vh;
 }
+button{
+    cursor: pointer;
+}
 
 /*header*/
 .logo {
@@ -113,6 +116,9 @@ ul {
 .cardType:hover {
     transform: scale(1.1)
 }
+.header-image{
+    height: 283px;
+}
 
 /*상단 검색창*/
 .search-area {
@@ -120,7 +126,19 @@ ul {
     justify-content: center;
     position: relative;
 }
-
+.search-area-full{
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    background-color: #007FFF;
+    height: 60px;
+    padding: 0 270px;
+}
+.filter-btn{
+    width: 100px;
+    height: 46px;
+    margin: 6px 0 0 200px;
+}
 .search-area .main-select,
 .search-box {
     background-color: #fff;
@@ -134,6 +152,16 @@ ul {
     padding: 0 20px;
     margin-left: 10px;
 }
+.card-search-box{
+    background-color: #fff;
+    border: 1px solid #007FFF;
+    margin-top: 6px;
+    height: 42px;
+    width: 300px;
+    border-radius: 30px;
+    padding-left: 20px;
+    margin-left: 500px;
+}
 
 .main-select {
     width: 120px;
@@ -144,7 +172,15 @@ ul {
     position: absolute;
     right: 10px;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(250%);
+}
+.card-search-icon {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-220%);
 }
 
 .search-input-wrapper {
@@ -153,6 +189,15 @@ ul {
 }
 
 .search-btn {
+    position: absolute;
+    right: 5px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+.card-search{
     position: absolute;
     right: 5px;
     top: 70px;
@@ -278,7 +323,8 @@ select {
 .option-search {
     border: 1px solid #E1E6EC;
     width: 180px;
-    height: 28px;
+    height: 22px;
+    margin-left: 10px;
 }
 
 .option-box {
@@ -499,6 +545,12 @@ select {
     margin-bottom: 10px;
     padding: 10px;
 }
+.deckTitle{
+    width: 97%;
+    text-align: start;
+    margin-bottom: 10px;
+    padding: 10px;
+}
 .regist-btn{
     padding: 10px 30px;
     background-color: #F8C501;
@@ -508,6 +560,9 @@ select {
     color: #fff;
     font-weight: 1000;
     font-size: 14px;
+}
+textarea{
+    border: 1px solid #E1E6EC;
 }
 /*카드움직이기 참고만 -->css겹칠 수 있음 조심!
 .container {
