@@ -6,7 +6,7 @@
 <head>
 <c:set var="path" value="${pageContext.servletContext.contextPath }"></c:set>
 <meta charset="UTF-8">
-<title>카드득 신규 가입 페이지</title>
+<title>카드득 신규 가입 페이지test</title>
 <script
 	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <link rel="stylesheet" href="../resources/css/signUp.css">
