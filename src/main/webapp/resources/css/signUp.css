@@ -1,0 +1,112 @@
+@charset "UTF-8";
+
+/* form {
+	display: flex;
+	flex-direction: column;
+	margin-top: 20px;
+}
+
+div {
+	margin-top : 20px;
+	margin-bottom: 20px;
+} */
+
+.custom-form {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;    
+}
+
+.input-label {
+    color: gray;
+    width: 120px; 
+    margin-right: 10px; 
+}
+
+
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.input-label {
+    color: gray;
+    width: 120px !important; 
+    margin-right: 10px; 
+}
+
+.email-select {
+	color: gray;
+    width: 100px; /* 이메일 입력 필드의 너비를 200px로 지정 */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* 패딩과 테두리를 포함하여 너비 계산 */
+}
+.email-input-field {
+    
+    max-width: 200px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.input-field {
+    /* flex: 1; */ 
+    width:300px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.check-button {
+    background-color: white;
+    color: #007FFF;
+    border: 1px solid #007FFF;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.check-button:hover {
+    background-color: #007FFF;
+    color: white;
+    margin-left: 10px;
+}
+
+.form-divider {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.profile-image-container {
+    width: 110px;
+    height: 120px;
+    border: 2px solid #ccc;
+    overflow: hidden;
+    border-radius: 4px;
+}
+
+.profile-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.submit-button {
+    background-color: #007FFF;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #005C9A;
+}
+
