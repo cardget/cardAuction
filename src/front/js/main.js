@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 /*덱리스트 카드추가 js*/
-const accordionImages = document.querySelectorAll('.accordion-content .listCard');
+const accordionImages = document.querySelectorAll('.listCard');
 const deckListImages = document.querySelectorAll('.deckList .makerCard');
 
 // 이미지 선택 상태를 저장할 Set
