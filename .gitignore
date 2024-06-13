@@ -1,6 +1,7 @@
 # settings
 .settings/
 target/
+.metadata
 
 # vscode
 .vscode/
@@ -14,6 +15,10 @@ target/
 *.properties
 
 # file
-*.jpg
-*.png
-*.jpeg
+# *.jpg
+# *.png
+# *.jpeg
+
+src/front/image/
+src/front/icon/
+src/main/webapp/resources/images/
