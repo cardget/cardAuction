@@ -1,6 +1,7 @@
 @charset "utf-8";
 
 body {
+    /*Apple SD 고딕 폰트*/
     font-family: 'Apple SD Gothic Neo', sans-serif;
     margin: 0;
     display: flex;
