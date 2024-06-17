@@ -432,8 +432,8 @@ select {
 </head>
 <body>
 <c:set var="path" value="${pageContext.servletContext.contextPath}" />
-	<!--header-->
-    <header data-include-path="main-header.html"></header>
+<!--header-->
+    <%@ include file="/WEB-INF/views/main/header.jsp" %>
     
 <!-- Body -->
 <div class="topimage"></div>
@@ -594,7 +594,7 @@ select {
 
     <!--footer-->
     <footer data-include-path="footer.html"></footer>
-    <script type="module" src="../static/js/main.js"></script>
+    <script type="module" src="${path}/resources/js/main.js"></script>
         
 </body>
 </html>

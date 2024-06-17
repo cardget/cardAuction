@@ -4,20 +4,22 @@
 <!DOCTYPE html>
 <html>
 <head>
+<c:set var="path" value="${pageContext.servletContext.contextPath }" />
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Apple+SD+Gothic+Neo&display=swap">
-
+<link rel="stylesheet" href="${path }/resources/css/main.css" />
 <title>카드득</title>
 
 <style>
 
 body {
 	display: flex;
-	justify-content: center; /* 수평 가운데 정렬 */
+	
 	font-family: 'Apple SD Gothic Neo', sans-serif;
 	height: 100vh; /* 화면 전체 높이 */
 	margin: 0; /* 기본 여백 제거 */
+	
 }
 /*header*/
 .logo {
@@ -315,7 +317,7 @@ input[type="radio"] {
 <body>
 <c:set var="path" value="${pageContext.servletContext.contextPath}" />
 <!--header-->
-<header data-include-path="main-header.html"></header>
+<%@ include file="/WEB-INF/views/main/header.jsp" %>
     
 <!-- Body -->
 <div class="container">
@@ -403,12 +405,12 @@ input[type="radio"] {
 		</div>
 		
 	</form>
-	<hr class="bottom-hr">
+	
 	
 	
 	<!--footer-->
     <footer data-include-path="footer.html"></footer>
-    <script type="module" src="../static/js/main.js"></script>
+    <script type="module" src="${path}/resources/js/main.js"></script>
 	
 </div>
 
