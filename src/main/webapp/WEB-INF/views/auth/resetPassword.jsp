@@ -14,14 +14,14 @@
 <body>
 	<div class="find-pw-container">
 		<div class="logo">
-			<img src="../resources/images/로고 이미지.png" alt="로고" class="logo-img">
+			<img src="${path}/resources/images/로고 이미지.png" alt="로고" class="logo-img">
 			<h1 class="logo-text">카드득</h1>
 		</div>
 		<div style="display: flex; justify-content: space-between; height: 40px;">
 		<h5>비밀번호 재설정</h5>
 		</div>		
 		<hr style="width:440px;">
-		<h6 style="margin-top:0px;"><img src="../resources/icon/blue_error.png">&nbsp;비밀번호를 변경해주세요</h6>
+		<h6 style="margin-top:0px;"><img src="${path}/resources/icon/blue_error.png">&nbsp;비밀번호를 변경해주세요</h6>
 		<form class="custom-form">
 			<div >
 				<div class="form-group">

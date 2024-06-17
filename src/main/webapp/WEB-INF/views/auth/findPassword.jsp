@@ -14,7 +14,7 @@
 <body>
 	<div class="find-pw-container">
 		<div class="logo">
-			<img src="../resources/images/로고 이미지.png" alt="로고" class="logo-img">
+			<img src="${path}/resources/images/로고 이미지.png" alt="로고" class="logo-img">
 			<h1 class="logo-text">카드득</h1>
 		</div>
 		<div style="display: flex; justify-content: space-between; height: 40px;">
@@ -23,7 +23,7 @@
 		</div>		
 		<hr style="width:440px;">
 		
-		<h6 style="margin-top:0px;"><img src="../resources/icon/blue_error.png">&nbsp;회원정보에 등록한 휴대전화 번호와 입력한 휴대전화 번호가 같아야 인증 번호를 받을 수 있습니다. </h6>
+		<h6 style="margin-top:0px;"><img src="${path}/resources/icon/blue_error.png">&nbsp;회원정보에 등록한 휴대전화 번호와 입력한 휴대전화 번호가 같아야 인증 번호를 받을 수 있습니다. </h6>
 		<form class="custom-form">
 			<div >
 				<div class="form-group">
@@ -42,7 +42,7 @@
 			    <input type="tel" class="input-field" style="margin-left: 80px;" placeholder="인증번호 입력" >
 			    <button type="submit" class="check-button">확인</button>
 			</div>				
-			<h6 style="margin-left: 80px; margin-top:1px;"><img src="../resources/icon/red_error.png">&nbsp;인증번호를 다시 입력해주세요</h6>
+			<h6 style="margin-left: 80px; margin-top:1px;"><img src="${path}/resources/icon/red_error.png">&nbsp;인증번호를 다시 입력해주세요</h6>
 			<button type="submit" class="submit-button">비밀번호 찾기</button>
 		</form>
 		
