@@ -8,7 +8,7 @@ import lombok.ToString;
 
 @Getter@Setter
 @ToString
-public class Pokemon {
+public class PokemonDTO {
 	private String cardId;
 	private String cardName;
 	private String cardSort;

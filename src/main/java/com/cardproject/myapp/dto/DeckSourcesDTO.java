@@ -8,7 +8,7 @@ import lombok.ToString;
 
 @Getter@Setter
 @ToString
-public class DeckSources {
+public class DeckSourcesDTO {
 	private int deckId;
 	private String pCard;
 	private String oCard;
