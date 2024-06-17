@@ -1,24 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+<c:set var="path" value="${pageContext.servletContext.contextPath }" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--Apple SD 고딕 폰트-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Apple+SD+Gothic+Neo&display=swap">
     <title>카드득</title>
-    <link rel="stylesheet" href="../css/main.css" />
-    <link rel="icon" href="../icon/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="${path }/resources/css/main.css" />
+    <link rel="icon" href="${path }/resources/icon/favicon.ico" type="image/x-icon">
 </head>
 
 <body>
+<c:set var="path" value="${pageContext.servletContext.contextPath }" />
     <!--header-->
-    <header data-include-path="header.html"></header>
+    <%@ include file="/WEB-INF/views/main/header.jsp" %>
     <!--헤더이미지-->
     <div class="header-image">
-        <img src="../image/pokemon_banner.png">
+        <img src="${path }/resources/css/pokemon_banner.png">
     </div>
     <div class="top-container">
         <!--검색창 돌려쓰세요-->
@@ -100,7 +103,8 @@
         </div>
     </div>
     <!--footer-->
-    <footer data-include-path="footer.html"></footer>
+    
+	<%@ include file="/WEB-INF/views/main/footer.jsp" %>
     <script type="module" src="../js/main.js"></script>
 </body>
 
