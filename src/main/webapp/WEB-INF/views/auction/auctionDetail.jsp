@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,9 +10,12 @@
 
 <title>카드득</title>
 <style>
-
-body{
+body {
 	font-family: 'Apple SD Gothic Neo', sans-serif;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
 }
 /*header*/
 .logo {
@@ -122,15 +126,16 @@ ul {
 /* 상단 이미지 */
 .imgbox {
     width: 1920px;
-    height: 424px;
+    height: 300px;
 }
 
 .topimage {
     width: 1920px;
-    height: 400px;
+    height: 283px;
     top: 0;
     left: 0;
-    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgb(83 83 83 / 32%) 63%, rgb(0 0 0 / 74%) 100%), url('../static/image/bgP1.png');
+    background-image: 
+		url('${pageContext.servletContext.contextPath}/resources/images/default/pokemon_banner.png');
     position: relative; /* 상대 위치 설정 */
 }
 
@@ -411,16 +416,30 @@ h2{
 	color: #808892;
 }
 
+.back-wrap {
+    margin: 10px 270px;
+    text-align: right; 
+}
+
+.back-btn {
+	
+    border-radius: 5px;
+    border: 1px solid #007FFF;
+    background-color: #007FFF;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+}
 </style>
 </head>
 <body>
-
+<c:set var="path" value="${pageContext.servletContext.contextPath}" />
 <!--header-->
 <header data-include-path="main-header.html"></header>
 
 <!-- 상단 이미지 -->
 <div class="topimage">
-	<div class="search-area">
+	<!-- <div class="search-area">
 		<div class="search-input-wrapper">
                 <input type="text" class="search-box" placeholder="검색어를 입력하세요.">
                 <button type="submit" class="search-btn">
@@ -430,12 +449,13 @@ h2{
          <div class="auction-insert-wrapper">
             	<button onclick="" class="insert-btn">판매 물품 등록</button>
          </div>
-	</div>
+	</div> 
+	-->
 </div>
 
-
+<div class="back-wrap"><button class="back-btn">목록으로 돌아가기</button></div>
 <div class="container">
-
+	
 	<!-- 이미지 슬라이더 -->
 	<div class="wrapper">
 		<main id="main">
@@ -445,19 +465,19 @@ h2{
 					<div class="slider__img">
 						<div class="slider__inner">
 							<div class="slider" role="group" aria-label="1/5">
-								<img src="../static/image/sampleimage1.png" alt="이미지1">
+								<img src="${path}/resources/images/pokemon/sampleimage1.png" alt="이미지1">
 							</div>
 							<div class="slider" role="group" aria-label="2/5">
-								<img src="../static/image/backgroundDigimon.png" alt="이미지2">
+								<img src="${path}/resources/images/pokemon/sampleimage1.png" alt="이미지2">
 							</div>
 							<div class="slider" role="group" aria-label="3/5">
-								<img src="../static/image/sampleimage3.png" alt="이미지3">
+								<img src="${path}/resources/images/pokemon/sampleimage1.png" alt="이미지3">
 							</div>
 							<div class="slider" role="group" aria-label="4/5">
-								<img src="../static/image/backgroundYou.jpg" alt="이미지4">
+								<img src="${path}/resources/images/pokemon/sampleimage1.png" alt="이미지4">
 							</div>
 							<div class="slider" role="group" aria-label="5/5">
-								<img src="../static/image/sampleimage5.png" alt="이미지5">
+								<img src="${path}/resources/images/pokemon/sampleimage1.png" alt="이미지5">
 							</div>
 						</div>
 						<div class="slider__btn">
@@ -466,11 +486,11 @@ h2{
 						</div>
 					</div>
 					<div class="slider__preview">
-						<img src="../static/image/sampleimage1.png" alt="이미지1">
-						<img src="../static/image/backgroundDigimon.png" alt="이미지2">
-						<img src="../static/image/sampleimage3.png" alt="이미지3">
-						<img src="../static/image/backgroundYou.jpg" alt="이미지4">
-						<img src="../static/image/sampleimage5.png" alt="이미지5">
+						<img src="${path}/resources/images/pokemon/sampleimage1.png" alt="이미지1">
+						<img src="${path}/resources/images/pokemon/sampleimage1.png" alt="이미지2">
+						<img src="${path}/resources/images/pokemon/sampleimage1.png" alt="이미지3">
+						<img src="${path}/resources/images/pokemon/sampleimage1.png" alt="이미지4">
+						<img src="${path}/resources/images/pokemon/sampleimage1.png" alt="이미지5">
 					</div>
 				</div>
 			</section>

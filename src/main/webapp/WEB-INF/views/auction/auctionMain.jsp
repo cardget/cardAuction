@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -97,23 +98,11 @@ ul {
 	transform: scale(1.1)
 }
 
-/*top 이미지*/
-.topimage {
-	
-	width: 1920px;
-	height: 424px;
-	top: 0;
-	left: 0;
-	background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%,
-		rgba(83.32, 83.32, 83.32, 0.32) 62.88%, rgb(0, 0, 0)100%),
-		url('../static/image/bgP1.png');
-		
-}
 
 /*검색창*/
 .search-area {
 	display: flex;
-	/*justify-content: center;*/
+	justify-content: center;
 	margin: auto 270px;
 	position: relative;
 }
@@ -263,17 +252,17 @@ select {
 /* 상단 이미지 */
 .imgbox {
 	width: 1920px;
-	height: 424px;
+	height: 300px;
 }
 
 .topimage {
 	
 	width: 1920px;
-	height: 400px;
+	height: 283px;
 	top: 0;
 	left: 0;
-	background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgb(83 83 83 / 32%) 63%,
-	 rgb(0 0 0 / 74%) 100%), url('../static/image/bgP1.png');
+	background-image: 
+		url('${pageContext.servletContext.contextPath}/resources/images/default/pokemon_banner.png');
 		
 }
 /* 물품 판매 등록 버튼*/
@@ -442,6 +431,7 @@ select {
 </style>
 </head>
 <body>
+<c:set var="path" value="${pageContext.servletContext.contextPath}" />
 	<!--header-->
     <header data-include-path="main-header.html"></header>
     
@@ -462,7 +452,7 @@ select {
             <div class="search-input-wrapper">
                 <input type="text" class="search-box" placeholder="검색어를 입력하세요.">
                 <button type="submit" class="search-btn">
-                    <img src="../static/icon/searchimg.png" alt="search" class="search-icon">
+                    <img src="${path}/resources/icon/search.png" alt="search" class="search-icon">
                 </button>
             </div>
             <div class="auction-insert-wrapper">
@@ -508,7 +498,7 @@ select {
 	
 	<div class="auction-list-wrapper">
 		<div class="auction-item">
-			<img src="../static/image/피카츄 ex.png" alt="card image" class="card-image">
+			<img src="${path}/resources/images/pokemon/피카츄 ex.png" alt="card image" class="card-image">
 			<div class="title-wrapper">
 				글제목
 			</div>
@@ -522,12 +512,12 @@ select {
 			</div>
 			<div class="button-wrapper">
 				<button class="auction-interest">
-					<img src="../static/icon/interest.png" alt="icon" class="interest-icon"> 관심물품</button>
+					<img src="${path}/resources/icon/interest.png" alt="icon" class="interest-icon"> 관심물품</button>
 				<button class="auction-detail-btn">상세보기</button>
 			</div>
 		</div>
 		<div class="auction-item">
-			<img src="../static/image/피카츄 ex.png" alt="card image" class="card-image">
+			<img src="${path}/resources/images/pokemon/피카츄 ex.png" alt="card image" class="card-image">
 			<div class="title-wrapper">
 				글제목
 			</div>
@@ -541,12 +531,12 @@ select {
 			</div>
 			<div class="button-wrapper">
 				<button class="auction-interest">
-					<img src="../static/icon/interest.png" alt="icon" class="interest-icon"> 관심물품</button>
+					<img src="${path}/resources/icon/interest.png" alt="icon" class="interest-icon"> 관심물품</button>
 				<button class="auction-detail-btn">상세보기</button>
 			</div>
 		</div>
 		<div class="auction-item">
-			<img src="../static/image/피카츄 ex.png" alt="card image" class="card-image">
+			<img src="${path}/resources/images/pokemon/피카츄 ex.png" alt="card image" class="card-image">
 			<div class="title-wrapper">
 				글제목
 			</div>
@@ -560,12 +550,12 @@ select {
 			</div>
 			<div class="button-wrapper">
 				<button class="auction-interest">
-					<img src="../static/icon/interest.png" alt="icon" class="interest-icon"> 관심물품</button>
+					<img src="${path}/resources/icon/interest.png" alt="icon" class="interest-icon"> 관심물품</button>
 				<button class="auction-detail-btn">상세보기</button>
 			</div>
 		</div>
 		<div class="auction-item">
-			<img src="../static/image/피카츄 ex.png" alt="card image" class="card-image">
+			<img src="${path}/resources/images/pokemon/피카츄 ex.png" alt="card image" class="card-image">
 			<div class="title-wrapper">
 				글제목
 			</div>
@@ -579,7 +569,7 @@ select {
 			</div>
 			<div class="button-wrapper">
 				<button class="auction-interest">
-					<img src="../static/icon/interest.png" alt="icon" class="interest-icon"> 관심물품</button>
+					<img src="${path}/resources/icon/interest.png" alt="icon" class="interest-icon"> 관심물품</button>
 				<button class="auction-detail-btn">상세보기</button>
 			</div>
 		</div>

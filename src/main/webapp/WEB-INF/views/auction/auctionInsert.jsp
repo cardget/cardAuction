@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+       <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -312,6 +313,7 @@ input[type="radio"] {
 </style>
 </head>
 <body>
+<c:set var="path" value="${pageContext.servletContext.contextPath}" />
 <!--header-->
 <header data-include-path="main-header.html"></header>
     
@@ -355,7 +357,7 @@ input[type="radio"] {
 		</div>
 		-->
 		<div class="image-format">
-			<img src="../static/icon/icon_error.png" class="icon-error" alt="icon"> 실제 카드 이미지 1개 필수 ( 최대 5개 )
+			<img src="${path}/resources/icon/error.png" class="icon-error" alt="icon"> 실제 카드 이미지 1개 필수 ( 최대 5개 )
 			<div class="input-container3">
 				<label for="image-input" class="image-upload-label">물품 이미지 업로드</label>
 				<input type="file" id="image-input" accept="image/*" multiple>
@@ -366,7 +368,7 @@ input[type="radio"] {
 		
 		<div class="image-preview-wrapper">
 			<div class="default-image">
-					<img src="../static/icon/icon_camera.png" class="icon-camera">
+					<img src="${path}/resources/icon/camera.png" class="icon-camera">
 					<b>0/5</b>
 				</div>
 			<div class="image-preview" id="image-preview"></div>
