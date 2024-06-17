@@ -15,18 +15,18 @@
 <body>
 	<div class="login-container">
 		<div class="logo">
-			<img src="../resources/images/로고 이미지.png" alt="로고" class="logo-img">
+			<img src="${path}/resources/images/로고 이미지.png" alt="로고" class="logo-img">
 			<h1 class="logo-text">카드득</h1>
 		</div>
 		<div class="container">
 			<form action="login_process.php" method="POST">
 				<div class="form-group">
 					<div class="input-with-icon">
-			        <img alt="" src="../resources/icon/loginUser.png" class="id-icon">
+			        <img alt="" src="${path}/resources/icon/loginUser.png" class="id-icon">
 			        <input type="text" id="username" name="username" placeholder="아이디" required>
 			    </div>
 			    <div class="input-with-icon">
-			        <img alt="" src="../resources/icon/lock.png" class="pw-icon">
+			        <img alt="" src="${path}/resources/icon/lock.png" class="pw-icon">
 			        <input type="password" id="password" name="password" placeholder="비밀번호" required>
 			    </div>
 				</div>
