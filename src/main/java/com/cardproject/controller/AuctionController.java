@@ -25,6 +25,6 @@ public class AuctionController {
 	public void auctionInsert() {
 		System.out.println("auctionInsert page");
 		
-		
+
 	}
 }
