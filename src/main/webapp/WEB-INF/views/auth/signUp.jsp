@@ -16,7 +16,7 @@
 </head>
 <body>
 	<div style="text-align: left; position: relative; margin-bottom: 30px">
-	    <img src="../resources/images/로고 이미지.png" alt="로고" class="logo-img">
+	    <img src="${path}/resources/images/로고 이미지.png" alt="로고" class="logo-img">
         <h1 class="logo-text">카드득</h1>
 	    <h5 style="position: absolute; left: 155px; top: 25px; margin: 0;">회원 가입</h5>
 	</div>
@@ -96,7 +96,7 @@
             <div class="form-group">
                 <label for="profileImage" class="input-label">프로필 이미지 등록</label>
                 <div class="profile-image-container">
-                    <img id="profile-image" src="../resources/images/기본 이미지.png" alt="Profile Image">
+                    <img id="profile-image" src="${path}/resources/images/기본 이미지.png" alt="Profile Image">
                 </div>
                 <input type="file" id="profileImage" name="profileImage" onchange="previewImage(this)" accept="image/* class="input-field" style="background-color: #F8F9FC;">
                 <button type="button" onclick="restProfileImage()" class="check-button">삭제</button>
