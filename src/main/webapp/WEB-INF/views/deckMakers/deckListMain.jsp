@@ -13,15 +13,17 @@
     <title>카드득</title>
     <link rel="stylesheet" href="${path }/resources/css/main.css" />
     <link rel="icon" href="${path }/resources/icon/favicon.ico" type="image/x-icon">
+    <script type="text/javascript">
+        var path = '${path}';
+    </script>
 </head>
 
 <body>
-<c:set var="path" value="${pageContext.servletContext.contextPath }" />
     <!--header-->
     <%@ include file="/WEB-INF/views/main/header.jsp" %>
     <!--헤더이미지-->
     <div class="header-image">
-        <img src="${path }/resources/css/pokemon_banner.png">
+        <img src="${path }/resources/images/default/pokemon_banner.png">
     </div>
     <div class="top-container">
         <!--검색창 돌려쓰세요-->
@@ -37,7 +39,7 @@
             <div class="search-input-wrapper">
                 <input type="text" class="search-box" placeholder="검색어를 입력하세요.">
                 <button type="submit" class="search-btn">
-                    <img src="../icon/search.png" alt="search" class="search-icon">
+                    <img src="${path }/resources/icon/search.png" alt="search" class="search-icon">
                 </button>
             </div>
         </div>
@@ -105,7 +107,7 @@
     <!--footer-->
     
 	<%@ include file="/WEB-INF/views/main/footer.jsp" %>
-    <script type="module" src="../js/main.js"></script>
+    <script type="module" src="${path }/resources/js/main.js"></script>
 </body>
 
 </html>
