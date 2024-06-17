@@ -15,6 +15,10 @@ body {
 	border-radius: 8px;
 	text-align: center;
 	width: 320px;
+	padding-left: 650px;
+	padding-right: 650px;
+	padding-bottom : 250px;
+	
 }
 
 .logo-container {

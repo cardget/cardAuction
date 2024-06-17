@@ -1,0 +1,94 @@
+@charset "UTF-8";
+
+.find-id-container{
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 8px;	
+	width: 450px;
+	padding-left: 650px;
+	padding-right: 650px;
+	padding-bottom : 250px;
+}
+
+.custom-form {
+	max-width: 780px;
+	margin: 0 auto;
+	background-color: #fff;
+}
+
+.form-group {
+	margin-bottom: 20px;
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.logo-container {
+	position: relative;
+	margin-bottom: 30px;
+}
+
+.logo-img {
+	text-align: left;
+	width: 50px;
+	height: 50px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.logo-text {
+	color: #F8C501;
+	display: inline-block;
+	vertical-align: middle;
+	margin: 0;
+	position: relative;
+	top: 3px; /* 이미지와 조정된 세로 위치 맞춤 */
+	margin-left: 5px; /* 이미지와 텍스트 사이의 간격 조정 */
+}
+
+.input-label {
+	color: gray;
+	width: 80px;	
+}
+
+.input-field {
+	width: 200px;
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	margin-right: 10px;
+	margin-bottom: 5px;
+}
+
+.check-button {
+	background-color: white;
+	color: #007FFF;
+	border: 1px solid #007FFF;	
+	padding: 8px 16px;
+	border-radius: 4px;
+	cursor: pointer;
+	margin-right: 10px;
+	margin-bottom: 5px;
+}
+
+.check-button:hover {
+	background-color: #007FFF;
+	color: white;
+}
+
+.submit-button {
+	width:450px;
+	background-color: white;
+	color: #007FFF;
+	border: 1px solid #007FFF;	
+	padding: 8px 16px;
+	border-radius: 4px;
+	cursor: pointer;
+	margin-right: 10px;
+	margin-bottom: 5px;
+}
+
+.submit-button:hover {
+	background-color: #007FFF;
+	color: white;
+}
