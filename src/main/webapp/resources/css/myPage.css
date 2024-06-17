@@ -1,0 +1,505 @@
+@charset "UTF-8";
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: AppleSDGothicNeoL00;
+    color: #000;
+    background-color: #f9fbfc;
+}
+
+.content > div:not(.header) {
+	background-color: #fff;
+	border: 1px solid #e1e6ec;
+	box-shadow: 4px rgba(0, 0, 0, 0.1);
+	padding: 30px;
+	border-radius: 10px;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+    padding: 0 270px;
+}
+
+.sidebar {
+    width: 400px;
+    background-color: #fff;
+    border-right: 1px solid #e1e6ec;
+    margin-right: 10px;
+    padding: 20px;
+    box-sizing: border-box;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+ul {
+	list-style: none;
+}
+
+li {
+	font-size: 24px;
+	margin-bottom: 20px;
+}
+
+.selected {
+	color: #007FFF;
+	text-decoration: underline;
+}
+ 
+.main {
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+}
+
+.main-header {
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: right;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.logo {
+	margin-up: 10px;
+	margin-bottom: 20px;
+}
+
+.logo > h1{
+	display: inline-block;
+	margin: 0;
+}
+
+.grayfont {
+	color: #ccc7c0;
+	font-weight: normal;
+}
+
+.textinfo {
+	text-align: center;
+}
+
+.main-header a {
+	text-decoration: none;
+	padding: 10px 20px;
+	display: inline-block;
+}
+
+.main-header .dropdown {
+	position: relative;
+	display: inline-block;
+}
+
+.main-header .dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: #fff;
+	border: 1px solid #e1e6ec;
+	border-radius: 10px; 
+	min-width: 300px;
+	z-index: 1;
+	right: 0;
+}
+
+.main-header .dropdown:hover .dropdown-content {
+	display: block;
+}
+
+.main-header .dropdown-content a {
+	color: #000;
+	padding: 10px 20px;
+	display: block;
+	text-align: left;
+}
+
+.main-header .dropdown-content a:hover {
+	background-color: #fff;
+}
+
+.chat-brief {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #ddd;
+    margin: 10px 0;
+    background-color: #fff;
+}
+
+.chat-image img {
+    height: 50px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.chat-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.chat-content h3 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-top: 0;
+    text-align: left;
+}
+
+.chat-content p {
+    font-size: 12px;
+    margin: 2px 0;
+    text-align: left;
+}
+
+.bottom-div {
+	display: flex;
+	justify-content: center;
+}
+
+.profile-image {
+	display: flex;
+	justify-content: center;
+}
+
+.imageinfo {
+    position: relative;
+    display: inline-block;
+}
+
+.imageinfo img {
+    display: block;
+}
+
+.imageinfo .editprofile {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.alarmSetting {
+	display: flex;
+	justify-content: space-between;
+}
+
+.slider-button {
+	display: flex;
+	align-items: center;
+}
+
+label {
+  height: 30px;
+  width: 60px;
+  border-radius: 30px;
+}
+
+.alarm {
+  display: none;
+}
+
+.alarm:checked + span {
+  background-color: gray;
+}
+
+.alarm:checked + span::before {
+  left: 30px;
+}
+
+.info {
+	display: inline-block;
+}
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #007FFF;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #007FFF;
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.revision {
+	padding: 5px 10px;
+    border: 1px solid #CCC7C0;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 15px;
+    background-color: #fff;
+    color: #CCC7C0;
+}
+
+.button-section {
+	display: flex;
+    justify-content: flex-end;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 0px;
+}
+
+.header h2 {
+	margin: 0px;
+}
+
+.header a {
+	padding: 0px;
+}
+
+/* 리스트 아이템 */
+.item-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px!important;
+    margin: 10px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: #fff;
+}
+
+/* 이미지 섹션 */
+.image-section img {
+    height: 100px;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+/* 정보 섹션 */
+.info-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.info-section h3 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-top: 0;
+}
+
+.info-section p {
+    font-size: 12px;
+    color: #888;
+    margin: 2px 0;
+}
+
+.info-section .grayfont {
+    font-size: 12px;
+    color: #888;
+    text-decoration: none;
+    margin-top: 5px;
+}
+
+/* 상태 섹션 */
+.status-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    min-width: 100px;
+}
+
+.status-section .status-button-sold {
+    padding: 10px 20px;
+    border: 1px solid #ff0000;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    background-color: #fff;
+    color: #ff0000;
+}
+
+.status-section .status-button-proceeding {
+    padding: 10px 20px;
+    border: 1px solid #007FFF;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    background-color: #fff;
+    color: #007FFF;
+}
+
+.status-section .status-button-delivered {
+    padding: 10px 20px;
+    border: 1px solid #CCC7C0;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    background-color: #fff;
+    color: #CCC7C0;
+}
+
+.enddate {
+	color: #FE3838 !important;
+}
+
+.status-table {
+	padding-top: 30px;
+	padding-bottom: 10px;
+}
+
+table {
+    width: 95%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    font-size: 18px;
+    text-align: left;
+}
+
+thead tr {
+    background-color: #f9fbfc;
+    text-align: center;
+}
+
+th, td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #CCC7C0;
+}
+
+tbody tr {
+    border-bottom: 1px solid #CCC7C0;
+    text-align: center;
+}
+
+.total-point {
+	background-color: #007FFF;
+	color: #fff;
+	text-align: center;
+	padding: 30px;
+	border-radius: 10px;
+}
+.point-per-month {
+	margin-left: 10%;
+	margin-right: 10%;
+}
+
+.select-month {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.select-month a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px; /* 필요에 따라 조정 가능 */
+    height: 30px; /* 필요에 따라 조정 가능 */
+}
+
+.select-month img {
+    height: 30px;
+}
+
+.select-month h3 {
+    margin: 0;
+    font-size: 16px;
+    text-align: center;
+    flex: 1;
+}
+
+.point-summary {
+	border: 1px solid #E1E6EC;
+	border-radius: 10px;
+	padding: 10px 20px;
+}
+
+.point-summary > div {
+	display: flex;
+    justify-content: space-between;
+    width: 95%;
+    margin: 0 auto;
+    padding: 10px;
+}
+.history-section {
+	padding: 0px 20px!important;
+	margin-bottom: 15px;
+}
+
+.history-section > .grayfont {
+	margin-bottom: 3px;
+}
+
+.point-status {
+	color: #007FFF;
+	margin-right: 10px;
+}
+
+.point-detail {
+	display: flex;
+    align-items: center;
+    padding: 0px;
+}
+
+.mainColor {
+	color: #007FFF!important;
+}

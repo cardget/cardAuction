@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>마이페이지</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<link rel="stylesheet" href="../../../resources/css/myPage.css">
+<link rel="stylesheet" href="../../../resources/css/myPage.css">le.css">
 </head>
 <body>
 	<c:set var="path" value="${pageContext.servletContext.contextPath}"/>
@@ -33,7 +33,7 @@
 			</div>
 		    <div class="sidemenu">
 				<ul>
-					<li>
+					<li class="selected">
 						<a href="myInfo.jsp">내정보</a>
 					</li>
 					<li>
@@ -45,7 +45,7 @@
 					<li>
 						<a href="myPoint.jsp">포인트</a>
 					</li>
-					<li class="selected">
+					<li>
 						<a href="myInterest.jsp">관심목록</a>
 					</li>
 					<li>
@@ -122,90 +122,15 @@
 						<img src="../static/images/uncheckednote.png" alt="알림" height=30>
 					</a>
 					<div class="dropdown-content">
-			            <div class="chat-brief">
-							<div class="chat-image">
-								<img src="../static/images/pikachucard.png" alt="Product Image">
-							</div>
-							<div class="chat-content">
-								<h3>[포켓몬] 1998 피카츄 일러스트레이터...</h3>
-								<p>축하드립니다. 낙찰되셨습니다. 낙찰금: 500,000원</p>
-							</div>
-						</div>
-						<div class="chat-brief">
-							<div class="chat-image">
-								<img src="../static/images/pikachucard.png" alt="Product Image">
-							</div>
-							<div class="chat-content">
-								<h3>[포켓몬] 1998 피카츄 일러스트레이터...</h3>
-								<p>최저판매금액을 달성하지 못해 유찰되었습니다.</p>
-							</div>
-						</div>
-						<div class="chat-brief">
-							<div class="chat-image">
-								<img src="../static/images/pikachucard.png" alt="Product Image">
-							</div>
-							<div class="chat-content">
-								<h3>[포켓몬] 1998 피카츄 일러스트레이터...</h3>
-								<p>아쉽게도 낙찰되지 못하셨습니다.</p>
-							</div>
-						</div>
-						<div class="chat-brief">
-							<div class="chat-image">
-								<img src="../static/images/pikachucard.png" alt="Product Image">
-							</div>
-							<div class="chat-content">
-								<h3>[포켓몬] 1998 피카츄 일러스트레이터...</h3>
-								<p>등록하신 물품이 500,000원에 낙찰되었습니다.</p>
-							</div>
-						</div>
-						<div class="chat-brief">
-							<div class="chat-image">
-								<img src="../static/images/pikachucard.png" alt="Product Image">
-							</div>
-							<div class="chat-content">
-								<h3>[포켓몬] 1998 피카츄 일러스트레이터...</h3>
-								<p>등록하신 물품이 유찰되었습니다.</p>
-							</div>
-						</div>
+			            <a href="#">알림 1</a>
+			            <a href="#">알림 2</a>
+			            <a href="#">알림 3</a>
 			            <a class="mainColor" href="#">모든 알림 보기</a>
 			        </div>
             	</div>
 			</div>
-            <div class="content">
-            	<div class="header">
-			        <h2>관심목록</h2>
-			        <a href="#" class="grayfont">전체삭제</a>
-			    </div>
-				<div class="item-section">
-					<div class="image-section">
-					    <img src="../static/images/pikachucard.png" alt="Product Image">
-					</div>
-					<div class="info-section">
-					    <h3>[포켓몬] 1998 피카츄 일러스트레이터 카드 PSA 8 한정판</h3>
-					    <p>등록일자: 2024-05-28</p>
-					    <p class="enddate">종료일자: 2024-07-01</p>
-					    <a href="#" class="grayfont">상세보기 ></a>
-					</div>
-					<div class="status-section">
-					    <button class="status-button-proceeding">진행중</button>
-					</div>
-				</div>
-				<div class="item-section">
-					<div class="image-section">
-					    <img src="../static/images/pikachucard.png" alt="Product Image">
-					</div>
-					<div class="info-section">
-					    <h3>[포켓몬] 1998 피카츄 일러스트레이터 카드 PSA 8 한정판</h3>
-					    <p>등록일자: 2024-05-28</p>
-					    <p class="enddate">종료일자: 2024-06-01</p>
-					    <a href="#" class="grayfont">상세보기 ></a>
-					</div>
-					<div class="status-section">
-					    <button class="status-button-sold">종료됨</button>
-					</div>
-				</div>
-            </div>
-		</div>
-	</div>
+            <div class="content">바디 내용</div>
+        </div>
+    </div>
 </body>
 </html>
