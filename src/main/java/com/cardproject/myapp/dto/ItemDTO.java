@@ -13,7 +13,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class ItemsDTO {
+public class ItemDTO {
 	
 	private int itemId; //물품아이디
 	private String userId; //판매자아이디

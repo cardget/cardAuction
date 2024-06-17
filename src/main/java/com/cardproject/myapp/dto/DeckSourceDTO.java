@@ -8,11 +8,11 @@ import lombok.ToString;
 
 @Getter@Setter
 @ToString
-public class DeckSourcesDTO {
-	private int deckId;
-	private String pCard;
+public class DeckSourceDTO {
+	private int deckId; //덱아이디
+	private String pCard; //카드아이디
 	private String oCard;
 	private String dCard;
 	private String yCard;
-	private int isThumbnail;
+	private int isThumbnail; //썸네일여부
 }

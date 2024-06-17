@@ -13,7 +13,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class BiddingsDTO {
+public class BiddingDTO {
 	private int bidId; //입찰 아이디
 	private int price; //입찰 금액
 	private Timestamp bidTime; //입찰 시간
