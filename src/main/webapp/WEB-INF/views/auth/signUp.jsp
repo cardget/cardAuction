@@ -6,8 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>카드득 신규 가입 페이지</title>
+<c:set var="path" value="${pageContext.servletContext.contextPath}"/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Apple+SD+Gothic+Neo&display=swap">
-<link rel="stylesheet" href="../resources/css/signUp.css">
+<link rel="stylesheet" href="${path}/resources/css/signUp.css">
 <script
 	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="../resources/js/signUp.js"></script>
