@@ -1,32 +1,30 @@
-//header, footer 불러오기
 async function asyncMarkupData() {
   const allElements = document.getElementsByTagName("*");
   Array.prototype.forEach.call(allElements, function (el) {
-    const includePath = el.dataset.includePath;
-    if (includePath) {
-      const xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          el.outerHTML = this.responseText;
-        }
-      };
-      xhttp.open("GET", includePath, true);
-      xhttp.send();
-    }
+      const includePath = el.dataset.includePath;
+      if (includePath) {
+          const xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function () {
+              if (this.readyState == 4 && this.status == 200) {
+                  el.outerHTML = this.responseText;
+              }
+          };
+          xhttp.open("GET", includePath, true);
+          xhttp.send();
+      }
   });
 }
-asyncMarkupData()
-  .then(() => {
-  });
+asyncMarkupData().then(() => {
+  // 나머지 초기화 코드
+});
 
-/*아코디언메뉴 */
 document.addEventListener('DOMContentLoaded', function () {
   const accordionHeaders = document.querySelectorAll('.accordion-header');
   accordionHeaders.forEach(header => {
-    header.addEventListener('click', () => {
-      const accordionContent = header.nextElementSibling;
-      accordionContent.classList.toggle('active');
-    });
+      header.addEventListener('click', () => {
+          const accordionContent = header.nextElementSibling;
+          accordionContent.classList.toggle('active');
+      });
   });
   //사이드바 고정
   const sidebar = document.querySelector('.sidebar');
@@ -34,89 +32,81 @@ document.addEventListener('DOMContentLoaded', function () {
   var offset = 300;  // 스크롤 높이 300 
 
   window.addEventListener('scroll', function () {
-    const scrollY = window.scrollY;
+      const scrollY = window.scrollY;
 
-    if (scrollY > offset) {
-      sidebar.classList.add('fixed-sidebar');
-      sidebar.style.top = '100px';
-    } else {
-      sidebar.classList.remove('fixed-sidebar');
-      sidebar.style.top = '';
-    }
+      if (scrollY > offset) {
+          sidebar.classList.add('fixed-sidebar');
+          sidebar.style.top = '100px';
+      } else {
+          sidebar.classList.remove('fixed-sidebar');
+          sidebar.style.top = '';
+      }
   });
 });
-/*덱리스트 카드추가 js*/
+
 const accordionImages = document.querySelectorAll('.listCard');
 const deckListImages = document.querySelectorAll('.deckList .makerCard');
 
-// 이미지 선택 상태를 저장할 Set
 const selectedValues = new Set();
 
-// accordion 이미지를 클릭해도 선택 해제되지 않도록 처리
 accordionImages.forEach(image => {
   image.addEventListener('click', () => {
-    const selectedValue = image.getAttribute('value');
-    // 선택한 이미지를 Set에 추가
-    if (!selectedValues.has(selectedValue)) {
-      selectedValues.add(selectedValue);
-    }
-    updateDeckList();
-    updateBorder();
-  });
-});
-// deckList 이미지를 클릭하면 선택 해제
-deckListImages.forEach(image => {
-  image.addEventListener('click', () => {
-    const selectedValue = image.getAttribute('value');
-    // 선택 해제
-    if (selectedValues.has(selectedValue)) {
-      selectedValues.delete(selectedValue);
+      const selectedValue = image.getAttribute('value');
+      if (!selectedValues.has(selectedValue)) {
+          selectedValues.add(selectedValue);
+      }
       updateDeckList();
       updateBorder();
-    }
   });
 });
-// 리스트 보이게
+
+deckListImages.forEach(image => {
+  image.addEventListener('click', () => {
+      const selectedValue = image.getAttribute('value');
+      if (selectedValues.has(selectedValue)) {
+          selectedValues.delete(selectedValue);
+          updateDeckList();
+          updateBorder();
+      }
+  });
+});
+
 function updateDeckList() {
   deckListImages.forEach(deckImage => {
-    if (selectedValues.has(deckImage.getAttribute('value'))) {
-      deckImage.parentElement.style.display = 'block';
+      if (selectedValues.has(deckImage.getAttribute('value'))) {
+          deckImage.parentElement.style.display = 'block';
+      } else {
+          deckImage.parentElement.style.display = 'none';
+      }
+  });
+}
 
-    } else {
-      deckImage.parentElement.style.display = 'none';
-    }
+function updateBorder() {
+  accordionImages.forEach(image => {
+      if (selectedValues.has(image.getAttribute('value'))) {
+          image.style.border = '3px solid #F8C501';
+          image.style.borderRadius = '8px';
+      } else {
+          image.style.border = 'none';
+      }
+      image.style.boxSizing = 'border-box';
   });
 }
-//선택된 카드 테두리
-function updateBorder(){
-  accordionImages.forEach(image =>{
-    if(selectedValues.has(image.getAttribute('value'))){
-      image.style.border = '3px solid #F8C501';
-      image.style.borderRadius = '8px';
-    }else{
-      image.style.border = 'none';
-    }
-    image.style.boxSizing = 'border-box';
-  });
-}
-// 기본적으로 이미지 안보이게
+
 window.addEventListener('DOMContentLoaded', () => {
   deckListImages.forEach(deckImage => {
-    deckImage.parentElement.style.display = 'none';
+      deckImage.parentElement.style.display = 'none';
   });
 });
-/*---덱리스트 카드추가 js---*/
 
-/*페이지네이션 */
 document.addEventListener("DOMContentLoaded", function () {
   const decks = [
-      // Deck 정보 배열
-      { number: '1번덱', username: '사용자명1', date: '2023-01-01', recommend : '추천수 : 5' },
-      { number: '2번덱', username: '사용자명2', date: '2023-01-02', recommend : '추천수 : 5' },
-      { number: '3번덱', username: '사용자명3', date: '2023-01-03', recommend : '추천수 : 5' },
-      { number: '4번덱', username: '사용자명4', date: '2023-01-04', recommend : '추천수 : 5' },
-      { number: '5번덱', username: '사용자명5', date: '2023-01-05', recommend : '추천수 : 5' },
-      { number: '6번덱', username: '사용자명6', date: '2023-01-06', recommend : '추천수 : 5' },
+      { number: '1번덱', username: '사용자명1', date: '2023-01-01', recommend: '추천수 : 5' },
+      { number: '2번덱', username: '사용자명2', date: '2023-01-02', recommend: '추천수 : 5' },
+      { number: '3번덱', username: '사용자명3', date: '2023-01-03', recommend: '추천수 : 5' },
+      { number: '4번덱', username: '사용자명4', date: '2023-01-04', recommend: '추천수 : 5' },
+      { number: '5번덱', username: '사용자명5', date: '2023-01-05', recommend: '추천수 : 5' },
+      { number: '6번덱', username: '사용자명6', date: '2023-01-06', recommend: '추천수 : 5' },
       { number: '7번덱', username: '사용자명7', date: '2023-01-07' },
       { number: '8번덱', username: '사용자명8', date: '2023-01-08' },
       { number: '9번덱', username: '사용자명9', date: '2023-01-09' },
@@ -214,10 +204,6 @@ document.addEventListener("DOMContentLoaded", function () {
   renderDecks(currentPage);
   renderPagination();
 });
-
-function recommendDeck() {
-  alert("추천되었습니다!");
-}
 
 
 /*카드 움직이기 

@@ -8,7 +8,8 @@ body {
     flex-direction: column;
     min-height: 100vh;
 }
-button{
+
+button {
     cursor: pointer;
 }
 
@@ -89,7 +90,8 @@ button{
     margin-bottom: 80px;
     flex: 1;
 }
-.main-container{
+
+.main-container {
     padding: 60px 270px 0;
     margin-bottom: 80px;
     flex: 1;
@@ -117,7 +119,8 @@ ul {
 .cardType:hover {
     transform: scale(1.1)
 }
-.header-image{
+
+.header-image {
     height: 283px;
 }
 
@@ -127,7 +130,8 @@ ul {
     justify-content: center;
     position: relative;
 }
-.search-area-full{
+
+.search-area-full {
     display: flex;
     justify-content: space-between;
     position: relative;
@@ -135,7 +139,8 @@ ul {
     height: 60px;
     padding: 0 270px;
 }
-.filter-btn{
+
+.filter-btn {
     width: 100px;
     height: 46px;
     margin: 6px 0 0 200px;
@@ -149,11 +154,13 @@ ul {
     align-items: center;
     justify-content: center;
 }
-.filter-icon{
+
+.filter-icon {
     width: 14px;
     height: 14px;
     margin: 0 5px 0 0;
 }
+
 .search-area .main-select,
 .search-box {
     background-color: #fff;
@@ -162,12 +169,14 @@ ul {
     height: 42px;
     border-radius: 30px;
 }
-.search-box{
+
+.search-box {
     width: 500px;
     padding: 0 20px;
     margin-left: 10px;
 }
-.card-search-box{
+
+.card-search-box {
     background-color: #fff;
     border: 1px solid #007FFF;
     margin-top: 6px;
@@ -189,6 +198,7 @@ ul {
     top: 50%;
     transform: translateY(250%);
 }
+
 .card-search-icon {
     width: 24px;
     height: 24px;
@@ -212,7 +222,8 @@ ul {
     padding: 0;
     cursor: pointer;
 }
-.card-search{
+
+.card-search {
     position: absolute;
     right: 5px;
     top: 70px;
@@ -361,6 +372,7 @@ select {
         color: #2c2c2c;
     }
 }
+
 /*댁라스트메인*/
 .create-deck {
     width: 70px;
@@ -373,19 +385,23 @@ select {
     cursor: pointer;
     font-weight: 600;
 }
+
 .row-deck-content {
     display: flex;
     flex-wrap: wrap;
     gap: 80px;
     justify-content: space-between;
 }
+
 .deck-overlay-container {
     position: relative;
     display: inline-block;
 }
+
 .deck-overlay-container img {
     display: block;
 }
+
 .overlay-text {
     position: absolute;
     top: 10px;
@@ -399,15 +415,19 @@ select {
     justify-content: space-between;
     padding: 10px;
 }
+
 .deck-number {
     font-size: 14px;
 }
+
 .deck-info {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
 }
-.deck-info .username, .deck-info .date {
+
+.deck-info .username,
+.deck-info .date {
     font-size: 12px;
     margin-right: 20px;
 }
@@ -462,6 +482,7 @@ select {
     height: 700px;
     width: 1000px;
 }
+
 .main-content-2 {
     position: relative;
     flex: 1;
@@ -480,9 +501,10 @@ select {
     height: auto;
 }
 
-.accordion{
+.accordion {
     width: 100%;
 }
+
 .accordion-item {
     border: none;
     border-radius: 4px;
@@ -511,26 +533,29 @@ select {
     gap: 7px;
 }
 
-.banner-overlay{
+.banner-overlay {
     position: absolute;
     left: 300px;
     padding: 20px;
     color: #fff;
     font-weight: 1000;
 }
-.makerInfo{
+
+.makerInfo {
     display: flex;
     gap: 20px;
     padding-top: 120px;
     font-weight: 100;
     align-items: center;
 }
-.count-overlay{
+
+.count-overlay {
     position: absolute;
     margin: 10px;
     color: #fff;
     text-align: center;
-    .count-circle{
+
+    .count-circle {
         background-color: #007FFF;
         padding: 5px;
         border-radius: 20px;
@@ -539,70 +564,84 @@ select {
         margin: 125px 0 0 70px;
     }
 }
+
 .deck-list {
     width: 350px;
     height: 540px;
     position: relative;
-    background: url('../image/makerframe.png') no-repeat center center ;
+    background: url('../image/makerframe.png') no-repeat center center;
     background-size: contain;
     overflow: hidden;
     padding: 10px;
     box-sizing: border-box;
-    ::-webkit-scrollbar{ /*덱리스트 스크롤바 디자인*/
+
+    ::-webkit-scrollbar {
+        /*덱리스트 스크롤바 디자인*/
         border-radius: 10px;
         background-color: #949494;
         width: 13px;
     }
-    ::-webkit-scrollbar-thumb{
+
+    ::-webkit-scrollbar-thumb {
         background-color: #F8C501;
         border-radius: 6px;
         border: 3px solid #949494;
     }
 }
+
 .deckList {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: calc(100% - 8px);
     height: 100%;
-    overflow-y: auto;
+    overflow-y: scroll;
     margin-top: 0;
 }
+
 .makerCard {
     margin-bottom: 10px;
 }
-.makeList{
+
+.makeList {
     width: 282px;
     height: 40px;
     margin-right: 10px;
 }
-.listCard, .card-count{
+
+.listCard,
+.card-count {
     cursor: pointer;
 }
+
 /*코멘트박스*/
-.comment{
+.comment {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.builder-comment{
+
+.builder-comment {
     margin-left: 20px;
     font-weight: 1000;
 }
-.commentBox{
+
+.commentBox {
     width: 97%;
     height: 150px;
-    text-align:start;
+    text-align: start;
     margin-bottom: 10px;
     padding: 10px;
 }
-.deckTitle{
+
+.deckTitle {
     width: 97%;
     text-align: start;
     margin-bottom: 10px;
     padding: 10px;
 }
-.regist-btn{
+
+.regist-btn {
     padding: 10px 30px;
     background-color: #F8C501;
     border: none;
@@ -612,9 +651,11 @@ select {
     font-weight: 1000;
     font-size: 14px;
 }
-textarea{
+
+textarea {
     border: 1px solid #E1E6EC;
 }
+
 /*추천버튼*/
 .recommend-button {
     text-align: center;
@@ -633,6 +674,15 @@ textarea{
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 5px;
+}
+.filter-options{
+    border-bottom: 1px solid #E1E6EC;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 0 270px;
+    display: none;
+    padding-top: 20px;
 }
 
 /*카드움직이기 참고만 -->css겹칠 수 있음 조심!

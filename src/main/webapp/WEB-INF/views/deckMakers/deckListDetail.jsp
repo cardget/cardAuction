@@ -151,16 +151,22 @@
             </div>
             <p class="builder-comment">제작자 코멘트</p>
             <div class="comment">
-                <textarea cols="50" rows="6" placeholder="알아서 재밌게 쓰시면 되는 덱입니다. 질문 받지 않습니다." class="commentBox"></textarea>
+                <textarea cols="50" rows="6" placeholder="알아서 재밌게 쓰시면 되는 덱입니다. 질문 받지 않습니다."
+                    class="commentBox"></textarea>
             </div>
             <div class="recommend-button">
-                <button onclick="recommendDeck()">추천</button>
+                <button type="submit" onclick="recommendDeck()">추천</button>
             </div>
         </div>
     </div>
     <!--footer-->
     <footer data-include-path="footer.html"></footer>
     <script type="module" src="../js/main.js"></script>
+    <script>
+        function recommendDeck() {
+            alert("추천되었습니다!");
+        }
+    </script>
 </body>
 
 </html>

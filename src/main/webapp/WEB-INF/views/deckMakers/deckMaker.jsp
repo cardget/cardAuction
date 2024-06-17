@@ -26,8 +26,16 @@
                     <img src="../icon/search.png" alt="search" class="card-search-icon">
                 </button>
             </div>
-            <button type="button" class="filter-btn">
-                <img src="../icon/filter.png" class="filter-icon">필터</button>
+            <button type="button" class="filter-btn" onclick="toggleFilterOptions()">
+                <img src="../icon/filter.png" class="filter-icon">필터
+            </button>
+        </div>
+        <div id="filter-options" class="filter-options">
+            <label><input type="checkbox" value="1"> 항목 1</label>
+            <label><input type="checkbox" value="2"> 항목 2</label>
+            <label><input type="checkbox" value="3"> 항목 3</label>
+            <label><input type="checkbox" value="4"> 항목 4</label>
+            <label><input type="checkbox" value="5"> 항목 5</label>
         </div>
     </div>
     <div class="container">
@@ -46,11 +54,6 @@
                             <img src="../image/innercard.png" class="listCard" value="3">
                         </div>
                         <div class="card-count">
-                            <!-- <div class="count-overlay">
-                                <div class="count-circle">
-                                    2
-                                </div>
-                            </div> -->
                             <img src="../image/innercard.png" class="listCard" value="4">
                         </div>
                         <div class="card-count">
@@ -160,6 +163,16 @@
     <!--footer-->
     <footer data-include-path="footer.html"></footer>
     <script type="module" src="../js/main.js"></script>
+    <script>
+        function toggleFilterOptions() {
+            var filterOptions = document.getElementById('filter-options');
+            if (filterOptions.style.display === 'none') {
+                filterOptions.style.display = 'block';
+            } else {
+                filterOptions.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 
 </html>
