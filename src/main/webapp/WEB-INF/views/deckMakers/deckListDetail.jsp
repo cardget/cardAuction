@@ -116,32 +116,35 @@
                     <div class="accordion-header">트레이너스 (38)</div>
                     <div class="accordion-content">
                         <img src="${path }/resources/images/default/innercard.png" class="listCard">
-						<img src="${path }/resources/images/default/innercard.png" class="listCard">
-						<img src="${path }/resources/images/default/innercard.png" class="listCard">
-						<img src="${path }/resources/images/default/innercard.png" class="listCard">
-						<img src="${path }/resources/images/default/innercard.png" class="listCard">
-						<img src="${path }/resources/images/default/innercard.png" class="listCard">
-						<img src="${path }/resources/images/default/innercard.png" class="listCard">
-						<img src="${path }/resources/images/default/innercard.png" class="listCard">
-						<img src="${path }/resources/images/default/innercard.png" class="listCard">
-						<img src="${path }/resources/images/default/innercard.png" class="listCard">
-						<img src="${path }/resources/images/default/innercard.png" class="listCard">
+					<img src="${path }/resources/images/default/innercard.png" class="listCard">
+					<img src="${path }/resources/images/default/innercard.png" class="listCard">
+					<img src="${path }/resources/images/default/innercard.png" class="listCard">
+					<img src="${path }/resources/images/default/innercard.png" class="listCard">
+					<img src="${path }/resources/images/default/innercard.png" class="listCard">
+					<img src="${path }/resources/images/default/innercard.png" class="listCard">
+					<img src="${path }/resources/images/default/innercard.png" class="listCard">
+					<img src="${path }/resources/images/default/innercard.png" class="listCard">
+					<img src="${path }/resources/images/default/innercard.png" class="listCard">
+					<img src="${path }/resources/images/default/innercard.png" class="listCard">
                     </div>
                 </div>
                 <div class="accordion-item">
                     <div class="accordion-header">에너지 (10)</div>
                     <div class="accordion-content">
-                        <img src="${path }/resources/images/default/innercard.png" class="listCard">
-						<img src="${path }/resources/images/default/innercard.png" class="listCard">
-						<img src="${path }/resources/images/default/innercard.png" class="listCard">
-						<img src="${path }/resources/images/default/innercard.png" class="listCard">
-						<img src="${path }/resources/images/default/innercard.png" class="listCard">
-						<img src="${path }/resources/images/default/innercard.png" class="listCard">
-						<img src="${path }/resources/images/default/innercard.png" class="listCard">
-						<img src="${path }/resources/images/default/innercard.png" class="listCard">
-						<img src="${path }/resources/images/default/innercard.png" class="listCard">
-						<img src="${path }/resources/images/default/innercard.png" class="listCard">
-						<img src="${path }/resources/images/default/innercard.png" class="listCard">
+                        <img src="../image/innercard.png" class="listCard">
+                        <img src="../image/innercard.png" class="listCard">
+                        <img src="../image/innercard.png" class="listCard">
+                        <img src="../image/innercard.png" class="listCard">
+                        <img src="../image/innercard.png" class="listCard">
+                        <img src="../image/innercard.png" class="listCard">
+                        <img src="../image/innercard.png" class="listCard">
+                        <img src="../image/innercard.png" class="listCard">
+                        <img src="../image/innercard.png" class="listCard">
+                        <img src="../image/innercard.png" class="listCard">
+                        <img src="../image/innercard.png" class="listCard">
+                        <img src="../image/innercard.png" class="listCard">
+                        <img src="../image/innercard.png" class="listCard">
+                        <img src="../image/innercard.png" class="listCard">
                     </div>
                 </div>
             </div>
