@@ -12,7 +12,7 @@ public class CommunityDAO{
 	@Autowired
 	SqlSession sqlSession;
 
-	String namespace = "com.cardproject.myapp.model.community.";
+	String namespace = "com.cardproject.myapp.dao.";
 
 	// test
 	public void test() {
