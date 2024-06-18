@@ -6,17 +6,6 @@ import java.util.Date;
 
 public class DateUtil {
 	
-	public static Date parseDateTimeLocal(String datetimeLocal) {
-	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-	        Date result = null;
-	        try {
-	            result = sdf.parse(datetimeLocal);
-	        } catch (ParseException e) {
-	            e.printStackTrace();
-	        }
-	        return result;
-	    }
-	    
 	public static java.sql.Date getSQLDate(String d) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		java.sql.Date result = null;

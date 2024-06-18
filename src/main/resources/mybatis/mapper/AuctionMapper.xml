@@ -10,7 +10,7 @@
 	</select>
 	<!-- 경매물품등록 (items테이블에 Insert) -->
 	<insert id="itemInsert" parameterType="itemvo">
-		insert into (item_id,user_id,item_name,cmt,status,min_price,rarity,create_date,end_date,trade_type,cat,image1,image2,image3,image4,image5,d_card_id,p_card_id,y_card_id,s_card_id,o_card_id) items
+		insert into items(item_id,user_id,item_name,cmt,status,min_price,rarity,create_date,end_date,trade_type,cat,image1,image2,image3,image4,image5,d_card_id,p_card_id,y_card_id,s_card_id,o_card_id)
 		 values (#{item_id},#{user_id},#{item_name},#{cmt},#{status},#{min_price},#{rarity},#{create_date},#{end_date},#{trade_type},#{cat},#{image1},#{image2},#{image3},#{image4},#{image5},#{d_card_id},#{p_card_id},#{y_card_id},#{s_card_id},#{o_card_id})
 	</insert>
 	<!-- 썸네일선택용-포켓몬카드 불러오기 -->

@@ -77,7 +77,7 @@
 		<!-- 나머지 input-->
 		<div class="input-container">
 			<label for="end_date">경매 종료 날짜 / 시간 </label>
-			<input type="datetime-local" id="end_date" class="input-field-date" >
+			<input type="datetime-local" id="end_date" class="input-field-date" name="end_date" >
 			
 		</div>
 		<div class="input-container">
