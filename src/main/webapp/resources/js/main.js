@@ -141,11 +141,11 @@ document.addEventListener("DOMContentLoaded", function () {
                   <div class="deck-overlay-container">
                       <img src="../image/deckSample.png">
                       <div class="overlay-text">
-                          <div class="deck-number">${deck.number}</div>
+                          <div class="deck-number">\${deck.number}</div>
                           <div class="deck-info">
-                              <div class="username">${deck.username}</div>
-                              <div class="date">${deck.date}</div>
-                              <div class="date">${deck.recommend}</div>
+                              <div class="username">\${deck.username}</div>
+                              <div class="date">\${deck.date}</div>
+                              <div class="date">\${deck.recommend}</div>
                           </div>
                       </div>
                   </div>
