@@ -9,10 +9,10 @@ import com.cardproject.myapp.dao.CommunityDAO;
 public class CommunityService {
 	
 	@Autowired
-	CommunityDAO myBatisTest;
+	CommunityDAO comDAO;
 	
 	public void test() {
-		myBatisTest.test();
+		comDAO.test();
 	}
 	
 }
