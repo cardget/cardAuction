@@ -2,7 +2,7 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.cardproject.myapp.model.community">
+<mapper namespace="com.cardproject.myapp.dao">
 	
 	<!-- test -->
 	<select id="selectTest" resultType="communityvo">

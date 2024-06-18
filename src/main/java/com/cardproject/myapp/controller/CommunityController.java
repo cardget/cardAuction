@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.cardproject.myapp.dao.CommunityDAO;
 import com.cardproject.myapp.service.CommunityService;
 
 @Controller
@@ -13,12 +12,12 @@ import com.cardproject.myapp.service.CommunityService;
 public class CommunityController {
 
 	@Autowired
-	CommunityService test;
+	CommunityService coms;
 	
 	@GetMapping("/BoardDetail.do")
 	public void BoardDetail() {
 		System.out.println("BoardDetail page");
-		test.test(); // community mybatis test
+		coms.test(); // community mybatis test
 	}
 	
 	@GetMapping("/BoardInsert.do")
