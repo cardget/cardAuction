@@ -1,4 +1,4 @@
-package com.cardproject.controller;
+package com.cardproject.myapp.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
