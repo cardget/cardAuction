@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/BoardInsert.css?after" rel="stylesheet">
+    <link href="../resources/css/BoardInsert.css?after" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
@@ -32,9 +32,9 @@
                     </select>
                 </div>
                 <div class="col" id="ImageLogoContainer">
-                    <img class="ImageLogo" src="../Images/picture.png" alt="1">
-                    <img class="ImageLogo" src="../Images/video.png" alt="2">
-                    <img class="ImageLogo" src="../Images/file.png" alt="3">
+                    <img class="ImageLogo" src="../resources/icon/image.png" alt="1">
+                    <img class="ImageLogo" src="../resources/icon/video.png" alt="2">
+                    <img class="ImageLogo" src="../resources/icon/link.png" alt="3">
                 </div>
             </div>
             <div class="mb-3 mt-3">

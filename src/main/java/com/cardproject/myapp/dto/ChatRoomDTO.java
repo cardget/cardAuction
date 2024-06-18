@@ -9,10 +9,10 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ChatRoomDTO {
-	private int chatId;
-	private int tradeId;
-	private int senderId;
+	private int chat_id;
+	private int trade_id;
+	private int sender_id;
 	private String message;
-	private Date createTime;
-	private int isChecked;
+	private Date create_time;
+	private int is_checked;
 }

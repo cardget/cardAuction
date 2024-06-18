@@ -11,6 +11,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class LikeDTO {
-	private String userId; //유저아이디
-	private int itemId; //물품아이디
+	private String user_id; //유저아이디
+	private int item_id; //물품아이디
 }
