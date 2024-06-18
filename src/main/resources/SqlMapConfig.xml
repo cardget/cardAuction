@@ -14,5 +14,18 @@
 		<typeAlias type="com.cardproject.myapp.dto.DigimonDTO" alias="digimonvo" />
 		<typeAlias type="com.cardproject.myapp.dto.YugiohDTO" alias="yugiohvo" />
 		<typeAlias type="com.cardproject.myapp.dto.OnepieceDTO" alias="onepiecevo" />
+		<typeAlias type="com.cardproject.myapp.dto.BiddingDTO" alias="biddingvo"/>
+		<typeAlias type="com.cardproject.myapp.dto.ChatroomDTO" alias="chatroomvo"/>
+		<typeAlias type="com.cardproject.myapp.dto.ItemDTO" alias="itemvo"/>
+		<typeAlias type="com.cardproject.myapp.dto.LikeDTO" alias="likevo"/>
+		<typeAlias type="com.cardproject.myapp.dto.NotificationDTO" alias="notificationvo"/>
+		<typeAlias type="com.cardproject.myapp.dto.PointDTO" alias="pointvo"/>
+		<typeAlias type="com.cardproject.myapp.dto.QuestionDTO" alias="questionvo"/>
+		<typeAlias type="com.cardproject.myapp.dto.ReplieDTO" alias="replievo"/>
+		<typeAlias type="com.cardproject.myapp.dto.ReportDTO" alias="reportvo"/>
+		<typeAlias type="com.cardproject.myapp.dto.SportDTO" alias="sportvo"/>
+		<typeAlias type="com.cardproject.myapp.dto.TradeDTO" alias="tradevo"/>
+		<typeAlias type="com.cardproject.myapp.dto.UserDTO" alias="uservo"/>
+		<typeAlias type="com.cardproject.myapp.dto.DTO" alias="communityvo"/>
 	</typeAliases>
 </configuration>
