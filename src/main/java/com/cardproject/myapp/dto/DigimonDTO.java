@@ -13,7 +13,7 @@ public class DigimonDTO {
 	private String card_sort;
 	private String card_attr;
 	private String evolution;
-	private String cardImage;
+	private String card_image;
 	private String card_color;
 	private String monster_type;
 	private String card_cost;

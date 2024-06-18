@@ -122,6 +122,7 @@ ul {
 
 .header-image {
     height: 283px;
+    width : 100%;
 }
 
 /*상단 검색창*/
@@ -387,10 +388,11 @@ select {
 }
 
 .row-deck-content {
-    display: flex;
     flex-wrap: wrap;
     gap: 80px;
     justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
 }
 
 .deck-overlay-container {
@@ -569,7 +571,7 @@ select {
     width: 350px;
     height: 540px;
     position: relative;
-    background: url('../image/makerframe.png') no-repeat center center;
+    background: url('../images/default/makerframe.png') no-repeat center center;
     background-size: contain;
     overflow: hidden;
     padding: 10px;
@@ -619,6 +621,8 @@ select {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 50px;
+    padding: 0 270px;
 }
 
 .builder-comment {

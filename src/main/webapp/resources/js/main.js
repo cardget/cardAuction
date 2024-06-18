@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", function () {
                           <div class="deck-info">
                               <div class="username">\${deck.username}</div>
                               <div class="date">\${deck.date}</div>
-                              <div class="date"\>${deck.recommend}</div>
+                              <div class="date">\${deck.recommend}</div>
                           </div>
                       </div>
                   </div>
@@ -206,7 +206,7 @@ document.addEventListener("DOMContentLoaded", function () {
   renderDecks(currentPage);
   renderPagination();
 });
-
+ 
 
 /*카드 움직이기 
 var container = document.querySelector('.container')
