@@ -9,6 +9,7 @@ async function asyncMarkupData() {
                   el.outerHTML = this.responseText;
               }
           };
+          
           xhttp.open("GET", includePath, true);
           xhttp.send();
       }
@@ -16,6 +17,7 @@ async function asyncMarkupData() {
 }
 asyncMarkupData().then(() => {
   // 나머지 초기화 코드
+   
 });
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -145,7 +147,7 @@ document.addEventListener("DOMContentLoaded", function () {
                           <div class="deck-info">
                               <div class="username">\${deck.username}</div>
                               <div class="date">\${deck.date}</div>
-                              <div class="date">\${deck.recommend}</div>
+                              <div class="date"\>${deck.recommend}</div>
                           </div>
                       </div>
                   </div>
