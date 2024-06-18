@@ -25,7 +25,7 @@
 <!-- Body -->
 <div class="container">
 	
-	<form action="#" class="insert-form" method="post">
+	<form action="${path}/auction/auctionInsert.do" class="insert-form" method="post">
 		<div class="top-wrapper">
 			<h1 class="top-item">포켓몬 카드 경매 등록</h1>
 			<button type="submit" class="top-insert-btn">판매 글 작성</button>
@@ -35,19 +35,19 @@
 		
 		
 		<div class="input-container">
-			<input type="text" id="title" class="input-field" placeholder="제목을 입력하세요">
+			<input type="text" id="title" class="input-field" placeholder="제목을 입력하세요" name="item_name">
 			<label for="trade_type" class="radio-title">선호 거래 방식</label>
-		    <input type="radio" id="status1" name="trade_type" value="">
+		    <input type="radio" id="status1" name="trade_type" value="1">
 		    <label for="status1">상관없음</label>
 		    
-		    <input type="radio" id="status2" name="trade_type" value="">
+		    <input type="radio" id="status2" name="trade_type" value="2">
 		    <label for="status2">직거래</label>
 		    
-		    <input type="radio" id="status3" name="trade_type" value="">
+		    <input type="radio" id="status3" name="trade_type" value="3">
 		    <label for="status3">중개</label>
 		    
 		    
-		    <select name="cardid" class="select-field-card">
+		    <select name="p_card_id" class="select-field-card">
 				<option>뮤ex</option>
 				<option>피카츄ex</option>
 				<option>날뛰는우레ex</option>
@@ -55,12 +55,7 @@
 			</select>
 		    
 		</div>
-		<!--  
-		<div class="input-container">
-			<label for="description">설명</label>
-			<input type="text" id="description" class="input-field" placeholder="설명을 입력하세요">
-		</div>
-		-->
+
 		<div class="image-format">
 			<img src="${path}/resources/icon/error.png" class="icon-error" alt="icon"> 실제 카드 이미지 1개 필수 ( 최대 5개 )
 			<div class="input-container3">
@@ -82,12 +77,13 @@
 		<!-- 나머지 input-->
 		<div class="input-container">
 			<label for="end_date">경매 종료 날짜 / 시간 </label>
-			<input type="date" id="end_date" class="input-field-date" >
+			<input type="datetime-local" id="end_date" class="input-field-date" >
+			
 		</div>
 		<div class="input-container">
 			<label for="status">물품 상태</label>
 			<select name="status" class="select-field-status">
-				<option>최상</option>
+				<option value="1">최상</option>
 				<option>상</option>
 				<option>중</option>
 				<option>하</option>
@@ -96,15 +92,15 @@
 		</div>
 		<div class="input-container">
 			<label for="rarity">희귀도</label>
-			<input type="text" id="rarity" class="input-field-rarity" >
+			<input type="text" id="rarity" class="input-field-rarity" name="rarity" >
 		</div>
 		<div class="input-container">
 			<label for="min_price">유찰가</label>
-			<input type="number" id="min_price" class="input-field-min-price"> 원
+			<input type="number" id="min_price" class="input-field-min-price" name="min_price"> 원
 		</div>
 		<div class="input-container2">
 			<label for="cmt">물품 상세 설명</label><br>
-			<textarea id="cmt" class="input-field-cmt" placeholder="물품에 대한 상세 정보를 입력하세요"></textarea>
+			<textarea id="cmt" class="input-field-cmt" placeholder="물품에 대한 상세 정보를 입력하세요" name="cmt"></textarea>
 		</div>
 		
 	</form>

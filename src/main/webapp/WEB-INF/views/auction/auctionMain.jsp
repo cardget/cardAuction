@@ -85,7 +85,7 @@
 	
 	<div class="auction-list-wrapper">
 		<div class="auction-item">
-			<img src="${path}/resources/images/pokemon/피카츄 ex.png" alt="card image" class="card-image">
+			<img src="https://s3.ap-southeast-2.amazonaws.com/shinhan.cardauction/images/피카츄+ex.png" alt="card image" class="card-image">
 			<div class="title-wrapper">
 				글제목
 			</div>
