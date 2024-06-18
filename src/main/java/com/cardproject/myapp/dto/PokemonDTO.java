@@ -9,12 +9,12 @@ import lombok.ToString;
 @ToString
 public class PokemonDTO {
 
-	private String cardId; //카드아이디
-	private String cardName; //이름
-	private String cardSort; //카드종류
+	private String card_id; //카드아이디
+	private String card_name; //이름
+	private String card_sort; //카드종류
 	private String feature; //특성
-	private String cardType; //카드타입
-	private String cardImage; //이미지
+	private String card_type; //카드타입
+	private String card_image; //이미지
 
 
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<settings>
+		<setting name="logImpl" value="LOG4J" />
+		<setting name="jdbcTypeForNull" value="NULL" />
+	</settings>
+	<typeAliases>
+		<typeAlias type="com.cardproject.myapp.dto.DeckDTO" alias="deckvo" />
+		<typeAlias type="com.cardproject.myapp.dto.DeckSourceDTO" alias="decksourcevo" />
+		<typeAlias type="com.cardproject.myapp.dto.PokemonDTO" alias="pokemonvo" />
+		<typeAlias type="com.cardproject.myapp.dto.DigimonDTO" alias="digimonvo" />
+		<typeAlias type="com.cardproject.myapp.dto.YugiohDTO" alias="yugiohvo" />
+		<typeAlias type="com.cardproject.myapp.dto.OnepieceDTO" alias="onepiecevo" />
+	</typeAliases>
+</configuration>

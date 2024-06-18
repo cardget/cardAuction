@@ -9,9 +9,9 @@ import lombok.ToString;
 @Getter@Setter
 @ToString
 public class ReplieDTO {
-	private int replyId; //아이디
+	private int reply_id; //아이디
 	private String cmt; //내용
-	private Date createTime; //작성시간
-	private int commId; //원글아이디
-	private int userId; //답글아이디
+	private Date create_time; //작성시간
+	private int comm_id; //원글아이디
+	private int user_id; //답글아이디
 }

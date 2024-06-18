@@ -1,0 +1,44 @@
+package com.cardproject.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.cardproject.myapp.model.community.CommunityDAO;
+import com.cardproject.myapp.model.community.CommunityDAOInterface;
+import com.cardproject.myapp.model.community.CommunityService;
+
+@Controller
+@RequestMapping("/community")
+public class CommunityController {
+
+	@Autowired
+	CommunityService test;
+	
+	@GetMapping("/BoardDetail.do")
+	public void BoardDetail() {
+		System.out.println("BoardDetail page");
+		test.test(); // community mybatis test
+	}
+	
+	@GetMapping("/BoardInsert.do")
+	public void BoardInsert() {
+		System.out.println("BoardInsert page");
+	}
+	
+	@GetMapping("/BoardModify.do")
+	public void BoardModify() {
+		System.out.println("BoardModify page");
+	}
+	
+	@GetMapping("/InquiryDetail.do")
+	public void InquiryDetail() {
+		System.out.println("InquiryDetail page");
+	}
+	
+	@GetMapping("/InquiryInsert.do")
+	public void InquiryInsert() {
+		System.out.println("InquiryInsert page");
+	}
+}

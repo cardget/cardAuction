@@ -14,10 +14,10 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class BiddingDTO {
-	private int bidId; //입찰 아이디
+	private int bid_id; //입찰 아이디
 	private int price; //입찰 금액
-	private Timestamp bidTime; //입찰 시간
-	private String userId; //입찰자 아이디
-	private int itemId; //물품 아이디
+	private Timestamp bid_time; //입찰 시간
+	private String user_id; //입찰자 아이디
+	private int item_id; //물품 아이디
 	
 }

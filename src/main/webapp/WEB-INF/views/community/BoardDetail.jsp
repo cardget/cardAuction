@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,12 +9,14 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
 	rel="stylesheet">
-<link href="../css/BoardDetail.css?after" rel="stylesheet">
+<link href="../resources/css/BoardDetail.css?after" rel="stylesheet">
+<link rel="stylesheet" href="../css/main.css" />
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../js/BoardDetail.js" defer></script>
 </head>
 <body>
+	<header data-include-path="main-header.html"></header>
 	<div class="container custom-container mt-3">
 		<div class="right-aligned-button">
 			<input type="submit" class="btn btn-primary" value="목록">
@@ -27,7 +29,8 @@
 				<div
 					class="form-inline mb-3 mt-3 d-flex justify-content-between align-items-center">
 					<div class="d-flex align-items-center">
-						<img id="ImageLogo1" src="../Images/noprofile.png" alt="1"
+						<img id="ImageLogo1"
+							src="../resources/images/default/defaultprofile.png" alt="1"
 							class="me-2">
 						<h2 class="me-2 mb-0" id="writer">서연잇</h2>
 						<a href="" class="d-inline"> 서연잇님의 게시글 더보기></a>
@@ -63,8 +66,8 @@
 				</div>
 				<div class="card mb-3" id="comment-box">
 					<div class="card-body d-flex">
-						<img src="../Images/noprofile.png" alt="이미지 설명"
-							class="comment-image me-2">
+						<img src="../resources/images/default/defaultprofile.png"
+							alt="이미지 설명" class="comment-image me-2">
 						<div>
 							<h5 class="card-title">준성쓰</h5>
 							<p class="card-text">모르는데요</p>
@@ -74,8 +77,8 @@
 				</div>
 				<div class="card mb-3" id="comment-box">
 					<div class="card-body d-flex">
-						<img src="../Images/noprofile.png" alt="이미지 설명"
-							class="comment-image me-2">
+						<img src="../resources/images/default/defaultprofile.png"
+							alt="이미지 설명" class="comment-image me-2">
 						<div>
 							<h5 class="card-title">대장은 심은정</h5>
 							<p class="card-text">서포트 템으로 페퍼랑 암호마니아의 해독, 보스의 지령, 투로박사의
@@ -98,7 +101,8 @@
 							placeholder=" 댓글을 입력해주세요" maxlength="2000"
 							oninput="updateCharCount()">
 						<div class="right-aligned-button mt-2">
-							<input type="submit" class="btn btn-primary btn-primary-custom" value="등록">
+							<input type="submit" class="btn btn-primary btn-primary-custom"
+								value="등록">
 						</div>
 					</div>
 				</div>
