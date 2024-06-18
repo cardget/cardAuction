@@ -8,10 +8,10 @@ import lombok.ToString;
 @Setter
 @ToString
 public class DeckSourceDTO {
-	private int deckId;
-	private String pCard;
-	private String oCard;
-	private String dCard;
-	private String yCard;
-	private int isThumbnail;
+	private int deck_id;
+	private String p_card;
+	private String o_card;
+	private String d_card;
+	private String y_card;
+	private int is_thumbnail;
 }

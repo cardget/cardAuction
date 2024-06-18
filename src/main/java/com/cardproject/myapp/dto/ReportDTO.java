@@ -11,12 +11,12 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class ReportDTO {
-	private int reportId; //아이디
+	private int report_id; //아이디
 	private int reason; //신고사유
-	private int reportCat; //카테고리
-	private String userId; //신고자
-	private int itemId; //신고물품
-	private int commId; //신고글
-	private int replyId; //신고댓글
+	private int report_cat; //카테고리
+	private String user_id; //신고자
+	private int item_id; //신고물품
+	private int comm_id; //신고글
+	private int reply_id; //신고댓글
 	
 }

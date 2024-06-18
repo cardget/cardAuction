@@ -8,11 +8,11 @@ import lombok.ToString;
 @Setter
 @ToString
 public class YugiohDTO {
-	private String cardId;
-	private String cardName;
-	private String cardSort;
-	private String cardAttr;
-	private String monsterType;
-	private int cardLevel;
-	private String cardImage;
+	private String card_d;
+	private String card_name;
+	private String card_sort;
+	private String card_attr;
+	private String monster_type;
+	private int card_level;
+	private String card_image;
 }
