@@ -1,5 +1,6 @@
 package com.cardproject.myapp.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,23 @@ public class AuctionService {
 		aucDAO.test();
 	}
 	public int itemInsert(ItemDTO item) {
+		System.out.println(item);
+		//판매자 아이디 session에서 받아서 set
+		item.setUser_id("seoyeon");
+		//생성일을 현재 날짜,시간으로 set
+		java.util.Date now = new java.util.Date();
+	    item.setCreate_date(new Date(now.getTime()));
+	    
+	    // end_date
+	    String endDate=item.getEnd_date().replace("T", " ");
+	    item.setEnd_date(endDate);
+	    		
+        
+	    //카테고리 (나중에 if로 분류)
+		item.setCat(0);
+		item.setImage1("test.png");
+		
+		System.out.println(item);
 		return aucDAO.itemInsert(item);
 	}
 	public List<PokemonDTO> selectPCardName() {

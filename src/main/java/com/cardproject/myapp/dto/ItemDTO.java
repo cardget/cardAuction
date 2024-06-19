@@ -1,6 +1,6 @@
 package com.cardproject.myapp.dto;
 
-import java.sql.Date;
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,7 +23,7 @@ public class ItemDTO {
 	private int min_price; //유찰가
 	private String rarity; //희귀도
 	private Date create_date; //생성일
-	private Date end_date; //마감일
+	private String end_date; //마감일
 	private int trade_type; //선호거래방식
 	private int cat; //카테고리
 	private String image1; //이미지
