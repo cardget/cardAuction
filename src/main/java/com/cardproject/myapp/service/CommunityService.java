@@ -6,21 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cardproject.myapp.dao.CommunityDAO;
-import com.cardproject.myapp.dto.CommunityDTO;
+import com.cardproject.myapp.dto.BoardListDTO;
 
 @Service
 public class CommunityService {
-	
+
 	@Autowired
 	CommunityDAO communityDao;
-	
-	// 전체 일반조회
-	public List<CommunityDTO> selectAll(){
-		return communityDao.selectAll();
+
+	// 게시글 리스트 조회
+	public List<BoardListDTO> selectBoardList() {
+		return communityDao.selectBoardList();
 	}
 	
-	public void test() {
-		communityDao.test();
+	// 게시글 상세 조회
+	public BoardListDTO selectBoardByCommId(Integer commId) {
+		return communityDao.selectBoardByCommId(commId);
 	}
-	
+
 }

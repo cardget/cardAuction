@@ -27,5 +27,6 @@
 		<typeAlias type="com.cardproject.myapp.dto.TradeDTO" alias="tradevo"/>
 		<typeAlias type="com.cardproject.myapp.dto.UserDTO" alias="uservo"/>
 		<typeAlias type="com.cardproject.myapp.dto.CommunityDTO" alias="communityvo"/>
+		<typeAlias type="com.cardproject.myapp.dto.BoardListDTO" alias="boardlistvo"/>
 	</typeAliases>
 </configuration>

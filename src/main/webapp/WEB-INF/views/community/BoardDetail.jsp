@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,15 +17,16 @@
 <script src="../js/BoardDetail.js" defer></script>
 </head>
 <body>
+	<c:set var="path" value="${pageContext.servletContext.contextPath}"/>
 	<header data-include-path="main-header.html"></header>
 	<div class="container custom-container mt-3">
 		<div class="right-aligned-button">
-			<input type="submit" class="btn btn-primary" value="목록">
-		</div>
+                <input type="submit" class="btn btn-primary" value="목록" onClick="location.href='${path}/community/BoardSelect.do'">
+            </div>
 		<div class="card p-3 mt-3">
 			<form action="">
 				<div class="form-inline mb-3 mt-3">
-					<h1>[Q&amp;A] 이 덱 구성할 때 어떤 카드 필요할까요</h1>
+					<h1>[${board.tag}] ${board.title}</h1>
 				</div>
 				<div
 					class="form-inline mb-3 mt-3 d-flex justify-content-between align-items-center">
@@ -32,11 +34,11 @@
 						<img id="ImageLogo1"
 							src="../resources/images/default/defaultprofile.png" alt="1"
 							class="me-2">
-						<h2 class="me-2 mb-0" id="writer">서연잇</h2>
-						<a href="" class="d-inline"> 서연잇님의 게시글 더보기></a>
+						<h2 class="me-2 mb-0" id="writer">${board.nickname }</h2>
+						<a href="" class="d-inline">${board.nickname} 님의 게시글 더보기></a>
 					</div>
 					<div class="d-flex align-items-center">
-						<p class="metadata mb-0 me-3">작성일: 2024-05-28 15:44 | 조회 6</p>
+						<p class="metadata mb-0 me-3">${board.create_date} | 조회 ${board.views}</p>
 						<div class="dropdown">
 							<button class="btn dropdown-toggle" type="button"
 								id="dropdownMenuButton" data-bs-toggle="dropdown"
@@ -51,14 +53,14 @@
 				</div>
 				<hr>
 				<div class="mb-3 mt-3">
-					<p>이 덱을 구성할 때 어떤 카드를 사용하는 것이 좋을까요? 여러 가지 카드를 추천해 주시면 감사하겠습니다.</p>
+					<p>${board.ctt}</p>
 				</div>
 				<br>
 				<div class="d-flex mb-3 mt-3">
-					<a href=""><img id="ImageLogo" src="../Images/like.png"
+					<a href=""><img id="ImageLogo" src="../resources/icon/heart.png"
 						alt="like"></a>
-					<p class="mb-0 me-2">추천 0</p>
-					<img class="ImageLogo" src="../Images/comment.png" alt="comment">
+					<p class="mb-0 me-2">추천 ${board.recommend}</p>
+					<img class="ImageLogo" src="../resources/icon/chat.png" alt="comment">
 					<p class="mb-0">댓글 2</p>
 				</div>
 				<div class="form-inline mb-3 mt-3">

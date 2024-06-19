@@ -6,7 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.cardproject.myapp.dto.CommunityDTO;
+import com.cardproject.myapp.dto.BoardListDTO;
 
 @Repository
 public class CommunityDAO{
@@ -16,18 +16,16 @@ public class CommunityDAO{
 
 	String namespace = "com.cardproject.myapp.dao.";
 	
-	// 전체 일반조회 ( 페이징 처리 할 때 분할 예정 .. 1이면 1-10 / 2이면 2-10 / 총개수/10 해서만큼 페이지 버튼 생성 )
-	public List<CommunityDTO> selectAll(){
-		List<CommunityDTO> blist = sqlSession.selectList(namespace + "selectAll");
+	// 게시글 리스트 조회
+	public List<BoardListDTO> selectBoardList(){
+		List<BoardListDTO> blist = sqlSession.selectList(namespace + "selectBoardList");
 		return blist;
 	}
 	
-	// test
-	public void test() {
-		CommunityDTO var = sqlSession.selectOne(namespace + "selectTest");
-		System.out.println(var);
+	// 게시글 상세 조회
+	public BoardListDTO selectBoardByCommId(Integer commId) {
+		BoardListDTO board = sqlSession.selectOne(namespace + "selectByCommId", commId);
+		return board;
 	}
-
-	
 
 }
