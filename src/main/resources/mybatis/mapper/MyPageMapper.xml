@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace = "com.cardproject.myapp.dao">
+	<!-- 내정보 -->
+	<select id="selectUserById" parameterType = "string" resultType="uservo">
+		SELECT * FROM USERS WHERE USER_ID = #{userid}
+	</select>
+ 	
+ 	<update id="userUpdate" parameterType="uservo">
+		UPDATE USERS
+				SET PW = #{password},
+					NICKNAME = #{nickname},
+					EMAIL = #{email},
+					ZIP_CODE = #{zipcode},
+					ADDRESS = #{address},
+					ADDRESS_DETAIL = #{addressdetail}
+				WHERE USER_ID = #{userid}
+	</update>
+
+	<update id="userProfileUpdate" parameterType="map">
+	    UPDATE USERS
+	    SET PROFILE_IMAGES = #{imgpath}
+	    WHERE USER_ID = #{userid}
+	</update>
+
+	
+	<!-- 입찰내역 -->
+	<select id="selectAllBids" resultType="itemvo">
+		SELECT * FROM ITEMS WHERE ITEM_ID IN
+								(SELECT ITEM_ID FROM BIDDINGS WHERE USER_ID = #{userid})
+	</select>
+	
+	<!-- 판매내역 -->
+	<select id="selectAllSales" resultType="itemvo">
+		SELECT * FROM ITEMS WHERE ITEM_ID IN
+								(SELECT ITEM_ID FROM TRADES WHERE USER_ID = #{userid})
+	</select>
+	
+	<!-- 포인트 -->
+	<select id="selectPointByUser" resultType="pointvo">
+		SELECT * FROM POINTS WHERE USER_ID = #{userid}
+	</select>
+	
+	<!-- 관심목록 -->
+	<select id="selectAllLikes" resultType="itemvo">
+		SELECT * FROM ITEMS WHERE ITEM_ID IN
+								(SELECT ITEM_ID FROM LIKES WHERE USER_ID = #{userid})
+	</select>
+	
+	<!-- 배송조회 -->
+</mapper>

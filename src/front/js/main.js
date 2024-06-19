@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
           deckDiv.innerHTML = `
               <a href="deckListDetail.html">
                   <div class="deck-overlay-container">
-                      <img src="${path }/resources/images/default/deckSample.png">
+                      <img src="../image/deckSample.png">
                       <div class="overlay-text">
                           <div class="deck-number">${deck.number}</div>
                           <div class="deck-info">
