@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,13 +9,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Apple+SD+Gothic+Neo&display=swap">
     <title>카드득</title>
-    <link rel="stylesheet" href="../css/main.css" />
-    <link rel="icon" href="../icon/favicon.ico" type="image/x-icon">
+    <c:set var="path" value="${pageContext.servletContext.contextPath}"/>
+    <link rel="stylesheet" href="${path}/resources/css/main.css" />
+    <link rel="icon" href="${path}/resources/icon/favicon.ico" type="image/x-icon">
 </head>
 
 <body>
     <!--header-->
-    <header data-include-path="main-header.html"></header>
+    <%@ include file="/WEB-INF/views/main/mainHeader.jsp"%>
     <div class="main-container">
         <!--검색창 돌려쓰세요-->
         <div class="search-area">
@@ -29,32 +31,32 @@
             <div class="search-input-wrapper">
                 <input type="text" class="search-box" placeholder="검색어를 입력하세요.">
                 <button type="submit" class="search-btn">
-                    <img src="../icon/search.png" alt="search" class="search-icon">
+                    <img src="${path}/resources/icon/search.png" alt="search" class="search-icon">
                 </button>
             </div>
         </div>
         <!--메인선택-->
         <div class="row-content">
             <div class="cardType" value="1">
-                <a href="#"><img src="../image/pokemon.png"></a>
+                <a href="#"><img src="${path}/resources/image/pokemon.png"></a>
             </div>
             <div class="cardType" value="2">
-                <img src="../image/yugigo.png">
+                <img src="${path}/resources/image/yugigo.png">
             </div>
             <div class="cardType" value="3">
-                <img src="../image/digimon.png">
+                <img src="${path}/resources/image/digimon.png">
             </div>
             <div class="cardType" value="4">
-                <img src="../image/onepiece.png">
+                <img src="${path}/resources/image/onepiece.png">
             </div>
             <div class="cardType" value="5">
-                <img src="../image/sport.png">
+                <img src="${path}/resources/image/sport.png">
             </div>
         </div>
     </div>
     <!--footer-->
-    <footer data-include-path="footer.html"></footer>
-    <script type="module" src="../js/main.js"></script>
+    <%@ include file="/WEB-INF/views/main/footer.jsp"%>
+    <script type="module" src="${path}/resources/js/main.js"></script>
 </body>
 
 </html>

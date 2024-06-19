@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace = "com.cardproject.myapp.dao">
+	<select id="loginChk" parameterType="map" resultType="com.cardproject.myapp.dto.UserDTO">
+		SELECT USER_ID, PW 
+	    FROM USERS 
+	    WHERE USER_ID = #{userid} AND PW = #{password}
+	</select>
+</mapper>

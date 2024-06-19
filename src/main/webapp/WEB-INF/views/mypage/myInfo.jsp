@@ -20,15 +20,22 @@
 		    <div class="profile">
 		    	<div class="profile-image">
 			    	<div class="imageinfo">
-			    		<img src="${path}/resources/images/default/defaultprofile.png" alt="프로필이미지" height=150>
+			    		<c:choose>
+					        <c:when test="${empty user.profile_image}">
+					            <img src="${path}/resources/images/default/defaultprofile.png" alt="프로필이미지" height="150">
+					        </c:when>
+					        <c:otherwise>
+					            <img src="${user.profile_image}" alt="프로필이미지" height="150">
+					        </c:otherwise>
+					    </c:choose>
 						<a href="#">
 							<img src="${path}/resources/icon/editprofile.png" alt="프로필편집" height=50 class="editprofile">
 						</a>
 			    	</div>
 		    	</div>
 				<div class="textinfo">
-					<h2>유저스트액티베이티드</h2>
-					<h3 class="grayfont">mytrapcard</h3>
+					<h2>${user.nick_name}</h2>
+					<h3 class="grayfont">${user.user_id}</h3>
 				</div>
 			</div>
 		    <div class="sidemenu">
@@ -174,21 +181,28 @@
             <div class="content">
 	            <div class="basicInfo">
 					<h3 class="grayfont">ⓘ 기본정보</h3>
-					<img src="${path}/resources/images/default/defaultprofile.png" alt="프로필이미지">
-					<h2>유저스트액티베이티드</h2>
-					<p class="grayfont">mytrapcard</p>
+					<c:choose>
+						<c:when test="${empty user.profile_image}">
+							<img src="${path}/resources/images/default/defaultprofile.png" alt="프로필이미지" height="150">
+						</c:when>
+						<c:otherwise>
+							<img src="${user.profile_image}" alt="프로필이미지" height="150">
+						</c:otherwise>
+					</c:choose>
+					<h2>${user.nick_name}</h2>
+					<p class="grayfont">${user.user_id}</p>
 					<hr class="grayfont">
 					<img src="${path}/resources/icon/phone.png" alt="핸드폰아이콘" height=20 class="info">
-					<h3 class="info">010-1234-5678</h3>
+					<h3 class="info">${user.phone_number}</h3>
 					<br/>
 					<img src="${path}/resources/icon/mail.png" alt="이메일아이콘" height=20 class="info">
-					<h3 class="info">yugioh@trapcard.com</h3>
+					<h3 class="info">${user.email}</h3>
 					<hr class="grayfont">
 					<img src="${path}/resources/icon/location.png" alt="주소아이콘" class="icon" class="info">
-					<h3 class="info">사랑시 고백구 행복동</h3>
+					<h3 class="info">${user.address} ${user.address_detail}</h3>
 					<br/>
 					<img src="${path}/resources/icon/account.png" alt="계좌아이콘" height=20 class="info">
-					<h3 class="info">신한 17-76026363</h3>
+					<h3 class="info">${user.accnt}</h3>
 					<div class="button-section">
 						<button class="revision">수정</button>
 					</div>
@@ -202,7 +216,11 @@
 						</div>
 						<div class="slider-button">
 							<label class="switch">
-							<input class="alarm" type="checkbox">
+							<input class="alarm" type="checkbox" 
+								<c:if test="${user.phone_agreement == 1}">
+			                        checked="checked"
+			                    </c:if>
+							>
 							<span class="slider round"></span>
 						</label>
 						</div>
@@ -215,7 +233,11 @@
 						</div>
 						<div class="slider-button">
 							<label class="switch">
-							<input class="alarm" type="checkbox">
+							<input class="alarm" type="checkbox"
+								<c:if test="${user.email_agreement == 1}">
+			                        checked="checked"
+			                    </c:if>
+							>
 							<span class="slider round"></span>
 						</label>
 						</div>
