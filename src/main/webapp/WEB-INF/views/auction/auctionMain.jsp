@@ -1,210 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-
+<c:set var="path" value="${pageContext.servletContext.contextPath }" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Apple+SD+Gothic+Neo&display=swap">
 <title>카드득</title>
-<link rel="stylesheet" href="../../../resources/css/auctionmain.css" />
+<link rel="stylesheet" href="${path }/resources/css/auctionMain.css" />
 
 <script src="../static/js/select.js"></script>
 
 <style>
 
-.top-info-wrapper{
-	padding-top:10px;
-} 
-/*layer 구분선*/
-.hr1{
-	width:1380px;
-}
-/* 상단 이미지 */
-.imgbox {
-	width: 1920px;
-	height: 424px;
-}
-
-.topimage {
-	
-	width: 1920px;
-	height: 400px;
-	top: 0;
-	left: 0;
-	background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgb(83 83 83 / 32%) 63%,
-	 rgb(0 0 0 / 74%) 100%), url('../static/image/bgP1.png');
-		
-}
-/* 물품 판매 등록 버튼*/
-.auction-insert-wrapper {
-	position:relative;
-	margin-left:40px;
-}
-
-.insert-btn {
-	border-radius:30px;
-	border : 1px solid #007FFF;
-	background-color: #007FFF;
-	color: #fff;
-	margin-top:50px;
-	width: 120px;
-	height: 42px;
-	
-}
-/*상단 정보*/
-.top-info-wrapper{ 
-	width:1380px;
-	font-size: 16px;
-	font-family: 'Apple SD Gothic Neo', sans-serif;
-	color: #565A66;
-	
-}
-
-/* 경매 물품 리스트 칸 width-1380 */
-.auction-list-wrapper{
-	width:1380px;
-	display:flex;
-	flex-wrap: wrap;
-	margin: auto 270px;
-	
-}
-/*경매 리스트 item*/
-.auction-item {
-	border:1px solid #E1E6EC;
-	border-radius:10px;
-	width:316px;
-	margin:40px 60px;
-	
-	/*height:548px;*/
-}
-
-.card-image {
-	width:268px;
-	height:376px;
-	margin:12px 24px;
-	
-}
-.hr2{
-	width:315px;
-	border:1px solid #E1E6EC;
-	
-}
-.title-wrapper{
-	font-size:18px;
-	width:268px;
-	margin:0px 24px 12px 24px;
-	overflow: hidden;
-    word-wrap: break-word;
-}
-.date-wrapper{
-	margin:6px 24px;
-	font-size:14px;
-	color: #FE3838;
-	
-}
-
-.info-wrapper{
-	display: flex;
-	margin:6px 24px;
-	font-size:14px;
-
-}	
-.people{
-	color: #007FFF
-}
-.tmethod{
-	margin:0 0 0 100px ;
-	color: #CCC7C0;
-}
-
-/*item안에 버튼 (관심/상세)*/
-.button-wrapper{
-	display: flex;
-	justify-content: center;
-	position:relative;
-	margin-top:10px;
-	margin-bottom: 12px;
-	font-size:14px;
-
-}
-.auction-interest{
-	border-radius:5px;
-	border : 1px solid #007FFF;
-	color: #007FFF;
-	background-color:#fff;
-	width: 120px;
-	height: 34px;
-}
-
-.interest-icon{
-	width:14px;
-	height:14px;
-}
-
-.auction-detail-btn{
-	border-radius:5px;
-	border : 1px solid #007FFF;
-	background-color: #007FFF;
-	color: #fff;
-	width: 120px;
-	height: 34px;
-	margin-left: 20px;
-}
-/*서브카테고리*/
-.sub-category {
-    margin-top: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 16px;
-    /*padding: 0 270px;*/
-    margin-left: 270px;
-    margin-right: 270px;
-    gap: 80px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #E1E6EC;
-}
-.main-category-box {
-    display: flex;
-    gap: 100px;
-    margin: 0;
-    padding: 0;
-    font-weight: 1000;
-    font-size: 18px;
-}
-
-.sub-category-box {
-    display: flex;
-    gap: 100px;
-    margin: 0;
-    padding: 0;
-    font-weight: 500;
-    font-size: 16px;
-}
-
-.category-item,
-.main-category-item,
-.sub-category-item,
-.sort-item {
-    list-style: none;
-    text-align: center;
-}
-
-.category-item a,
-.main-category-item a,
-.sub-category-item a,
-.sort-item a {
-    text-decoration: none;
-    color: #2c2c2c;
-}
-
 </style>
 </head>
 <body>
-	<!--header-->
-    <header data-include-path="main-header.html"></header>
+<c:set var="path" value="${pageContext.servletContext.contextPath}" />
+<!--header-->
+    <%@ include file="/WEB-INF/views/main/header.jsp" %>
     
 <!-- Body -->
 <div class="topimage"></div>
@@ -223,7 +39,7 @@
             <div class="search-input-wrapper">
                 <input type="text" class="search-box" placeholder="검색어를 입력하세요.">
                 <button type="submit" class="search-btn">
-                    <img src="../static/icon/searchimg.png" alt="search" class="search-icon">
+                    <img src="${path}/resources/icon/search.png" alt="search" class="search-icon">
                 </button>
             </div>
             <div class="auction-insert-wrapper">
@@ -269,7 +85,7 @@
 	
 	<div class="auction-list-wrapper">
 		<div class="auction-item">
-			<img src="../static/image/피카츄 ex.png" alt="card image" class="card-image">
+			<img src="https://s3.ap-southeast-2.amazonaws.com/shinhan.cardauction/images/피카츄+ex.png" alt="card image" class="card-image">
 			<div class="title-wrapper">
 				글제목
 			</div>
@@ -283,12 +99,12 @@
 			</div>
 			<div class="button-wrapper">
 				<button class="auction-interest">
-					<img src="../static/icon/interest.png" alt="icon" class="interest-icon"> 관심물품</button>
+					<img src="${path}/resources/icon/interest.png" alt="icon" class="interest-icon"> 관심물품</button>
 				<button class="auction-detail-btn">상세보기</button>
 			</div>
 		</div>
 		<div class="auction-item">
-			<img src="../static/image/피카츄 ex.png" alt="card image" class="card-image">
+			<img src="${path}/resources/images/pokemon/피카츄 ex.png" alt="card image" class="card-image">
 			<div class="title-wrapper">
 				글제목
 			</div>
@@ -302,12 +118,12 @@
 			</div>
 			<div class="button-wrapper">
 				<button class="auction-interest">
-					<img src="../static/icon/interest.png" alt="icon" class="interest-icon"> 관심물품</button>
+					<img src="${path}/resources/icon/interest.png" alt="icon" class="interest-icon"> 관심물품</button>
 				<button class="auction-detail-btn">상세보기</button>
 			</div>
 		</div>
 		<div class="auction-item">
-			<img src="../static/image/피카츄 ex.png" alt="card image" class="card-image">
+			<img src="${path}/resources/images/pokemon/피카츄 ex.png" alt="card image" class="card-image">
 			<div class="title-wrapper">
 				글제목
 			</div>
@@ -321,12 +137,12 @@
 			</div>
 			<div class="button-wrapper">
 				<button class="auction-interest">
-					<img src="../static/icon/interest.png" alt="icon" class="interest-icon"> 관심물품</button>
+					<img src="${path}/resources/icon/interest.png" alt="icon" class="interest-icon"> 관심물품</button>
 				<button class="auction-detail-btn">상세보기</button>
 			</div>
 		</div>
 		<div class="auction-item">
-			<img src="../static/image/피카츄 ex.png" alt="card image" class="card-image">
+			<img src="${path}/resources/images/pokemon/피카츄 ex.png" alt="card image" class="card-image">
 			<div class="title-wrapper">
 				글제목
 			</div>
@@ -340,7 +156,7 @@
 			</div>
 			<div class="button-wrapper">
 				<button class="auction-interest">
-					<img src="../static/icon/interest.png" alt="icon" class="interest-icon"> 관심물품</button>
+					<img src="${path}/resources/icon/interest.png" alt="icon" class="interest-icon"> 관심물품</button>
 				<button class="auction-detail-btn">상세보기</button>
 			</div>
 		</div>
@@ -365,7 +181,7 @@
 
     <!--footer-->
     <footer data-include-path="footer.html"></footer>
-    <script type="module" src="../static/js/main.js"></script>
+    <script type="module" src="${path}/resources/js/main.js"></script>
         
 </body>
 </html>
