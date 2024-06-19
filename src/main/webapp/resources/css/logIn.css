@@ -1,0 +1,131 @@
+@charset "UTF-8";
+
+body {
+	display: flex;
+	justify-content: center;
+	font-family: 'Apple SD Gothic Neo', sans-serif;
+	align-items: center;
+	height: 100vh;
+	margin: 0;
+}
+
+.login-container {
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	text-align: center;
+	width: 320px;
+	padding-left: 650px;
+	padding-right: 650px;
+	padding-bottom : 250px;
+	
+}
+
+.logo-container {
+	text-align: left;
+	position: relative;
+	margin-bottom: 30px;
+}
+
+.logo-img {
+	width: 50px;
+	height: 50px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.logo-text {
+	color: #F8C501;
+	display: inline-block;
+	vertical-align: middle;
+	margin: 0;
+	position: relative;
+	top: 3px; /* 이미지와 조정된 세로 위치 맞춤 */
+	margin-left: 5px; /* 이미지와 텍스트 사이의 간격 조정 */
+}
+
+.form-group {
+	margin-bottom: 15px;
+	text-align: left;
+	position: relative;
+}
+
+.form-group label {
+	display: block;
+	margin-bottom: 5px;
+	font-weight: bold;
+}
+.input-with-icon {
+    position: relative;
+    margin-bottom: 15px;
+}
+.id-icon {
+	position: absolute;
+	left: 10px; /* 아이콘의 수평 위치 */
+    top: 55%; /* 아이콘의 수직 위치 */	
+}
+
+.pw-icon {
+	position: absolute;
+	left: 10px; /* 아이콘의 수평 위치 */
+    top: 20%; /* 아이콘의 수직 위치 */
+}
+
+.form-group input {
+	width: 100%;
+	padding: 15px;
+	font-size: 14px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+#username {
+	margin-top: 40px;
+}
+.input-with-icon input {
+    width: 100%;
+    padding: 15px 15px 15px 50px; /* 왼쪽 패딩을 추가하여 아이콘 공간 확보 */
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.remember-me {
+	font-size :10px;
+	text-align: left;
+	margin-bottom: 15px;
+}
+
+.login-btn {
+	width: 100%;
+	background-color: white;
+	color: #007FFF;
+	border: 1px solid #007FFF;
+	padding: 8px 16px;
+	border-radius: 4px;
+	cursor: pointer;
+	margin-right: 10px;
+	margin-bottom: 5px;
+}
+
+.login-btn:hover {
+	background-color: #007FFF;
+	color: white; /* hover 시 글자 색을 흰색으로 변경 */
+}
+
+.links {
+	margin-top: 10px;
+	font-size: 12px;
+}
+
+.links a {
+	margin-right: 10px;
+	color: #007bff;
+	text-decoration: none;
+}
+
+.links a:hover {
+	text-decoration: underline;
+}

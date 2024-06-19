@@ -206,7 +206,7 @@ document.addEventListener("DOMContentLoaded", function () {
   renderDecks(currentPage);
   renderPagination();
 });
- 
+
 
 /*카드 움직이기 
 var container = document.querySelector('.container')

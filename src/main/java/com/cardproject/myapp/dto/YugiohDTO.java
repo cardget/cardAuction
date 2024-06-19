@@ -8,7 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class YugiohDTO {
-	private String card_d;
+	private String card_id;
 	private String card_name;
 	private String card_sort;
 	private String card_attr;
