@@ -59,7 +59,7 @@
 					<div id="here"></div>
 				</div>
 				<div class="moreBtn">
-					<button type="button" id="loadMoreOBtn">더보기</button>
+					<button type="button" id="loadMoreDBtn">더보기</button>
 				</div>
 			</div>
 		</div>
