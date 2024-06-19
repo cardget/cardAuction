@@ -178,7 +178,7 @@
 </script>
 
 <!--footer-->
-<footer data-include-path="footer.html"></footer>
+<%@ include file="/WEB-INF/views/main/footer.jsp" %>
 <script type="module" src="${path}/resources/js/main.js"></script>
 
 </body>

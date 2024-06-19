@@ -47,7 +47,7 @@
 		    <label for="status3">중개</label>
 		    
 		    
-		    <select name="p_card_id" class="select-field-card">
+		    <select name="#_card_id" class="select-field-card">
 				<option>뮤ex</option>
 				<option>피카츄ex</option>
 				<option>날뛰는우레ex</option>
@@ -77,7 +77,7 @@
 		<!-- 나머지 input-->
 		<div class="input-container">
 			<label for="end_date">경매 종료 날짜 / 시간 </label>
-			<input type="datetime-local" id="end_date" class="input-field-date" >
+			<input type="datetime-local" id="end_date" class="input-field-date" name="end_date" >
 			
 		</div>
 		<div class="input-container">

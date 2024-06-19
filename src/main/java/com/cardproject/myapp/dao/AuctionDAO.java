@@ -21,7 +21,7 @@ public class AuctionDAO {
 	String namespace = "com.cardproject.myapp.dao.";
 	//테스트 : 모든 경매물품 조회
 	public void test() {
-		ItemDTO var = sqlSession.selectOne(namespace + "selectAllItems");
+		List<ItemDTO> var = sqlSession.selectList(namespace + "selectAllItems");
 		System.out.println(var);
 	}
 	//경매물품 등록 items Insert

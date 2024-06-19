@@ -258,6 +258,7 @@ select {
 .auction-insert-wrapper {
 	position:relative;
 	margin-left:40px;
+
 }
 
 .insert-btn {
@@ -268,8 +269,10 @@ select {
 	margin-top:50px;
 	width: 120px;
 	height: 42px;
+	cursor: pointer;
 	
 }
+
 /*상단 정보*/
 .top-info-wrapper{ 
 	width:1380px;

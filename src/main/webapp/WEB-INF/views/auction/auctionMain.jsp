@@ -11,8 +11,14 @@
 <title>카드득</title>
 <link rel="stylesheet" href="${path }/resources/css/auctionMain.css" />
 
-<script src="../static/js/select.js"></script>
 
+<script>
+        function redirectToAuctionInsert() {
+            // 서버 측에서 path 변수를 제공해야 합니다.
+            const path = '<%= request.getContextPath() %>'; 
+            window.location.href = `${path}/auction/auctionInsert.do`;
+        }
+    </script>
 <style>
 
 </style>
@@ -43,7 +49,7 @@
                 </button>
             </div>
             <div class="auction-insert-wrapper">
-            	<button onclick="" class="insert-btn">판매 물품 등록</button>
+            	<button onclick="redirectToAuctionInsert()" class="insert-btn" >판매 물품 등록</button>
             </div>
 	</div>
 	
@@ -82,27 +88,32 @@
                 </ul>
             </div>
         </div>
+        
 	
 	<div class="auction-list-wrapper">
+	<!-- <c:forEach var="item" items="${itemlist}"></c:forEach> -->
 		<div class="auction-item">
 			<img src="https://s3.ap-southeast-2.amazonaws.com/shinhan.cardauction/images/피카츄+ex.png" alt="card image" class="card-image">
 			<div class="title-wrapper">
-				글제목
+				글제목 ${item.item_name}
 			</div>
 			<hr class="hr2">
 			<div class="date-wrapper">
-				마감일: 2024-07-10
+				마감일: ${item.end_date}
 			</div>
 			<div class="info-wrapper">		
-				<span class="people">참여자 00명</span>
-				<span class="tmethod">선호거래방식</span>
+				<span class="people">참여자 명</span>
+				<span class="tmethod">선호거래방식 ${item.trade_type}</span>
 			</div>
 			<div class="button-wrapper">
-				<button class="auction-interest">
+				<button onclick="" class="auction-interest">
 					<img src="${path}/resources/icon/interest.png" alt="icon" class="interest-icon"> 관심물품</button>
-				<button class="auction-detail-btn">상세보기</button>
+				<button onclick="" class="auction-detail-btn">상세보기</button>
 			</div>
 		</div>
+		
+		
+		
 		<div class="auction-item">
 			<img src="${path}/resources/images/pokemon/피카츄 ex.png" alt="card image" class="card-image">
 			<div class="title-wrapper">
@@ -180,7 +191,7 @@
 </div>
 
     <!--footer-->
-    <footer data-include-path="footer.html"></footer>
+    <%@ include file="/WEB-INF/views/main/footer.jsp" %>
     <script type="module" src="${path}/resources/js/main.js"></script>
         
 </body>
