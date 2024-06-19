@@ -8,6 +8,11 @@
 	<select id="selectAllItems" resultType="itemvo">
 		select * from items
 	</select>
+	<!-- 경매물품 최신순 조회 -->
+	<!-- 경매물품 종료임박순 조회-->
+	<!-- 경매물품 참여자많은순 조회-->
+	<!-- 경매물품 참여자적은순 조회-->
+	
 	<!-- 경매물품등록 (items테이블에 Insert) -->
 	<insert id="itemInsert" parameterType="itemvo"> 
 		insert into items(item_id,user_id,item_name,cmt,status,min_price,rarity,create_date,end_date,trade_type,cat,image1,image2,image3,image4,image5,d_card_id,p_card_id,y_card_id,s_card_id,o_card_id)
