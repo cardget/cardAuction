@@ -14,24 +14,22 @@ import lombok.ToString;
 @ToString
 public class UserDTO {
 	
-	private String user_id; //¾ÆÀÌµğ
-	private String user_name; //ÀÌ¸§
-	private String pw; //ºñ¹Ğ¹øÈ£
-	private String nick_name; //´Ğ³×ÀÓ
-	private String email; //ÀÌ¸ŞÀÏ
-	private String phone_number; //ÀüÈ­¹øÈ£
-	private String zip_code; //¿ìÆí¹øÈ£
-	private String address; //µµ·Î¸íÁÖ¼Ò
-	private String address_detail; //»ó¼¼ÁÖ¼Ò
-	private String profile_image; //ÇÁ·ÎÇÊ»çÁø
-	private int pnt; //Æ÷ÀÎÆ®
-	private String accnt; //°èÁÂ
-	private int user_tier; //µî±Ş
-	private int recommend; //ÃßÃµ¼ö
-	private int is_admin; //°ü¸®ÀÚ
-	private int auction_alarm_phone; //°æ¸ÅÀüÈ­¾Ë¸²µ¿ÀÇ
-	private int auction_alarm_email; //°æ¸Å¸ŞÀÏ¾Ë¸²µ¿ÀÇ
-	private int comm_alarm_phone; //°Ô½ÃÆÇÀüÈ­¾Ë¸²µ¿ÀÇ
-	private int comm_alarm_email; //°Ô½ÃÆÇ¸ŞÀÏ¾Ë¸²µ¿ÀÇ
+	private String user_id; //ï¿½ï¿½ï¿½Ìµï¿½
+	private String user_name; //ï¿½Ì¸ï¿½
+	private String pw; //ï¿½ï¿½Ğ¹ï¿½È£
+	private String nick_name; //ï¿½Ğ³ï¿½ï¿½ï¿½
+	private String email; //ï¿½Ì¸ï¿½ï¿½ï¿½
+	private String phone_number; //ï¿½ï¿½È­ï¿½ï¿½È£
+	private String zip_code; //ï¿½ï¿½ï¿½ï¿½ï¿½È£
+	private String address; //ï¿½ï¿½ï¿½Î¸ï¿½ï¿½Ö¼ï¿½
+	private String address_detail; //ï¿½ï¿½ï¿½Ö¼ï¿½
+	private String profile_image; //ï¿½ï¿½ï¿½ï¿½ï¿½Ê»ï¿½ï¿½ï¿½
+	private int pnt; 
+	private String accnt; 
+	private int user_tier; 
+	private int recommend; 
+	private int is_admin; 
+	private int phone_agreement; 
+	private int email_agreement;
 	
 }
