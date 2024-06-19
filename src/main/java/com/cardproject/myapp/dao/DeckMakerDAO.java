@@ -1,8 +1,10 @@
 package com.cardproject.myapp.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -19,19 +21,31 @@ public class DeckMakerDAO {
     private SqlSession sqlSession;
     String namespace = "com.cardproject.myapp.dao";
 
-    public List<PokemonDTO> selectAllPCard() {
-        return sqlSession.selectList(namespace + ".selectAllPCard");
-    }
-    
-    public List<YugiohDTO> selectAllYCard() {
-        return sqlSession.selectList(namespace + ".selectAllYCard");
-    }
-
-    public List<DigimonDTO> selectAllDCard() {
-        return sqlSession.selectList(namespace + ".selectAllDCard");
+    public List<PokemonDTO> selectAllPCard(int startRow, int endRow) {
+        Map<String, Integer> params = new HashMap<>();
+        params.put("startRow", startRow);
+        params.put("endRow", endRow);
+        return sqlSession.selectList(namespace + ".selectAllPCard", params);
     }
 
-    public List<OnepieceDTO> selectAllOCard() {
-        return sqlSession.selectList(namespace + ".selectAllOCard");
+    public List<YugiohDTO> selectAllYCard(int startRow, int endRow) {
+        Map<String, Integer> params = new HashMap<>();
+        params.put("startRow", startRow);
+        params.put("endRow", endRow);
+        return sqlSession.selectList(namespace + ".selectAllYCard", params);
+    }
+
+    public List<DigimonDTO> selectAllDCard(int startRow, int endRow) {
+        Map<String, Integer> params = new HashMap<>();
+        params.put("startRow", startRow);
+        params.put("endRow", endRow);
+        return sqlSession.selectList(namespace + ".selectAllDCard", params);
+    }
+
+    public List<OnepieceDTO> selectAllOCard(int startRow, int endRow) {
+        Map<String, Integer> params = new HashMap<>();
+        params.put("startRow", startRow);
+        params.put("endRow", endRow);
+        return sqlSession.selectList(namespace + ".selectAllOCard", params);
     }
 }

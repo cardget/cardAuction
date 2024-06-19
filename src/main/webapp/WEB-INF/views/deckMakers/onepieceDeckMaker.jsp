@@ -11,7 +11,7 @@
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css2?family=Apple+SD+Gothic+Neo&display=swap">
 <title>카드득</title>
-<link rel="stylesheet" href="${path }/resources/css/main.css" />
+<link rel="stylesheet" href="${path}/resources/css/main.css" />
 <link rel="icon" href="${path }/resources/icon/favicon.ico"
 	type="image/x-icon">
 </head>
@@ -50,12 +50,16 @@
 				<div class="accordion-item">
 					<div class="accordion-header">원피스</div>
 					<div class="accordion-content active" id="deckList">
-					<c:forEach items = "${oCardList}" var ="card">
-						<div class="card-count">
-							<img src="${card.card_image}" class="listCard">
-						</div>
-					</c:forEach>
+						<c:forEach items="${oCardList}" var="card">
+							<div class="card-count">
+								<img src="${card.card_id}" class="listCard">
+							</div>
+						</c:forEach>
 					</div>
+					<div id="here"></div>
+				</div>
+				<div class="moreBtn">
+					<button type="button" id="loadMoreOBtn">더보기</button>
 				</div>
 			</div>
 		</div>
@@ -106,7 +110,7 @@
 	</div>
 	<!--footer-->
 	<%@ include file="/WEB-INF/views/main/footer.jsp"%>
-	<script type="module" src="../js/main.js"></script>
+	<script type="module" src="${path}/resources/js/main.js"></script>
 	<script>
 		function toggleFilterOptions() {
 			var filterOptions = document.getElementById('filter-options');
@@ -116,6 +120,29 @@
 				filterOptions.style.display = 'none';
 			}
 		}
+		
+		let currentPageO = 1;
+		document.getElementById('loadMoreOBtn').addEventListener('click', function() {
+
+		    currentPageO++;
+		    console.log(currentPageO);
+		    fetch("/myapp/deckMakers/loadMoreOCard.do?page=" + currentPageO)
+		        .then(response =>  
+		        response.json() 
+		        )
+		        .then(data => {
+		            console.log(data);
+		            const deckList = document.getElementById('here');
+		            data.forEach(card => {
+		                const cardDiv = document.createElement('div');
+		                cardDiv.classList.add('card-count');
+		                cardDiv.innerHTML += `
+		                    <img src="\${card.card_id}" class="listCard">
+		                `;
+		                deckList.appendChild(cardDiv);
+		            });
+		        });
+		});
 	</script>
 </body>
 

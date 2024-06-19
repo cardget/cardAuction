@@ -52,11 +52,14 @@
 					<div class="accordion-content active" id="deckList">
 						<c:forEach items="${pCardList}" var="card">
 							<div class="card-count">
-								<img src="${card.card_image}" class="listCard">
+								<img src="${card.card_id}" class="listCard">
 							</div>
 						</c:forEach>
 					</div>
-					<button id="loadMore">더보기</button>
+					<div id="here"></div>
+				</div>
+				<div class="moreBtn">
+					<button type="button" id="loadMoreOBtn">더보기</button>
 				</div>
 			</div>
 		</div>
@@ -107,7 +110,7 @@
 	</div>
 	<!--footer-->
 	<%@ include file="/WEB-INF/views/main/footer.jsp"%>
-	<script type="module" src="../js/main.js"></script>
+	<script type="module" src="${path}/resources/js/main.js"></script>
 	<script>
 		function toggleFilterOptions() {
 			var filterOptions = document.getElementById('filter-options');
@@ -117,6 +120,29 @@
 				filterOptions.style.display = 'none';
 			}
 		}
+
+		let currentPageP = 1;
+		document.getElementById('loadMorePBtn').addEventListener('click', function() {
+
+		    currentPageP++;
+		    console.log(currentPageP);
+		    fetch("/myapp/deckMakers/loadMorePCard.do?page=" + currentPageP)
+		        .then(response =>  
+		        response.json() 
+		        )
+		        .then(data => {
+		            console.log(data);
+		            const deckList = document.getElementById('here');
+		            data.forEach(card => {
+		                const cardDiv = document.createElement('div');
+		                cardDiv.classList.add('card-count');
+		                cardDiv.innerHTML += `
+		                    <img src="\${card.card_id}" class="listCard">
+		                `;
+		                deckList.appendChild(cardDiv);
+		            });
+		        });
+		});
 	</script>
 </body>
 

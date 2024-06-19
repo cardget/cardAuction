@@ -18,19 +18,31 @@ public class DeckMakerService {
     @Autowired
     private DeckMakerDAO deckMakerDAO;
 
-    public List<PokemonDTO> selectAllPCard() {
-        return deckMakerDAO.selectAllPCard();
+    public List<PokemonDTO> selectAllPCard(int page) {
+    	int itemsPerPage = 30;
+        int startRow = (page - 1) * itemsPerPage + 1;
+        int endRow = page * itemsPerPage;
+        return deckMakerDAO.selectAllPCard(startRow, endRow);
     }
     
-    public List<YugiohDTO> selectAllYCard() {
-        return deckMakerDAO.selectAllYCard();
+    public List<YugiohDTO> selectAllYCard(int page) {
+    	 int itemsPerPage = 30;
+         int startRow = (page - 1) * itemsPerPage + 1;
+         int endRow = page * itemsPerPage;
+         return deckMakerDAO.selectAllYCard(startRow, endRow);
     }
 
-    public List<DigimonDTO> selectAllDCard() {
-        return deckMakerDAO.selectAllDCard();
+    public List<DigimonDTO> selectAllDCard(int page) {
+    	int itemsPerPage = 30;
+        int startRow = (page - 1) * itemsPerPage + 1;
+        int endRow = page * itemsPerPage;
+        return deckMakerDAO.selectAllDCard(startRow, endRow);
     }
 
-    public List<OnepieceDTO> selectAllOCard() {
-        return deckMakerDAO.selectAllOCard();
+    public List<OnepieceDTO> selectAllOCard(int page) {
+            int itemsPerPage = 30;
+            int startRow = (page - 1) * itemsPerPage + 1;
+            int endRow = page * itemsPerPage;
+            return deckMakerDAO.selectAllOCard(startRow, endRow);
     }
 }
