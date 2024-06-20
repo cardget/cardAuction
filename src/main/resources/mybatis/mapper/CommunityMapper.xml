@@ -22,7 +22,8 @@
 	</select>
 
 	<!-- 게시글 상세 조회 -->
-	<select id="selectByCommId" parameterType="int" resultType="boardlistvo">
+	<select id="selectByCommId" parameterType="int"
+		resultType="boardlistvo">
 		SELECT
 		COMMUNITY.COMM_ID,
 		COMMUNITY.TAG,
@@ -35,14 +36,25 @@
 		FROM
 		COMMUNITY
 		JOIN
-		USERS ON COMMUNITY.USER_ID = USERS.USER_ID
+		USERS ON
+		COMMUNITY.USER_ID = USERS.USER_ID
 		WHERE COMM_ID=#{commid}
 	</select>
-	
+
+	<!-- 조회수 증가 -->
+	<update id="updateViews" parameterType="int">
+		UPDATE COMMUNITY
+		SET VIEWS = VIEWS + 1
+		WHERE COMM_ID = #{commid}
+	</update>
+
 	<!-- 게시글 등록 -->
 	<insert id="insertBoard" parameterType="communityvo">
-		INSERT INTO COMMUNITY(COMM_ID, TITLE, CAT, CTT, CREATE_DATE, USER_ID, RECOMMEND, VIEWS, TAG) 
-VALUES(COMM_SEQ.NEXTVAL, '제목입니다!!!!!!!!', 1, '내용입니다!!!!!!!!!!!!!', SYSDATE, 'guny1117', 0, 0,'자유');
+		INSERT INTO
+		COMMUNITY(COMM_ID, TITLE, CAT, CTT, CREATE_DATE, USER_ID, RECOMMEND,
+		VIEWS, TAG)
+		VALUES(COMM_SEQ.NEXTVAL, '제목입니다!!!!!!!!', 1, '내용입니다!!!!!!!!!!!!!', SYSDATE, 'guny1117', 0,
+		0,'자유');
 	</insert>
 </mapper>
 

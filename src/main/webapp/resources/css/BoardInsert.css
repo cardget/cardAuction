@@ -1,87 +1,101 @@
 .right-aligned-button {
-    display: flex;
-    justify-content: flex-end;
+	display: flex;
+	justify-content: flex-end;
 }
 
 .comment-textarea {
-    height: calc(100vh - 300px); 
-    border: #C7C8C9 2px solid;
-    width: 100%;
+	height: calc(100vh - 300px);
+	border: #C7C8C9 2px solid;
+	width: 100%;
 }
 
 .custom-container {
-    width: 60%; /* 가로 비율을 줄임 */
-    margin: 0 auto; /* 가운데 정렬 */
+	width: 60%; /* 媛�濡� 鍮꾩쑉�쓣 以꾩엫 */
+	margin: 0 auto; /* 媛��슫�뜲 �젙�젹 */
 }
 
 .form-inline {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px; /* 요소 사이의 간격 */
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px; /* �슂�냼 �궗�씠�쓽 媛꾧꺽 */
 }
 
 .form-inline .col {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+	display: flex;
+	align-items: center;
+	gap: 20px;
 }
 
 .form-inline .col:nth-child(1) {
-    margin-right: 20px;
+	margin-right: 20px;
 }
 
 .form-inline .form-control {
-    flex: 1;
-    min-width: 150px; 
-    border: none;
-    border-bottom: #C7C8C9 2px solid;
-    border-radius: 0;
-    color: #666666;
+	flex: 1;
+	min-width: 150px;
+	border: none;
+	border-bottom: #C7C8C9 2px solid;
+	border-radius: 0;
+	color: #666666;
 }
 
 .form-inline .form-control[type="file"] {
-    flex: 2; 
+	flex: 2;
 }
 
 .form-inline .form-control[type="date"] {
-    flex: 1; 
+	flex: 1;
 }
 
 .boardType {
-    border: none;
-    border-bottom: #C7C8C9 2px solid;
-    border-radius: 0;
-    max-width: 150px;
-    color: #666666;
+	border: none;
+	border-bottom: #C7C8C9 2px solid;
+	border-radius: 0;
+	max-width: 200px;
+	color: #666666;
+}
+
+.categoryType {
+	border: none;
+	border-bottom: #C7C8C9 2px solid;
+	border-radius: 0;
+	max-width: 200px;
+	color: #666666;
+}
+
+.category-select {
+	font-size: 16px; /* 글씨 크기 조정 */
+	padding: 5px; /* 패딩 추가 */
 }
 
 #ImageLogoContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-end;
 }
 
 #ImageLogoContainer img {
-    max-width: 100%;
-    max-height: 200px;
-    margin-top: 10px;
-    height: 40px;
+	max-width: 100%;
+	max-height: 200px;
+	margin-top: 10px;
+	height: 40px;
+	cursor: pointer;
 }
 
 #title {
-    min-width: 500px;
-    color: #666666;
+	min-width: 300px;
+	color: #666666;
 }
 
 .comment-div {
-    height: auto;
-    min-height: calc(100vh - 300px);
-    border: 2px solid #C7C8C9;
-    padding: .375rem .75rem;
-    border-radius: .25rem;
-    background-color: #fff;
-    white-space: pre-wrap;
-    overflow-wrap: break-word;
-    width: 100%;
-    box-sizing: border-box; /* 패딩과 보더를 포함한 너비 계산 */
+	height: auto;
+	min-height: calc(100vh - 300px);
+	border: 2px solid #C7C8C9;
+	padding: .375rem .75rem;
+	border-radius: .25rem;
+	background-color: #fff;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+	width: 100%;
+	box-sizing: border-box;
 }
