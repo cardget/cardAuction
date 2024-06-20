@@ -1,7 +1,5 @@
 package com.cardproject.myapp.dto;
 
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,23 +13,23 @@ import lombok.ToString;
 @ToString
 public class ItemDTO {
 	
-	private int item_id; //¹°Ç°¾ÆÀÌµğ
-	private String user_id; //ÆÇ¸ÅÀÚ¾ÆÀÌµğ
-	private String item_name; //ÀÌ¸§
-	private String cmt; //ÄÚ¸àÆ®
-	private int status; //¹°Ç°»óÅÂ 0:ÃÖ»ó / 1: »ó / 2: Áß / 3: ÇÏ
-	private int min_price; //À¯Âû°¡
-	private String rarity; //Èñ±Íµµ C<R<RR<RRR<HR<UR<SAR,CSRµî
-	private Date create_date; //»ı¼ºÀÏ
-	private String end_date; //¸¶°¨ÀÏ
-	private int trade_type; //¼±È£°Å·¡¹æ½Ä 0:»ó°ü¾øÀ½ / 1:Á÷°Å·¡ / 2:Áß°³
-	private int cat; //Ä«Å×°í¸® 0:Æ÷ÄÏ¸ó / 1:À¯Èñ¿Õ / 2:µğÁö¸ó / 3:¿øÇÇ½º / 4:½ºÆ÷Ã÷
-	private String image1; //ÀÌ¹ÌÁö
+	private int item_id; //ï¿½ï¿½Ç°ï¿½ï¿½ï¿½Ìµï¿½
+	private String user_id; //ï¿½Ç¸ï¿½ï¿½Ú¾ï¿½ï¿½Ìµï¿½
+	private String item_name; //ï¿½Ì¸ï¿½
+	private String cmt; //ï¿½Ú¸ï¿½Æ®
+	private int status; //ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ 0:ï¿½Ö»ï¿½ / 1: ï¿½ï¿½ / 2: ï¿½ï¿½ / 3: ï¿½ï¿½
+	private int min_price; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private String rarity; //ï¿½ï¿½Íµï¿½ C<R<RR<RRR<HR<UR<SAR,CSRï¿½ï¿½
+	private String create_date; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private String end_date; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private int trade_type; //ï¿½ï¿½È£ï¿½Å·ï¿½ï¿½ï¿½ï¿½ 0:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ / 1:ï¿½ï¿½ï¿½Å·ï¿½ / 2:ï¿½ß°ï¿½
+	private int cat; //Ä«ï¿½×°ï¿½ 0:ï¿½ï¿½ï¿½Ï¸ï¿½ / 1:ï¿½ï¿½ï¿½ï¿½ï¿½ / 2:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ / 3:ï¿½ï¿½ï¿½Ç½ï¿½ / 4:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private String image1; //ï¿½Ì¹ï¿½ï¿½ï¿½
 	private String image2;
 	private String image3;
 	private String image4;
 	private String image5;
-	private String d_card_id; //Ä«µå¾ÆÀÌµğ
+	private String d_card_id; //Ä«ï¿½ï¿½ï¿½ï¿½Ìµï¿½
 	private String p_card_id;
 	private String y_card_id;
 	private String s_card_id;

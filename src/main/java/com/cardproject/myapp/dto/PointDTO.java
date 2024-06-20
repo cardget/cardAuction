@@ -9,10 +9,11 @@ import lombok.ToString;
 @Getter@Setter
 @ToString
 public class PointDTO {
-	private int point_id; //Æ÷ÀÎÆ®¾ÆÀÌµð
-	private int amount; //¾ç
-	private Date create_date; //»ý¼ºÀÏ
-	private String cmt; //ÄÚ¸àÆ®
-	private int user_id; //¾ÆÀÌµð
-	private int is_add; //Àû¸³,»ç¿ë¿©ºÎ
+	private int point_id; //ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½Ìµï¿½
+	private int amount; //ï¿½ï¿½
+	private Date create_date; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private String cmt; //ï¿½Ú¸ï¿½Æ®
+	private String user_id; //ï¿½ï¿½ï¿½Ìµï¿½
+	private int is_add; //ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ë¿©ï¿½ï¿½
+	private int cat;
 }

@@ -1,7 +1,5 @@
 package com.cardproject.myapp.dto;
 
-
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,16 +12,16 @@ import lombok.ToString;
 @ToString
 public class UserDTO {
 	
-	private String user_id; //���̵�
-	private String user_name; //�̸�
-	private String pw; //��й�ȣ
-	private String nick_name; //�г���
-	private String email; //�̸���
-	private String phone_number; //��ȭ��ȣ
-	private String zip_code; //�����ȣ
-	private String address; //���θ��ּ�
-	private String address_detail; //���ּ�
-	private String profile_image; //�����ʻ���
+	private String user_id; 
+	private String user_name; 
+	private String pw; 
+	private String nickname; 
+	private String email;
+	private String phone_number;
+	private String zip_code;
+	private String address;
+	private String address_detail;
+	private String profile_image;
 	private int pnt; 
 	private String accnt; 
 	private int user_tier; 
