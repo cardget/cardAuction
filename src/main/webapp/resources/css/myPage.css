@@ -385,6 +385,16 @@ input:focus + .slider {
     color: #007FFF;
 }
 
+.status-section .status-button-winning {
+    padding: 10px 20px;
+    border: 1px solid #F8C501;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    background-color: #fff;
+    color: #F8C501;
+}
+
 .status-section .status-button-delivered {
     padding: 10px 20px;
     border: 1px solid #CCC7C0;
@@ -489,8 +499,13 @@ tbody tr {
 	margin-bottom: 3px;
 }
 
-.point-status {
+.point-status-blue {
 	color: #007FFF;
+	margin-right: 10px;
+}
+
+.point-status-red {
+	color: #FE3838;
 	margin-right: 10px;
 }
 

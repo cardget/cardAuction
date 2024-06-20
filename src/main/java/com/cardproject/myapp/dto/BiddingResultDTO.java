@@ -1,6 +1,5 @@
 package com.cardproject.myapp.dto;
 
-
 import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
@@ -13,11 +12,15 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class BiddingDTO {
-	private int bid_id; //���� ���̵�
-	private int price; //���� �ݾ�
-	private Timestamp bid_time; //���� �ð�
-	private String user_id; //������ ���̵�
-	private int item_id; //��ǰ ���̵�
+public class BiddingResultDTO {
+	private int bid_id;
+	private int price; 
+	private Timestamp bid_time;
+	private String user_id;
+	private int item_id;
+	private String end_date;
+	private String image1;
+	private String item_name;
 	private int is_win;
+	
 }

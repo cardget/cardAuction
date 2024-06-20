@@ -34,7 +34,7 @@
 			    	</div>
 		    	</div>
 				<div class="textinfo">
-					<h2>${user.nick_name}</h2>
+					<h2>${user.nickname}</h2>
 					<h3 class="grayfont">${user.user_id}</h3>
 				</div>
 			</div>
@@ -63,7 +63,7 @@
 			<hr class="grayfont">
 			<div class="bottom-div">
 				<div>
-					<a href="#" class="grayfont">로그아웃</a>
+					<a href="../auth/logout.do" class="grayfont">로그아웃</a>
 		    		<span class="grayfont"> | </span>
 					<a href="#" class="grayfont">회원탈퇴</a>
 				</div>
@@ -189,7 +189,7 @@
 							<img src="${user.profile_image}" alt="프로필이미지" height="150">
 						</c:otherwise>
 					</c:choose>
-					<h2>${user.nick_name}</h2>
+					<h2>${user.nickname}</h2>
 					<p class="grayfont">${user.user_id}</p>
 					<hr class="grayfont">
 					<img src="${path}/resources/icon/phone.png" alt="핸드폰아이콘" height=20 class="info">

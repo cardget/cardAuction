@@ -20,15 +20,22 @@
 		    <div class="profile">
 		    	<div class="profile-image">
 			    	<div class="imageinfo">
-			    		<img src="${path}/resources/images/default/defaultprofile.png" alt="프로필이미지" height=150>
+			    		<c:choose>
+					        <c:when test="${empty user.profile_image}">
+					            <img src="${path}/resources/images/default/defaultprofile.png" alt="프로필이미지" height="150">
+					        </c:when>
+					        <c:otherwise>
+					            <img src="${user.profile_image}" alt="프로필이미지" height="150">
+					        </c:otherwise>
+					    </c:choose>
 						<a href="#">
 							<img src="${path}/resources/icon/editprofile.png" alt="프로필편집" height=50 class="editprofile">
 						</a>
 			    	</div>
 		    	</div>
 				<div class="textinfo">
-					<h2>유저스트액티베이티드</h2>
-					<h3 class="grayfont">mytrapcard</h3>
+					<h2>${user.nickname}</h2>
+					<h3 class="grayfont">${user.user_id}</h3>
 				</div>
 			</div>
 		    <div class="sidemenu">
@@ -56,7 +63,7 @@
 			<hr class="grayfont">
 			<div class="bottom-div">
 				<div>
-					<a href="#" class="grayfont">로그아웃</a>
+					<a href="../auth/logout.do" class="grayfont">로그아웃</a>
 		    		<span class="grayfont"> | </span>
 					<a href="#" class="grayfont">회원탈퇴</a>
 				</div>

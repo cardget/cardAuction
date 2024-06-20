@@ -20,15 +20,22 @@
 		    <div class="profile">
 		    	<div class="profile-image">
 			    	<div class="imageinfo">
-			    		<img src="${path}/resources/images/default/defaultprofile.png" alt="프로필이미지" height=150>
+			    		<c:choose>
+					        <c:when test="${empty user.profile_image}">
+					            <img src="${path}/resources/images/default/defaultprofile.png" alt="프로필이미지" height="150">
+					        </c:when>
+					        <c:otherwise>
+					            <img src="${user.profile_image}" alt="프로필이미지" height="150">
+					        </c:otherwise>
+					    </c:choose>
 						<a href="#">
 							<img src="${path}/resources/icon/editprofile.png" alt="프로필편집" height=50 class="editprofile">
 						</a>
 			    	</div>
 		    	</div>
 				<div class="textinfo">
-					<h2>유저스트액티베이티드</h2>
-					<h3 class="grayfont">mytrapcard</h3>
+					<h2>${user.nickname}</h2>
+					<h3 class="grayfont">${user.user_id}</h3>
 				</div>
 			</div>
 		    <div class="sidemenu">
@@ -56,7 +63,7 @@
 			<hr class="grayfont">
 			<div class="bottom-div">
 				<div>
-					<a href="#" class="grayfont">로그아웃</a>
+					<a href="../auth/logout.do" class="grayfont">로그아웃</a>
 		    		<span class="grayfont"> | </span>
 					<a href="#" class="grayfont">회원탈퇴</a>
 				</div>
@@ -175,71 +182,50 @@
 				<div>
 					<div class="total-point">
 						<h2>카드득 포인트</h2>
-						<h1>100P</h1>
+						<h1>${total}P</h1>
 					</div>
 					<div class="point-per-month">
-						<div class="select-month">
-							<a href="#">
-								<img src="${path}/resources/icon/left.png" alt="왼쪽화살표">
-							</a>
-							<h2>5월</h2>
-							<a href="#">
-								<img src="${path}/resources/icon/right.png" alt="오른쪽화살표">
-							</a>
-						</div>
 						<div class="point-summary">
 							<div>
-								<h3>총 적립 포인트</h3>
-								<h3>140P</h3>
-							</div>
-							<div>
 								<p>구매 포인트</p>
-								<p>40P</p>
+								<p>${purchase}P</p>
 							</div>
 							<div>
-								<p>입찰 포인트</p>
-								<p>100P</p>	
+								<p>판매 포인트</p>
+								<p>${sales}P</p>	
 							</div>
 							<div>
 								<p>위로 포인트</p>
-								<p>0P</p>
+								<p>${sorry}P</p>
 							</div>
 							<div>
 								<p>이벤트 포인트</p>
-								<p>0P</p>
+								<p>${event}P</p>
+							</div>
+							<div>
+								<p>사용 포인트</p>
+								<p>${used}P</p>
 							</div>
 						</div>
 					</div>
 				</div>
-				<h2>적립내역</h2>
-				<div class="history-section">
-					<p class="grayfont">2024-05-30</p>
-					<div class="point-detail">
-						<h3 class="point-status">적립 +20</h3>
-						<p>[판매] [포켓몬] 1998 피카츄 일러스트레이터 카드 PSA 8 한정판</p>
+				<h2>포인트내역</h2>
+				<c:forEach var="points" items="${points}">
+					<div class="history-section">
+						<p class="grayfont">${points.create_date}</p>
+						<div class="point-detail">
+							<c:choose>
+							    <c:when test="${points.is_add == 1}">
+							        <h3 class="point-status-blue">적립 +${points.amount}</h3>
+							    </c:when>
+							    <c:when test="${points.is_add == -1}">
+							        <h3 class="point-status-red">사용 -${points.amount}</h3>
+							    </c:when>
+							</c:choose>
+							<p>${points.cmt}</p>
+						</div>
 					</div>
-				</div>
-				<div class="history-section">
-					<p class="grayfont">2024-05-30</p>
-					<div class="point-detail">
-						<h3 class="point-status">적립 +20</h3>
-						<p>[판매] [포켓몬] 1998 피카츄 일러스트레이터 카드 PSA 8 한정판</p>
-					</div>
-				</div>
-				<div class="history-section">
-					<p class="grayfont">2024-05-30</p>
-					<div class="point-detail">
-						<h3 class="point-status">적립 +20</h3>
-						<p>[판매] [포켓몬] 1998 피카츄 일러스트레이터 카드 PSA 8 한정판</p>
-					</div>
-				</div>
-				<div class="history-section">
-					<p class="grayfont">2024-05-30</p>
-					<div class="point-detail">
-						<h3 class="point-status">적립 +20</h3>
-						<p>[판매] [포켓몬] 1998 피카츄 일러스트레이터 카드 PSA 8 한정판</p>
-					</div>
-				</div>
+				</c:forEach>
 			</div>
 		</div>
     </div>
