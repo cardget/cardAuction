@@ -18,10 +18,15 @@ public class CommunityService {
 	public List<BoardListDTO> selectBoardList() {
 		return communityDao.selectBoardList();
 	}
-	
+
 	// 게시글 상세 조회
 	public BoardListDTO selectBoardByCommId(Integer commId) {
 		return communityDao.selectBoardByCommId(commId);
+	}
+
+	// 조회수 증가
+	public int updateViews(Integer commId) {
+		return communityDao.updateViews(commId);
 	}
 
 }
