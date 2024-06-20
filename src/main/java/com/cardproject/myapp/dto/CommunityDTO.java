@@ -18,4 +18,5 @@ public class CommunityDTO {
 	private int recommend; //추천수
 	private int views; //조회수
 	private int cat; //카테고리
+	private String image; // 이미지
 }

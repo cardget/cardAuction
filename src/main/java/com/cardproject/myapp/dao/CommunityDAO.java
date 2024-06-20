@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cardproject.myapp.dto.BoardListDTO;
+import com.cardproject.myapp.dto.CommunityDTO;
 
 @Repository
 public class CommunityDAO {
@@ -34,5 +35,8 @@ public class CommunityDAO {
 	}
 
 	// 게시글 등록
+	public int insertBoard(CommunityDTO board) {
+		return sqlSession.insert(namespace + "insertBoard", board);
+	}
 
 }

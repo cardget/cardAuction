@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.cardproject.myapp.dao.CommunityDAO;
 import com.cardproject.myapp.dto.BoardListDTO;
+import com.cardproject.myapp.dto.CommunityDTO;
 
 @Service
 public class CommunityService {
@@ -27,6 +28,11 @@ public class CommunityService {
 	// 조회수 증가
 	public int updateViews(Integer commId) {
 		return communityDao.updateViews(commId);
+	}
+
+	// 게시글 등록
+	public int insertBoard(CommunityDTO board) {
+		return communityDao.insertBoard(board);
 	}
 
 }
