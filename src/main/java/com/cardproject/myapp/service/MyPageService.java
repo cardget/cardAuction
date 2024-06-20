@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cardproject.myapp.dao.MyPageDAO;
+import com.cardproject.myapp.dto.BiddingResultDTO;
 import com.cardproject.myapp.dto.ItemDTO;
 import com.cardproject.myapp.dto.PointDTO;
 import com.cardproject.myapp.dto.UserDTO;
@@ -32,7 +33,7 @@ public class MyPageService {
  	}
 
  	// 입찰내역
- 	public List<ItemDTO> selectAllBids(String userid) {
+ 	public List<BiddingResultDTO> selectAllBids(String userid) {
  		return myPageDAO.selectAllBids(userid);
  	}
  	
@@ -44,6 +45,16 @@ public class MyPageService {
  	// 포인트
  	public List<PointDTO> selectPointByUser(String userid) {
  		return myPageDAO.selectPointByUser(userid);
+ 	}
+ 	
+ 	// 포인트 합계
+ 	public int selectTotalPointByUser(String userid) {
+ 		return myPageDAO.selectTotalPointByUser(userid);
+ 	}
+ 	
+ 	// 카테고리별 포인트 합계
+ 	public int selectTotalPointByCat(String userid, int cat) {
+ 		return myPageDAO.selectTotalPointByCat(userid, cat);
  	}
  	
  	// 관심목록

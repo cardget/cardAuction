@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cardproject.myapp.dto.BiddingResultDTO;
 import com.cardproject.myapp.dto.ItemDTO;
 import com.cardproject.myapp.dto.PointDTO;
 import com.cardproject.myapp.dto.UserDTO;
@@ -39,7 +40,7 @@ public class MyPageDAO{
 	}
 
 	// 입찰내역
-	public List<ItemDTO> selectAllBids(String userid) {
+	public List<BiddingResultDTO> selectAllBids(String userid) {
 		return sqlSession.selectList(namespace + ".selectAllBids", userid);
 	}
 	
@@ -51,6 +52,19 @@ public class MyPageDAO{
 	// 포인트
 	public List<PointDTO> selectPointByUser(String userid) {
 		return sqlSession.selectList(namespace + ".selectPointByUser", userid);
+	}
+	
+	// 포인트 합계
+	public int selectTotalPointByUser(String userid) {
+		return sqlSession.selectOne(namespace + ".selectTotalPointByUser", userid);
+	}
+	
+	// 카테고리별 포인트 합계
+	public int selectTotalPointByCat(String userid, int cat) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("userid", userid);
+		params.put("cat", cat);
+		return sqlSession.selectOne(namespace + ".selectTotalPointByCat", params);
 	}
 	
 	// 관심목록

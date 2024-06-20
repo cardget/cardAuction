@@ -20,15 +20,22 @@
 		    <div class="profile">
 		    	<div class="profile-image">
 			    	<div class="imageinfo">
-			    		<img src="${path}/resources/images/default/defaultprofile.png" alt="프로필이미지" height=150>
+			    		<c:choose>
+					        <c:when test="${empty user.profile_image}">
+					            <img src="${path}/resources/images/default/defaultprofile.png" alt="프로필이미지" height="150">
+					        </c:when>
+					        <c:otherwise>
+					            <img src="${user.profile_image}" alt="프로필이미지" height="150">
+					        </c:otherwise>
+					    </c:choose>
 						<a href="#">
 							<img src="${path}/resources/icon/editprofile.png" alt="프로필편집" height=50 class="editprofile">
 						</a>
 			    	</div>
 		    	</div>
 				<div class="textinfo">
-					<h2>유저스트액티베이티드</h2>
-					<h3 class="grayfont">mytrapcard</h3>
+					<h2>${user.nickname}</h2>
+					<h3 class="grayfont">${user.user_id}</h3>
 				</div>
 			</div>
 		    <div class="sidemenu">
@@ -56,7 +63,7 @@
 			<hr class="grayfont">
 			<div class="bottom-div">
 				<div>
-					<a href="#" class="grayfont">로그아웃</a>
+					<a href="../auth/logout.do" class="grayfont">로그아웃</a>
 		    		<span class="grayfont"> | </span>
 					<a href="#" class="grayfont">회원탈퇴</a>
 				</div>
@@ -176,34 +183,33 @@
 			        <h2>입찰내역</h2>
 			        <a href="#" class="grayfont">전체삭제</a>
 			    </div>
-				<div class="item-section">
-					<div class="image-section">
-					    <img src="${path}/resources/images/test/pikachucard.png" alt="Product Image">
+			    <c:forEach var="bids" items="${bids}">
+			    	<div class="item-section">
+						<div class="image-section">
+						    <img src="${bids.image1}" alt="Product Image">
+						</div>
+						<div class="info-section">
+						    <h3>${bids.item_name}</h3>
+						    <p>입찰시간: ${bids.bid_time}</p>
+						    <p class="enddate">종료일자: ${bids.end_date}</p>
+						    <a href="#" class="grayfont">상세보기 ></a>
+						</div>
+						<div class="status-section">
+						    <c:set var="endDate" value="${bids.end_date}" />
+			                <c:choose>
+			                    <c:when test="${now gt endDate && bids.is_win == 1}">
+			                        <button class="status-button-winning">낙찰!</button>
+			                    </c:when>
+			                    <c:when test="${now gt endDate && bids.is_win == 0}">
+			                        <button class="status-button-sold">종료됨</button>
+			                    </c:when>
+			                    <c:otherwise>
+			                        <button class="status-button-proceeding">진행중</button>
+			                    </c:otherwise>
+			                </c:choose>
+						</div>
 					</div>
-					<div class="info-section">
-					    <h3>[포켓몬] 1998 피카츄 일러스트레이터 카드 PSA 8 한정판</h3>
-					    <p>등록일자: 2024-05-28</p>
-					    <p class="enddate">종료일자: 2024-07-01</p>
-					    <a href="#" class="grayfont">상세보기 ></a>
-					</div>
-					<div class="status-section">
-					    <button class="status-button-proceeding">진행중</button>
-					</div>
-				</div>
-				<div class="item-section">
-					<div class="image-section">
-					    <img src="${path}/resources/images/test/pikachucard.png" alt="Product Image">
-					</div>
-					<div class="info-section">
-					    <h3>[포켓몬] 1998 피카츄 일러스트레이터 카드 PSA 8 한정판</h3>
-					    <p>등록일자: 2024-05-28</p>
-					    <p class="enddate">종료일자: 2024-06-01</p>
-					    <a href="#" class="grayfont">상세보기 ></a>
-					</div>
-					<div class="status-section">
-					    <button class="status-button-sold">종료됨</button>
-					</div>
-				</div>
+			    </c:forEach>
             </div>
 		</div>
 	</div>

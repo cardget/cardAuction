@@ -27,15 +27,49 @@
 
 	
 	<!-- 입찰내역 -->
-	<select id="selectAllBids" resultType="itemvo">
-		SELECT * FROM ITEMS WHERE ITEM_ID IN
-								(SELECT ITEM_ID FROM BIDDINGS WHERE USER_ID = #{userid})
+	<select id="selectAllBids" resultType="biddingresultvo">
+		SELECT 
+	        b.bid_id,
+	        b.price,
+	        b.bid_time,
+	        b.item_id,
+	        TO_CHAR(i.end_date, 'YYYY-MM-DD') AS END_DATE,
+	        i.image1,
+	        i.item_name,
+	        b.is_win
+	    FROM 
+	        biddings b
+	    INNER JOIN 
+	        items i
+	    ON 
+	        b.item_id = i.item_id
+		WHERE b.USER_ID = #{userid}
 	</select>
 	
 	<!-- 판매내역 -->
 	<select id="selectAllSales" resultType="itemvo">
-		SELECT * FROM ITEMS WHERE ITEM_ID IN
-								(SELECT ITEM_ID FROM TRADES WHERE USER_ID = #{userid})
+		SELECT ITEM_ID,    
+				USER_ID,    
+				ITEM_NAME,  
+				CMT,        
+				STATUS,     
+				MIN_PRICE,  
+				RARITY,     
+				TO_CHAR(create_date, 'YYYY-MM-DD') AS CREATE_DATE,
+    			TO_CHAR(end_date, 'YYYY-MM-DD') AS END_DATE,   
+				TRADE_TYPE, 
+				CAT,        
+				IMAGE1,     
+				IMAGE2,     
+				IMAGE3,     
+				IMAGE4,     
+				IMAGE5,     
+				D_CARD_ID,  
+				P_CARD_ID,  
+				Y_CARD_ID,  
+				S_CARD_ID,  
+				O_CARD_ID   
+		FROM ITEMS WHERE USER_ID = #{userid}
 	</select>
 	
 	<!-- 포인트 -->
@@ -43,9 +77,43 @@
 		SELECT * FROM POINTS WHERE USER_ID = #{userid}
 	</select>
 	
+	<!-- 포인트 합계 -->
+	<select id="selectTotalPointByUser" resultType="java.lang.Integer">
+		SELECT SUM(AMOUNT * IS_ADD) AS TOTAL
+	    FROM POINTS
+	    WHERE USER_ID = #{userid} 
+	</select>
+	
+	<select id="selectTotalPointByCat" resultType="java.lang.Integer">
+		SELECT SUM(AMOUNT) AS CATTOTAL
+		FROM POINTS
+		WHERE USER_ID = #{userid} AND CAT = #{cat}
+	</select>
+	
 	<!-- 관심목록 -->
 	<select id="selectAllLikes" resultType="itemvo">
-		SELECT * FROM ITEMS WHERE ITEM_ID IN
+		SELECT ITEM_ID,    
+				USER_ID,    
+				ITEM_NAME,  
+				CMT,        
+				STATUS,     
+				MIN_PRICE,  
+				RARITY,     
+				TO_CHAR(create_date, 'YYYY-MM-DD') AS CREATE_DATE,
+    			TO_CHAR(end_date, 'YYYY-MM-DD') AS END_DATE,   
+				TRADE_TYPE, 
+				CAT,        
+				IMAGE1,     
+				IMAGE2,     
+				IMAGE3,     
+				IMAGE4,     
+				IMAGE5,     
+				D_CARD_ID,  
+				P_CARD_ID,  
+				Y_CARD_ID,  
+				S_CARD_ID,  
+				O_CARD_ID   
+		FROM ITEMS WHERE ITEM_ID IN
 								(SELECT ITEM_ID FROM LIKES WHERE USER_ID = #{userid})
 	</select>
 	
