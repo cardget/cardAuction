@@ -4,16 +4,45 @@
 
 <mapper namespace="com.cardproject.myapp.dao">
 
-	<!-- 일반 전체조회 -->
-	<select id="selectAll" resultType="communityvo">
-		SELECT * FROM COMMUNITY
-	</select>
-	
-	<!-- test -->
-	<select id="selectTest" resultType="communityvo">
-		SELECT * FROM COMMUNITY WHERE
-		COMM_ID=1
+	<!-- 게시글 리스트 조회 -->
+	<select id="selectBoardList" resultType="boardlistvo">
+		SELECT
+		COMMUNITY.COMM_ID,
+		COMMUNITY.TAG,
+		COMMUNITY.TITLE,
+		USERS.NICKNAME,
+		COMMUNITY.CREATE_DATE,
+		COMMUNITY.RECOMMEND,
+		COMMUNITY.VIEWS
+		FROM
+		COMMUNITY
+		JOIN
+		USERS ON
+		COMMUNITY.USER_ID = USERS.USER_ID
 	</select>
 
+	<!-- 게시글 상세 조회 -->
+	<select id="selectByCommId" parameterType="int" resultType="boardlistvo">
+		SELECT
+		COMMUNITY.COMM_ID,
+		COMMUNITY.TAG,
+		COMMUNITY.TITLE,
+		USERS.NICKNAME,
+		COMMUNITY.CREATE_DATE,
+		COMMUNITY.RECOMMEND,
+		COMMUNITY.VIEWS,
+		COMMUNITY.CTT
+		FROM
+		COMMUNITY
+		JOIN
+		USERS ON COMMUNITY.USER_ID = USERS.USER_ID
+		WHERE COMM_ID=#{commid}
+	</select>
+	
+	<!-- 게시글 등록 -->
+	<insert id="insertBoard" parameterType="communityvo">
+		INSERT INTO COMMUNITY(COMM_ID, TITLE, CAT, CTT, CREATE_DATE, USER_ID, RECOMMEND, VIEWS, TAG) 
+VALUES(COMM_SEQ.NEXTVAL, '제목입니다!!!!!!!!', 1, '내용입니다!!!!!!!!!!!!!', SYSDATE, 'guny1117', 0, 0,'자유');
+	</insert>
 </mapper>
 
