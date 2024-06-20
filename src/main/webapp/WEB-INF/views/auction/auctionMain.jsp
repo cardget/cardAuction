@@ -12,11 +12,18 @@
 <link rel="stylesheet" href="${path }/resources/css/auctionMain.css" />
 
 
+
 <script>
         function redirectToAuctionInsert() {
             // 서버 측에서 path 변수를 제공해야 합니다.
             const path = '<%= request.getContextPath() %>'; 
             window.location.href = `${path}/auction/auctionInsert.do`;
+        }
+        function sortItems() {
+            const sortOption = document.querySelector('.sort-select').value;
+            const path = '<%= request.getContextPath() %>';
+            console.log("Selected sort option: " + sortOption);
+            window.location.href = `${path}/auction/auctionMain.do?sortOption=${sortOption}`;
         }
     </script>
 <style>
@@ -78,12 +85,14 @@
                     </li>
                     <li class="sort-item">
                         정렬기준 :
-                        <select class="sort-select">
-                            <option>최신순</option>
-                            <option>종료임박순</option>
-                            <option>참여자많은순</option>
-                            <option>참여자적은순</option>
-                        </select>
+                        <form action="${path}/auction/auctionMain.do" method="get" id="sortForm">
+    						<select class="sort-select" name="sortOption" onchange="document.getElementById('sortForm').submit()">
+						        <option value="recent" <c:if test="${selectedSortOption == 'recent'}">selected</c:if>>최신순</option>
+						        <option value="ending" <c:if test="${selectedSortOption == 'ending'}">selected</c:if>>종료임박순</option>
+						        <option value="mostpeople" <c:if test="${selectedSortOption == 'mostpeople'}">selected</c:if>>참여자많은순</option>
+						        <option value="leastpeople" <c:if test="${selectedSortOption == 'leastpeople'}">selected</c:if>>참여자적은순</option>
+						    </select>
+						</form>
                     </li>
                 </ul>
             </div>
@@ -91,19 +100,34 @@
         
 	
 	<div class="auction-list-wrapper">
-	<!-- <c:forEach var="item" items="${itemlist}"></c:forEach> -->
+	<c:forEach var="itemd" items="${itemDlist}">
 		<div class="auction-item">
 			<img src="https://s3.ap-southeast-2.amazonaws.com/shinhan.cardauction/images/피카츄+ex.png" alt="card image" class="card-image">
 			<div class="title-wrapper">
-				글제목 ${item.item_name}
+				${itemd.item_name}
 			</div>
 			<hr class="hr2">
 			<div class="date-wrapper">
-				마감일: ${item.end_date}
+				마감일: ${itemd.end_date}
 			</div>
 			<div class="info-wrapper">		
-				<span class="people">참여자 명</span>
-				<span class="tmethod">선호거래방식 ${item.trade_type}</span>
+				<span class="people">참여자 ${itemd.bid_count}명</span>
+				<span class="tmethod">선호 거래 방식 : 
+					    <c:choose>
+					        <c:when test="${itemd.trade_type == 1}">
+					            상관없음
+					        </c:when>
+					        <c:when test="${itemd.trade_type == 2}">
+					            직거래
+					        </c:when>
+					        <c:when test="${itemd.trade_type == 3}">
+					            중개
+					        </c:when>
+					        <c:otherwise>
+					            ${itemd.trade_type}
+					        </c:otherwise>
+					    </c:choose>
+				</span>
 			</div>
 			<div class="button-wrapper">
 				<button onclick="" class="auction-interest">
@@ -111,66 +135,9 @@
 				<button onclick="" class="auction-detail-btn">상세보기</button>
 			</div>
 		</div>
+		</c:forEach>
 		
 		
-		
-		<div class="auction-item">
-			<img src="${path}/resources/images/pokemon/피카츄 ex.png" alt="card image" class="card-image">
-			<div class="title-wrapper">
-				글제목
-			</div>
-			<hr class="hr2">
-			<div class="date-wrapper">
-				마감일: 2024-07-10
-			</div>
-			<div class="info-wrapper">		
-				<span class="people">참여자 00명</span>
-				<span class="tmethod">선호거래방식</span>
-			</div>
-			<div class="button-wrapper">
-				<button class="auction-interest">
-					<img src="${path}/resources/icon/interest.png" alt="icon" class="interest-icon"> 관심물품</button>
-				<button class="auction-detail-btn">상세보기</button>
-			</div>
-		</div>
-		<div class="auction-item">
-			<img src="${path}/resources/images/pokemon/피카츄 ex.png" alt="card image" class="card-image">
-			<div class="title-wrapper">
-				글제목
-			</div>
-			<hr class="hr2">
-			<div class="date-wrapper">
-				마감일: 2024-07-10
-			</div>
-			<div class="info-wrapper">		
-				<span class="people">참여자 00명</span>
-				<span class="tmethod">선호거래방식</span>
-			</div>
-			<div class="button-wrapper">
-				<button class="auction-interest">
-					<img src="${path}/resources/icon/interest.png" alt="icon" class="interest-icon"> 관심물품</button>
-				<button class="auction-detail-btn">상세보기</button>
-			</div>
-		</div>
-		<div class="auction-item">
-			<img src="${path}/resources/images/pokemon/피카츄 ex.png" alt="card image" class="card-image">
-			<div class="title-wrapper">
-				글제목
-			</div>
-			<hr class="hr2">
-			<div class="date-wrapper">
-				마감일: 2024-07-10
-			</div>
-			<div class="info-wrapper">		
-				<span class="people">참여자 00명</span>
-				<span class="tmethod">선호거래방식</span>
-			</div>
-			<div class="button-wrapper">
-				<button class="auction-interest">
-					<img src="${path}/resources/icon/interest.png" alt="icon" class="interest-icon"> 관심물품</button>
-				<button class="auction-detail-btn">상세보기</button>
-			</div>
-		</div>
 	</div>
 	<!--페이지네이션-->
         <div class="pagination">

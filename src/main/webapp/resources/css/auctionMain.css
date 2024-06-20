@@ -1,7 +1,5 @@
 @charset "UTF-8";
 
-@charset "UTF-8";
-@charset "UTF-8";
 
 
 body {
@@ -403,8 +401,12 @@ select {
     font-weight: 500;
     font-size: 16px;
 }
+.alarmIcon{
+	width:24px;
+	height:24px;
+}
 
-.category-item,
+
 .main-category-item,
 .sub-category-item,
 .sort-item {
@@ -412,7 +414,7 @@ select {
     text-align: center;
 }
 
-.category-item a,
+
 .main-category-item a,
 .sub-category-item a,
 .sort-item a {

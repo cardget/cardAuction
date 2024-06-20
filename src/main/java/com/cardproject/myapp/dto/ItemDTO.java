@@ -22,7 +22,7 @@ public class ItemDTO {
 	private int status; //물품상태 0:최상 / 1: 상 / 2: 중 / 3: 하
 	private int min_price; //유찰가
 	private String rarity; //희귀도 C<R<RR<RRR<HR<UR<SAR,CSR등
-	private Date create_date; //생성일
+	private String create_date; //생성일
 	private String end_date; //마감일
 	private int trade_type; //선호거래방식 0:상관없음 / 1:직거래 / 2:중개
 	private int cat; //카테고리 0:포켓몬 / 1:유희왕 / 2:디지몬 / 3:원피스 / 4:스포츠
