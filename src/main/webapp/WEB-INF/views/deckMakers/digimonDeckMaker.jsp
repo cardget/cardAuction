@@ -52,7 +52,7 @@
 					<div class="accordion-content active" id="deckList">
 						<c:forEach items="${dCardList}" var="card">
 							<div class="card-count">
-								<img src="${card.card_id}" class="listCard">
+								<img src="${card.card_id}" onclick="call('${card.card_id}')" class="listCard">
 							</div>
 						</c:forEach>
 					</div>

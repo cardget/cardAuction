@@ -601,6 +601,10 @@ select {
 	height: 40px;
 	margin-right: 10px;
 }
+.cardList{
+	width: 282px;
+    height: 40px;
+}
 
 .listCard, .card-count {
 	cursor: pointer;
@@ -612,6 +616,17 @@ select {
 .listCard {
 	width: 121px;
 	height: 174px;
+}
+.addCard{
+	max-width: 280px;
+	max-height: 50px;
+	cursor:pointer;
+	margin-bottom:2px;
+}
+.addCard img{	
+	max-width: 300px;
+	max-height:initial;	
+	margin-left:-10px;
 }
 
 /*코멘트박스*/

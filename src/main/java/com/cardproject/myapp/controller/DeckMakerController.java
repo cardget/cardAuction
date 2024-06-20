@@ -1,10 +1,15 @@
 package com.cardproject.myapp.controller;
 
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -35,11 +40,22 @@ public class DeckMakerController {
 	}
 	@Autowired
     private DeckMakerService deckMakerService;	
+	@Autowired
+	HttpSession session;
 	
 	//포켓몬카드
 	@RequestMapping("/pokemonDeckMaker.do")
     public void pokemonDeckMaker(Model model, @RequestParam(defaultValue = "1") int page) {
-        List<PokemonDTO> pCardList = deckMakerService.selectAllPCard(page);
+		String userid = null;
+		 
+		 if(session.getAttribute("userid") != null) {
+			 userid = (String) session.getAttribute("userid");
+			 System.out.println(userid);
+		 }else {
+			 System.out.println("null");
+		 }
+		
+		List<PokemonDTO> pCardList = deckMakerService.selectAllPCard(page);
         System.out.println(pCardList.size());
         model.addAttribute("pCardList", pCardList);
         model.addAttribute("currentPage", page);
@@ -94,4 +110,7 @@ public class DeckMakerController {
 		 System.out.println("olist:" + olist.size());
 	        return olist;
 	    }
+	 
+	 
+
 }

@@ -46,33 +46,11 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-const accordionImages = document.querySelectorAll('.listCard');
-const deckListImages = document.querySelectorAll('.deckList .makerCard');
 
-const selectedValues = new Set();
+//
 
-accordionImages.forEach(image => {
-  image.addEventListener('click', () => {
-      const selectedValue = image.getAttribute('value');
-      if (!selectedValues.has(selectedValue)) {
-          selectedValues.add(selectedValue);
-      }
-      updateDeckList();
-      updateBorder();
-  });
-});
 
-deckListImages.forEach(image => {
-  image.addEventListener('click', () => {
-      const selectedValue = image.getAttribute('value');
-      if (selectedValues.has(selectedValue)) {
-          selectedValues.delete(selectedValue);
-          updateDeckList();
-          updateBorder();
-      }
-  });
-});
-
+//
 function updateDeckList() {
   deckListImages.forEach(deckImage => {
       if (selectedValues.has(deckImage.getAttribute('value'))) {

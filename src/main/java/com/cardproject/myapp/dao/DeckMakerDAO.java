@@ -48,4 +48,5 @@ public class DeckMakerDAO {
         params.put("endRow", endRow);
         return sqlSession.selectList(namespace + ".selectAllOCard", params);
     }
+    
 }
