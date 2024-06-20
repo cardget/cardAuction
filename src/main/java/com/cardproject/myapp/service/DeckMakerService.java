@@ -19,7 +19,7 @@ public class DeckMakerService {
     private DeckMakerDAO deckMakerDAO;
 
     public List<PokemonDTO> selectAllPCard(int page) {
-    	int itemsPerPage = 30;
+    	int itemsPerPage = 1;
         int startRow = (page - 1) * itemsPerPage + 1;
         int endRow = page * itemsPerPage;
         return deckMakerDAO.selectAllPCard(startRow, endRow);
@@ -45,4 +45,5 @@ public class DeckMakerService {
             int endRow = page * itemsPerPage;
             return deckMakerDAO.selectAllOCard(startRow, endRow);
     }
+    
 }
