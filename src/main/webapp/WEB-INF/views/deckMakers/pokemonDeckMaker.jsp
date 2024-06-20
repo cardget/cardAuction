@@ -14,7 +14,8 @@
 <link rel="stylesheet" href="${path }/resources/css/main.css" />
 <link rel="icon" href="${path }/resources/icon/favicon.ico"
 	type="image/x-icon">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -53,7 +54,8 @@
 					<div class="accordion-content active" id="deckList">
 						<c:forEach items="${pCardList}" var="card">
 							<div class="card-count">
-								<img src="${card.card_id}" onclick="call('${card.card_id}')" class="listCard"">
+								<img src="${card.card_id}" onclick="call('${card.card_id}')"
+									class="listCard"">
 							</div>
 						</c:forEach>
 					</div>
@@ -66,18 +68,19 @@
 		</div>
 		<div class="deck-list">
 			<ul class="deckList" id="deckListContainer">
-				
+
 			</ul>
 		</div>
 	</div>
-	<div class="comment">
-		<textarea cols="28" rows="1" placeholder="덱 이름을 입력해주세요."
-			class="deckTitle"></textarea>
-		<textarea cols="50" rows="6" placeholder="코멘트를 적어주세요."
-			class="commentBox"></textarea>
-		<button type="submit" class="regist-btn"
-			onclick="location.href='deckListMain.do'">등록하기</button>
-	</div>
+	<form action="createDeck" method="post">
+		<div class="comment">
+			<input type="text" name="deckTitle" class="deckTitle" placeholder="덱이름">
+			<textarea name="commentBox" class="commentBox" placeholder="코멘트를 적어주세요" cols="50" rows="6"></textarea>
+			<input type="hidden" name="userId" value="${sessionScope.userId}">
+			<input type="hidden" name="p_card" id="p_card">
+			<button type="submit" class="regist-btn" onclick="location.href='deckListMain.do'">등록하기</button>
+		</div>
+	</form>
 	<!--footer-->
 	<%@ include file="/WEB-INF/views/main/footer.jsp"%>
 	<script type="module" src="${path}/resources/js/main.js"></script>
@@ -116,13 +119,14 @@
 		
 		function call(card_id){
 			document.querySelector("#deckListContainer").innerHTML += `
-                <li><img src="\${card_id}" class="addCard" onclick="removeCard(this)"></li>
+                <li class="addCard"><img src="\${card_id}" onclick="removeCard(this)"></li>
             `;
 		}
 		
 		function removeCard(element){
 			element.parentElement.remove();
 		}
+		
 		
 	</script>
 </body>

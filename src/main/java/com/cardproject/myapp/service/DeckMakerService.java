@@ -7,6 +7,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.cardproject.myapp.dao.DeckMakerDAO;
+import com.cardproject.myapp.dto.DeckDTO;
+import com.cardproject.myapp.dto.DeckSourceDTO;
 import com.cardproject.myapp.dto.DigimonDTO;
 import com.cardproject.myapp.dto.OnepieceDTO;
 import com.cardproject.myapp.dto.PokemonDTO;
@@ -19,7 +21,7 @@ public class DeckMakerService {
     private DeckMakerDAO deckMakerDAO;
 
     public List<PokemonDTO> selectAllPCard(int page) {
-    	int itemsPerPage = 1;
+    	int itemsPerPage = 30;
         int startRow = (page - 1) * itemsPerPage + 1;
         int endRow = page * itemsPerPage;
         return deckMakerDAO.selectAllPCard(startRow, endRow);
@@ -45,5 +47,6 @@ public class DeckMakerService {
             int endRow = page * itemsPerPage;
             return deckMakerDAO.selectAllOCard(startRow, endRow);
     }
+    
     
 }
