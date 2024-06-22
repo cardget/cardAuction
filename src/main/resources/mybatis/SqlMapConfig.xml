@@ -28,6 +28,7 @@
 		<typeAlias type="com.cardproject.myapp.dto.UserDTO" alias="uservo"/>
 		<typeAlias type="com.cardproject.myapp.dto.CommunityDTO" alias="communityvo"/>
 		<typeAlias type="com.cardproject.myapp.dto.BoardListDTO" alias="boardlistvo"/>
+		<typeAlias type="com.cardproject.myapp.dto.ItemDetailDTO" alias="itemdetailvo"/>
 		<typeAlias type="com.cardproject.myapp.dto.BiddingResultDTO" alias="biddingresultvo"/>
 	</typeAliases>
 </configuration>

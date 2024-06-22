@@ -25,6 +25,7 @@ public class ItemDTO {
 	private int trade_type; //��ȣ�ŷ���� 0:������� / 1:���ŷ� / 2:�߰�
 	private int cat; //ī�װ� 0:���ϸ� / 1:����� / 2:������ / 3:���ǽ� / 4:������
 	private String image1; //�̹���
+
 	private String image2;
 	private String image3;
 	private String image4;
