@@ -4,7 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.stereotype.Service;
 import com.cardproject.myapp.dao.DeckMakerDAO;
 import com.cardproject.myapp.dto.DeckDTO;
@@ -48,5 +52,16 @@ public class DeckMakerService {
             return deckMakerDAO.selectAllOCard(startRow, endRow);
     }
     
+    public void insertPDeck(DeckDTO deck) {
+    	ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+    	HttpSession session = attr.getRequest().getSession();
+    	String userid = (String) session.getAttribute("user_id");
+
+    	deck.setUser_id(userid);
+    	deck.setCat(1);
+    	deck.setRecommend(0);
+    	
+    	deckMakerDAO.insertPDeck(deck);
+    }
     
 }

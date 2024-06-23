@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cardproject.myapp.dto.DeckDTO;
 import com.cardproject.myapp.dto.DigimonDTO;
 import com.cardproject.myapp.dto.OnepieceDTO;
 import com.cardproject.myapp.dto.PokemonDTO;
@@ -47,6 +48,11 @@ public class DeckMakerDAO {
         params.put("startRow", startRow);
         params.put("endRow", endRow);
         return sqlSession.selectList(namespace + ".selectAllOCard", params);
+    }
+    
+    //덱정보 추가
+    public int insertPDeck(DeckDTO deck) {
+    	return sqlSession.insert(namespace + ".insertPDeck", deck);
     }
     
 }

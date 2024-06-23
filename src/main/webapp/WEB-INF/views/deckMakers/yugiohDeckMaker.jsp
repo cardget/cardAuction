@@ -52,7 +52,7 @@
 					<div class="accordion-content active" id="deckList">
 						<c:forEach items="${yCardList}" var="card">
 							<div class="card-count">
-								<img src="${card.card_id}" class="listCard">
+								<img src="${card.card_id}" onclick="call('${card.card_id}')" class="listCard">
 							</div>
 						</c:forEach>
 					</div>
@@ -64,39 +64,8 @@
 			</div>
 		</div>
 		<div class="deck-list">
-			<ul class="deckList">
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="1"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="2"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="3"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="4"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="5"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="6"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="7"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="8"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="9"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="10"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="11"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="12"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="13"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="14"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="15"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="16"></li>
+			<ul class="deckList" id="deckListContainer">
+
 			</ul>
 		</div>
 	</div>
@@ -137,12 +106,22 @@
 		                const cardDiv = document.createElement('div');
 		                cardDiv.classList.add('card-count');
 		                cardDiv.innerHTML += `
-		                    <img src="\${card.card_id}" class="listCard">
+		                    <img src="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}')">
 		                `;
 		                deckList.appendChild(cardDiv);
 		            });
 		        });
 		});
+		
+		function call(card_id){
+			document.querySelector("#deckListContainer").innerHTML += `
+                <li class="addCard"><img src="\${card_id}" onclick="removeCard(this)"></li>
+            `;
+		}
+		
+		function removeCard(element){
+			element.parentElement.remove();
+		}
 	</script>
 </body>
 
