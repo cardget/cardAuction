@@ -14,7 +14,7 @@
 </head>
 <body>
 	<div class="login-container">
-		<div class="logo">
+		<div class="logo-container">
 			<img src="${path}/resources/images/로고 이미지.png" alt="로고" class="logo-img">
 			<h1 class="logo-text">카드득</h1>
 		</div>
