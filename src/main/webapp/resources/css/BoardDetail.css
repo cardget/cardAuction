@@ -1,4 +1,4 @@
-.body{
+.DetailBoard{
 	font-family: 'Apple SD Gothic Neo', sans-serif;
 }
 
@@ -111,7 +111,7 @@ p {
     min-width: auto;
 }
 
-#ImageLogo {
+#RecommendUp {
     height: 30px;
     width: 30px; 
 }
@@ -174,4 +174,9 @@ p {
     border: 1px solid #007bff; /* Bootstrap primary blue */
     background-color: #ffffff; /* White background */
     color: #007bff; /* Bootstrap primary blue text */
+}
+
+#uploadedImg {
+	height:400px;
+	width:300px;
 }

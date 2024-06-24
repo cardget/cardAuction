@@ -19,7 +19,7 @@
 	<c:set var="path" value="${pageContext.servletContext.contextPath}" />
 	<div class="container custom-container mt-3">
 		<form action="${path}/community/BoardInsert.do" method="post"
-			id="myForm">
+			id="myForm" enctype="multipart/form-data">
 			<div class="right-aligned-button">
 				<input type="submit" class="btn btn-primary" value="글 작성">
 			</div>
@@ -32,8 +32,8 @@
 				<div class="col">
 					<select class="form-select boardType" id="tag" name="tag">
 						<option value="none" selected>태그 ( 필수 )</option>
-						<option value="free">자유</option>
-						<option value="auction">경매</option>
+						<option value="자유">자유</option>
+						<option value="경매">경매</option>
 					</select>
 				</div>
 				<div class="col">
@@ -47,8 +47,9 @@
 					</select>
 				</div>
 				<div class="col" id="ImageLogoContainer">
-					<input type="file" name="image" id="fileInput" style="display: none;">
-        <img class="ImageLogo" src="../resources/icon/image.png" alt="image" id="imageLogo">
+					<input type="file" name="imageFile" id="imageFile"
+						style="display: none;"> <img class="ImageLogo"
+						src="../resources/icon/image.png" alt="image" id="imageLogo">
 				</div>
 			</div>
 			<div class="mb-3 mt-3">
