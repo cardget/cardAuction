@@ -78,13 +78,13 @@
 	</select>
 	
 	<!-- 포인트 합계 -->
-	<select id="selectTotalPointByUser" resultType="java.lang.Integer">
+	<select id="selectTotalPointByUser" resultType="int">
 		SELECT SUM(AMOUNT * IS_ADD) AS TOTAL
 	    FROM POINTS
 	    WHERE USER_ID = #{userid} 
 	</select>
 	
-	<select id="selectTotalPointByCat" resultType="java.lang.Integer">
+	<select id="selectTotalPointByCat" resultType="int">
 		SELECT SUM(AMOUNT) AS CATTOTAL
 		FROM POINTS
 		WHERE USER_ID = #{userid} AND CAT = #{cat}
@@ -116,6 +116,30 @@
 		FROM ITEMS WHERE ITEM_ID IN
 								(SELECT ITEM_ID FROM LIKES WHERE USER_ID = #{userid})
 	</select>
+	<delete id="deleteAllLikes" parameterType="string">
+		DELETE * FROM LIKES WHERE USER_ID = #{userid}
+	</delete>
 	
 	<!-- 배송조회 -->
+	<select id="selectAllDeliveries" resultType="deliveryvo">
+		SELECT 
+	        d.DELIVERY_ID,
+	        d.TRADE_ID,
+	        t.ITEM_ID,
+	        TO_CHAR(t.CREATE_DATE, 'YYYY-MM-DD') AS CREATE_DATE,
+	        t.USER_ID,
+	        i.IMAGE1,
+	        i.ITEM_NAME
+	    FROM 
+	        DELIVERIES d
+	    INNER JOIN 
+	        TRADES t
+	    ON 
+	        d.TRADE_ID = t.TRADE_ID
+	    INNER JOIN
+	    	ITEMS i
+	    ON
+	    	t.ITEM_ID = i.ITEM_ID
+		WHERE t.USER_ID = #{userid}
+	</select>
 </mapper>

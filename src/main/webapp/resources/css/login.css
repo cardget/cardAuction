@@ -15,15 +15,15 @@ body {
 	padding: 20px;
 	border-radius: 8px;
 	text-align: center;
-	width: 320px;
-	padding-left: 650px;
-	padding-right: 650px;
+	width: 400px;
+/* 	padding-left: 650px;
+	padding-right: 650px; */
 	padding-bottom : 250px;
 	
 }
 
 .logo-container {
-	text-align: left;
+	text-align: center;
 	position: relative;
 	margin-bottom: 30px;
 }
@@ -63,7 +63,7 @@ body {
 .id-icon {
 	position: absolute;
 	left: 10px; /* 아이콘의 수평 위치 */
-    top: 55%; /* 아이콘의 수직 위치 */	
+    top: 8px; /* 아이콘의 수직 위치 */	
 }
 
 .pw-icon {

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cardproject.myapp.dto.BiddingResultDTO;
+import com.cardproject.myapp.dto.DeliveryDTO;
 import com.cardproject.myapp.dto.ItemDTO;
 import com.cardproject.myapp.dto.PointDTO;
 import com.cardproject.myapp.dto.UserDTO;
@@ -70,5 +71,15 @@ public class MyPageDAO{
 	// 관심목록
 	public List<ItemDTO> selectAllLikes(String userid) {
 		return sqlSession.selectList(namespace + ".selectAllLikes", userid);
+	}
+	
+	// 관심목록 삭제
+	public int deleteAllLikes(String userid) {
+		return sqlSession.delete(namespace + ".deleteAllLikes", userid);
+	}
+	
+	// 배송조회
+	public List<DeliveryDTO> selectAllDeliveries(String userid) {
+		return sqlSession.selectList(namespace + ".selectAllDeliveries", userid);
 	}
 }

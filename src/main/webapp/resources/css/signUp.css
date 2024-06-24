@@ -1,15 +1,13 @@
 @charset "UTF-8";
 
-/* form {
-	display: flex;
-	flex-direction: column;
-	margin-top: 20px;
+body {
+	/* display: flex; */
+	justify-content: center;
+	font-family: 'Apple SD Gothic Neo', sans-serif;
+	align-items: center;
+	height: 100vh;
+	margin: 0;	
 }
-
-div {
-	margin-top : 20px;
-	margin-bottom: 20px;
-} */
 .container {
 	padding-left: 270px;
 	padding-right: 270px;
@@ -19,6 +17,7 @@ div {
 	text-align: left;
 	position: relative;
 	margin-bottom: 30px;
+	margin-left: 270px;
 }
 
 .logo-img {
@@ -35,11 +34,18 @@ div {
 	margin: 0;
 	position: relative;
 	top: 3px; /* 이미지와 조정된 세로 위치 맞춤 */
-	margin-left: 5px; /* 이미지와 텍스트 사이의 간격 조정 */
+	margin-left: 6px; /* 이미지와 텍스트 사이의 간격 조정 */
+}
+
+.agree-container {
+    background-color: #F8F9FC;
+    padding: 20px;
+    border-radius: 5px;
+    height: 150px;
 }
 
 .custom-form {
-	max-width: 780px;
+	/* max-width: 780px; */
 	margin: 0 auto;
 	padding: 20px;
 	background-color: #fff;
@@ -47,8 +53,9 @@ div {
 
 .input-label {
 	color: gray;
-	width: 120px;
-	margin-right: 10px;
+	width: 150px;
+	margin-right: 20px;
+	margin-left: 20px;
 }
 
 .form-group {
@@ -74,6 +81,7 @@ div {
 	border-radius: 4px;
 	box-sizing: border-box;
 	margin-bottom: 5px;
+	background-color: #F8F9FC;
 }
 
 .address-container {
@@ -86,7 +94,7 @@ div {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	margin-left: 130px;
+	margin-left: 190px;
 }
 
 .address-group {
@@ -102,6 +110,7 @@ div {
 	border-radius: 4px;
 	margin-right: 10px;
 	margin-bottom: 5px;
+	background-color: #F8F9FC;
 }
 
 .check-button {
@@ -155,18 +164,44 @@ div {
 .noti-info-text {
 	font-size: 12px;
 	color: gray;
-	margin-left: 130px;
+	margin-left: 190px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px; 
+    margin-top: 35px; 
 }
 
 .submit-button {
-	background-color: #007FFF;
-	color: white;
-	padding: 10px 20px;
-	border: none;
-	border-radius: 4px;
-	cursor: pointer;
+    background-color: #007FFF;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    margin-bottom: 200px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 140px;
+    height: 60px;
 }
 
 .submit-button:hover {
-	background-color: #005C9A;
+    background-color: white;
+    color: #007FFF;
+    border: 1px solid #007FFF;
+}
+
+.disabled-button {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
+.disabled-button:hover {
+    background-color: #ccc;
+    color: #666;
+    border: none;
 }
