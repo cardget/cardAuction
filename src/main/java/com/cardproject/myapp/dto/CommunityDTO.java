@@ -9,14 +9,14 @@ import lombok.ToString;
 @Getter@Setter
 @ToString
 public class CommunityDTO {
-	private int comm_id; //¾ÆÀÌµð
-	private String title; //Á¦¸ñ
-	private String tag; //ÅÂ±×
-	private String ctt; //³»¿ë
-	private Date create_date; //ÀÛ¼ºÀÏ
-	private String user_id; //È¸¿ø¾ÆÀÌµð
-	private int recommend; //ÃßÃµ¼ö
-	private int views; //Á¶È¸¼ö
-	private int cat; //Ä«Å×°í¸®
-	private String image; // ÀÌ¹ÌÁö
+	private int comm_id; //ï¿½ï¿½ï¿½Ìµï¿½
+	private String title; //ï¿½ï¿½ï¿½ï¿½
+	private int cat;
+	private String tag; //ï¿½Â±ï¿½
+	private String ctt; //ï¿½ï¿½ï¿½ï¿½
+	private Date create_date; //ï¿½Û¼ï¿½ï¿½ï¿½
+	private String user_id; //È¸ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½
+	private int recommend; //ï¿½ï¿½Ãµï¿½ï¿½
+	private int views; //ï¿½ï¿½È¸ï¿½ï¿½
+	private String image; // ï¿½Ì¹ï¿½ï¿½ï¿½
 }
