@@ -29,5 +29,5 @@ public class UserDTO {
 	private int is_admin; 
 	private int phone_agreement; 
 	private int email_agreement;
-	
+	private String bank;
 }

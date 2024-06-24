@@ -30,5 +30,6 @@
 		<typeAlias type="com.cardproject.myapp.dto.BoardListDTO" alias="boardlistvo"/>
 		<typeAlias type="com.cardproject.myapp.dto.ItemDetailDTO" alias="itemdetailvo"/>
 		<typeAlias type="com.cardproject.myapp.dto.BiddingResultDTO" alias="biddingresultvo"/>
+		<typeAlias type="com.cardproject.myapp.dto.DeliveryDTO" alias="deliveryvo"/>
 	</typeAliases>
 </configuration>

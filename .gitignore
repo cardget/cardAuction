@@ -12,7 +12,7 @@ target/
 .springBeans
 
 # security
-#*.properties
+*.properties
 
 # file
 # *.jpg
