@@ -17,26 +17,40 @@ public class CommunityDAO {
 
 	String namespace = "com.cardproject.myapp.dao.";
 
-	// °Ô½Ã±Û ¸®½ºÆ® Á¶È¸
+	// ê²Œì‹œê¸€ ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ
 	public List<BoardListDTO> selectBoardList() {
 		List<BoardListDTO> blist = sqlSession.selectList(namespace + "selectBoardList");
 		return blist;
 	}
 
-	// °Ô½Ã±Û »ó¼¼ Á¶È¸
+	// ê²Œì‹œê¸€ ìƒì„¸ ì¡°íšŒ
 	public BoardListDTO selectBoardByCommId(Integer commId) {
 		BoardListDTO board = sqlSession.selectOne(namespace + "selectByCommId", commId);
 		return board;
 	}
 
-	// Á¶È¸¼ö Áõ°¡
+	// ê²Œì‹œê¸€ ë“±ë¡ í˜ì´ì§€ ë¡œë“œ
 	public int updateViews(Integer commId) {
 		return sqlSession.update(namespace + "updateViews", commId);
 	}
 
-	// °Ô½Ã±Û µî·Ï
+	// ê²Œì‹œê¸€ ë“±ë¡
 	public int insertBoard(CommunityDTO board) {
 		return sqlSession.insert(namespace + "insertBoard", board);
 	}
 
+	// ê²Œì‹œê¸€ ìˆ˜ì •
+	public int modifyBoard(CommunityDTO board) {
+		return sqlSession.update(namespace + "updateBoard", board);
+	}
+
+	// ì¶”ì²œ
+	public int incrementRecommend(Integer commId) {
+		return sqlSession.update(namespace + "incrementRecommend", commId);
+	}
+
+	// ì¶”ì²œ ìˆ˜ ì¡°íšŒ
+	public int getRecommendCount(Integer commId) {
+		return sqlSession.selectOne(namespace + "getRecommendCount", commId);
+	}
 }

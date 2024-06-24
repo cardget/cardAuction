@@ -15,24 +15,39 @@ public class CommunityService {
 	@Autowired
 	CommunityDAO communityDao;
 
-	// °Ô½Ã±Û ¸®½ºÆ® Á¶È¸
+	// ê²Œì‹œê¸€ ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ
 	public List<BoardListDTO> selectBoardList() {
 		return communityDao.selectBoardList();
 	}
 
-	// °Ô½Ã±Û »ó¼¼ Á¶È¸
+	// ê²Œì‹œê¸€ ìƒì„¸ ì¡°íšŒ
 	public BoardListDTO selectBoardByCommId(Integer commId) {
 		return communityDao.selectBoardByCommId(commId);
 	}
 
-	// Á¶È¸¼ö Áõ°¡
+	// ê²Œì‹œê¸€ ë“±ë¡ í˜ì´ì§€ ë¡œë“œ
 	public int updateViews(Integer commId) {
 		return communityDao.updateViews(commId);
 	}
 
-	// °Ô½Ã±Û µî·Ï
+	// ê²Œì‹œê¸€ ë“±ë¡
 	public int insertBoard(CommunityDTO board) {
 		return communityDao.insertBoard(board);
+	}
+	
+	// ê²Œì‹œê¸€ ìˆ˜ì •
+	public int modifyBoard(CommunityDTO board) {
+		return communityDao.modifyBoard(board);
+	}
+	
+	// ì¶”ì²œ
+	public int incrementRecommend(Integer commId) {
+		return communityDao.incrementRecommend(commId);
+	}
+	
+	// ì¶”ì²œ ìˆ˜ ì¡°íšŒ
+	public int getRecommendCount(Integer commId) {
+		return communityDao.getRecommendCount(commId);
 	}
 
 }

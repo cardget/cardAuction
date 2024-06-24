@@ -1,7 +1,7 @@
 window.onload = function() {
             // 이미지 클릭 시 파일 입력 필드 클릭
             document.getElementById('imageLogo').addEventListener('click', function() {
-                document.getElementById('fileInput').click();
+                document.getElementById('imageFile').click();
             });
 
             // 폼 제출 시 숨겨진 입력 필드 추가

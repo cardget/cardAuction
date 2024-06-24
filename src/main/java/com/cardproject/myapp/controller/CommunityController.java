@@ -1,13 +1,23 @@
 package com.cardproject.myapp.controller;
 
+import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.cardproject.myapp.dto.BoardListDTO;
 import com.cardproject.myapp.dto.CommunityDTO;
@@ -20,55 +30,110 @@ public class CommunityController {
 	@Autowired
 	CommunityService cService;
 
-	// °Ô½Ã±Û ¸®½ºÆ® Á¶È¸
+	// ê²Œì‹œê¸€ ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ
 	@GetMapping("/BoardSelect.do")
 	public String BoardSelect(Model model) {
-		System.out.println("/community/BoardSelect.do get¿äÃ»");
+		System.out.println("/community/BoardSelect.do get ìš”ì²­");
 
 		List<BoardListDTO> blist = cService.selectBoardList();
 		model.addAttribute("blist", blist);
 		return "community/BoardSelect";
 	}
 
-	// °Ô½Ã±Û »ó¼¼ Á¶È¸
+	// ê²Œì‹œê¸€ ìƒì„¸ ì¡°íšŒ
 	@GetMapping("/BoardDetail.do")
 	public String BoardDetail(Integer commId, Model model) {
-		System.out.println("/community/BoardDetail.do get¿äÃ»");
+		System.out.println("/community/BoardDetail.do get ìš”ì²­");
 
-		cService.updateViews(commId); // Á¶È¸¼ö Áõ°¡
+		// s3 ì‚¬ìš©í•´ì•¼ ì´ë¯¸ì§€ ê³µë™ìœ¼ë¡œ ë³¼ ìˆ˜ ìˆì›€ ..
+		cService.updateViews(commId); // ì¡°íšŒìˆ˜ ê¸°ëŠ¥
 		model.addAttribute("board", cService.selectBoardByCommId(commId));
 		return "community/BoardDetail";
 	}
 
-	// °Ô½Ã±Û µî·Ï ÆäÀÌÁö ·Îµå
+	// ê²Œì‹œê¸€ ë“±ë¡ í˜ì´ì§€ ë¡œë“œ
 	@GetMapping("/BoardInsert.do")
-	public void BoardInsertPage() {
-		System.out.println("/community/BoardDetail.do get¿äÃ»");
+	public void BoardInsert() {
+		System.out.println("/community/BoardInsert.do get ìš”ì²­");
 	}
 
-	// °Ô½Ã±Û µî·Ï
+	// ê²Œì‹œê¸€ ë“±ë¡
 	@PostMapping("/BoardInsert.do")
-	public String BoardInsert(CommunityDTO board) {
-		board.setUser_id("guny1117"); // ·Î±×ÀÎ ±â´É ÀÌÈÄ¿¡ sessionÀ¸·Î ±³Ã¼
+	public String BoardInsert(CommunityDTO board, MultipartHttpServletRequest file, HttpSession session) {
+		board.setUser_id("guny1117"); // ë¡œê·¸ì¸ ê¸°ëŠ¥ ì—°ë™ í›„ sessionìœ¼ë¡œ êµì²´
 
-		/*
-		 * if (!image.isEmpty()) { try { byte[] bytes = image.getBytes(); // ÆÄÀÏÀ» Æ¯Á¤ °æ·Î¿¡
-		 * ÀúÀå String uploadDir = "src/main/webapp/resources/images/test"; File
-		 * uploadDirFile = new File(uploadDir); if (!uploadDirFile.exists()) {
-		 * uploadDirFile.mkdirs(); } File uploadFile = new File(uploadDir,
-		 * image.getOriginalFilename()); try (BufferedOutputStream stream = new
-		 * BufferedOutputStream(new FileOutputStream(uploadFile))) {
-		 * stream.write(bytes); } } catch (Exception e) { e.printStackTrace(); } }
-		 */
+		// ì´ë¯¸ì§€ ë“±ë¡
+		HttpServletRequest request = (HttpServletRequest) file;
+		String path = request.getSession().getServletContext().getRealPath("/");
+		long time = System.currentTimeMillis();
+		MultipartFile image = file.getFile("imageFile");
+		File fileDir = new File(path);
+		if (!fileDir.exists()) {
+			fileDir.mkdirs();
+		}
+		String originFileName = image.getOriginalFilename();
+		String saveFileName = String.format("%d_%s", time, originFileName);
+		board.setImage(saveFileName);
+		try {
+			image.transferTo(new File(path, saveFileName)); // wtp ì„œë²„ ê²½ë¡œì— ì €ì¥ë˜ë¯€ë¡œ, ì´í›„ì— s3 í•„ìš”
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println(path); // ì„ì‹œ ì„œë²„ ì €ì¥ ì´ë¯¸ì§€ ê²½ë¡œ
+		System.out.println(board); // ë°ì´í„° í™•ì¸
 
-		System.out.println(board);
+		cService.insertBoard(board);
 		return "redirect:BoardSelect.do";
+
 	}
 
 	@GetMapping("/BoardModify.do")
-	public void BoardModify() {
+	public String BoardModify(Integer commId, Model model) {
+		System.out.println("/community/BoardModify.do get ìš”ì²­");
+		model.addAttribute("board", cService.selectBoardByCommId(commId));
+		return "community/BoardModify";
 	}
 
+	@PostMapping("/BoardModify.do")
+	public String BoardModify(CommunityDTO board, MultipartHttpServletRequest file, HttpSession session) {
+
+		// ì´ë¯¸ì§€ ë“±ë¡ or ìˆ˜ì •
+		HttpServletRequest request = (HttpServletRequest) file;
+		String path = request.getSession().getServletContext().getRealPath("/");
+		long time = System.currentTimeMillis();
+		MultipartFile image = file.getFile("imageFile");
+		File fileDir = new File(path);
+		if (!fileDir.exists()) {
+			fileDir.mkdirs();
+		}
+		String originFileName = image.getOriginalFilename();
+		String saveFileName = String.format("%d_%s", time, originFileName);
+		board.setImage(saveFileName);
+		try {
+			image.transferTo(new File(path, saveFileName)); // wtp ì„œë²„ ê²½ë¡œì— ì €ì¥ë˜ë¯€ë¡œ, ì´í›„ì— s3 í•„ìš”
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		int commId = board.getComm_id();
+		cService.modifyBoard(board);
+		return "redirect:BoardDetail.do?commId=" + commId;
+	}
+	
+	@PostMapping("/community/recommendUp")
+	@ResponseBody
+	public Map<String, Object> RecommendUp(@RequestBody Map<String, Integer> payload) {
+        int commId = payload.get("commId");
+        int success = cService.incrementRecommend(commId);
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", success);
+        if (success > 0) {
+            int newRecommendCount = cService.getRecommendCount(commId);
+            response.put("recommend", newRecommendCount);
+        }
+        return response;
+    }
+	
 	@GetMapping("/InquirySelect.do")
 	public void InquirySelect() {
 

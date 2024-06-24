@@ -26,25 +26,29 @@
 		resultType="boardlistvo">
 		SELECT
 		COMMUNITY.COMM_ID,
+		COMMUNITY.CAT,
 		COMMUNITY.TAG,
 		COMMUNITY.TITLE,
 		USERS.NICKNAME,
 		COMMUNITY.CREATE_DATE,
 		COMMUNITY.RECOMMEND,
 		COMMUNITY.VIEWS,
-		COMMUNITY.CTT
+		COMMUNITY.CTT,
+		COMMUNITY.IMAGE
 		FROM
 		COMMUNITY
 		JOIN
 		USERS ON
 		COMMUNITY.USER_ID = USERS.USER_ID
-		WHERE COMM_ID=#{commid}
+		WHERE
+		COMM_ID=#{commid}
 	</select>
 
 	<!-- 조회수 증가 -->
 	<update id="updateViews" parameterType="int">
 		UPDATE COMMUNITY
-		SET VIEWS = VIEWS + 1
+		SET VIEWS
+		= VIEWS + 1
 		WHERE COMM_ID = #{commid}
 	</update>
 
@@ -52,9 +56,26 @@
 	<insert id="insertBoard" parameterType="communityvo">
 		INSERT INTO
 		COMMUNITY(COMM_ID, TITLE, CAT, CTT, CREATE_DATE, USER_ID, RECOMMEND,
-		VIEWS, TAG)
-		VALUES(COMM_SEQ.NEXTVAL, '제목입니다!!!!!!!!', 1, '내용입니다!!!!!!!!!!!!!', SYSDATE, 'guny1117', 0,
-		0,'자유');
+		VIEWS, TAG,IMAGE)
+		VALUES(COMM_SEQ.NEXTVAL, #{title}, #{cat}, #{ctt},
+		SYSDATE, #{user_id}, #{recommend},
+		#{views},#{tag},#{image})
 	</insert>
-</mapper>
 
+	<!-- 게시글 수정 -->
+	<update id="updateBoard" parameterType="communityvo">
+		UPDATE COMMUNITY SET
+		TITLE=#{title}, CAT=#{cat}, CTT=#{ctt}, TAG=#{tag}, IMAGE=#{image}
+		WHERE COMM_ID=#{comm_id}
+	</update>
+
+	<!-- 추천 -->
+	<update id="incrementRecommend">
+		UPDATE COMMUNITY SET RECOMMEND = RECOMMEND + 1 WHERE COMM_ID = #{commid}
+	</update>
+	
+	<!-- 추천 수 조회 -->
+	<select id="getRecommendCount" resultType="int">
+		SELECT RECOMMEND FROM COMMUNITY WHERE COMM_ID = #{commid}
+	</select>
+</mapper>
