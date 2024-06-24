@@ -9,9 +9,9 @@
 <c:set var="path" value="${pageContext.servletContext.contextPath}"/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Apple+SD+Gothic+Neo&display=swap">
 <link rel="stylesheet" href="${path}/resources/css/signUp.css">
-<script
-	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="../resources/js/signUp.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="${path}/resources/js/signUp.js"></script>
+<script src="${path}/resources/js/verificationSMS_API.js"></script>
 
 
 </head>
@@ -48,16 +48,17 @@
         <form class="custom-form" onsubmit="return validatePasswords()">
         	<div class="form-group">
                 <label for="nickname" class="input-label">이름</label>
-                <input type="text" id="nickname" name="nickname" placeholder="정성진" required class="input-field">
+                <input type="text" id="nickname" name="nickname" required class="input-field">
             </div> 
             <hr class="form-divider">
             <div >				
 			    <div class="form-group">
 			        <label class="input-label">전화번호</label>
-			        <input type="phone" id="phone" name="phone" class="input-field" placeholder="010-1234-1234" required>
-			        <button class="check-button">인증번호 발송</button>
-				    <input type="tel" class="input-field" style="margin-left: 190px;" placeholder="인증번호 입력" >
-				    <button type="submit" class="check-button">확인</button>			    
+			        <input type="phone" id="phone" name="phone" class="input-field" required>
+			        <button class="check-button" onclick="sendCode()">인증번호 발송</button>
+				    <input type="tel" id="verificationCode" class="input-field" style="margin-left: 190px;" placeholder="인증번호 입력" >
+				    <button type="submit" class="check-button" onclick="verifyCode()">확인</button>	
+				    <p id="result"></p>		    
 			    </div>			    
 			</div>          
             <hr class="form-divider">      
@@ -70,8 +71,9 @@
             <div class="form-group">
                 <label for="password" class="input-label">비밀번호</label>
                 <input type="password" id="password" name="password" placeholder="●●●●●●●●●●" required class="input-field" onkeyup="checkPasswordMatch()" >
-            	<p class="noti-info-text">※ 영문/숫자/특수문자를 2가지 이상 포함하여 6~12자로 작성해주세요. </p>
+                <br>           	
             </div>
+            <p class="noti-info-text">※ 영문/숫자/특수문자를 2가지 이상 포함하여 6~12자로 작성해주세요. </p>
             <hr class="form-divider">
             <div class="form-group">
                 <label for="confirmPassword" class="input-label">비밀번호 확인</label>
@@ -89,7 +91,7 @@
             <hr class="form-divider">
             <div class="form-group">
                 <label for="email" class="input-label">이메일</label>
-                <input type="email" id="email" name="email" required class="email-input-field" >
+                <input type="text" id="email" name="email" required class="email-input-field" >
                 <span>@</span>
                 <input type="text" id="domain" name="domain" required class="email-input-field">
                 &nbsp;
@@ -139,6 +141,7 @@
 			            <label><input type="radio" name="email-notification-choice" class="email-disagree"> 비동의</label>			            
 			        </div>					       
 			    </div>
+			    <br>
 			    <p class="noti-info-text">※ 알림 서비스에 동의하시면 인기 경매 물품과 회원님의 관심 정보와 관련된 알람을 보내드립니다.<br>가입 후 마이페이지에서 수신 동의 여부를 변경하실 수 있습니다.</p>
 			    
 			</div>

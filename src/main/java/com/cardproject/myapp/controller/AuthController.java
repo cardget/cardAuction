@@ -77,4 +77,8 @@ public class AuthController {
 	public void resetPassword() {
 		System.out.println("resetPassword page");
 	}
+	@GetMapping("/smsAPI")
+	public String verificationSMS_API(){
+		return "auth/Twilio_Verification";
+	}
 }
