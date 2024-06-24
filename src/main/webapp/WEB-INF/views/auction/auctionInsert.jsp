@@ -47,11 +47,10 @@
 		    <label for="status3">중개</label>
 		    
 		    
-		    <select name="#_card_id" class="select-field-card">
-				<option>뮤ex</option>
-				<option>피카츄ex</option>
-				<option>날뛰는우레ex</option>
-				<option>뮤츠</option>
+		    <select name="p_card_id" class="select-field-card">
+				<c:forEach items="${plist}" var="plist">
+ 	  				<option value="${plist.card_id}" >${plist.card_name}</option>
+ 	  			</c:forEach>
 			</select>
 		    
 		</div>
@@ -84,9 +83,9 @@
 			<label for="status">물품 상태</label>
 			<select name="status" class="select-field-status">
 				<option value="1">최상</option>
-				<option>상</option>
-				<option>중</option>
-				<option>하</option>
+				<option value="2">상</option>
+				<option value="3">중</option>
+				<option value="4">하</option>
 			</select>
 			
 		</div>

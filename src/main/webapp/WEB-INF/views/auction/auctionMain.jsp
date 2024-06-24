@@ -25,7 +25,27 @@
             console.log("Selected sort option: " + sortOption);
             window.location.href = `${path}/auction/auctionMain.do?sortOption=${sortOption}`;
         }
-    </script>
+        
+        function registerInterest(itemId) {
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "${path}/auction/registerInterest", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        alert(xhr.responseText === 'success' ? "관심물품으로 등록되었습니다." : "관심물품 등록에 실패했습니다.");
+                    } else {
+                        alert("관심물품 등록에 실패했습니다.");
+                    }
+                }
+            };
+
+            xhr.send("item_id=" + itemId);
+        }
+        
+        
+</script>
 <style>
 
 </style>
@@ -130,9 +150,9 @@
 				</span>
 			</div>
 			<div class="button-wrapper">
-				<button onclick="" class="auction-interest">
+				<button onclick="registerInterest(${itemd.item_id})" class="auction-interest">
 					<img src="${path}/resources/icon/interest.png" alt="icon" class="interest-icon"> 관심물품</button>
-				<button onclick="" class="auction-detail-btn">상세보기</button>
+				<button  onclick="location.href='${path}/auction/auctionDetail.do?item_id=${itemd.item_id}'" class="auction-detail-btn">상세보기</button>
 			</div>
 		</div>
 		</c:forEach>
@@ -162,4 +182,5 @@
     <script type="module" src="${path}/resources/js/main.js"></script>
         
 </body>
+
 </html>
