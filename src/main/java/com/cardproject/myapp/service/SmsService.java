@@ -4,16 +4,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import javax.annotation.PostConstruct;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
-
-import io.github.cdimascio.dotenv.Dotenv;
 
 @Service
 public class SmsService {
@@ -28,6 +28,11 @@ public class SmsService {
 
     @Value("${twilio.phone.number}")
     private String fromPhoneNumber;
+    
+    @PostConstruct
+    public void initTwilio() {
+        Twilio.init(accountSid, authToken);
+    }
 
     public void sendSms(String to) {
         logger.info("Sending SMS to: {}", to);
