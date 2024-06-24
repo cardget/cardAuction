@@ -1,5 +1,6 @@
 package com.cardproject.myapp.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,12 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cardproject.myapp.dao.DeckMakerDAO;
+import com.cardproject.myapp.dto.DeckDTO;
+import com.cardproject.myapp.dto.DeckSourceDTO;
 import com.cardproject.myapp.dto.DigimonDTO;
 import com.cardproject.myapp.dto.OnepieceDTO;
 import com.cardproject.myapp.dto.PokemonDTO;
@@ -110,7 +114,46 @@ public class DeckMakerController {
 		 System.out.println("olist:" + olist.size());
 	        return olist;
 	    }
-	 
-	 
+	 @PostMapping("/insertDeck.do")
+	    public String addDeck(@RequestParam String kind, 
+				    		  @RequestParam String deckTitle,
+				    		  @RequestParam String commentBox, 
+				    		  @RequestParam("imgList[]") String[] imgList,
+	                          HttpSession session, Model model) {
 
+	        String userId = (String) session.getAttribute("userid");
+	        
+	        if (userId == null) {
+	            throw new RuntimeException("로그인 후 이용해주십시오.");
+	        }
+
+	        System.out.println(userId);
+	        DeckDTO deckDTO = new DeckDTO();
+	        deckDTO.setDeck_title(deckTitle);
+	        deckDTO.setCmt(commentBox);
+	        deckDTO.setUser_id(userId);
+	        deckDTO.setRecommend(0);
+
+	        switch (kind) {
+	            case "P":
+	                deckDTO.setCat(1);
+	                break;
+	            case "Y":
+	                deckDTO.setCat(2);
+	                break;
+	            case "D":
+	                deckDTO.setCat(3);
+	                break;
+	            case "O":
+	                deckDTO.setCat(4);
+	                break;
+	        }
+
+	        
+	            deckMakerService.saveDeckSource(deckDTO,imgList,kind );
+	         
+
+	        return "redirect:/deckMakers/deckListMain";
+	    }
+	 
 }

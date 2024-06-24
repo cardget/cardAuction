@@ -14,6 +14,8 @@
 <link rel="stylesheet" href="${path }/resources/css/main.css" />
 <link rel="icon" href="${path }/resources/icon/favicon.ico"
 	type="image/x-icon">
+	<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -52,7 +54,8 @@
 					<div class="accordion-content active" id="deckList">
 						<c:forEach items="${yCardList}" var="card">
 							<div class="card-count">
-								<img src="${card.card_id}" class="listCard">
+								<img src="${card.card_id}" onclick="call('${card.card_id}')"
+									class="listCard">
 							</div>
 						</c:forEach>
 					</div>
@@ -64,54 +67,43 @@
 			</div>
 		</div>
 		<div class="deck-list">
-			<ul class="deckList">
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="1"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="2"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="3"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="4"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="5"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="6"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="7"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="8"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="9"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="10"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="11"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="12"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="13"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="14"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="15"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="16"></li>
+			<ul class="deckList" id="deckListContainer">
+
 			</ul>
 		</div>
 	</div>
-	<div class="comment">
-		<textarea cols="28" rows="1" placeholder="덱 이름을 입력해주세요."
-			class="deckTitle"></textarea>
-		<textarea cols="50" rows="6" placeholder="코멘트를 적어주세요."
-			class="commentBox"></textarea>
-		<button type="submit" class="regist-btn"
-			onclick="location.href='deckListMain.do'">등록하기</button>
-	</div>
+	<form action="createDeck" method="post">
+		<div class="comment">
+			<input type="text" id="deckTitle" class="deckTitle" placeholder="덱이름">
+			<textarea id="commentBox" class="commentBox" placeholder="코멘트를 적어주세요"
+				cols="50" rows="6"></textarea>
+
+			<input type="button" class="regist-btn" onclick="insertCard()"
+				value="등록하기">
+		</div>
+	</form>
 	<!--footer-->
 	<%@ include file="/WEB-INF/views/main/footer.jsp"%>
 	<script type="module" src="${path}/resources/js/main.js"></script>
 	<script>
+
+    function insertCard(){
+    	console.log($("#deckTitle").val());
+    	console.log($("#commentBox").val());
+    	var arr = [];
+    	$(".deck-list img").each(function(index, item){
+    		arr.push($(item).attr("data-card"));
+    	});
+    	console.log(arr);
+    	$.ajax({
+    		url:"${path}/deckMakers/insertDeck.do",
+    		type:"post",
+    		data:{kind:"Y",deckTitle:$("#deckTitle").val(),
+    			commentBox:$("#commentBox").val(),
+    		    imgList : arr	
+    		}
+    	});
+    }
 		function toggleFilterOptions() {
 			var filterOptions = document.getElementById('filter-options');
 			if (filterOptions.style.display === 'none') {
@@ -137,12 +129,22 @@
 		                const cardDiv = document.createElement('div');
 		                cardDiv.classList.add('card-count');
 		                cardDiv.innerHTML += `
-		                    <img src="\${card.card_id}" class="listCard">
+		                    <img src="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}')">
 		                `;
 		                deckList.appendChild(cardDiv);
 		            });
 		        });
 		});
+		
+		function call(card_id){
+			document.querySelector("#deckListContainer").innerHTML += `
+                <li class="addCard"><img src="\${card_id}" data-card="\${card_id}" onclick="removeCard(this)"></li>
+            `;
+		}
+		
+		function removeCard(element){
+			element.parentElement.remove();
+		}
 	</script>
 </body>
 

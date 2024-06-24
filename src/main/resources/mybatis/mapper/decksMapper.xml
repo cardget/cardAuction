@@ -7,39 +7,66 @@
 	<!-- test -->
 	<select id="selectAllPCard" resultType="pokemonvo">
 		SELECT * FROM (
-		SELECT a.*, ROWNUM rnum
+		SELECT
+		a.*, ROWNUM rnum
 		FROM (SELECT * FROM POKEMON ORDER BY CARD_ID) a
-		WHERE ROWNUM &lt;= #{endRow}
+		WHERE
+		ROWNUM &lt;= #{endRow}
 		)
 		WHERE rnum &gt;= #{startRow}
 	</select>
 
 	<select id="selectAllYCard" resultType="yugiohvo">
 		SELECT * FROM (
-		SELECT a.*, ROWNUM rnum
+		SELECT
+		a.*, ROWNUM rnum
 		FROM (SELECT * FROM YUGIOH ORDER BY CARD_ID) a
-		WHERE ROWNUM &lt;= #{endRow}
+		WHERE
+		ROWNUM &lt;= #{endRow}
 		)
 		WHERE rnum &gt;= #{startRow}
 	</select>
 
 	<select id="selectAllDCard" resultType="digimonvo">
 		SELECT * FROM (
-		SELECT a.*, ROWNUM rnum
+		SELECT
+		a.*, ROWNUM rnum
 		FROM (SELECT * FROM DIGIMON ORDER BY CARD_ID) a
-		WHERE ROWNUM &lt;= #{endRow}
+		WHERE
+		ROWNUM &lt;= #{endRow}
 		)
 		WHERE rnum &gt;= #{startRow}
 	</select>
 
 	<select id="selectAllOCard" resultType="onepiecevo">
 		SELECT * FROM (
-		SELECT a.*, ROWNUM rnum
+		SELECT
+		a.*, ROWNUM rnum
 		FROM (SELECT * FROM ONEPIECE ORDER BY CARD_ID) a
-		WHERE ROWNUM &lt;= #{endRow}
+		WHERE
+		ROWNUM &lt;= #{endRow}
 		)
 		WHERE rnum &gt;= #{startRow}
 	</select>
+
+	<insert id="insertDeck" parameterType="deckvo">
+		INSERT INTO decks (deck_id,cat, deck_title, create_date, user_id, recommend,
+		cmt)
+		VALUES (deck_seq.NEXTVAL, #{cat}, #{deck_title}, sysdate, #{user_id},
+		#{recommend}, #{cmt})
+	</insert>
+	
+	<select id="deckId" resultType="int">
+	   select last_number - 1 from user_sequences where sequence_name = 'DECK_SEQ'
+	</select>
+
+	<insert id="insertDeckSource" parameterType="decksourcevo">
+		INSERT INTO deckSources (decksource_id, deck_id, p_card, o_card, d_card,
+		y_card)
+		VALUES (decksource_seq.NEXTVAL, #{deck_id}, #{p_card}, #{o_card}, #{d_card},
+		#{y_card})
+	</insert>
+
 	
 
 </mapper>
