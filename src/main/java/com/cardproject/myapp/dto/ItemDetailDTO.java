@@ -1,5 +1,6 @@
 package com.cardproject.myapp.dto;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -8,7 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter@Setter
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
@@ -24,7 +26,7 @@ public class ItemDetailDTO {
 	private String end_date;
 	private int trade_type;
 	private int cat;
-	private String image1; 
+	private String image1;
 	private String image2;
 	private String image3;
 	private String image4;
@@ -35,4 +37,15 @@ public class ItemDetailDTO {
 	private String card_name;
 	private String card_image;
 	private int bid_count;
+
+	public String getFormattedCreateDate() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return sdf.format(create_date);
+	}
+
+	public String getFormattedEndDate() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return sdf.format(end_date);
+	}
+
 }

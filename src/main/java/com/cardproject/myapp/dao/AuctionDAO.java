@@ -1,6 +1,8 @@
 package com.cardproject.myapp.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.cardproject.myapp.dto.ItemDTO;
 import com.cardproject.myapp.dto.ItemDetailDTO;
+import com.cardproject.myapp.dto.LikeDTO;
 import com.cardproject.myapp.dto.PokemonDTO;
 
 @Repository
@@ -21,56 +24,70 @@ public class AuctionDAO {
 
 	Logger logger = LoggerFactory.getLogger(AuctionDAO.class);
 
-	// ÃÖ½Å¼ø p°æ¸Å¹°Ç° Á¶È¸
+	// ê²½ë§¤ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ ( ìµœì‹ ìˆœ )
 	public List<ItemDetailDTO> selectItemRecent() {
 		List<ItemDetailDTO> itemDlist = sqlSession.selectList(namespace + "selectItemRecent");
-		logger.info(itemDlist.size() + "°Ç Á¶È¸µÊ");
+		logger.info(itemDlist.size() + "ê±´ ì¡°íšŒë¨.");
 		return itemDlist;
 
 	}
 
-	// Á¾·áÀÓ¹Ú¼ø p°æ¸Å¹°Ç° Á¶È¸
+	// ê²½ë§¤ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ ( ì¢…ë£Œì„ë°•ìˆœ )
 	public List<ItemDetailDTO> selectItemEnding() {
 		List<ItemDetailDTO> itemDlist = sqlSession.selectList(namespace + "selectItemEnding");
-		logger.info(itemDlist.size() + "°Ç Á¶È¸µÊ");
+		logger.info(itemDlist.size() + "ê±´ ì¡°íšŒë¨.");
 		return itemDlist;
 
 	}
 
-	// Âü¿©ÀÚ¸¹Àº¼ø p°æ¸Å¹°Ç° Á¶È¸
+	// ê²½ë§¤ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ ( ì°¸ì—¬ìë§ì€ìˆœ )
 	public List<ItemDetailDTO> selectItemMost() {
 		List<ItemDetailDTO> itemDlist = sqlSession.selectList(namespace + "selectItemMost");
-		logger.info(itemDlist.size() + "°Ç Á¶È¸µÊ");
+		logger.info(itemDlist.size() + "ê±´ ì¡°íšŒë¨.");
 		return itemDlist;
 
 	}
 
-	// Âü¿©ÀÚÀûÀº¼ø p°æ¸Å¹°Ç° Á¶È¸
+	// ê²½ë§¤ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ ( ì°¸ì—¬ìì ì€ìˆœ )
 	public List<ItemDetailDTO> selectItemLeast() {
 		List<ItemDetailDTO> itemDlist = sqlSession.selectList(namespace + "selectItemLeast");
-		logger.info(itemDlist.size() + "°Ç Á¶È¸µÊ");
+		logger.info(itemDlist.size() + "ê±´ ì¡°íšŒë¨.");
 		return itemDlist;
 
 	}
-
-	// Å×½ºÆ® : ¸ğµç °æ¸Å¹°Ç° Á¶È¸
-	public void test() {
-		List<ItemDTO> var = sqlSession.selectList(namespace + "selectAllItems");
-		System.out.println(var);
+	public ItemDetailDTO selectItemOne(int item_id) {
+		ItemDetailDTO itemDetail = sqlSession.selectOne(namespace+"selectItemOne", item_id);
+		logger.info(itemDetail.toString());
+		return itemDetail;
 	}
 
-	// °æ¸Å¹°Ç° µî·Ï items Insert
+	// ê²½ë§¤ë¬¼í’ˆ ë“±ë¡ items Insert
 	public int itemInsert(ItemDTO item) {
 		int result = sqlSession.insert(namespace + "itemInsert", item);
-		logger.info(result + "°Ç Ãß°¡µÊ");
+		logger.info(result + "ê±´ ì¡°íšŒë¨.");
 		return result;
 	}
-
-	// Ä«µåÁ¶È¸
-	public List<PokemonDTO> selectPCardName() {
-		List<PokemonDTO> plist = sqlSession.selectList(namespace + "selectPCardName");
-		logger.info(plist.size() + "°Ç Á¶È¸µÊ");
+	
+	// í¬ì¼“ëª¬ ì¹´ë“œ ì¡°íšŒ
+	public List<PokemonDTO> selectPCard() {
+		List<PokemonDTO> plist = sqlSession.selectList(namespace + "selectPCard");
+		logger.info(plist.size() + "ê±´ ì¡°íšŒë¨.");
 		return plist;
 	}
+	//ê´€ì‹¬ë¬¼í’ˆ ë“±ë¡
+	public int likeInsert(LikeDTO like) {
+		int result = sqlSession.insert(namespace+"likeInsert",like);
+		logger.info(result+"ê±´ ë“±ë¡.");
+		return result;
+		
+	}
+	// ê´€ì‹¬ë¬¼í’ˆ ì‚­ì œ
+    public int likeDelete(Map<String, Object> paramMap) {
+        int result = sqlSession.delete(namespace + "likeDelete", paramMap);
+        logger.info(result + "ê±´ ì‚­ì œë¨.");
+        return result;
+    }
+
+    
 
 }
