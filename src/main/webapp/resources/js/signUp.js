@@ -1,5 +1,47 @@
+// DOMContentLoaded 이벤트를 사용하여 페이지가 로드된 후에 코드를 실행
+document.addEventListener('DOMContentLoaded', function () {    
+    var checkboxes = document.querySelectorAll('.agree');    
+    checkboxes.forEach(function (checkbox) {
+        checkbox.addEventListener('change', function () {            
+            checkAllAgreed();
+        });
+    });
+});
+
+// 약관 전체 동의 체크박스를 클릭했을 때 호출되는 함수
+function toggleAll() {    
+    var agreeAll = document.getElementById('agreeAll').checked;   
+    var checkboxes = document.querySelectorAll('.agree');    
+    checkboxes.forEach(function (checkbox) {
+        checkbox.checked = agreeAll;
+    });
+    
+    checkAllAgreed();
+}
+
+// 모든 체크박스가 체크되었는지 확인하고 버튼 활성화 여부를 결정하는 함수
+function checkAllAgreed() {
+    var checkboxes = document.querySelectorAll('.agree');
+    var allChecked = true;
+    checkboxes.forEach(function (checkbox) {
+        if (!checkbox.checked) {
+            allChecked = false;
+        }
+    });
+    var submitButton = document.getElementById('submitButton');
+    if (allChecked) {
+        submitButton.disabled = false;
+        submitButton.classList.remove('disabled-button');
+    } else {
+        submitButton.disabled = true;
+        submitButton.classList.add('disabled-button');
+    }
+}
 
 
+
+
+// 주소찾기 api
 function sample6_execDaumPostcode() {
 	new daum.Postcode(
 		{
@@ -51,8 +93,7 @@ function sample6_execDaumPostcode() {
 		}).open();
 }
 
-
-
+// 프로필 이미지 관련
 function previewImage(input) {
 	if (input.files && input.files[0]) {
 		var reader = new FileReader();
@@ -65,7 +106,39 @@ function previewImage(input) {
 		document.getElementById('profile-image').src = '../resources/images/기본 이미지.png';
 	}
 }
-
+// 기본 이미지
 function restProfileImage() {
 	document.getElementById('profile-image').src = '../resources/images/기본 이미지.png';
 }
+
+//폼 제출시 호출됨
+function validatePasswords(){
+	var password = document.getElementById("password").value;
+    var confirmPassword = document.getElementById("confirmPassword").value;
+    var message = document.getElementById("passwordMessage");
+    
+    if (password !== confirmPassword) {
+        message.style.color = 'red';
+        message.textContent = '비밀번호가 일치하지 않습니다. 다시 입력해주세요.';
+        return false;
+    } else {
+        message.style.color = 'green';
+        message.textContent = '일치하는 비밀번호입니다.';
+        return true;
+    }
+}
+// 비밀번호 필드에 키 입력이 있을 때마다 호출
+function checkPasswordMatch() {
+    var password = document.getElementById("password").value;
+    var confirmPassword = document.getElementById("confirmPassword").value;
+    var message = document.getElementById("passwordMessage");
+
+    if (password !== confirmPassword) {
+        message.style.color = 'red';
+        message.textContent = '비밀번호가 일치하지 않습니다. 다시 입력해주세요.';
+    } else {
+        message.style.color = 'green';
+        message.textContent = '일치하는 비밀번호입니다.';
+    }
+}
+
