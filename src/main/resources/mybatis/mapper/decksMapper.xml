@@ -49,11 +49,24 @@
 		WHERE rnum &gt;= #{startRow}
 	</select>
 
-	<insert id="insertPDeck" parameterType="deckvo">
-		INSERT INTO Decks (deck_id, cat, deck_title, create_date, user_id,
-		recommend, cmt)
-		VALUES (#{deck_id}, 1, #{deck_title}, sysdate, #{user_id}, 0, #{cmt})
+	<insert id="insertDeck" parameterType="deckvo">
+		INSERT INTO decks (deck_id,cat, deck_title, create_date, user_id, recommend,
+		cmt)
+		VALUES (deck_seq.NEXTVAL, #{cat}, #{deck_title}, sysdate, #{user_id},
+		#{recommend}, #{cmt})
+	</insert>
+	
+	<select id="deckId" resultType="int">
+	   select last_number - 1 from user_sequences where sequence_name = 'DECK_SEQ'
+	</select>
+
+	<insert id="insertDeckSource" parameterType="decksourcevo">
+		INSERT INTO deckSources (decksource_id, deck_id, p_card, o_card, d_card,
+		y_card)
+		VALUES (decksource_seq.NEXTVAL, #{deck_id}, #{p_card}, #{o_card}, #{d_card},
+		#{y_card})
 	</insert>
 
+	
 
 </mapper>

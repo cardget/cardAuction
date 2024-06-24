@@ -28,7 +28,7 @@
 		<div class="search-area-full">
 			<div class="search-input-wrapper">
 				<input type="text" class="card-search-box" placeholder="검색어를 입력하세요.">
-				<button type="submit" class="card-search">
+				<button type="submit" class="card-search" onclick="searchCard()">
 					<img src="${path }/resources/icon/search.png" alt="search"
 						class="card-search-icon">
 				</button>
@@ -54,7 +54,8 @@
 					<div class="accordion-content active" id="deckList">
 						<c:forEach items="${pCardList}" var="card">
 							<div class="card-count">
-								<img src="${card.card_id}" onclick="call('${card.card_id}')" class="listCard"">
+								<img src="${card.card_id}" onclick="call('${card.card_id}')"
+									class="listCard"">
 							</div>
 						</c:forEach>
 					</div>
@@ -73,17 +74,38 @@
 	</div>
 	<form action="createDeck" method="post">
 		<div class="comment">
-			<input type="text" name="deckTitle" class="deckTitle" placeholder="덱이름">
-			<textarea name="commentBox" class="commentBox" placeholder="코멘트를 적어주세요" cols="50" rows="6"></textarea>
-			<input type="hidden" name="userId" value="${sessionScope.userId}">
-			<input type="hidden" name="p_card" id="p_card">
-			<button type="submit" class="regist-btn" onclick="location.href='deckListMain.do'">등록하기</button>
+			<input type="text" id="deckTitle" class="deckTitle" placeholder="덱이름">
+			<textarea id="commentBox" class="commentBox" placeholder="코멘트를 적어주세요"
+				cols="50" rows="6"></textarea>
+
+			<input type="button" class="regist-btn" onclick="insertCard()"
+				value="등록하기">
 		</div>
 	</form>
 	<!--footer-->
 	<%@ include file="/WEB-INF/views/main/footer.jsp"%>
 	<script type="module" src="${path}/resources/js/main.js"></script>
 	<script>
+	
+	//덱만들기 등록
+	    function insertCard(){
+	    	console.log($("#deckTitle").val());
+	    	console.log($("#commentBox").val());
+	    	var arr = [];
+	    	$(".deck-list img").each(function(index, item){
+	    		arr.push($(item).attr("data-card"));
+	    	});
+	    	console.log(arr);
+	    	$.ajax({
+	    		url:"${path}/deckMakers/insertDeck.do",
+	    		type:"post",
+	    		data:{kind:"P",deckTitle:$("#deckTitle").val(),
+	    			commentBox:$("#commentBox").val(),
+	    		    imgList : arr	
+	    		}
+	    	});
+	    }
+	//필터옵션
 		function toggleFilterOptions() {
 			var filterOptions = document.getElementById('filter-options');
 			if (filterOptions.style.display === 'none') {
@@ -92,7 +114,7 @@
 				filterOptions.style.display = 'none';
 			}
 		}
-
+	//더보기
 		let currentPageP = 1;
 		document.getElementById('loadMorePBtn').addEventListener('click', function() {
 
@@ -115,17 +137,16 @@
 		            });
 		        });
 		});
-		
+		//카드리스트에추가
 		function call(card_id){
 			document.querySelector("#deckListContainer").innerHTML += `
-                <li class="addCard"><img src="\${card_id}" onclick="removeCard(this)"></li>
+                <li class="addCard"><img src="\${card_id}" data-card="\${card_id}" onclick="removeCard(this)"></li>
             `;
 		}
 		
 		function removeCard(element){
 			element.parentElement.remove();
 		}
-		
 		
 	</script>
 </body>

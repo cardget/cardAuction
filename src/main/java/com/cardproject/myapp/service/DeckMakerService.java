@@ -52,16 +52,40 @@ public class DeckMakerService {
             return deckMakerDAO.selectAllOCard(startRow, endRow);
     }
     
-    public void insertPDeck(DeckDTO deck) {
-    	ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-    	HttpSession session = attr.getRequest().getSession();
-    	String userid = (String) session.getAttribute("user_id");
+   // public int saveDeck(DeckDTO deckDTO) {
+   //     return deckMakerDAO.insertDeck(deckDTO);
+   // }
 
-    	deck.setUser_id(userid);
-    	deck.setCat(1);
-    	deck.setRecommend(0);
+    public void saveDeckSource(DeckDTO deckDTO, String[] imgList, String kind) {
+    	deckMakerDAO.insertDeck(deckDTO);
+    	int deckId = deckMakerDAO.deckId();
     	
-    	deckMakerDAO.insertPDeck(deck);
+    	System.out.println("deckId:" + deckId);
+    	for (String img : imgList) {
+            DeckSourceDTO deckSourceDTO = new DeckSourceDTO();
+            switch (kind) {
+                case "P":
+                    deckSourceDTO.setP_card(img);
+                    break;
+                case "Y":
+                    deckSourceDTO.setY_card(img);
+                    break;
+                case "D":
+                    deckSourceDTO.setD_card(img);
+                    break;
+                case "O":
+                    deckSourceDTO.setO_card(img);
+                    break;
+            }
+            deckSourceDTO.setDeck_id(deckId);
+            deckMakerDAO.insertDeckSource(deckSourceDTO);
+        }
+    	
+    	 
+    	 
+         
     }
+    
+    
     
 }
