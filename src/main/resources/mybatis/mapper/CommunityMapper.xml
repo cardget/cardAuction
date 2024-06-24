@@ -70,12 +70,12 @@
 	</update>
 
 	<!-- 추천 -->
-	<update id="incrementRecommend">
+	<update id="incrementRecommend" parameterType="int">
 		UPDATE COMMUNITY SET RECOMMEND = RECOMMEND + 1 WHERE COMM_ID = #{commid}
 	</update>
 	
 	<!-- 추천 수 조회 -->
-	<select id="getRecommendCount" resultType="int">
+	<select id="getRecommendCount" parameterType="int" resultType="int">
 		SELECT RECOMMEND FROM COMMUNITY WHERE COMM_ID = #{commid}
 	</select>
 </mapper>

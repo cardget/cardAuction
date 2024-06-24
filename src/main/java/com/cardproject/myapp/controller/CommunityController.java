@@ -1,9 +1,7 @@
 package com.cardproject.myapp.controller;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -87,6 +84,7 @@ public class CommunityController {
 
 	}
 
+	// 게시글 수정 페이지 로드
 	@GetMapping("/BoardModify.do")
 	public String BoardModify(Integer commId, Model model) {
 		System.out.println("/community/BoardModify.do get 요청");
@@ -94,6 +92,7 @@ public class CommunityController {
 		return "community/BoardModify";
 	}
 
+	// 게시글 수정
 	@PostMapping("/BoardModify.do")
 	public String BoardModify(CommunityDTO board, MultipartHttpServletRequest file, HttpSession session) {
 
@@ -114,26 +113,26 @@ public class CommunityController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		int commId = board.getComm_id();
 		cService.modifyBoard(board);
 		return "redirect:BoardDetail.do?commId=" + commId;
 	}
-	
-	@PostMapping("/community/recommendUp")
+
+	// 추천
+	@GetMapping("/recommendUp.do")
 	@ResponseBody
-	public Map<String, Object> RecommendUp(@RequestBody Map<String, Integer> payload) {
-        int commId = payload.get("commId");
-        int success = cService.incrementRecommend(commId);
-        Map<String, Object> response = new HashMap<>();
-        response.put("success", success);
-        if (success > 0) {
-            int newRecommendCount = cService.getRecommendCount(commId);
-            response.put("recommend", newRecommendCount);
-        }
-        return response;
-    }
-	
+	public String Recommend(Integer commId) {
+		System.out.println("/community/recommendUp.do 요청");
+		cService.incrementRecommend(commId);
+		int result = cService.getRecommendCount(commId);
+		if (result > 0) {
+			return String.valueOf(result);
+		} else {
+			return "fail";
+		}
+	}
+
 	@GetMapping("/InquirySelect.do")
 	public void InquirySelect() {
 
