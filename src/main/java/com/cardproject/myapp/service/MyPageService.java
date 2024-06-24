@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.cardproject.myapp.dao.MyPageDAO;
 import com.cardproject.myapp.dto.BiddingResultDTO;
+import com.cardproject.myapp.dto.DeliveryDTO;
 import com.cardproject.myapp.dto.ItemDTO;
 import com.cardproject.myapp.dto.PointDTO;
 import com.cardproject.myapp.dto.UserDTO;
@@ -61,5 +62,14 @@ public class MyPageService {
  	public List<ItemDTO> selectAllLikes(String userid) {
  		return myPageDAO.selectAllLikes(userid);
  	}
+ 	
+ 	// 관심목록 삭제
+ 	public int deleteAllLikes(String userid) {
+ 		return myPageDAO.deleteAllLikes(userid);
+ 	}
     
+ 	// 배송조회
+ 	public List<DeliveryDTO> selectAllDeliveries(String userid) {
+ 		return myPageDAO.selectAllDeliveries(userid);
+ 	}
 }
