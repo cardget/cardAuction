@@ -55,6 +55,7 @@ public class AuctionDAO {
 		return itemDlist;
 
 	}
+	//경매물품 하나 Detail조회
 	public ItemDetailDTO selectItemOne(int item_id) {
 		ItemDetailDTO itemDetail = sqlSession.selectOne(namespace+"selectItemOne", item_id);
 		logger.info(itemDetail.toString());
@@ -74,20 +75,18 @@ public class AuctionDAO {
 		logger.info(plist.size() + "건 조회됨.");
 		return plist;
 	}
-	//관심물품 등록
-	public int likeInsert(LikeDTO like) {
-		int result = sqlSession.insert(namespace+"likeInsert",like);
-		logger.info(result+"건 등록.");
-		return result;
-		
-	}
-	// 관심물품 삭제
-    public int likeDelete(Map<String, Object> paramMap) {
-        int result = sqlSession.delete(namespace + "likeDelete", paramMap);
-        logger.info(result + "건 삭제됨.");
-        return result;
+
+
+	public void likeInsert(LikeDTO likeVO) {
+        sqlSession.insert(namespace+"likeInsert", likeVO);
     }
 
-    
+    public void likeDelete(Map<String, Object> params) {
+        sqlSession.delete(namespace+"likeDelete", params);
+    }
+
+    public LikeDTO likeStatus(Map<String, Object> params) {
+        return sqlSession.selectOne(namespace+"likeStatus", params);
+    }
 
 }

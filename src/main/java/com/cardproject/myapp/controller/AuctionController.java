@@ -8,13 +8,16 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.cardproject.myapp.dto.ItemDTO;
 import com.cardproject.myapp.dto.ItemDetailDTO;
@@ -32,7 +35,7 @@ public class AuctionController {
 	public String auctionMain(@RequestParam(value = "sortOption", required = false) String sortOption, Model model) {
 		System.out.println("auctionmain page");
 		if (sortOption == null) {
-			sortOption = "recent"; // �⺻�� ����
+			sortOption = "recent"; 
 		}
 		System.out.println("auctionmain page with sortOption: " + sortOption);
 		List<ItemDetailDTO> itemDlist = aucs.getSortedItemList(sortOption);
@@ -70,48 +73,36 @@ public class AuctionController {
 		return "redirect:auctionMain.do";
 
 	}
+	
+	@PostMapping("/like/toggle")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> toggleLike(@RequestBody Map<String, String> request, HttpSession session) {
+        String userId = (String) session.getAttribute("userid");
+        Integer itemId = Integer.parseInt(request.get("itemId"));
+        Map<String, Object> response = new HashMap<>();
+        
+        if (aucs.isLiked(userId, itemId)) {
+            response.put("success", aucs.removeLike(userId, itemId));
+            response.put("status", "removed");
+        } else {
+            response.put("success", aucs.addLike(userId, itemId));
+            response.put("status", "added");
+        }
+        
+        return ResponseEntity.ok(response);
+    }
 
-	@PostMapping("/removeInterest")
-	@ResponseBody
-	public String removeInterest(@RequestParam("item_id") int itemId, HttpSession session) {
-		String userId = (String) session.getAttribute("userid");
-
-		if (userId != null) {
-			Map<String, Object> paramMap = new HashMap<>();
-			paramMap.put("user_id", userId);
-			paramMap.put("item_id", itemId);
-
-			int result = aucs.likeDelete(paramMap);
-			if (result > 0) {
-				return "success";
-			} else {
-				return "fail";
-			}
-		} else {
-			return "fail";
-		}
-	}
-
-	@PostMapping("/registerInterest")
-	@ResponseBody
-	public String registerInterest(@RequestParam("item_id") int itemId, HttpSession session) {
-		String userId = (String) session.getAttribute("userid");
-
-		if (userId != null) {
-			LikeDTO like = new LikeDTO();
-			like.setUser_id(userId);
-			like.setItem_id(itemId);
-
-			int result = aucs.likeInsert(like);
-			if (result > 0) {
-				return "success";
-			} else {
-				return "fail";
-			}
-		} else {
-			return "fail";
-		}
-	}
+    @GetMapping("/like/status")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> getLikeStatus(@RequestParam String itemId, HttpSession session) {
+        String userId = (String) session.getAttribute("userid");
+        Integer itemIdInt = Integer.parseInt(itemId);
+        Map<String, Object> response = new HashMap<>();
+        boolean isLiked = aucs.isLiked(userId, itemIdInt);
+        response.put("isLiked", isLiked);
+        return ResponseEntity.ok(response);
+    }
+	
 //	@PostMapping("/registerInterest")
 //	@ResponseBody
 //	public String registerInterest(@RequestParam("item_id") int itemId, HttpSession session) {

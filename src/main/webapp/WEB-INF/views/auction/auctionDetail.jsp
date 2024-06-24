@@ -39,11 +39,9 @@
 	height: 34px;
 }
 
-
 .bidding-wrapper {
 	display: flex;
 	align-items: center;
-	
 	gap: 10px;
 	font-size: 18px;
 }
@@ -172,9 +170,7 @@
 					<input type="number" id="bidding_price" class="bidding-price-field"
 						placeholder="입찰 가격을 입력하세요.">
 					<button class="bidding-btn">경매 참여</button>
-					<button class="like-btn" onclick="toggleInterest(this, ${itemDetailOne.item_id})">
-						관심 물품
-					</button>
+					<button class="like-btn" id="likeBtn">관심 물품</button>
 				</div>
 			</div>
 
@@ -226,36 +222,47 @@
 	});
 	
 	//관심물품토글
+	 document.addEventListener("DOMContentLoaded", () => {
+			const likeBtn = document.getElementById("likeBtn");
+			const userId = '<%= session.getAttribute("userid") %>';
+			const itemId = ${itemDetailOne.item_id};
+
+			// Check if item is already liked
+			fetch('<%= request.getContextPath() %>/auction/like/status?itemId=' + itemId)
+				.then(response => response.json())
+				.then(data => {
+					if (data.isLiked) {
+						likeBtn.classList.add("act");
+					}
+				});
+
+			likeBtn.addEventListener("click", () => {
+				fetch('<%= request.getContextPath() %>/auction/like/toggle', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({ userId: userId, itemId: itemId.toString() })
+				})
+				.then(response => response.json())
+				.then(data => {
+					if (data.success) {
+						likeBtn.classList.toggle("act");
+						if (data.status === "added") {
+							console.log('관심 물품이 추가되었습니다.');
+						} else {
+							console.log('관심 물품이 삭제되었습니다.');
+						}
+					} else {
+						console.log('처리 중 오류가 발생했습니다.');
+					}
+				});
+			});
+		});
 	//function toggleAct(button) {
     //      button.classList.toggle("act");
     //}
-	 function toggleAct(button) {
-	        button.classList.toggle("act");
-
-	    }
-	 function toggleInterest(button, itemId) {
-	        const isAct = button.classList.contains("act");
-	        const url = isAct ? "${path}/auction/removeInterest" : "${path}/auction/registerInterest";
-	        const action = isAct ? "삭제" : "등록";
-
-	        $.ajax({
-	            type: "POST",
-	            url: url,
-	            data: { item_id: itemId },
-	            success: function(response) {
-	                console.log("Response:", response); // 응답 확인을 위한 콘솔 로그
-	                if (response === "success") {
-	                    button.classList.toggle("act");
-	                } else {
-	                    alert("로그인이 필요합니다.");
-	                }
-	            },
-	            error: function(xhr, status, error) {
-	                console.error("Error:", error); // 에러 메시지 확인을 위한 콘솔 로그
-	                alert("관심 물품 " + action + "에 실패했습니다.");
-	            }
-	        });
-	    }
+	
 </script>
 
 	<!--footer-->
