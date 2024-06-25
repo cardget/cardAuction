@@ -27,8 +27,9 @@ public class AuthController {
 		System.out.println("signUp page");
 	}
 	@PostMapping("/insertSignUp.do")
-	public void insertSignUp(UserDTO user) {
+	public String insertSignUp(UserDTO user) {
 		aService.insertSignUp(user); 
+		return "redirect:login.do";
 	}
 
 	@GetMapping("/login.do")
@@ -63,6 +64,11 @@ public class AuthController {
 			return "redirect:" + goPage;
 		}
 	}
+	@GetMapping("/logout.do")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:login.do";
+	}
 
 	@GetMapping("/findId.do")
 	public void findId() {
@@ -91,17 +97,16 @@ public class AuthController {
 	@GetMapping("/checkUserId")
 	@ResponseBody
     public String checkUserId(@RequestParam String userId) {		
-        int isDuplicate = aService.isUserIdDuplicate(userId);
-        System.out.println("ctrl: " + isDuplicate);
+        int isDuplicate = aService.isUserIdDuplicate(userId);        
         return isDuplicate+"";
     }	
 
     @GetMapping("/checkNickname")
     @ResponseBody
-    public int checkNickname(@RequestParam String nickname) {
-    	//콘솔 확인
-		System.out.println("checkUserId called with nickname: " + nickname);
+    public String checkNickname(@RequestParam String nickname) {    
         int isDuplicate = aService.isNicknameDuplicate(nickname);
-        return isDuplicate;
+        return isDuplicate+"";
     }
+    
+   
 }

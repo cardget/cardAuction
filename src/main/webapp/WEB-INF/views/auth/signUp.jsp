@@ -12,6 +12,7 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="${path}/resources/js/signUp.js"></script>
 <script src="${path}/resources/js/verificationSMS_API.js"></script>
+<script src="${path}/resources/js/mapAPI.js"></script>
 <script>
        
 function f_checkUserId() {
@@ -22,12 +23,8 @@ function f_checkUserId() {
         data: { "userId": userId },
         success: function(isDuplicate) {
             if (isDuplicate > 0) {
-            	console.log(isDuplicate);
-            	console.log(isDuplicate>0);
                 alert("이미 사용중인 아이디입니다.");
             } else {
-            	console.log("isDuplicate:" + isDuplicate);
-            	console.log(isDuplicate>0);
                 alert("사용 가능한 아이디입니다.");
             }
         },
@@ -130,7 +127,7 @@ function f_checkNickname() {
 		    <hr class="form-divider">
 		    <div class="form-group">
 		        <label for="email" class="input-label">이메일</label>
-		        <input type="text" id="email" name="email" required class="email-input-field">
+		        <input type="text" id="emailName" name="emailName" required class="email-input-field">
 		        <span>@</span>
 		        <input type="text" id="domain" name="domain" required class="email-input-field">
 		        <select class="email-select" name="emailList" size="1" onchange="checkEmail(this)">
@@ -141,7 +138,9 @@ function f_checkNickname() {
 		            <option value="nate.com">nate.com</option>
 		        </select>
 		    </div>
-		    <input type="hidden" id="fullEmail" name="fullEmail">
+		    <!-- 이메일을 결합하여 숨겨진 필드에 저장 -->
+            <input type="hidden" id="email" name="email">
+		    
 		    <hr class="form-divider"> 
 		    <div class="form-group address-group">
 		        <label for="address" class="input-label">주소</label>
@@ -161,6 +160,7 @@ function f_checkNickname() {
 		            <img id="profile-image" src="${path}/resources/images/기본 이미지.png" alt="Profile Image">
 		        </div>
 		        <input type="file" id="profile_image" name="profile_image" onchange="previewImage(this)" accept="image/*" class="input-field" style="margin-left:10px;">
+		    	<button type="button" onclick="restProfileImage()" class="check-button">삭제</button>
 		    </div>
 		    <hr class="form-divider">
 		    <div class="form-group">
