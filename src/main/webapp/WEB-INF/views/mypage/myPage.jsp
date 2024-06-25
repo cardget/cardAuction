@@ -55,6 +55,30 @@
 			});
 		});
 	});
+	
+	$(function() {
+		$(".mainColor").click(function(event) {
+			event.preventDefault();
+			
+			// 기존에 선택된 메뉴의 selected 클래스 제거
+			$(".sidemenu a").removeClass("selected");
+			
+			var url = $(this).attr("href");
+			$.ajax({
+				url : url,
+				method : 'GET',
+				success : function(response) {
+					$(".content").html(response);
+				},
+				error : function(xhr, status, error) {
+					console.log("Error: " + error);
+					console.log("Status: " + status);
+					console.dir(xhr);
+					alert("Failed to load the page.");
+				}
+			});
+		});
+	});
 
 </script>
 </head>
@@ -164,61 +188,39 @@
 					</div>
 				</div>
 				<div class="dropdown">
-					<a href="#" class="dropdown-toggle"> <img
-						src="${path}/resources/icon/isAlarm.png" alt="알림" height=30>
+					<a href="#" class="dropdown-toggle"> 
+						<c:choose>
+							<c:when test="${empty nlist}">
+								<img src="${path}/resources/icon/alarm.png" alt="알림" height=30>
+							</c:when>
+							<c:otherwise>
+								<img src="${path}/resources/icon/isAlarm.png" alt="알림" height=30>
+							</c:otherwise>
+						</c:choose>
+						
 					</a>
 					<div class="dropdown-content">
-						<div class="chat-brief">
-							<div class="chat-image">
-								<img src="${path}/resources/images/test/pikachucard.png"
-									alt="Product Image">
-							</div>
-							<div class="chat-content">
-								<h3>[포켓몬] 1998 피카츄 일러스트레이터...</h3>
-								<p>축하드립니다. 낙찰되셨습니다. 낙찰금: 500,000원</p>
-							</div>
-						</div>
-						<div class="chat-brief">
-							<div class="chat-image">
-								<img src="${path}/resources/images/test/pikachucard.png"
-									alt="Product Image">
-							</div>
-							<div class="chat-content">
-								<h3>[포켓몬] 1998 피카츄 일러스트레이터...</h3>
-								<p>최저판매금액을 달성하지 못해 유찰되었습니다.</p>
-							</div>
-						</div>
-						<div class="chat-brief">
-							<div class="chat-image">
-								<img src="${path}/resources/images/test/pikachucard.png"
-									alt="Product Image">
-							</div>
-							<div class="chat-content">
-								<h3>[포켓몬] 1998 피카츄 일러스트레이터...</h3>
-								<p>아쉽게도 낙찰되지 못하셨습니다.</p>
-							</div>
-						</div>
-						<div class="chat-brief">
-							<div class="chat-image">
-								<img src="${path}/resources/images/test/pikachucard.png"
-									alt="Product Image">
-							</div>
-							<div class="chat-content">
-								<h3>[포켓몬] 1998 피카츄 일러스트레이터...</h3>
-								<p>등록하신 물품이 500,000원에 낙찰되었습니다.</p>
-							</div>
-						</div>
-						<div class="chat-brief">
-							<div class="chat-image">
-								<img src="${path}/resources/images/test/pikachucard.png"
-									alt="Product Image">
-							</div>
-							<div class="chat-content">
-								<h3>[포켓몬] 1998 피카츄 일러스트레이터...</h3>
-								<p>등록하신 물품이 유찰되었습니다.</p>
-							</div>
-						</div>
-						<a class="mainColor" href="#">모든 알림 보기</a>
+						<c:choose>
+							<c:when test="${empty nlist}">
+								<div class="no-unread-noti">
+									<h3>미확인 알림이 없습니다.</h3>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<c:forEach var="noti" items="${nlist}">
+									<div class="chat-brief">
+										<div class="chat-image">
+											<img src="${noti.image1 }" alt="Product Image">
+										</div>
+										<div class="chat-content">
+											<h3>${noti.item_name }</h3>
+											<p>${noti.cmt }</p>
+										</div>
+									</div>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
+						<a class="mainColor" href="myNoti.do">모든 알림 보기</a>
 					</div>
 				</div>
 			</div>
