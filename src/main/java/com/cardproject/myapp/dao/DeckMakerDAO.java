@@ -9,6 +9,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cardproject.myapp.dto.DeckDTO;
+import com.cardproject.myapp.dto.DeckSourceDTO;
 import com.cardproject.myapp.dto.DigimonDTO;
 import com.cardproject.myapp.dto.OnepieceDTO;
 import com.cardproject.myapp.dto.PokemonDTO;
@@ -49,4 +51,34 @@ public class DeckMakerDAO {
         return sqlSession.selectList(namespace + ".selectAllOCard", params);
     }
     
+    //덱정보 추가
+    public int insertDeck(DeckDTO deckDTO) {
+        sqlSession.insert(namespace + ".insertDeck", deckDTO);
+        return deckDTO.getDeck_id();
+    }
+
+    public void insertDeckSource(DeckSourceDTO deckSourceDTO) {
+        sqlSession.insert(namespace + ".insertDeckSource", deckSourceDTO);
+    }
+    
+    public int deckId() {
+        return sqlSession.selectOne(namespace + ".deckId");
+    }
+
+    public List<PokemonDTO> filterPCard(Map<String, String> params) {
+    	System.out.println("DAOparams:"+params);
+        return sqlSession.selectList(namespace + ".filterPCard", params);
+    }
+    public List<DigimonDTO> filterDCard(Map<String, String> params) {
+    	System.out.println("DAOparams:"+params);
+        return sqlSession.selectList(namespace + ".filterDCard", params);
+    }
+    public List<OnepieceDTO> filterOCard(Map<String, String> params) {
+    	System.out.println("DAOparams:"+params);
+        return sqlSession.selectList(namespace + ".filterOCard", params);
+    }
+    public List<YugiohDTO> filterYCard(Map<String, String> params) {
+    	System.out.println("DAOparams:"+params);
+        return sqlSession.selectList(namespace + ".filterYCard", params);
+    }
 }

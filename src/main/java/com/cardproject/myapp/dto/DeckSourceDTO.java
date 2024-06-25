@@ -8,6 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class DeckSourceDTO {
+	private int decksource_id;
 	private int deck_id;
 	private String p_card;
 	private String o_card;

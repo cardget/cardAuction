@@ -10,7 +10,7 @@
     <div class="top-nav-category">
       <ul class="category-box">
         <li class="category-item">
-          <a href="/auth/login.do">
+          <a href="${path}/auth/login.do">
             <img src="${path}/resources/icon/logout.png" class="icon">
             로그인</a>
         </li>

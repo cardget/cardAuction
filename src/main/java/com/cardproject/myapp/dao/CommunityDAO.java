@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.cardproject.myapp.dto.BoardListDTO;
 import com.cardproject.myapp.dto.CommunityDTO;
+import com.cardproject.myapp.dto.ReplieDTO;
 
 @Repository
 public class CommunityDAO {
@@ -52,5 +53,21 @@ public class CommunityDAO {
 	// 추천 수 조회
 	public int getRecommendCount(Integer commId) {
 		return sqlSession.selectOne(namespace + "getRecommendCount", commId);
+	}
+
+	// 댓글 조회
+	public List<ReplieDTO> selectReplieList(Integer commId) {
+		List<ReplieDTO> rlist = sqlSession.selectList(namespace + "selectReplie", commId);
+		return rlist;
+	}
+
+	// 댓글 수 조회
+	public int getReplieCount(Integer commId) {
+		return sqlSession.selectOne(namespace + "selectReplieNum", commId);
+	}
+
+	// 댓글 작성
+	public int insertComment(ReplieDTO replie) {
+		return sqlSession.insert(namespace + "insertComment", replie);
 	}
 }

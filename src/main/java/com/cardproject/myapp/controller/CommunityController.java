@@ -1,9 +1,7 @@
 package com.cardproject.myapp.controller;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,14 +11,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.cardproject.myapp.dto.BoardListDTO;
 import com.cardproject.myapp.dto.CommunityDTO;
+import com.cardproject.myapp.dto.ReplieDTO;
 import com.cardproject.myapp.service.CommunityService;
 
 @Controller
@@ -87,6 +86,7 @@ public class CommunityController {
 
 	}
 
+	// 게시글 수정 페이지 로드
 	@GetMapping("/BoardModify.do")
 	public String BoardModify(Integer commId, Model model) {
 		System.out.println("/community/BoardModify.do get 요청");
@@ -94,6 +94,7 @@ public class CommunityController {
 		return "community/BoardModify";
 	}
 
+	// 게시글 수정
 	@PostMapping("/BoardModify.do")
 	public String BoardModify(CommunityDTO board, MultipartHttpServletRequest file, HttpSession session) {
 
@@ -114,26 +115,60 @@ public class CommunityController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		int commId = board.getComm_id();
 		cService.modifyBoard(board);
 		return "redirect:BoardDetail.do?commId=" + commId;
 	}
-	
-	@PostMapping("/community/recommendUp")
+
+	// 추천
+	@GetMapping("/recommendUp.do")
 	@ResponseBody
-	public Map<String, Object> RecommendUp(@RequestBody Map<String, Integer> payload) {
-        int commId = payload.get("commId");
-        int success = cService.incrementRecommend(commId);
-        Map<String, Object> response = new HashMap<>();
-        response.put("success", success);
-        if (success > 0) {
-            int newRecommendCount = cService.getRecommendCount(commId);
-            response.put("recommend", newRecommendCount);
-        }
-        return response;
-    }
-	
+	public String Recommend(Integer commId) {
+		System.out.println("/community/recommendUp.do 요청");
+		cService.incrementRecommend(commId); // 조회수 증가
+		int result = cService.getRecommendCount(commId); // 증가된 조회수
+		if (result > 0) {
+			return String.valueOf(result);
+		} else {
+			return "fail";
+		}
+	}
+
+	// 댓글 리스트 조회
+	@GetMapping("/getReplieList.do")
+	@ResponseBody
+	public List<ReplieDTO> selectReplieList(Integer commId) {
+		System.out.println("/community/replieList.do 요청");
+		List<ReplieDTO> rlist = cService.selectReplieList(commId);
+		return rlist;
+	}
+
+	// 댓글 수 조회
+	@GetMapping("/getReplieCount.do")
+	@ResponseBody
+	public int getReplieCount(Integer commId) {
+		return cService.getReplieCount(commId);
+	}
+
+	// 댓글 작성
+	@PostMapping("/insertReplie.do")
+	@ResponseBody
+	public String insertReplie(@RequestParam Integer commId, @RequestParam String cmt, @RequestParam String userId) {
+		ReplieDTO replie = new ReplieDTO();
+		replie.setComm_id(commId);
+		replie.setCmt(cmt);
+		replie.setUser_id(userId);
+		System.out.println(replie);
+
+		int result = cService.insertComment(replie);
+		if (result > 0) {
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+
 	@GetMapping("/InquirySelect.do")
 	public void InquirySelect() {
 

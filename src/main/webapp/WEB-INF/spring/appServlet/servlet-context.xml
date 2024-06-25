@@ -35,18 +35,31 @@
 
 	<!-- -->
 
-	<beans:bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-	<beans:property name="locations">
-		<beans:list>
-			<beans:value>classpath:application.properties</beans:value>
-			<beans:value>/WEB-INF/spring/appServlet/oracleDB.properties
-			</beans:value>
-		</beans:list>
-	</beans:property>
-	<beans:property name="fileEncoding" value="UTF-8" />
+
+	<beans:bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<beans:property name="locations">
+			<beans:list>
+				<beans:value>/WEB-INF/spring/appServlet/oracleDB.properties</beans:value>
+				<beans:value>/WEB-INF/spring/appServlet/aws.properties</beans:value>
+        <beans:value>classpath:application.properties</beans:value>
+			</beans:list>
+		</beans:property>
+		<beans:property name="fileEncoding" value="UTF-8" />
 	</beans:bean>
 
 	<beans:bean id="dataSource"
+		class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+		<beans:constructor-arg ref="dataSourceOriginal" />
+		<beans:property name="logFormatter">
+			<beans:bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+				<beans:property name="loggingType" value="MULTI_LINE"></beans:property>
+				<beans:property name="sqlPrefix" value="[ SQL문장 ] "></beans:property>
+			</beans:bean>
+		</beans:property>
+	</beans:bean>
+
+	<beans:bean id="dataSourceOriginal"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<beans:property name="driverClassName"
 			value="${jdbc.driverClassName}" />
@@ -79,7 +92,7 @@
 
 	<tx:annotation-driven
 		transaction-manager="transactionManager" />
-		
+
 	<!-- 파일 업로드 -->
 	<beans:bean name="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

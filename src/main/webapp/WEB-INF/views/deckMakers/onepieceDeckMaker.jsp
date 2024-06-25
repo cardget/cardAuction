@@ -14,6 +14,8 @@
 <link rel="stylesheet" href="${path}/resources/css/main.css" />
 <link rel="icon" href="${path }/resources/icon/favicon.ico"
 	type="image/x-icon">
+	<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -37,11 +39,32 @@
 			</button>
 		</div>
 		<div id="filter-options" class="filter-options">
-			<label><input type="checkbox" value="1"> 항목 1</label> <label><input
-				type="checkbox" value="2"> 항목 2</label> <label><input
-				type="checkbox" value="3"> 항목 3</label> <label><input
-				type="checkbox" value="4"> 항목 4</label> <label><input
-				type="checkbox" value="5"> 항목 5</label>
+			<form id="conditionForm" action="conditionSearch" method="get">
+				카드타입 <select class="optionBox" id="card_type" name="card_type">
+					<option value="0">전체</option>
+					<option value="풀">풀</option>
+					<option value="불꽃">불꽃</option>
+					<option value="물">물</option>
+					<option value="번개">번개</option>
+					<option value="초">초</option>
+					<option value="격투">격투</option>
+					<option value="악">악</option>
+					<option value="강철">강철</option>
+					<option value="드래곤">드래곤</option>
+					<option value="무색">무색</option>
+				</select> 
+				아이템선택 : <select class="optionBox" id="card_sort" name="card_sort">
+					<option value="0">전체</option>
+					<option value="리더">리더</option>
+					<option value="아이템">아이템</option>
+					<option value="포켓몬의 도구">포켓몬의 도구</option>
+					<option value="스타디움">스타디움</option>
+					<option value="특수에너지">특수에너지</option>
+					<option value="기본에너지">기본에너지</option>
+				</select>
+			</form>
+			<button class="conditionSearch" id="conditionSearch"
+				onclick="con_search()">조건검색</button>
 		</div>
 	</div>
 	<div class="container">
@@ -52,7 +75,8 @@
 					<div class="accordion-content active" id="deckList">
 						<c:forEach items="${oCardList}" var="card">
 							<div class="card-count">
-								<img src="${card.card_id}" class="listCard">
+								<img src="${card.card_id}" onclick="call('${card.card_id}')"
+									class="listCard">
 							</div>
 						</c:forEach>
 					</div>
@@ -64,54 +88,74 @@
 			</div>
 		</div>
 		<div class="deck-list">
-			<ul class="deckList">
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="1"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="2"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="3"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="4"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="5"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="6"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="7"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="8"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="9"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="10"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="11"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="12"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="13"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="14"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="15"></li>
-				<li class="makeList"><img src="../image/makerlist-pokemon.png"
-					class="makerCard" value="16"></li>
+			<ul class="deckList" id="deckListContainer">
+
 			</ul>
 		</div>
 	</div>
-	<div class="comment">
-		<textarea cols="28" rows="1" placeholder="덱 이름을 입력해주세요."
-			class="deckTitle"></textarea>
-		<textarea cols="50" rows="6" placeholder="코멘트를 적어주세요."
-			class="commentBox"></textarea>
-		<button type="submit" class="regist-btn"
-			onclick="location.href='deckListMain.do'">등록하기</button>
-	</div>
+	<form action="createDeck" method="post">
+		<div class="comment">
+			<input type="text" id="deckTitle" class="deckTitle" placeholder="덱이름">
+			<textarea id="commentBox" class="commentBox" placeholder="코멘트를 적어주세요"
+				cols="50" rows="6"></textarea>
+
+			<input type="button" class="regist-btn" onclick="insertCard()"
+				value="등록하기">
+		</div>
+	</form>
 	<!--footer-->
 	<%@ include file="/WEB-INF/views/main/footer.jsp"%>
 	<script type="module" src="${path}/resources/js/main.js"></script>
 	<script>
+	
+	function con_search() {
+        var form = document.getElementById("conditionForm");
+        var formData = $(form).serialize();
+
+        $.ajax({
+            url: "/myapp/deckMakers/conditionOSearch.do",
+            type: "GET",
+            data: formData,
+            dataType: "json",
+            success: function(data) {
+            	console.log("성공")
+            	console.log(data)
+                var deckList = document.getElementById("deckList");
+                deckList.innerHTML = ""; // 기존 내용 삭제
+
+                data.forEach(card => {
+                    var cardDiv = document.createElement("div");
+                    cardDiv.classList.add("card-count");
+                    cardDiv.innerHTML = `
+                        <img src="${card.card_id}" class="listCard" onclick="call('${card.card_id}')">
+                    `;
+                    deckList.appendChild(cardDiv);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error("Error:", error);
+            }
+        });
+    }
+	
+	function insertCard(){
+    	console.log($("#deckTitle").val());
+    	console.log($("#commentBox").val());
+    	var arr = [];
+    	$(".deck-list img").each(function(index, item){
+    		arr.push($(item).attr("data-card"));
+    	});
+    	console.log(arr);
+    	$.ajax({
+    		url:"${path}/deckMakers/insertDeck.do",
+    		type:"post",
+    		data:{kind:"O",deckTitle:$("#deckTitle").val(),
+    			commentBox:$("#commentBox").val(),
+    		    imgList : arr	
+    		}
+    	});
+    }
+	
 		function toggleFilterOptions() {
 			var filterOptions = document.getElementById('filter-options');
 			if (filterOptions.style.display === 'none') {
@@ -137,12 +181,22 @@
 		                const cardDiv = document.createElement('div');
 		                cardDiv.classList.add('card-count');
 		                cardDiv.innerHTML += `
-		                    <img src="\${card.card_id}" class="listCard">
+		                    <img src="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}')">
 		                `;
 		                deckList.appendChild(cardDiv);
 		            });
 		        });
 		});
+		
+		function call(card_id){
+			document.querySelector("#deckListContainer").innerHTML += `
+                <li class="addCard"><img src="\${card_id}" data-card="\${card_id}" onclick="removeCard(this)"></li>
+            `;
+		}
+		
+		function removeCard(element){
+			element.parentElement.remove();
+		}
 	</script>
 </body>
 

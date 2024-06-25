@@ -1,6 +1,5 @@
 package com.cardproject.myapp.service;
 
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -18,41 +17,44 @@ import com.cardproject.myapp.dto.PokemonDTO;
 
 @Service
 public class AuctionService {
-	
+
 	@Autowired
 	AuctionDAO aucDAO;
-	
+
 	public ItemDetailDTO selectItemOne(int item_id) {
 		return aucDAO.selectItemOne(item_id);
 	}
+
 	public List<ItemDetailDTO> selectItemRecent() {
 		return aucDAO.selectItemRecent();
 	}
+
 	public int itemInsert(ItemDTO item) {
 		System.out.println(item);
-		
+
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String currentDateStr = formatter.format(new Date());
 		item.setCreate_date(currentDateStr);
 
-	    String endDate=item.getEnd_date().replace("T", " ");
-	    item.setEnd_date(endDate);
-	    		
-        
-	    item.setUser_id("seoyeon");
+		String endDate = item.getEnd_date().replace("T", " ");
+		item.setEnd_date(endDate);
+
+		item.setUser_id("seoyeon");
 		item.setCat(0);
-		item.setImage1("test.png");
-		
+		//item.setImage1("test.png");
+
 		System.out.println(item);
 		return aucDAO.itemInsert(item);
 	}
+
 	public List<PokemonDTO> selectPCard() {
 		return aucDAO.selectPCard();
 	}
+
 	public List<ItemDetailDTO> getSortedItemList(String sortOption) {
 		if (sortOption == null) {
-            return aucDAO.selectItemRecent();
-        }
+			return aucDAO.selectItemRecent();
+		}
 		switch (sortOption) {
 		case "recent":
 			return aucDAO.selectItemRecent();
@@ -65,16 +67,39 @@ public class AuctionService {
 		default:
 			return aucDAO.selectItemRecent();
 		}
-		
+
 	}
-	public int likeInsert(LikeDTO like) {
-		return aucDAO.likeInsert(like);
-	}
-	
-	public int likeDelete(Map<String, Object> paramMap) {
-        return aucDAO.likeDelete(paramMap);
+	public boolean addLike(String userId, Integer itemId) {
+        try {
+        	LikeDTO like = new LikeDTO();
+            like.setUser_id(userId);
+            like.setItem_id(itemId);
+            aucDAO.likeInsert(like);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
-    
+    public boolean removeLike(String userId, Integer itemId) {
+        try {
+            Map<String, Object> params = new HashMap<>();
+            params.put("user_id", userId);
+            params.put("item_id", itemId);
+            aucDAO.likeDelete(params);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean isLiked(String userId, Integer itemId) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("user_id", userId);
+        params.put("item_id", itemId);
+        LikeDTO like = aucDAO.likeStatus(params);
+        return like != null;
+    }
 	
+    
 }

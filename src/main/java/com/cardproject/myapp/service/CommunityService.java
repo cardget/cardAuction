@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.cardproject.myapp.dao.CommunityDAO;
 import com.cardproject.myapp.dto.BoardListDTO;
 import com.cardproject.myapp.dto.CommunityDTO;
+import com.cardproject.myapp.dto.ReplieDTO;
 
 @Service
 public class CommunityService {
@@ -48,6 +49,21 @@ public class CommunityService {
 	// 추천 수 조회
 	public int getRecommendCount(Integer commId) {
 		return communityDao.getRecommendCount(commId);
+	}
+	
+	// 댓글 조회
+	public List<ReplieDTO> selectReplieList(Integer commId){
+		return communityDao.selectReplieList(commId);
+	}
+	
+	// 댓글 수 조회
+	public int getReplieCount(Integer commId) {
+		return communityDao.getReplieCount(commId);
+	}
+	
+	// 댓글 작성
+	public int insertComment(ReplieDTO replie) {
+		return communityDao.insertComment(replie);
 	}
 
 }
