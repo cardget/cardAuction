@@ -65,4 +65,8 @@ public class DeckMakerDAO {
         return sqlSession.selectOne(namespace + ".deckId");
     }
 
+    public List<PokemonDTO> filterCard(Map<String, String> params) {
+    	System.out.println("DAOparams:"+params);
+        return sqlSession.selectList(namespace + ".filterCard", params);
+    }
 }

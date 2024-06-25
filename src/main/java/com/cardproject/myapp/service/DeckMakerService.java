@@ -80,12 +80,11 @@ public class DeckMakerService {
             deckSourceDTO.setDeck_id(deckId);
             deckMakerDAO.insertDeckSource(deckSourceDTO);
         }
-    	
-    	 
-    	 
-         
     }
     
-    
+    public List<PokemonDTO> filterCard(Map<String, String> params) {
+    	System.out.println("serviceParams:"+params);
+        return deckMakerDAO.filterCard(params);
+    }
     
 }

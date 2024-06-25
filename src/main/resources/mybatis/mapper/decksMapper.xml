@@ -25,6 +25,7 @@
 		ROWNUM &lt;= #{endRow}
 		)
 		WHERE rnum &gt;= #{startRow}
+		
 	</select>
 
 	<select id="selectAllDCard" resultType="digimonvo">
@@ -50,23 +51,37 @@
 	</select>
 
 	<insert id="insertDeck" parameterType="deckvo">
-		INSERT INTO decks (deck_id,cat, deck_title, create_date, user_id, recommend,
+		INSERT INTO decks
+		(deck_id,cat, deck_title, create_date, user_id, recommend,
 		cmt)
-		VALUES (deck_seq.NEXTVAL, #{cat}, #{deck_title}, sysdate, #{user_id},
+		VALUES
+		(deck_seq.NEXTVAL, #{cat}, #{deck_title}, sysdate, #{user_id},
 		#{recommend}, #{cmt})
 	</insert>
-	
+
 	<select id="deckId" resultType="int">
-	   select last_number - 1 from user_sequences where sequence_name = 'DECK_SEQ'
+		select last_number - 1 from
+		user_sequences where sequence_name = 'DECK_SEQ'
 	</select>
 
 	<insert id="insertDeckSource" parameterType="decksourcevo">
-		INSERT INTO deckSources (decksource_id, deck_id, p_card, o_card, d_card,
+		INSERT INTO
+		deckSources (decksource_id, deck_id, p_card, o_card, d_card,
 		y_card)
-		VALUES (decksource_seq.NEXTVAL, #{deck_id}, #{p_card}, #{o_card}, #{d_card},
+		VALUES (decksource_seq.NEXTVAL, #{deck_id}, #{p_card}, #{o_card},
+		#{d_card},
 		#{y_card})
 	</insert>
 
-	
-
+	<select id="filterCard" parameterType="map"
+		resultType="pokemonvo">
+		SELECT * FROM POKEMON
+		WHERE 1=1
+		<if test='card_sort != "0" and card_sort != ""'>
+			AND CARD_SORT = #{card_sort}
+		</if>
+		<if test='card_type != "0" and card_type != ""'>
+			AND CARD_TYPE = #{card_type}
+		</if>
+	</select>
 </mapper>
