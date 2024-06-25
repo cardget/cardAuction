@@ -41,7 +41,7 @@ public class AuctionService {
 
 		item.setUser_id("seoyeon");
 		item.setCat(0);
-		item.setImage1("test.png");
+		//item.setImage1("test.png");
 
 		System.out.println(item);
 		return aucDAO.itemInsert(item);
@@ -101,5 +101,5 @@ public class AuctionService {
         return like != null;
     }
 	
-
+    
 }

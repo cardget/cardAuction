@@ -83,43 +83,58 @@
 
 						<div class="slider__img">
 							<div class="slider__inner">
-								<div class="slider" role="group" aria-label="1/5">
-									<img src="${path}/resources/images/pokemon/sampleimage1.png"
-										alt="이미지1">
-								</div>
-								<div class="slider" role="group" aria-label="2/5">
-									<img src="${path}/resources/images/pokemon/sampleimage1.png"
-										alt="이미지2">
-								</div>
-								<div class="slider" role="group" aria-label="3/5">
-									<img src="${path}/resources/images/pokemon/sampleimage1.png"
-										alt="이미지3">
-								</div>
-								<div class="slider" role="group" aria-label="4/5">
-									<img src="${path}/resources/images/pokemon/sampleimage1.png"
-										alt="이미지4">
-								</div>
-								<div class="slider" role="group" aria-label="5/5">
-									<img src="${path}/resources/images/pokemon/sampleimage1.png"
-										alt="이미지5">
-								</div>
+								<c:if test="${itemDetailOne.image1 != null}">
+									<div class="slider" role="group" aria-label="1/5">
+										<img src="${itemDetailOne.image1}" alt="이미지1">
+									</div>
+								</c:if>
+								<c:if test="${itemDetailOne.image2 != null}">
+									<div class="slider" role="group" aria-label="2/5">
+										<img src="${itemDetailOne.image2}" alt="이미지2">
+									</div>
+								</c:if>
+								<c:if test="${itemDetailOne.image3 != null}">
+									<div class="slider" role="group" aria-label="3/5">
+										<img src="${itemDetailOne.image3}" alt="이미지3">
+									</div>
+								</c:if>
+								<c:if test="${itemDetailOne.image4 != null}">
+									<div class="slider" role="group" aria-label="4/5">
+										<img src="${itemDetailOne.image4}" alt="이미지4">
+									</div>
+								</c:if>
+								<c:if test="${itemDetailOne.image5 != null}">
+									<div class="slider" role="group" aria-label="5/5">
+										<img src="${itemDetailOne.image5}" alt="이미지5">
+									</div>
+								</c:if>
 							</div>
+
 							<div class="slider__btn">
-								<a href="#" class="prev" role="button" aria-label="왼쪽 이미지">prev</a>
-								<a href="#" class="next" role="button" aria-label="오른쪽 이미지">next</a>
+								<a href="#" class="prev" role="button" aria-label="왼쪽 이미지">
+								<img src="${path}/resources/images/leftBtn.png" alt="leftBtn" class="left-icon">
+								</a>
+								<a href="#" class="next" role="button" aria-label="오른쪽 이미지">
+								<img src="${path}/resources/images/rightBtn.png" alt="rightBtn" class="right-icon">
+								</a>
 							</div>
 						</div>
 						<div class="slider__preview">
-							<img src="${path}/resources/images/pokemon/sampleimage1.png"
-								alt="이미지1"> <img
-								src="${path}/resources/images/pokemon/sampleimage1.png"
-								alt="이미지2"> <img
-								src="${path}/resources/images/pokemon/sampleimage1.png"
-								alt="이미지3"> <img
-								src="${path}/resources/images/pokemon/sampleimage1.png"
-								alt="이미지4"> <img
-								src="${path}/resources/images/pokemon/sampleimage1.png"
-								alt="이미지5">
+							<c:if test="${itemDetailOne.image1 != null}">
+								<img src="${itemDetailOne.image1}" alt="이미지1">
+							</c:if>
+							<c:if test="${itemDetailOne.image2 != null}">
+								<img src="${itemDetailOne.image2}" alt="이미지2">
+							</c:if>
+							<c:if test="${itemDetailOne.image3 != null}">
+								<img src="${itemDetailOne.image3}" alt="이미지3">
+							</c:if>
+							<c:if test="${itemDetailOne.image4 != null}">
+								<img src="${itemDetailOne.image4}" alt="이미지4">
+							</c:if>
+							<c:if test="${itemDetailOne.image5 != null}">
+								<img src="${itemDetailOne.image5}" alt="이미지5">
+							</c:if>
 						</div>
 					</div>
 				</section>
@@ -194,41 +209,41 @@
 
 	// 이미지 이동
 	function gotoSlider(num) {
-		sliderInner.style.transition = "all 400ms";
-		sliderInner.style.transform = "translateX(" + -sliderWidth * num + "px)";
-		currentIndex = num;
+	    sliderInner.style.transition = "all 400ms";
+	    sliderInner.style.transform = "translateX(" + -sliderWidth * num + "px)";
+	    currentIndex = num;
 	}
 
 	// 버튼 클릭했을 때
 	document.querySelectorAll(".slider__btn a").forEach((btn, index) => {
-		btn.addEventListener("click", (e) => {
-			e.preventDefault();
-			let prevIndex = (currentIndex + (sliderCount - 1)) % sliderCount;
-			let nextIndex = (currentIndex + 1) % sliderCount;
+	    btn.addEventListener("click", (e) => {
+	        e.preventDefault();
+	        let prevIndex = (currentIndex + (sliderCount - 1)) % sliderCount;
+	        let nextIndex = (currentIndex + 1) % sliderCount;
 
-			if (btn.classList.contains("prev")) {
-				gotoSlider(prevIndex);
-			} else {
-				gotoSlider(nextIndex);
-			}
-		});
+	        if (btn.classList.contains("prev")) {
+	            gotoSlider(prevIndex);
+	        } else {
+	            gotoSlider(nextIndex);
+	        }
+	    });
 	});
 
 	// 프리뷰 이미지를 클릭했을 때 해당 이미지로 이동
 	sliderPreview.forEach((preview, index) => {
-		preview.addEventListener("click", () => {
-			gotoSlider(index);
-		});
+	    preview.addEventListener("click", () => {
+	        gotoSlider(index);
+	    });
 	});
 	
 	//관심물품토글
 	 document.addEventListener("DOMContentLoaded", () => {
 			const likeBtn = document.getElementById("likeBtn");
-			const userId = '<%= session.getAttribute("userid") %>';
+			const userId = '<%=session.getAttribute("userid")%>';
 			const itemId = ${itemDetailOne.item_id};
 
-			// Check if item is already liked
-			fetch('<%= request.getContextPath() %>/auction/like/status?itemId=' + itemId)
+			//이미 관심물품인지 체크
+			fetch('<%=request.getContextPath()%>/auction/like/status?itemId=' + itemId)
 				.then(response => response.json())
 				.then(data => {
 					if (data.isLiked) {
@@ -237,7 +252,7 @@
 				});
 
 			likeBtn.addEventListener("click", () => {
-				fetch('<%= request.getContextPath() %>/auction/like/toggle', {
+				fetch('<%=request.getContextPath()%>/auction/like/toggle', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json'

@@ -134,7 +134,7 @@
 	<select id="likeStatus" parameterType="map" resultType="likevo">
 		select * from likes where user_id=#{user_id} and item_id=#{item_id}
 	</select>
-
+	
 	<!-- 입찰 (biddings테이블에 Insert) -->
 	<insert id="biddingInsert" parameterType="biddingvo">
 		insert into

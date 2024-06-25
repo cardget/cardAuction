@@ -271,23 +271,23 @@ select {
 }
 
 .slider:nth-child(1)::before {
-    content: '이미지1';
+    content: 'img1';
 }
 
 .slider:nth-child(2)::before {
-    content: '이미지2';
+    content: 'img2';
 }
 
 .slider:nth-child(3)::before {
-    content: '이미지3';
+    content: 'img3';
 }
 
 .slider:nth-child(4)::before {
-    content: '이미지4';
+    content: 'img4';
 }
 
 .slider:nth-child(5)::before {
-    content: '이미지5';
+    content: 'img5';
 }
 
 @media (max-width: 800px) {
@@ -303,7 +303,7 @@ select {
     transform: translateY(-50%);
     width: 50px;
     height: 50px;
-    background: rgba(0, 0, 0, 0.4);
+    
     text-align: center;
     line-height: 50px;
     transition: all 0.2s;
@@ -342,6 +342,9 @@ select {
 
 .slider__preview img:hover {
     transform: scale(1.1);
+}
+.right-icon, .left-icon{
+	height: 48px;
 }
 
 /*detail */

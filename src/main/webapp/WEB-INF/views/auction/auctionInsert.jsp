@@ -25,7 +25,7 @@
 <!-- Body -->
 <div class="container">
 	
-	<form action="${path}/auction/auctionInsert.do" class="insert-form" method="post">
+	<form action="${path}/auction/auctionInsert.do" class="insert-form" method="post" enctype="multipart/form-data">
 		<div class="top-wrapper">
 			<h1 class="top-item">포켓몬 카드 경매 등록</h1>
 			<button type="submit" class="top-insert-btn">판매 글 작성</button>
@@ -59,7 +59,7 @@
 			<img src="${path}/resources/icon/error.png" class="icon-error" alt="icon"> 실제 카드 이미지 1개 필수 ( 최대 5개 )
 			<div class="input-container3">
 				<label for="image-input" class="image-upload-label">물품 이미지 업로드</label>
-				<input type="file" id="image-input" accept="image/*" multiple>
+				<input type="file" id="image-input" name="images" accept="image/*" multiple required>
 			</div>
 			
 		</div>

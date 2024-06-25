@@ -88,5 +88,5 @@ public class AuctionDAO {
     public LikeDTO likeStatus(Map<String, Object> params) {
         return sqlSession.selectOne(namespace+"likeStatus", params);
     }
-
+    
 }
