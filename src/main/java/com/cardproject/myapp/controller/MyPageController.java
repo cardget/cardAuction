@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.cardproject.myapp.dto.BiddingResultDTO;
 import com.cardproject.myapp.dto.DeliveryDTO;
 import com.cardproject.myapp.dto.ItemDTO;
+import com.cardproject.myapp.dto.NotificationDTO;
 import com.cardproject.myapp.dto.PointDTO;
 import com.cardproject.myapp.dto.UserDTO;
 import com.cardproject.myapp.service.MyPageService;
@@ -26,6 +27,7 @@ import com.cardproject.myapp.service.MyPageService;
 @RequestMapping("/mypage")
 public class MyPageController {
 
+    
 	@Autowired
 	MyPageService mpService;
 
@@ -41,8 +43,10 @@ public class MyPageController {
 		}
 
 		UserDTO user = mpService.selectUserById(userid);
-
+		List<NotificationDTO> nlist = mpService.selectFiveNotifications(userid);
+		
 		model.addAttribute("user", user);
+		model.addAttribute("nlist", nlist);
 
 		return "mypage/myPage";
 	}
@@ -208,5 +212,61 @@ public class MyPageController {
 		model.addAttribute("user", user);
 		model.addAttribute("dlist", dlist);
 		return "mypage/myDelivery";
+	}
+	
+	// 모든 알림 조회
+	@GetMapping("/myNoti.do")
+	public String myNoti(Model model) {
+		String userid = (String) session.getAttribute("userid");
+		if (userid == null) {
+			return "redirect:../auth/login.do";
+		}
+		
+		List<NotificationDTO> nlist = mpService.selectAllNotifications(userid);
+		
+		model.addAttribute("nlist", nlist);
+		return "mypage/myNotification";
+	}
+	
+	@GetMapping("/readUpdate.do")
+	public String readUpdate(Model model) {
+		String userid = (String) session.getAttribute("userid");
+		if (userid == null) {
+			return "redirect:../auth/login.do";
+		}
+		
+		int result = mpService.isReadUpdateAll(userid);
+		String message = result>0?"success":"failure";
+		
+		List<NotificationDTO> nlist = mpService.selectAllNotifications(userid);
+		model.addAttribute("nlist", nlist);
+		model.addAttribute("message", message);
+		return "mypage/myNotification";
+	}
+	
+	@GetMapping("/deleteAllNoti.do")
+	public String deleteAllNoti(Model model) {
+		String userid = (String) session.getAttribute("userid");
+		if (userid == null) {
+			return "redirect:../auth/login.do";
+		}
+		
+		int result = mpService.deleteAllNotificationRead(userid);
+		String message = result>0?"success":"failure";
+		
+		List<NotificationDTO> nlist = mpService.selectAllNotifications(userid);
+		
+		model.addAttribute("nlist", nlist);
+		
+		return "mypage/myNotification";
+	}
+	
+	@GetMapping("/markAsRead.do")
+	public String markAsRead(@RequestParam("notiId") int notiId,
+							@RequestParam("itemId") int itemId,
+							Model model) {
+		mpService.isReadUpdate(notiId);
+
+	    return "redirect:../auction/auctionDetail.do?item_id=" + itemId;
 	}
 }

@@ -1,7 +1,5 @@
 package com.cardproject.myapp.dto;
 
-import java.sql.Date;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -9,11 +7,12 @@ import lombok.ToString;
 @Getter@Setter
 @ToString
 public class NotificationDTO {
-	private int notification_id; //¾Ë¸²
-	private String cmt; //³»¿ë
-	private String user_id; //¼ö½ÅÀÚ
-	private Date create_date; //ÀÛ¼ºÀÏ
-	private int is_read; //ÀÐ±â¿©ºÎ
-	private int item_id; //¹°Ç°¾ÆÀÌµð
-	
+	private int notification_id; //ï¿½Ë¸ï¿½
+	private String cmt; //ï¿½ï¿½ï¿½ï¿½
+	private String user_id; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private String create_date; //ï¿½Û¼ï¿½ï¿½ï¿½
+	private int is_read; //ï¿½Ð±â¿©ï¿½ï¿½
+	private int item_id; //ï¿½ï¿½Ç°ï¿½ï¿½ï¿½Ìµï¿½
+	private String item_name;
+	private String image1;
 }

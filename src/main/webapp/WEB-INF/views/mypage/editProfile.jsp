@@ -82,8 +82,6 @@
             <hr class="form-divider">
             <div class="form-group">
                 <label for="email" class="input-label">이메일</label>
-                <input type="text" id="email" name="email" required value="${localPart}" class="email-input-field">
-                <span>@</span>
                 <input type="text" id="domain" name="domain" required value="${domainPart}" class="email-input-field">
                 &nbsp;
                 <select class="email-select" name="emailList" size="1" onchange="return checkEmail()">
