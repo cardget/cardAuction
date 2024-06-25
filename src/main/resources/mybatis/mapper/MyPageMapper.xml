@@ -142,4 +142,78 @@
 	    	t.ITEM_ID = i.ITEM_ID
 		WHERE t.USER_ID = #{userid}
 	</select>
+	
+	<!-- 알림조회 -->
+	<select id="selectAllNotifications" resultType="notificationvo">
+		SELECT 
+			n.NOTIFICATION_ID,
+			n.CMT,
+			n.USER_ID,
+			TO_CHAR(n.CREATE_DATE, 'YYYY-MM-DD HH24:MI:SS') AS CREATE_DATE,
+			n.IS_READ,
+			n.ITEM_ID,
+			i.ITEM_NAME,
+			i.IMAGE1
+		FROM NOTIFICATIONS n
+		INNER JOIN
+			ITEMS i
+		ON
+			n.ITEM_ID = i.ITEM_ID
+		WHERE n.USER_ID = #{userid}
+		ORDER BY NOTIFICATION_ID DESC
+	</select>
+	
+	<!-- 알림 상위 5개 조회 -->
+	<select id="selectFiveNotifications" resultType="notificationvo">
+		<![CDATA[
+		SELECT *
+		FROM (
+			SELECT 
+				n.NOTIFICATION_ID,
+				n.CMT,
+				n.USER_ID,
+				TO_CHAR(n.CREATE_DATE, 'YYYY-MM-DD HH24:MI:SS') AS CREATE_DATE,
+				n.IS_READ,
+				n.ITEM_ID,
+				i.ITEM_NAME,
+				i.IMAGE1
+			FROM NOTIFICATIONS n
+			INNER JOIN
+				ITEMS i
+			ON
+				n.ITEM_ID = i.ITEM_ID
+			WHERE 
+				n.USER_ID = #{userid}
+			AND
+				n.IS_READ = 0
+			ORDER BY NOTIFICATION_ID DESC
+			)
+		WHERE ROWNUM <= 5
+		]]>
+	</select>
+	
+	<!-- 알림 읽음표시 업데이트 -->
+	<update id="isReadUpdate" parameterType="int">
+		UPDATE NOTIFICATIONS
+		SET IS_READ = 1
+		WHERE NOTIFICATION_ID = #{notificationid}
+	</update>
+	
+	<!-- 알림 삭제 -->
+	<delete id="deleteNotification" parameterType="int">
+		DELETE FROM NOTIFICATIONS WHERE NOTIFICATION_ID = #{notificationid}
+	</delete>
+	
+	<!-- 모든 알림 읽음 표시로 변경 -->
+	<update id="isReadUpdateAll" parameterType="string">
+		UPDATE NOTIFICATIONS
+		SET IS_READ = 1
+		WHERE USER_ID = #{userid}
+	</update>
+	
+	<!-- 읽은 알림 전체 삭제 -->
+	<delete id="deleteAllNotificationRead" parameterType="string">
+		DELETE FROM NOTIFICATIONS 
+		WHERE USER_ID = #{userid} AND IS_READ = 1
+	</delete>
 </mapper>

@@ -680,3 +680,13 @@ tbody tr {
 .submit-button:hover {
 	background-color: #005C9A;
 }
+
+/* 알림창 */
+.already-read {
+	background-color: #E1E6EC!important;
+}
+
+.no-unread-noti {
+	text-align: center!important;
+	border-bottom: 1px solid #ddd;
+}

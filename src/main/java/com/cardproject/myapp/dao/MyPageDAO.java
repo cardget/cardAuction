@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.cardproject.myapp.dto.BiddingResultDTO;
 import com.cardproject.myapp.dto.DeliveryDTO;
 import com.cardproject.myapp.dto.ItemDTO;
+import com.cardproject.myapp.dto.NotificationDTO;
 import com.cardproject.myapp.dto.PointDTO;
 import com.cardproject.myapp.dto.UserDTO;
 
@@ -28,16 +29,16 @@ public class MyPageDAO{
     }
 
 	// 내 정보 수정
-	public void userUpdate(UserDTO user){
-		sqlSession.update(namespace + ".userUpdate", user);
+	public int userUpdate(UserDTO user){
+		return sqlSession.update(namespace + ".userUpdate", user);
 	}
 	
 	// 프로필 이미지 수정
-	public void userProfileUpdate(String userid, String imgpath) {
+	public int userProfileUpdate(String userid, String imgpath) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("userid", userid);
 		params.put("imgpath", imgpath);
-		sqlSession.update(namespace + ".userProfileUpdate", params);
+		return sqlSession.update(namespace + ".userProfileUpdate", params);
 	}
 
 	// 입찰내역
@@ -81,5 +82,35 @@ public class MyPageDAO{
 	// 배송조회
 	public List<DeliveryDTO> selectAllDeliveries(String userid) {
 		return sqlSession.selectList(namespace + ".selectAllDeliveries", userid);
+	}
+	
+	// 알림조회
+	public List<NotificationDTO> selectAllNotifications(String userid) {
+		return sqlSession.selectList(namespace + ".selectAllNotifications", userid);
+	}
+	
+	// 알림 상위 5개 조회
+	public List<NotificationDTO> selectFiveNotifications(String userid){
+		return sqlSession.selectList(namespace + ".selectFiveNotifications", userid);
+	}
+	
+	// 알림 읽음 표시 업데이트
+	public int isReadUpdate(int notificationid) {
+		return sqlSession.update(namespace + ".isReadUpdate", notificationid);
+	}
+	
+	// 알림 삭제
+	public int deleteNotification(int notificationid) {
+		return sqlSession.delete(namespace + ".deleteNotification", notificationid);
+	}
+	
+	// 모든 알림 읽음 표시로 변경
+	public int isReadUpdateAll(String userid) {
+		return sqlSession.update(namespace + ".isReadUpdateAll", userid);
+	}
+	
+	// 읽은 알림 전체 삭제
+	public int deleteAllNotificationRead(String userid) {
+		return sqlSession.delete(namespace + ".deleteAllNotificationRead", userid);
 	}
 }
