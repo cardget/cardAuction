@@ -113,7 +113,7 @@
         var formData = $(form).serialize();
 
         $.ajax({
-            url: "/myapp/deckMakers/conditionSearch.do",
+            url: "/myapp/deckMakers/conditionPSearch.do",
             type: "GET",
             data: formData,
             dataType: "json",

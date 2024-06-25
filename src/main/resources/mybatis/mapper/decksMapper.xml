@@ -50,6 +50,7 @@
 		WHERE rnum &gt;= #{startRow}
 	</select>
 
+	<!-- 덱저장 -->
 	<insert id="insertDeck" parameterType="deckvo">
 		INSERT INTO decks
 		(deck_id,cat, deck_title, create_date, user_id, recommend,
@@ -72,10 +73,44 @@
 		#{d_card},
 		#{y_card})
 	</insert>
+	<!-- **덱저장** -->
 
-	<select id="filterCard" parameterType="map"
+	<select id="filterPCard" parameterType="map"
 		resultType="pokemonvo">
 		SELECT * FROM POKEMON
+		WHERE 1=1
+		<if test='card_sort != "0" and card_sort != ""'>
+			AND CARD_SORT = #{card_sort}
+		</if>
+		<if test='card_type != "0" and card_type != ""'>
+			AND CARD_TYPE = #{card_type}
+		</if>
+	</select>
+	<select id="filterDCard" parameterType="map"
+		resultType="digimonvo">
+		SELECT * FROM DIGIMON
+		WHERE 1=1
+		<if test='card_sort != "0" and card_sort != ""'>
+			AND CARD_SORT = #{card_sort}
+		</if>
+		<if test='card_type != "0" and card_type != ""'>
+			AND CARD_TYPE = #{card_type}
+		</if>
+	</select>
+	<select id="filterOCard" parameterType="map"
+		resultType="onepiecevo">
+		SELECT * FROM ONEPIECE
+		WHERE 1=1
+		<if test='card_sort != "0" and card_sort != ""'>
+			AND CARD_SORT = #{card_sort}
+		</if>
+		<if test='card_type != "0" and card_type != ""'>
+			AND CARD_TYPE = #{card_type}
+		</if>
+	</select>
+	<select id="filterYCard" parameterType="map"
+		resultType="yugiohvo">
+		SELECT * FROM YUGIOH
 		WHERE 1=1
 		<if test='card_sort != "0" and card_sort != ""'>
 			AND CARD_SORT = #{card_sort}

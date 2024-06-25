@@ -82,9 +82,21 @@ public class DeckMakerService {
         }
     }
     
-    public List<PokemonDTO> filterCard(Map<String, String> params) {
+    public List<PokemonDTO> filterPCard(Map<String, String> params) {
     	System.out.println("serviceParams:"+params);
-        return deckMakerDAO.filterCard(params);
+        return deckMakerDAO.filterPCard(params);
+    }
+    public List<DigimonDTO> filterDCard(Map<String, String> params) {
+    	System.out.println("serviceParams:"+params);
+        return deckMakerDAO.filterDCard(params);
+    }
+    public List<OnepieceDTO> filterOCard(Map<String, String> params) {
+    	System.out.println("serviceParams:"+params);
+        return deckMakerDAO.filterOCard(params);
+    }
+    public List<YugiohDTO> filterYCard(Map<String, String> params) {
+    	System.out.println("serviceParams:"+params);
+        return deckMakerDAO.filterYCard(params);
     }
     
 }

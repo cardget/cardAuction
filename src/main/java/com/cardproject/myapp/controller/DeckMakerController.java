@@ -159,15 +159,48 @@ public class DeckMakerController {
 	        return "redirect:/deckMakers/deckListMain.do";
 	    }
 
-	 @GetMapping("/conditionSearch.do")
+	 @GetMapping("/conditionPSearch.do")
 	    @ResponseBody
-	    public List<PokemonDTO> conditionSearch(@RequestParam(value = "card_type", required = false) String cardType,
+	    public List<PokemonDTO> conditionPSearch(@RequestParam(value = "card_type", required = false) String cardType,
 	                                            @RequestParam(value = "card_sort", required = false) String cardSort) {
 	        Map<String, String> params = new HashMap<>();
 	        params.put("card_type", cardType);
 	        params.put("card_sort", cardSort);
 	        System.out.println("cardtype,cardsort:" + params);
 	     
-	        return deckMakerService.filterCard(params);
+	        return deckMakerService.filterPCard(params);
+	    }
+	 @GetMapping("/conditionOSearch.do")
+	    @ResponseBody
+	    public List<OnepieceDTO> conditionOSearch(@RequestParam(value = "card_type", required = false) String cardType,
+	                                            @RequestParam(value = "card_sort", required = false) String cardSort) {
+	        Map<String, String> params = new HashMap<>();
+	        params.put("card_type", cardType);
+	        params.put("card_sort", cardSort);
+	        System.out.println("cardtype,cardsort:" + params);
+	     
+	        return deckMakerService.filterOCard(params);
+	    }
+	 @GetMapping("/conditionYSearch.do")
+	    @ResponseBody
+	    public List<YugiohDTO> conditionYSearch(@RequestParam(value = "card_type", required = false) String cardType,
+	                                            @RequestParam(value = "card_sort", required = false) String cardSort) {
+	        Map<String, String> params = new HashMap<>();
+	        params.put("card_type", cardType);
+	        params.put("card_sort", cardSort);
+	        System.out.println("cardtype,cardsort:" + params);
+	     
+	        return deckMakerService.filterYCard(params);
+	    }
+	 @GetMapping("/conditionDSearch.do")
+	    @ResponseBody
+	    public List<DigimonDTO> conditionDSearch(@RequestParam(value = "card_type", required = false) String cardType,
+	                                            @RequestParam(value = "card_sort", required = false) String cardSort) {
+	        Map<String, String> params = new HashMap<>();
+	        params.put("card_type", cardType);
+	        params.put("card_sort", cardSort);
+	        System.out.println("cardtype,cardsort:" + params);
+	     
+	        return deckMakerService.filterDCard(params);
 	    }
 }
