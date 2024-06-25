@@ -4,11 +4,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cardproject.myapp.dto.UserDTO;
 import com.cardproject.myapp.service.AuthService;
@@ -23,6 +25,10 @@ public class AuthController {
 	@GetMapping("/signUp.do")
 	public void signUp() {
 		System.out.println("signUp page");
+	}
+	@PostMapping("/insertSignUp.do")
+	public void insertSignUp(UserDTO user) {
+		aService.insertSignUp(user); 
 	}
 
 	@GetMapping("/login.do")
@@ -81,4 +87,21 @@ public class AuthController {
 	public String verificationSMS_API(){
 		return "auth/Twilio_Verification";
 	}
+	
+	@GetMapping("/checkUserId")
+	@ResponseBody
+    public String checkUserId(@RequestParam String userId) {		
+        int isDuplicate = aService.isUserIdDuplicate(userId);
+        System.out.println("ctrl: " + isDuplicate);
+        return isDuplicate+"";
+    }	
+
+    @GetMapping("/checkNickname")
+    @ResponseBody
+    public int checkNickname(@RequestParam String nickname) {
+    	//콘솔 확인
+		System.out.println("checkUserId called with nickname: " + nickname);
+        int isDuplicate = aService.isNicknameDuplicate(nickname);
+        return isDuplicate;
+    }
 }

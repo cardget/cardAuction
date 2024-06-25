@@ -43,7 +43,8 @@ public class VerificationController {
         try {
             // URL 인코딩된 전화번호를 디코딩
             String decodedPhoneNumber = URLDecoder.decode(phoneNumber, StandardCharsets.UTF_8.name());
-            boolean isValid = smsService.verifyCode(decodedPhoneNumber, code);
+            String formattedPhoneNumber = formatPhoneNumber(decodedPhoneNumber);
+            boolean isValid = smsService.verifyCode(formattedPhoneNumber, code);
             return ResponseEntity.ok(isValid);
         } catch (Exception e) {
             return ResponseEntity.status(400).body(false);

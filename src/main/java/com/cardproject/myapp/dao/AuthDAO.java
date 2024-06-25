@@ -24,4 +24,20 @@ public class AuthDAO {
     UserDTO user = sqlSession.selectOne(namespace + ".loginChk", params);
     return user;
   }
+  //회원가입 insert
+  public int insertSignUp(UserDTO user) {
+	  int result = sqlSession.insert(namespace +".insertSignUp",user);
+	  return result;
+  }
+  //아이디 중복 확인
+  public int isUserIdDuplicate(String userId) {
+      int count = sqlSession.selectOne(namespace + ".checkUserId", userId);
+      System.out.println("dao: " + count);
+      return count;
+  }
+  // 닉네임 중복 확인
+  public int isNicknameDuplicate(String nickname) {
+      int count = sqlSession.selectOne(namespace + ".checkNickname", nickname);
+      return count;
+  }
 }
