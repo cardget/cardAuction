@@ -35,12 +35,16 @@
 
 	<!-- -->
 
-	<beans:bean
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<beans:property name="location"
-			value="/WEB-INF/spring/appServlet/oracleDB.properties" />
-		<beans:property name="fileEncoding" value="UTF-8" />
+	<beans:bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	    <beans:property name="locations">
+	        <beans:list>
+	            <beans:value>/WEB-INF/spring/appServlet/oracleDB.properties</beans:value>
+	            <beans:value>/WEB-INF/spring/appServlet/aws.properties</beans:value>
+	        </beans:list>
+	    </beans:property>
+	    <beans:property name="fileEncoding" value="UTF-8" />
 	</beans:bean>
+
 
 	<beans:bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
