@@ -26,28 +26,39 @@
             window.location.href = `${path}/auction/auctionMain.do?sortOption=${sortOption}`;
         }
         
-        function registerInterest(itemId) {
-            const xhr = new XMLHttpRequest();
-            xhr.open("POST", "${path}/auction/registerInterest", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        alert(xhr.responseText === 'success' ? "관심물품으로 등록되었습니다." : "관심물품 등록에 실패했습니다.");
-                    } else {
-                        alert("관심물품 등록에 실패했습니다.");
-                    }
-                }
-            };
-
-            xhr.send("item_id=" + itemId);
-        }
         
         
 </script>
 <style>
+	.button-wrapper{
+	display: flex;
+	justify-content: center;
+	position:relative;
+	margin-top:10px;
+	margin-bottom: 12px;
+	font-size:14px;
 
+}
+.like-btn{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius:5px;
+	border : 1px solid #007FFF;
+	color: #007FFF;
+	background-color:#fff;
+	width: 120px;
+	height: 34px;
+}
+.like-btn.act {
+	border: 1px solid #007FFF;
+	border-radius: 5px;
+	background-color: #007FFF;
+	color: white;
+	font-weight: bold;
+	width: 120px;
+	height: 34px;
+}
 </style>
 </head>
 <body>
@@ -150,8 +161,8 @@
 				</span>
 			</div>
 			<div class="button-wrapper">
-				<button onclick="registerInterest(${itemd.item_id})" class="auction-interest">
-					<img src="${path}/resources/icon/interest.png" alt="icon" class="interest-icon"> 관심물품</button>
+				
+				<button class="like-btn">관심물품</button>
 				<button  onclick="location.href='${path}/auction/auctionDetail.do?item_id=${itemd.item_id}'" class="auction-detail-btn">상세보기</button>
 			</div>
 		</div>
@@ -176,6 +187,7 @@
         </div>
   
 </div>
+
 
     <!--footer-->
     <%@ include file="/WEB-INF/views/main/footer.jsp" %>

@@ -347,11 +347,23 @@ select {
 	font-size:14px;
 
 }
-.auction-interest{
+.like-btn{
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	border-radius:5px;
 	border : 1px solid #007FFF;
 	color: #007FFF;
 	background-color:#fff;
+	width: 120px;
+	height: 34px;
+}
+.like-btn.act {
+	border: 1px solid #007FFF;
+	border-radius: 5px;
+	background-color: #007FFF;
+	color: white;
+	font-weight: bold;
 	width: 120px;
 	height: 34px;
 }
