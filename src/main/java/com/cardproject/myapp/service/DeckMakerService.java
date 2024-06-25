@@ -24,11 +24,17 @@ public class DeckMakerService {
     @Autowired
     private DeckMakerDAO deckMakerDAO;
 
-    public List<PokemonDTO> selectAllPCard(int page) {
-    	int itemsPerPage = 30;
+    public List<PokemonDTO> getPCardList(int page, Map<String, String> filters) {
+        int itemsPerPage = 30;
         int startRow = (page - 1) * itemsPerPage + 1;
         int endRow = page * itemsPerPage;
-        return deckMakerDAO.selectAllPCard(startRow, endRow);
+
+        Map<String, Object> params = new HashMap<>(filters);
+        params.put("startRow", startRow);
+        params.put("endRow", endRow);
+
+        System.out.println("serviceParams:" + params);
+        return deckMakerDAO.selectOrFilterPCard(params);
     }
     
     public List<YugiohDTO> selectAllYCard(int page) {
@@ -82,10 +88,6 @@ public class DeckMakerService {
         }
     }
     
-    public List<PokemonDTO> filterPCard(Map<String, String> params) {
-    	System.out.println("serviceParams:"+params);
-        return deckMakerDAO.filterPCard(params);
-    }
     public List<DigimonDTO> filterDCard(Map<String, String> params) {
     	System.out.println("serviceParams:"+params);
         return deckMakerDAO.filterDCard(params);

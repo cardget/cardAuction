@@ -23,11 +23,9 @@ public class DeckMakerDAO {
     private SqlSession sqlSession;
     String namespace = "com.cardproject.myapp.dao";
 
-    public List<PokemonDTO> selectAllPCard(int startRow, int endRow) {
-        Map<String, Integer> params = new HashMap<>();
-        params.put("startRow", startRow);
-        params.put("endRow", endRow);
-        return sqlSession.selectList(namespace + ".selectAllPCard", params);
+    public List<PokemonDTO> selectOrFilterPCard(Map<String, Object> params) {
+        System.out.println("DAOparams:" + params);
+        return sqlSession.selectList(namespace + ".selectOrFilterPCard", params);
     }
 
     public List<YugiohDTO> selectAllYCard(int startRow, int endRow) {
@@ -65,10 +63,6 @@ public class DeckMakerDAO {
         return sqlSession.selectOne(namespace + ".deckId");
     }
 
-    public List<PokemonDTO> filterPCard(Map<String, String> params) {
-    	System.out.println("DAOparams:"+params);
-        return sqlSession.selectList(namespace + ".filterPCard", params);
-    }
     public List<DigimonDTO> filterDCard(Map<String, String> params) {
     	System.out.println("DAOparams:"+params);
         return sqlSession.selectList(namespace + ".filterDCard", params);

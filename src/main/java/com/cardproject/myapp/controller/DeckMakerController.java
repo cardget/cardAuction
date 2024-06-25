@@ -52,22 +52,36 @@ public class DeckMakerController {
 	
 	//포켓몬카드
 	@RequestMapping("/pokemonDeckMaker.do")
-    public void pokemonDeckMaker(Model model, @RequestParam(defaultValue = "1") int page) {
-		String userid = null;
-		 
-		 if(session.getAttribute("userid") != null) {
-			 userid = (String) session.getAttribute("userid");
-			 System.out.println(userid);
-		 }else {
-			 System.out.println("null");
-		 }
-		
-		List<PokemonDTO> pCardList = deckMakerService.selectAllPCard(page);
-        System.out.println(pCardList.size());
-        model.addAttribute("pCardList", pCardList);
-        model.addAttribute("currentPage", page);
+    public String pokemonDeckMaker(Model model,
+                                   @RequestParam(defaultValue = "1") int page,
+                                   @RequestParam(value = "responseType", required = false) String responseType,
+                                   @RequestParam(value = "card_type", required = false, defaultValue = "t") String cardType,
+                                   @RequestParam(value = "card_sort", required = false, defaultValue = "s") String cardSort) {
+        Map<String, String> params = new HashMap<>();
+        if (!"t".equals(cardType)) {
+            params.put("card_type", cardType);
+        }
+        if (!"s".equals(cardSort)) {
+            params.put("card_sort", cardSort);
+        }
+
+        if ("loadMore".equals(responseType)) {
+            List<PokemonDTO> plist = deckMakerService.getPCardList(page, params);
+            System.out.println("plist:" + plist.size());
+            model.addAttribute("pCardList", plist);
+            return "jsonView"; // JSON 형태로 반환
+        } else if ("search".equals(responseType)) {
+            List<PokemonDTO> searchList = deckMakerService.getPCardList(1, params);
+            model.addAttribute("pCardList", searchList);
+            return "jsonView"; // JSON 형태로 반환
+        } else {
+            List<PokemonDTO> pCardList = deckMakerService.getPCardList(page, new HashMap<>());
+            System.out.println(pCardList.size());
+            model.addAttribute("pCardList", pCardList);
+            model.addAttribute("currentPage", page);
+            return "pokemonDeckMaker"; // JSP 파일 이름 반환
+        }
     }
-	
 	 //유희왕카드
 	@RequestMapping("/yugiohDeckMaker.do")
     public void yugiohDeckMaker(Model model, @RequestParam(defaultValue = "1") int page) {
@@ -93,12 +107,7 @@ public class DeckMakerController {
     }
 	
 
-	 @GetMapping("/loadMorePCard.do")
-	    public  @ResponseBody List<PokemonDTO> loadMorePCard(@RequestParam int page) {
-		 List<PokemonDTO> plist = deckMakerService.selectAllPCard(page);
-		 System.out.println("plist:" + plist.size());
-	        return plist;
-	    }
+	 
 	 @GetMapping("/loadMoreYCard.do")
 	    public  @ResponseBody List<YugiohDTO> loadMoreYCard(@RequestParam int page) {
 		 List<YugiohDTO> ylist = deckMakerService.selectAllYCard(page);
@@ -159,17 +168,7 @@ public class DeckMakerController {
 	        return "redirect:/deckMakers/deckListMain.do";
 	    }
 
-	 @GetMapping("/conditionPSearch.do")
-	    @ResponseBody
-	    public List<PokemonDTO> conditionPSearch(@RequestParam(value = "card_type", required = false) String cardType,
-	                                            @RequestParam(value = "card_sort", required = false) String cardSort) {
-	        Map<String, String> params = new HashMap<>();
-	        params.put("card_type", cardType);
-	        params.put("card_sort", cardSort);
-	        System.out.println("cardtype,cardsort:" + params);
-	     
-	        return deckMakerService.filterPCard(params);
-	    }
+	 
 	 @GetMapping("/conditionOSearch.do")
 	    @ResponseBody
 	    public List<OnepieceDTO> conditionOSearch(@RequestParam(value = "card_type", required = false) String cardType,

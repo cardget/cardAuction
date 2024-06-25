@@ -5,16 +5,25 @@
 <mapper namespace="com.cardproject.myapp.dao">
 
 	<!-- test -->
-	<select id="selectAllPCard" resultType="pokemonvo">
-		SELECT * FROM (
-		SELECT
-		a.*, ROWNUM rnum
-		FROM (SELECT * FROM POKEMON ORDER BY CARD_ID) a
-		WHERE
-		ROWNUM &lt;= #{endRow}
-		)
-		WHERE rnum &gt;= #{startRow}
-	</select>
+	<select id="selectOrFilterPCard" parameterType="map" resultType="pokemonvo">
+         SELECT * FROM (
+            SELECT
+            a.*, ROWNUM rnum
+            FROM (
+                SELECT * FROM POKEMON
+                WHERE 1=1
+                <if test='card_sort != null and card_sort != "s"'>
+                    AND CARD_SORT = #{card_sort}
+                </if>
+                <if test='card_type != null and card_type != "t"'>
+                    AND CARD_TYPE = #{card_type}
+                </if>
+                ORDER BY CARD_ID
+            ) a
+            WHERE ROWNUM &lt;= #{endRow}
+        )
+        WHERE rnum &gt;= #{startRow}
+    </select>
 
 	<select id="selectAllYCard" resultType="yugiohvo">
 		SELECT * FROM (
@@ -75,17 +84,6 @@
 	</insert>
 	<!-- **덱저장** -->
 
-	<select id="filterPCard" parameterType="map"
-		resultType="pokemonvo">
-		SELECT * FROM POKEMON
-		WHERE 1=1
-		<if test='card_sort != "0" and card_sort != ""'>
-			AND CARD_SORT = #{card_sort}
-		</if>
-		<if test='card_type != "0" and card_type != ""'>
-			AND CARD_TYPE = #{card_type}
-		</if>
-	</select>
 	<select id="filterDCard" parameterType="map"
 		resultType="digimonvo">
 		SELECT * FROM DIGIMON
