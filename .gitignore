@@ -16,7 +16,7 @@ target/
 
 # file
 # *.jpg
-*.png
+# *.png
 # *.jpeg
 
 src/front/image/
