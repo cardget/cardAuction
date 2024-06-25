@@ -16,9 +16,9 @@ target/
 
 # file
 # *.jpg
-# *.png
+*.png
 # *.jpeg
 
 src/front/image/
 src/front/icon/
-src/main/webapp/resources/images/
+# src/main/webapp/resources/images/
