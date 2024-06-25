@@ -8,4 +8,47 @@
 	    FROM USERS 
 	    WHERE USER_ID = #{userid} AND PW = #{password}
 	</select>
+	
+	<insert id="insertSignUp" parameterType="uservo">
+		INSERT INTO USERS
+		(
+		USER_ID,
+		USER_NAME,
+		PW,
+		NICKNAME,
+		EMAIL,
+		PHONE_NUMBER,
+		ZIP_CODE,
+		ADDRESS,
+		ADDRESS_DETAIL, 
+		PROFILE_IMAGE,
+		USER_TIER, 
+		PHONE_AGREEMENT,
+		MAIL_AGREEMENT
+		)
+		VALUES
+		(
+        #{user_id},
+        #{user_name},
+        #{pw},
+        #{nickname},
+        #{email},
+        #{phone_number},
+        #{zip_code},
+        #{address},
+        #{address_detail},
+        #{profile_image},
+        1,
+        #{phone_agreement},
+        #{email_agreement}
+    )	
+	</insert>
+	
+	<select id="checkUserId" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM USERS WHERE USER_ID=#{userId}
+	</select>
+	
+	<select id="checkNickname" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM USERS WHERE NICKNAME=#{nickname}
+	</select>
 </mapper>

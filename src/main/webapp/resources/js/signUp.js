@@ -1,3 +1,4 @@
+var contextPath = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
 // DOMContentLoaded 이벤트를 사용하여 페이지가 로드된 후에 코드를 실행
 document.addEventListener('DOMContentLoaded', function () {    
     var checkboxes = document.querySelectorAll('.agree');    
@@ -113,7 +114,7 @@ function restProfileImage() {
 
 //폼 제출시 호출됨
 function validatePasswords(){
-	var password = document.getElementById("password").value;
+	var password = document.getElementById("pw").value;
     var confirmPassword = document.getElementById("confirmPassword").value;
     var message = document.getElementById("passwordMessage");
     
@@ -127,9 +128,14 @@ function validatePasswords(){
         return true;
     }
 }
+
+
+
+
+
 // 비밀번호 필드에 키 입력이 있을 때마다 호출
 function checkPasswordMatch() {
-    var password = document.getElementById("password").value;
+    var password = document.getElementById("pw").value;
     var confirmPassword = document.getElementById("confirmPassword").value;
     var message = document.getElementById("passwordMessage");
 
@@ -140,5 +146,10 @@ function checkPasswordMatch() {
         message.style.color = 'green';
         message.textContent = '일치하는 비밀번호입니다.';
     }
+}
+
+// 이메일 선택 js
+function checkEmail(select) {
+    document.getElementById('domain').value = select.value;
 }
 
