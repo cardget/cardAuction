@@ -1,7 +1,9 @@
 package com.cardproject.myapp.controller;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -153,7 +156,51 @@ public class DeckMakerController {
 	            deckMakerService.saveDeckSource(deckDTO,imgList,kind );
 	         
 
-	        return "redirect:/deckMakers/deckListMain";
+	        return "redirect:/deckMakers/deckListMain.do";
 	    }
-	 
+
+	 @GetMapping("/conditionPSearch.do")
+	    @ResponseBody
+	    public List<PokemonDTO> conditionPSearch(@RequestParam(value = "card_type", required = false) String cardType,
+	                                            @RequestParam(value = "card_sort", required = false) String cardSort) {
+	        Map<String, String> params = new HashMap<>();
+	        params.put("card_type", cardType);
+	        params.put("card_sort", cardSort);
+	        System.out.println("cardtype,cardsort:" + params);
+	     
+	        return deckMakerService.filterPCard(params);
+	    }
+	 @GetMapping("/conditionOSearch.do")
+	    @ResponseBody
+	    public List<OnepieceDTO> conditionOSearch(@RequestParam(value = "card_type", required = false) String cardType,
+	                                            @RequestParam(value = "card_sort", required = false) String cardSort) {
+	        Map<String, String> params = new HashMap<>();
+	        params.put("card_type", cardType);
+	        params.put("card_sort", cardSort);
+	        System.out.println("cardtype,cardsort:" + params);
+	     
+	        return deckMakerService.filterOCard(params);
+	    }
+	 @GetMapping("/conditionYSearch.do")
+	    @ResponseBody
+	    public List<YugiohDTO> conditionYSearch(@RequestParam(value = "card_type", required = false) String cardType,
+	                                            @RequestParam(value = "card_sort", required = false) String cardSort) {
+	        Map<String, String> params = new HashMap<>();
+	        params.put("card_type", cardType);
+	        params.put("card_sort", cardSort);
+	        System.out.println("cardtype,cardsort:" + params);
+	     
+	        return deckMakerService.filterYCard(params);
+	    }
+	 @GetMapping("/conditionDSearch.do")
+	    @ResponseBody
+	    public List<DigimonDTO> conditionDSearch(@RequestParam(value = "card_type", required = false) String cardType,
+	                                            @RequestParam(value = "card_sort", required = false) String cardSort) {
+	        Map<String, String> params = new HashMap<>();
+	        params.put("card_type", cardType);
+	        params.put("card_sort", cardSort);
+	        System.out.println("cardtype,cardsort:" + params);
+	     
+	        return deckMakerService.filterDCard(params);
+	    }
 }

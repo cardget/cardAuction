@@ -39,11 +39,32 @@
 			</button>
 		</div>
 		<div id="filter-options" class="filter-options">
-			<label><input type="checkbox" value="1"> 항목 1</label> <label><input
-				type="checkbox" value="2"> 항목 2</label> <label><input
-				type="checkbox" value="3"> 항목 3</label> <label><input
-				type="checkbox" value="4"> 항목 4</label> <label><input
-				type="checkbox" value="5"> 항목 5</label>
+			<form id="conditionForm" action="conditionSearch" method="get">
+				카드타입 <select class="optionBox" id="card_type" name="card_type">
+					<option value="0">전체</option>
+					<option value="풀">풀</option>
+					<option value="불꽃">불꽃</option>
+					<option value="물">물</option>
+					<option value="번개">번개</option>
+					<option value="초">초</option>
+					<option value="격투">격투</option>
+					<option value="악">악</option>
+					<option value="강철">강철</option>
+					<option value="드래곤">드래곤</option>
+					<option value="무색">무색</option>
+				</select> 
+				아이템선택 : <select class="optionBox" id="card_sort" name="card_sort">
+					<option value="0">전체</option>
+					<option value="함정">함정</option>
+					<option value="아이템">아이템</option>
+					<option value="포켓몬의 도구">포켓몬의 도구</option>
+					<option value="스타디움">스타디움</option>
+					<option value="특수에너지">특수에너지</option>
+					<option value="기본에너지">기본에너지</option>
+				</select>
+			</form>
+			<button class="conditionSearch" id="conditionSearch"
+				onclick="con_search()">조건검색</button>
 		</div>
 	</div>
 	<div class="container">
@@ -86,6 +107,36 @@
 	<%@ include file="/WEB-INF/views/main/footer.jsp"%>
 	<script type="module" src="${path}/resources/js/main.js"></script>
 	<script>
+	
+	function con_search() {
+        var form = document.getElementById("conditionForm");
+        var formData = $(form).serialize();
+
+        $.ajax({
+            url: "/myapp/deckMakers/conditionYSearch.do",
+            type: "GET",
+            data: formData,
+            dataType: "json",
+            success: function(data) {
+            	console.log("성공")
+            	console.log(data)
+                var deckList = document.getElementById("deckList");
+                deckList.innerHTML = ""; // 기존 내용 삭제
+
+                data.forEach(card => {
+                    var cardDiv = document.createElement("div");
+                    cardDiv.classList.add("card-count");
+                    cardDiv.innerHTML = `
+                        <img src="${card.card_id}" class="listCard" onclick="call('${card.card_id}')">
+                    `;
+                    deckList.appendChild(cardDiv);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error("Error:", error);
+            }
+        });
+    }
 
     function insertCard(){
     	console.log($("#deckTitle").val());

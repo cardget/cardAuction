@@ -696,11 +696,22 @@ textarea {
 .filter-options {
 	border-bottom: 1px solid #E1E6EC;
 	height: 40px;
-	display: flex;
-	align-items: center;
-	padding: 0 270px;
 	display: none;
-	padding-top: 20px;
+	align-items: center;
+	padding: 20px 270px;
+	gap:80px;
+	justify-content:space-between;
+}
+.optionBox{
+	width:110px;
+	height:30px;
+	padding-left:10px
+}
+.conditionSearch{
+	width:100px;
+	height:30px;
+	background:#fff;
+	border:1px solid #007FFF;
 }
 .moreBtn {
 	display: flex;
