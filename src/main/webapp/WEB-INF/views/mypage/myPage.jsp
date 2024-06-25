@@ -55,24 +55,7 @@
 			});
 		});
 	});
-	
-	$(function() {
-		$(".revision").click(function() {
-			$.ajax({
-				url : '${path}/mypage/editProfile.do',
-				method : 'GET',
-				success : function(response) {
-					$(".content").html(response);
-				},
-				error : function(xhr, status, error) {
-					console.log("Error: " + error);
-					console.log("Status: " + status);
-					console.dir(xhr);
-					alert("Failed to load the page.");
-				}
-			});
-		});
-	});
+
 </script>
 </head>
 <body>
