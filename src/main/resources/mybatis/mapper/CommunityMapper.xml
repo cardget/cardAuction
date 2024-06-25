@@ -71,11 +71,39 @@
 
 	<!-- 추천 -->
 	<update id="incrementRecommend" parameterType="int">
-		UPDATE COMMUNITY SET RECOMMEND = RECOMMEND + 1 WHERE COMM_ID = #{commid}
+		UPDATE COMMUNITY
+		SET RECOMMEND = RECOMMEND + 1 WHERE COMM_ID = #{commid}
 	</update>
-	
+
 	<!-- 추천 수 조회 -->
-	<select id="getRecommendCount" parameterType="int" resultType="int">
+	<select id="getRecommendCount" parameterType="int"
+		resultType="int">
 		SELECT RECOMMEND FROM COMMUNITY WHERE COMM_ID = #{commid}
 	</select>
+
+	<!-- 댓글 리스트 조회 -->
+	<select id="selectReplie" parameterType="int"
+		resultType="replievo">
+		SELECT
+		R.CMT,
+		R.CREATE_TIME,
+		U.NICKNAME,
+		U.PROFILE_IMAGE
+		FROM
+		REPLIES R
+		JOIN USERS U ON R.USER_ID = U.USER_ID
+		WHERE COMM_ID=#{commid}
+	</select>
+
+	<!-- 댓글 수 조회 -->
+	<select id="selectReplieNum" parameterType="int"
+		resultType="int">
+		SELECT COUNT(*) FROM REPLIES WHERE COMM_ID=#{commid}
+	</select>
+
+	<!-- 댓글 작성 -->
+	<insert id="insertComment" parameterType="replievo">
+		INSERT INTO REPLIES(REPLY_ID, CMT, COMM_ID, CREATE_TIME, USER_ID)
+		VALUES(REPLY_SEQ.NEXTVAL,#{cmt},#{comm_id}, SYSDATE, #{user_id})
+	</insert>
 </mapper>

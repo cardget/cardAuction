@@ -12,12 +12,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.cardproject.myapp.dto.BoardListDTO;
 import com.cardproject.myapp.dto.CommunityDTO;
+import com.cardproject.myapp.dto.ReplieDTO;
 import com.cardproject.myapp.service.CommunityService;
 
 @Controller
@@ -124,10 +126,44 @@ public class CommunityController {
 	@ResponseBody
 	public String Recommend(Integer commId) {
 		System.out.println("/community/recommendUp.do 요청");
-		cService.incrementRecommend(commId);
-		int result = cService.getRecommendCount(commId);
+		cService.incrementRecommend(commId); // 조회수 증가
+		int result = cService.getRecommendCount(commId); // 증가된 조회수
 		if (result > 0) {
 			return String.valueOf(result);
+		} else {
+			return "fail";
+		}
+	}
+
+	// 댓글 리스트 조회
+	@GetMapping("/getReplieList.do")
+	@ResponseBody
+	public List<ReplieDTO> selectReplieList(Integer commId) {
+		System.out.println("/community/replieList.do 요청");
+		List<ReplieDTO> rlist = cService.selectReplieList(commId);
+		return rlist;
+	}
+
+	// 댓글 수 조회
+	@GetMapping("/getReplieCount.do")
+	@ResponseBody
+	public int getReplieCount(Integer commId) {
+		return cService.getReplieCount(commId);
+	}
+
+	// 댓글 작성
+	@PostMapping("/insertReplie.do")
+	@ResponseBody
+	public String insertReplie(@RequestParam Integer commId, @RequestParam String cmt, @RequestParam String userId) {
+		ReplieDTO replie = new ReplieDTO();
+		replie.setComm_id(commId);
+		replie.setCmt(cmt);
+		replie.setUser_id(userId);
+		System.out.println(replie);
+
+		int result = cService.insertComment(replie);
+		if (result > 0) {
+			return "success";
 		} else {
 			return "fail";
 		}

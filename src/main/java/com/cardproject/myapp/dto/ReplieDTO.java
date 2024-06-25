@@ -9,9 +9,11 @@ import lombok.ToString;
 @Getter@Setter
 @ToString
 public class ReplieDTO {
-	private int reply_id; //¾ÆÀÌµğ
-	private String cmt; //³»¿ë
-	private Date create_time; //ÀÛ¼º½Ã°£
-	private int comm_id; //¿ø±Û¾ÆÀÌµğ
-	private int user_id; //´ä±Û¾ÆÀÌµğ
+	private int reply_id; // ë‹µê¸€ ì•„ì´ë””
+	private String cmt; // ë‹µê¸€ ë‚´ìš©
+	private Date create_time; // ìƒì„± ì‹œê°„
+	private int comm_id; // ê²Œì‹œê¸€ ì•„ì´ë””
+	private String user_id; // ìœ ì €ì•„ì´ë””
+	private String nickname; // ë‹‰ë„¤ì„
+	private String profile_image; // í”„ë¡œí•„ ì´ë¯¸ì§€
 }
