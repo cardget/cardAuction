@@ -25,7 +25,7 @@
 				<h3>${bids.item_name}</h3>
 				<p>입찰시간: ${bids.bid_time}</p>
 				<p class="enddate">종료일자: ${bids.end_date}</p>
-				<a href="#" class="grayfont">상세보기 ></a>
+				<a href="../auction/auctionDetail?item_id=${bids.item_id}" class="grayfont">상세보기 ></a>
 			</div>
 			<div class="status-section">
 				<c:set var="endDate" value="${bids.end_date}" />

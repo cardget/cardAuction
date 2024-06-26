@@ -71,7 +71,7 @@
             <div class="form-group address-group">
 			    <label for="address" class="input-label">주소</label>
 			    <div class="address-container">
-			        <input type="text" id="sample6_postcode" value="${user.zip_code}" class="input-field">
+			        <input type="text" id="sample6_postcode" name="zipCode" value="${user.zip_code}" class="input-field">
 			        <input type="button" onclick="sample6_execDaumPostcode()" value="주소 찾기" class="check-button">
 			    </div>
 			    <div class="address-fields">
@@ -79,27 +79,6 @@
 			        <input type="text" id="sample6_detailAddress" name="detailAddress" value="${user.address_detail}" class="input-field">
 			    </div>
 			</div>
-            <hr class="form-divider">
-            <div class="form-group">
-                <label for="email" class="input-label">이메일</label>
-                <input type="text" id="domain" name="domain" required value="${domainPart}" class="email-input-field">
-                &nbsp;
-                <select class="email-select" name="emailList" size="1" onchange="return checkEmail()">
-                	<option value=" ">직접입력</option>
-                    <option value="신한">신한</option>
-                    <option value="우리">우리</option>
-                    <option value="국민">국민</option>
-                    <option value="기업">기업</option>
-                    <option value="하나">하나</option>
-                    <option value="농협">농협</option>
-                    <option value="수협">수협</option>
-                    <option value="부산">부산</option>
-                    <option value="대구">대구</option>
-                    <option value="광주">광주</option>
-                    <option value="제주">제주</option>
-                    <option value="카카오뱅크">카카오뱅크</option>
-                </select>
-            </div>
             <div class=button-section>
             	<button type="submit" class="submit-button">수정완료</button>
             </div>
