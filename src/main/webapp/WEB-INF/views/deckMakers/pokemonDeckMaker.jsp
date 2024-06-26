@@ -20,18 +20,28 @@
 
 <body>
 	<!--header-->
-	<%@ include file="/WEB-INF/views/main/header.jsp"%>
+	<c:choose>
+    	<c:when test="${empty userid}">
+    		<%@ include file="/WEB-INF/views/main/defaultHeader.jsp"%>
+    	</c:when>
+    	<c:otherwise>
+    		<%@ include file="/WEB-INF/views/main/loginHeader.jsp"%>
+    	</c:otherwise>
+    </c:choose>
 	<div class="header-image">
 		<img src="${path }/resources/images/default/pokemon_banner.png">
 	</div>
 	<div class="top-container">
 		<div class="search-area-full">
 			<div class="search-input-wrapper">
-				<input type="text" class="card-search-box" placeholder="검색어를 입력하세요.">
-				<button type="submit" class="card-search" onclick="searchCard()">
-					<img src="${path }/resources/icon/search.png" alt="search"
-						class="card-search-icon">
-				</button>
+				<form action="${path}/deckMakers/searchP" method="get">
+					<input type="text" class="card-search-box" name="query"
+						placeholder="검색어를 입력하세요.">
+					<button type="submit" class="card-search">
+						<img src="${path }/resources/icon/search.png" alt="search"
+							class="card-search-icon">
+					</button>
+				</form>
 			</div>
 			<button type="button" class="filter-btn"
 				onclick="toggleFilterOptions()">
@@ -52,8 +62,7 @@
 					<option value="강철">강철</option>
 					<option value="드래곤">드래곤</option>
 					<option value="무색">무색</option>
-				</select> 
-				아이템선택 : <select class="optionBox" id="card_sort" name="card_sort">
+				</select> 아이템선택 : <select class="optionBox" id="card_sort" name="card_sort">
 					<option value="s">전체</option>
 					<option value="서포트">서포트</option>
 					<option value="아이템">아이템</option>

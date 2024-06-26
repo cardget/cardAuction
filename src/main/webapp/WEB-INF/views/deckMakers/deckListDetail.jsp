@@ -16,7 +16,14 @@
 
 <body>
     <!--header-->
-    <%@ include file="/WEB-INF/views/main/header.jsp" %>
+    <c:choose>
+    	<c:when test="${empty userid}">
+    		<%@ include file="/WEB-INF/views/main/defaultHeader.jsp"%>
+    	</c:when>
+    	<c:otherwise>
+    		<%@ include file="/WEB-INF/views/main/loginHeader.jsp"%>
+    	</c:otherwise>
+    </c:choose>
     <div class="deck-detail-image">
         <div class="banner-overlay"> <!--정보입력 오버레이-->
             <p>날뛰는우레 & 모래털가죽</p>

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -45,11 +46,25 @@ public class DeckMakerController {
 		System.out.println("deckListMain page");
 
 	}
+	
 
 	@Autowired
 	private DeckMakerService deckMakerService;
 	@Autowired
 	HttpSession session;
+	
+	String userid = (String) session.getAttribute("userid");
+	
+	if (userid == null) {
+		return "main";
+	}else {
+		UserDTO user = mpService.selectUserById(userid);
+		List<NotificationDTO> nlist = mpService.selectFiveNotifications(userid);
+		model.addAttribute("user", user);
+		model.addAttribute("nlist", nlist);
+		
+        return "main";
+	}
 
 	// 포켓몬카드 -------------------------------------------------------------------
 	@RequestMapping("/pokemonDeckMaker.do")

@@ -56,17 +56,10 @@ public class DeckMakerDAO {
     public int deckId() {
         return sqlSession.selectOne(namespace + ".deckId");
     }
-
-    public List<DigimonDTO> filterDCard(Map<String, String> params) {
-    	System.out.println("DAOparams:"+params);
-        return sqlSession.selectList(namespace + ".filterDCard", params);
-    }
-    public List<OnepieceDTO> filterOCard(Map<String, String> params) {
-    	System.out.println("DAOparams:"+params);
-        return sqlSession.selectList(namespace + ".filterOCard", params);
-    }
-    public List<YugiohDTO> filterYCard(Map<String, String> params) {
-    	System.out.println("DAOparams:"+params);
-        return sqlSession.selectList(namespace + ".filterYCard", params);
+    public void updateThumbnail(int deckId, String kind) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("deckId", deckId);
+        params.put("kind", kind);
+        sqlSession.update(namespace + ".updateThumbnail", params);
     }
 }

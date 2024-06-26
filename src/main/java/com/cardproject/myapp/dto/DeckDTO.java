@@ -9,11 +9,11 @@ import lombok.ToString;
 @Getter@Setter
 @ToString
 public class DeckDTO {
-	private int deck_id; //µ¦¾ÆÀÌµð
-	private int cat; //Ä«Å×°í¸®
-	private String deck_title; //ÀÌ¸§
-	private Date create_date; //»ý¼ºÀÏÀÚ
-	private String user_id; //ÀÛ¼ºÀÚ
-	private int recommend; //ÃßÃµ¼ö
-	private String cmt; //ÄÚ¸àÆ®
+	private int deck_id; //ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½
+	private int cat; //Ä«ï¿½×°ï¿½
+	private String deck_title; //ï¿½Ì¸ï¿½
+	private Date create_date; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private String user_id; //ï¿½Û¼ï¿½ï¿½ï¿½
+	private int recommend; //ï¿½ï¿½Ãµï¿½ï¿½
+	private String cmt; //ï¿½Ú¸ï¿½Æ®
 }
