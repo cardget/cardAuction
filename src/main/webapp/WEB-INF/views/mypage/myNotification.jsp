@@ -53,20 +53,32 @@
 			<a href="${path}/mypage/deleteAllNoti.do" class="grayfont">읽은 알림 삭제</a>
 		</div>
 	</div>
-	<c:forEach var="noti" items="${nlist}">
-        <div class="${noti.is_read == 1 ? 'item-section already-read' : 'item-section'}" data-noti-id="${noti.notification_id}" data-item-id="${noti.item_id}">
-            <div class="image-section">
-				<img src="${noti.image1}" alt="Product Image">
+	<c:choose>
+		<c:when test="${empty nlist}">
+			<div class="item-section">
+				<div class="info-section">
+					<h3>알림이 없습니다</h3>
+				</div>
 			</div>
-			<div class="info-section">
-				<h3>${noti.item_name}</h3>
-				<p>${noti.cmt }</p>
-				<p>${noti.create_date }</p>
-			</div>
-			<div class="status-section">
-				<button class="status-button-sold">삭제</button>
-			</div>
-		</div>
-	</c:forEach>
+		</c:when>
+		<c:otherwise>
+			<c:forEach var="noti" items="${nlist}">
+		        <div class="${noti.is_read == 1 ? 'item-section already-read' : 'item-section'}" data-noti-id="${noti.notification_id}" data-item-id="${noti.item_id}">
+		            <div class="image-section">
+						<img src="${noti.image1}" alt="Product Image">
+					</div>
+					<div class="info-section">
+						<h3>${noti.item_name}</h3>
+						<p>${noti.cmt }</p>
+						<p>${noti.create_date }</p>
+					</div>
+					<div class="status-section">
+						<button class="status-button-sold">삭제</button>
+					</div>
+				</div>
+			</c:forEach>
+		</c:otherwise>
+	</c:choose>
+	
 </body>
 </html>

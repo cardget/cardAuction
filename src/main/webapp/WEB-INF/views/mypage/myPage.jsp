@@ -57,7 +57,7 @@
 	});
 	
 	$(function() {
-		$(".mainColor").click(function(event) {
+		$("#allNoti").click(function(event) {
 			event.preventDefault();
 			
 			// 기존에 선택된 메뉴의 selected 클래스 제거
@@ -122,22 +122,22 @@
 			<hr class="grayfont">
 			<div class="bottom-div">
 				<div>
-					<a href="../auth/logout.do" class="grayfont">로그아웃</a> <span
-						class="grayfont"> | </span> <a href="#" class="grayfont">회원탈퇴</a>
+					<a href="../auth/logout.do" class="grayfont">로그아웃</a> 
+					<span class="grayfont"> | </span> 
+					<a href="#" class="grayfont">회원탈퇴</a>
 				</div>
 			</div>
 		</div>
 		<div class="main">
 			<div class="main-header">
 				<div class="dropdown">
-					<a href="#" class="dropdown-toggle"> <img
-						src="${path}/resources/icon/uncheckedchat.png" alt="채팅" height=30>
+					<a href="#" class="dropdown-toggle"> 
+						<img src="${path}/resources/icon/uncheckedchat.png" alt="채팅" height=30>
 					</a>
 					<div class="dropdown-content">
 						<div class="chat-brief">
 							<div class="chat-image">
-								<img src="${path}/resources/images/test/pikachucard.png"
-									alt="Product Image">
+								<img src="${path}/resources/images/test/pikachucard.png" alt="Product Image">
 							</div>
 							<div class="chat-content">
 								<h3>[포켓몬] 1998 피카츄 일러스트레이터...</h3>
@@ -146,8 +146,7 @@
 						</div>
 						<div class="chat-brief">
 							<div class="chat-image">
-								<img src="${path}/resources/images/test/pikachucard.png"
-									alt="Product Image">
+								<img src="${path}/resources/images/test/pikachucard.png" alt="Product Image">
 							</div>
 							<div class="chat-content">
 								<h3>[포켓몬] 1998 피카츄 일러스트레이터...</h3>
@@ -156,8 +155,7 @@
 						</div>
 						<div class="chat-brief">
 							<div class="chat-image">
-								<img src="${path}/resources/images/test/pikachucard.png"
-									alt="Product Image">
+								<img src="${path}/resources/images/test/pikachucard.png" alt="Product Image">
 							</div>
 							<div class="chat-content">
 								<h3>[포켓몬] 1998 피카츄 일러스트레이터...</h3>
@@ -166,8 +164,7 @@
 						</div>
 						<div class="chat-brief">
 							<div class="chat-image">
-								<img src="${path}/resources/images/test/pikachucard.png"
-									alt="Product Image">
+								<img src="${path}/resources/images/test/pikachucard.png" alt="Product Image">
 							</div>
 							<div class="chat-content">
 								<h3>[포켓몬] 1998 피카츄 일러스트레이터...</h3>
@@ -176,8 +173,7 @@
 						</div>
 						<div class="chat-brief">
 							<div class="chat-image">
-								<img src="${path}/resources/images/test/pikachucard.png"
-									alt="Product Image">
+								<img src="${path}/resources/images/test/pikachucard.png" alt="Product Image">
 							</div>
 							<div class="chat-content">
 								<h3>[포켓몬] 1998 피카츄 일러스트레이터...</h3>
@@ -220,7 +216,7 @@
 								</c:forEach>
 							</c:otherwise>
 						</c:choose>
-						<a class="mainColor" href="myNoti.do">모든 알림 보기</a>
+						<a id="allNoti" class="mainColor" href="myNoti.do">모든 알림 보기</a>
 					</div>
 				</div>
 			</div>
@@ -229,8 +225,7 @@
 					<h3 class="grayfont">ⓘ 기본정보</h3>
 					<c:choose>
 						<c:when test="${empty user.profile_image}">
-							<img src="${path}/resources/images/default/defaultprofile.png"
-								alt="프로필이미지" height="150">
+							<img src="${path}/resources/images/default/defaultprofile.png" alt="프로필이미지" height="150">
 						</c:when>
 						<c:otherwise>
 							<img src="${user.profile_image}" alt="프로필이미지" height="150">
@@ -265,11 +260,11 @@
 							<h3 class="info">휴대전화</h3>
 						</div>
 						<div class="slider-button">
-							<label class="switch"> <input class="alarm"
-								type="checkbox"
+							<label class="switch"> 
+							<input class="alarm" type="checkbox"
 								<c:if test="${user.phone_agreement == 1}">
-                                        checked="checked"
-                                    </c:if>>
+                                	checked="checked"
+                                </c:if>>
 								<span class="slider round"></span>
 							</label>
 						</div>
@@ -277,13 +272,11 @@
 					<hr>
 					<div class="alarmSetting">
 						<div>
-							<img src="${path}/resources/icon/mail.png" alt="메일아이콘" height=20
-								class="info">
+							<img src="${path}/resources/icon/mail.png" alt="메일아이콘" height=20 class="info">
 							<h3 class="info">이메일</h3>
 						</div>
 						<div class="slider-button">
-							<label class="switch"> <input class="alarm"
-								type="checkbox"
+							<label class="switch"> <input class="alarm" type="checkbox"
 								<c:if test="${user.email_agreement == 1}">
                                         checked="checked"
                                     </c:if>>
