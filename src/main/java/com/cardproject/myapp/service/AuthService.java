@@ -20,10 +20,12 @@ public class AuthService {
 	  return authDAO.insertSignUp(user);
   }
   public int isUserIdDuplicate(String userId) {
-	  System.out.println("service: " + authDAO.isUserIdDuplicate(userId));
 	  return authDAO.isUserIdDuplicate(userId);
   }
   public int isNicknameDuplicate(String nickname) {
 	  return authDAO.isNicknameDuplicate(nickname);
+  }
+  public String findUserId(String userName, String phoneNumber) {
+	  return authDAO.findUserId(userName, phoneNumber);
   }
 }

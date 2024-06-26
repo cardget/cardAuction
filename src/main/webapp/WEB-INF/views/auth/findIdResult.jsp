@@ -20,9 +20,12 @@
 		<h5>아이디 찾기</h5>
 		<h6 >회원정보에 등록한 휴대전화로 인증</h6>
 		</div>		
-		<hr style="width:440px;">	
-		<h6 style="margin-top:0px;"><img src="${path}/resources/icon/blue_error.png">&nbsp;고객님의 정보와 일치하는 ID입니다.</h6>	
-			<input type="text" id="id" name="id" class="input-field" placeholder="shinhanDS03" required>
+		<hr style="width:440px;">			
+		<h6 style="margin-top:0px;">
+			<img src="${path}/resources/icon/blue_error.png">&nbsp;고객님의 정보와 일치하는 ID입니다.
+		</h6>
+		<form>	
+			<input type="text" id="id" name="id" class="input-field" value="${userId}" readonly>
 			<img src="${path}/resources/icon/CheckBox_Blue.png">
 			<button type="submit" class="check-button">로그인 하러가기</button>
 			<button type="submit" class="check-button">비밀번호 찾기</button>
