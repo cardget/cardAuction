@@ -41,7 +41,7 @@
 		<div id="filter-options" class="filter-options">
 			<form id="conditionForm" action="conditionSearch" method="get">
 				카드타입 <select class="optionBox" id="card_type" name="card_type">
-					<option value="0">전체</option>
+					<option value="t">전체</option>
 					<option value="풀">풀</option>
 					<option value="불꽃">불꽃</option>
 					<option value="물">물</option>
@@ -54,7 +54,7 @@
 					<option value="무색">무색</option>
 				</select> 
 				아이템선택 : <select class="optionBox" id="card_sort" name="card_sort">
-					<option value="0">전체</option>
+					<option value="s">전체</option>
 					<option value="함정">함정</option>
 					<option value="아이템">아이템</option>
 					<option value="포켓몬의 도구">포켓몬의 도구</option>
@@ -113,7 +113,7 @@
         var formData = $(form).serialize();
 
         $.ajax({
-            url: "/myapp/deckMakers/conditionYSearch.do",
+            url: "/myapp/deckMakers/loadMoreYCard.do",
             type: "GET",
             data: formData,
             dataType: "json",
@@ -122,12 +122,14 @@
             	console.log(data)
                 var deckList = document.getElementById("deckList");
                 deckList.innerHTML = ""; // 기존 내용 삭제
+                var here = document.getElementById("here");
+                here.innerHTML = ""; // 기존 내용 삭제
 
                 data.forEach(card => {
                     var cardDiv = document.createElement("div");
                     cardDiv.classList.add("card-count");
                     cardDiv.innerHTML = `
-                        <img src="${card.card_id}" class="listCard" onclick="call('${card.card_id}')">
+                        <img src="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}')">
                     `;
                     deckList.appendChild(cardDiv);
                 });
@@ -155,6 +157,7 @@
     		}
     	});
     }
+    
 		function toggleFilterOptions() {
 			var filterOptions = document.getElementById('filter-options');
 			if (filterOptions.style.display === 'none') {

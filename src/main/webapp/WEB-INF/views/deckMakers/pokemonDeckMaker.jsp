@@ -41,7 +41,7 @@
 		<div id="filter-options" class="filter-options">
 			<form id="conditionForm" action="conditionSearch" method="get">
 				카드타입 <select class="optionBox" id="card_type" name="card_type">
-					<option value="0">전체</option>
+					<option value="t">전체</option>
 					<option value="풀">풀</option>
 					<option value="불꽃">불꽃</option>
 					<option value="물">물</option>
@@ -52,8 +52,9 @@
 					<option value="강철">강철</option>
 					<option value="드래곤">드래곤</option>
 					<option value="무색">무색</option>
-				</select> 아이템선택 : <select class="optionBox" id="card_sort" name="card_sort">
-					<option value="0">전체</option>
+				</select> 
+				아이템선택 : <select class="optionBox" id="card_sort" name="card_sort">
+					<option value="s">전체</option>
 					<option value="서포트">서포트</option>
 					<option value="아이템">아이템</option>
 					<option value="포켓몬의 도구">포켓몬의 도구</option>
@@ -75,7 +76,7 @@
 						<c:forEach items="${pCardList}" var="card">
 							<div class="card-count">
 								<img src="${card.card_id}" onclick="call('${card.card_id}')"
-									class="listCard"">
+									class="listCard">
 							</div>
 						</c:forEach>
 					</div>
@@ -106,54 +107,39 @@
 	<%@ include file="/WEB-INF/views/main/footer.jsp"%>
 	<script type="module" src="${path}/resources/js/main.js"></script>
 	<script>
-	$(document).ready(function() {
-	    fetch("${path}/deckMakers/pokemonDeckMaker.do?page=1")
-	        .then(response => response.json())
-	        .then(data => {
-	            console.log(data);
-	            var deckList = document.getElementById("deckList");
-	            deckList.innerHTML = ""; // 기존 내용 삭제
-
-	            data.forEach(card => {
-	                var cardDiv = document.createElement("div");
-	                cardDiv.classList.add("card-count");
-	                cardDiv.innerHTML = `
-	                    <img src="${card.card_id}" class="listCard" onclick="call('${card.card_id}')">
-	                `;
-	                deckList.appendChild(cardDiv);
-	            });
-	        })
-	        .catch(error => console.error("Error:", error));
-	});
+	
 	function con_search() {
-	    var form = document.getElementById("conditionForm");
-	    var formData = $(form).serialize();
+        var form = document.getElementById("conditionForm");
+        var formData = $(form).serialize();
 
-	    $.ajax({
-	        url: "${path}/deckMakers/pokemonDeckMaker.do",
-	        type: "GET",
-	        data: formData + "&responseType=search",
-	        dataType: "json",
-	        success: function(data) {
-	            console.log("성공");
-	            console.log(data);
-	            var deckList = document.getElementById("deckList");
-	            deckList.innerHTML = ""; // 기존 내용 삭제
+        $.ajax({
+            url: "/myapp/deckMakers/loadMorePCard.do",
+            type: "GET",
+            data: formData,
+            dataType: "json",
+            success: function(data) {
+            	console.log("성공")
+            	console.log(data)
+                var deckList = document.getElementById("deckList");
+                deckList.innerHTML = ""; // 기존 내용 삭제
+                var here = document.getElementById("here");
+                here.innerHTML = ""; // 기존 내용 삭제
 
-	            data.forEach(card => {
-	                var cardDiv = document.createElement("div");
-	                cardDiv.classList.add("card-count");
-	                cardDiv.innerHTML = `
-	                    <img src="${card.card_id}" class="listCard" onclick="call('${card.card_id}')">
-	                `;
-	                deckList.appendChild(cardDiv);
-	            });
-	        },
-	        error: function(xhr, status, error) {
-	            console.error("Error:", error);
-	        }
-	    });
-	}
+                data.forEach(card => {
+                	console.log(card);
+                    var cardDiv = document.createElement("div");
+                    cardDiv.classList.add("card-count");
+                    cardDiv.innerHTML = `
+                        <img src="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}')">
+                    `;
+                    deckList.appendChild(cardDiv);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error("Error:", error);
+            }
+        });
+    }
 	
 	//덱만들기 등록
 	    function insertCard(){
@@ -184,25 +170,27 @@
 		}
 	//더보기
 		let currentPageP = 1;
-document.getElementById('loadMorePBtn').addEventListener('click', function() {
-    currentPageP++;
-    console.log(currentPageP);
-    fetch("${path}/deckMakers/pokemonDeckMaker.do?page=" + currentPageP + "&responseType=loadMore")
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            const deckList = document.getElementById('here');
-            data.forEach(card => {
-                const cardDiv = document.createElement('div');
-                cardDiv.classList.add('card-count');
-                cardDiv.innerHTML += `
-                    <img src="${card.card_id}" class="listCard" onclick="call('${card.card_id}')">
-                `;
-                deckList.appendChild(cardDiv);
-            });
-        })
-        .catch(error => console.error("Error:", error));
-});
+		document.getElementById('loadMorePBtn').addEventListener('click', function() {
+
+		    currentPageP++;
+		    console.log(currentPageP);
+		    fetch("/myapp/deckMakers/loadMorePCard.do?page=" + currentPageP)
+		        .then(response =>  
+		        response.json() 
+		        )
+		        .then(data => {
+		            console.log(data);
+		            const deckList = document.getElementById('here');
+		            data.forEach(card => {
+		                const cardDiv = document.createElement('div');
+		                cardDiv.classList.add('card-count');
+		                cardDiv.innerHTML += `
+		                    <img src="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}')">
+		                `;
+		                deckList.appendChild(cardDiv);
+		            });
+		        });
+		});
 		//카드리스트에추가
 		function call(card_id){
 			document.querySelector("#deckListContainer").innerHTML += `

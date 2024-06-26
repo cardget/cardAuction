@@ -28,25 +28,19 @@ public class DeckMakerDAO {
         return sqlSession.selectList(namespace + ".selectOrFilterPCard", params);
     }
 
-    public List<YugiohDTO> selectAllYCard(int startRow, int endRow) {
-        Map<String, Integer> params = new HashMap<>();
-        params.put("startRow", startRow);
-        params.put("endRow", endRow);
-        return sqlSession.selectList(namespace + ".selectAllYCard", params);
+    public List<YugiohDTO> selectOrFilterYCard(Map<String, Object> params) {
+        System.out.println("DAOparams:" + params);
+        return sqlSession.selectList(namespace + ".selectOrFilterYCard", params);
     }
 
-    public List<DigimonDTO> selectAllDCard(int startRow, int endRow) {
-        Map<String, Integer> params = new HashMap<>();
-        params.put("startRow", startRow);
-        params.put("endRow", endRow);
-        return sqlSession.selectList(namespace + ".selectAllDCard", params);
+    public List<DigimonDTO> selectOrFilterDCard(Map<String, Object> params) {
+        System.out.println("DAOparams:" + params);
+        return sqlSession.selectList(namespace + ".selectOrFilterDCard", params);
     }
-
-    public List<OnepieceDTO> selectAllOCard(int startRow, int endRow) {
-        Map<String, Integer> params = new HashMap<>();
-        params.put("startRow", startRow);
-        params.put("endRow", endRow);
-        return sqlSession.selectList(namespace + ".selectAllOCard", params);
+    
+    public List<OnepieceDTO> selectOrFilterOCard(Map<String, Object> params) {
+        System.out.println("DAOparams:" + params);
+        return sqlSession.selectList(namespace + ".selectOrFilterOCard", params);
     }
     
     //덱정보 추가

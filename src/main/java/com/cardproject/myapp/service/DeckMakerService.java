@@ -37,31 +37,45 @@ public class DeckMakerService {
         return deckMakerDAO.selectOrFilterPCard(params);
     }
     
-    public List<YugiohDTO> selectAllYCard(int page) {
-    	 int itemsPerPage = 30;
-         int startRow = (page - 1) * itemsPerPage + 1;
-         int endRow = page * itemsPerPage;
-         return deckMakerDAO.selectAllYCard(startRow, endRow);
-    }
-
-    public List<DigimonDTO> selectAllDCard(int page) {
-    	int itemsPerPage = 30;
+    public List<YugiohDTO> getYCardList(int page, Map<String, String> filters) {
+        int itemsPerPage = 30;
         int startRow = (page - 1) * itemsPerPage + 1;
         int endRow = page * itemsPerPage;
-        return deckMakerDAO.selectAllDCard(startRow, endRow);
+
+        Map<String, Object> params = new HashMap<>(filters);
+        params.put("startRow", startRow);
+        params.put("endRow", endRow);
+
+        System.out.println("serviceParams:" + params);
+        return deckMakerDAO.selectOrFilterYCard(params);
     }
 
-    public List<OnepieceDTO> selectAllOCard(int page) {
-            int itemsPerPage = 30;
-            int startRow = (page - 1) * itemsPerPage + 1;
-            int endRow = page * itemsPerPage;
-            return deckMakerDAO.selectAllOCard(startRow, endRow);
+    public List<DigimonDTO> getDCardList(int page, Map<String, String> filters) {
+        int itemsPerPage = 30;
+        int startRow = (page - 1) * itemsPerPage + 1;
+        int endRow = page * itemsPerPage;
+
+        Map<String, Object> params = new HashMap<>(filters);
+        params.put("startRow", startRow);
+        params.put("endRow", endRow);
+
+        System.out.println("serviceParams:" + params);
+        return deckMakerDAO.selectOrFilterDCard(params);
     }
+    public List<OnepieceDTO> getOCardList(int page, Map<String, String> filters) {
+        int itemsPerPage = 30;
+        int startRow = (page - 1) * itemsPerPage + 1;
+        int endRow = page * itemsPerPage;
+
+        Map<String, Object> params = new HashMap<>(filters);
+        params.put("startRow", startRow);
+        params.put("endRow", endRow);
+
+        System.out.println("serviceParams:" + params);
+        return deckMakerDAO.selectOrFilterOCard(params);
+    }
+
     
-   // public int saveDeck(DeckDTO deckDTO) {
-   //     return deckMakerDAO.insertDeck(deckDTO);
-   // }
-
     public void saveDeckSource(DeckDTO deckDTO, String[] imgList, String kind) {
     	deckMakerDAO.insertDeck(deckDTO);
     	int deckId = deckMakerDAO.deckId();
@@ -88,17 +102,5 @@ public class DeckMakerService {
         }
     }
     
-    public List<DigimonDTO> filterDCard(Map<String, String> params) {
-    	System.out.println("serviceParams:"+params);
-        return deckMakerDAO.filterDCard(params);
-    }
-    public List<OnepieceDTO> filterOCard(Map<String, String> params) {
-    	System.out.println("serviceParams:"+params);
-        return deckMakerDAO.filterOCard(params);
-    }
-    public List<YugiohDTO> filterYCard(Map<String, String> params) {
-    	System.out.println("serviceParams:"+params);
-        return deckMakerDAO.filterYCard(params);
-    }
     
 }

@@ -113,7 +113,7 @@
         var formData = $(form).serialize();
 
         $.ajax({
-            url: "/myapp/deckMakers/conditionDSearch.do",
+            url: "/myapp/deckMakers/loadMoreDCard.do",
             type: "GET",
             data: formData,
             dataType: "json",
@@ -122,12 +122,14 @@
             	console.log(data)
                 var deckList = document.getElementById("deckList");
                 deckList.innerHTML = ""; // 기존 내용 삭제
+                var here = document.getElementById("here");
+                here.innerHTML = ""; // 기존 내용 삭제
 
                 data.forEach(card => {
                     var cardDiv = document.createElement("div");
                     cardDiv.classList.add("card-count");
                     cardDiv.innerHTML = `
-                        <img src="${card.card_id}" class="listCard" onclick="call('${card.card_id}')">
+                        <img src="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}')">
                     `;
                     deckList.appendChild(cardDiv);
                 });
