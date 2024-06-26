@@ -24,10 +24,13 @@ import com.cardproject.myapp.dao.DeckMakerDAO;
 import com.cardproject.myapp.dto.DeckDTO;
 import com.cardproject.myapp.dto.DeckSourceDTO;
 import com.cardproject.myapp.dto.DigimonDTO;
+import com.cardproject.myapp.dto.NotificationDTO;
 import com.cardproject.myapp.dto.OnepieceDTO;
 import com.cardproject.myapp.dto.PokemonDTO;
+import com.cardproject.myapp.dto.UserDTO;
 import com.cardproject.myapp.dto.YugiohDTO;
 import com.cardproject.myapp.service.DeckMakerService;
+import com.cardproject.myapp.service.MyPageService;
 
 import kotlin.internal.RequireKotlin;
 
@@ -52,19 +55,9 @@ public class DeckMakerController {
 	private DeckMakerService deckMakerService;
 	@Autowired
 	HttpSession session;
-	
-	String userid = (String) session.getAttribute("userid");
-	
-	if (userid == null) {
-		return "main";
-	}else {
-		UserDTO user = mpService.selectUserById(userid);
-		List<NotificationDTO> nlist = mpService.selectFiveNotifications(userid);
-		model.addAttribute("user", user);
-		model.addAttribute("nlist", nlist);
-		
-        return "main";
-	}
+	@Autowired
+	MyPageService mpService;
+
 
 	// 포켓몬카드 -------------------------------------------------------------------
 	@RequestMapping("/pokemonDeckMaker.do")
@@ -72,13 +65,22 @@ public class DeckMakerController {
 			@RequestParam(value = "card_type", required = false, defaultValue = "t") String cardType,
 			@RequestParam(value = "card_sort", required = false, defaultValue = "s") String cardSort) {
 		Map<String, String> params = new HashMap<>();
-
+		
+		String userid = (String) session.getAttribute("userid");
 		params.put("card_type", cardType);
 		params.put("card_sort", cardSort);
 		List<PokemonDTO> pCardList = deckMakerService.getPCardList(page, params);
 		System.out.println(pCardList.size());
 		model.addAttribute("pCardList", pCardList);
 		model.addAttribute("currentPage", page);
+		if (userid != null) {
+	
+			UserDTO user = mpService.selectUserById(userid);
+			List<NotificationDTO> nlist = mpService.selectFiveNotifications(userid);
+			model.addAttribute("user", user);
+			model.addAttribute("nlist", nlist);
+		}
+
 	}
 
 	@GetMapping(value="/loadMorePCard.do", produces="application/json")
@@ -101,12 +103,20 @@ public class DeckMakerController {
 			@RequestParam(value = "card_sort", required = false, defaultValue = "s") String cardSort) {
 		Map<String, String> params = new HashMap<>();
 
+		String userid = (String) session.getAttribute("userid");
 		params.put("card_attr", cardAttr);
 		params.put("card_sort", cardSort);
 		List<YugiohDTO> yCardList = deckMakerService.getYCardList(page, params);
 		System.out.println(yCardList.size());
 		model.addAttribute("yCardList", yCardList);
 		model.addAttribute("currentPage", page);
+		if (userid != null) {
+			
+			UserDTO user = mpService.selectUserById(userid);
+			List<NotificationDTO> nlist = mpService.selectFiveNotifications(userid);
+			model.addAttribute("user", user);
+			model.addAttribute("nlist", nlist);
+		}
 	}
 
 	@GetMapping(value="/loadMoreYCard.do", produces="application/json")
@@ -129,12 +139,20 @@ public class DeckMakerController {
 			@RequestParam(value = "card_sort", required = false, defaultValue = "s") String cardSort) {
 		Map<String, String> params = new HashMap<>();
 
+		String userid = (String) session.getAttribute("userid");
 		params.put("card_attr", cardAttr);
 		params.put("card_sort", cardSort);
 		List<DigimonDTO> dCardList = deckMakerService.getDCardList(page, params);
 		System.out.println(dCardList.size());
 		model.addAttribute("dCardList", dCardList);
 		model.addAttribute("currentPage", page);
+		if (userid != null) {
+			
+			UserDTO user = mpService.selectUserById(userid);
+			List<NotificationDTO> nlist = mpService.selectFiveNotifications(userid);
+			model.addAttribute("user", user);
+			model.addAttribute("nlist", nlist);
+		}
 	}
 
 	@GetMapping(value="/loadMoreDCard.do", produces="application/json")
@@ -157,12 +175,20 @@ public class DeckMakerController {
 			@RequestParam(value = "card_sort", required = false, defaultValue = "s") String cardSort) {
 		Map<String, String> params = new HashMap<>();
 
+		String userid = (String) session.getAttribute("userid");
 		params.put("card_attr", cardAttr);
 		params.put("card_sort", cardSort);
 		List<OnepieceDTO> oCardList = deckMakerService.getOCardList(page, params);
 		System.out.println(oCardList.size());
 		model.addAttribute("oCardList", oCardList);
 		model.addAttribute("currentPage", page);
+		if (userid != null) {
+			
+			UserDTO user = mpService.selectUserById(userid);
+			List<NotificationDTO> nlist = mpService.selectFiveNotifications(userid);
+			model.addAttribute("user", user);
+			model.addAttribute("nlist", nlist);
+		}
 	}
 
 	@GetMapping(value="/loadMoreOCard.do", produces="application/json")
