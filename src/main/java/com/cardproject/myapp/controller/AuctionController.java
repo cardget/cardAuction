@@ -28,20 +28,29 @@ import com.cardproject.myapp.dto.BiddingDTO;
 import com.cardproject.myapp.dto.ItemDTO;
 import com.cardproject.myapp.dto.ItemDetailDTO;
 import com.cardproject.myapp.dto.LikeDTO;
+import com.cardproject.myapp.dto.NotificationDTO;
+import com.cardproject.myapp.dto.UserDTO;
 import com.cardproject.myapp.service.AWSS3Service;
 import com.cardproject.myapp.service.AuctionService;
+import com.cardproject.myapp.service.MyPageService;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/auction")
 public class AuctionController {
 
-	@Autowired
-	AuctionService aucs;
-	@Autowired
-	private AWSS3Service s3Service;
+	
+	final AuctionService aucs;
+
+	private final AWSS3Service s3Service;
+	
+	final MyPageService mpService; 
+
 
 	@RequestMapping("/auctionMain.do")
-	public String auctionMain(@RequestParam(value = "sortOption", required = false) String sortOption, Model model) {
+	public String auctionMain(@RequestParam(value = "sortOption", required = false) String sortOption,HttpSession session, Model model) {
 		System.out.println("auctionmain page");
 		if (sortOption == null) {
 			sortOption = "recent";
@@ -50,6 +59,14 @@ public class AuctionController {
 		List<ItemDetailDTO> itemDlist = aucs.getSortedItemList(sortOption);
 		model.addAttribute("selectedSortOption", sortOption);
 		model.addAttribute("itemDlist", itemDlist);
+		String userid = (String) session.getAttribute("userid");
+    	
+    	if (userid != null) {
+			UserDTO user = mpService.selectUserById(userid);
+			List<NotificationDTO> nlist = mpService.selectFiveNotifications(userid);
+			model.addAttribute("user", user);
+			model.addAttribute("nlist", nlist);
+		}
 		return "auction/auctionMain";
 	}
 
