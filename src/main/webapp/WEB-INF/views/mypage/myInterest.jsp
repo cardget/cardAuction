@@ -25,7 +25,7 @@
 				<h3>${interests.item_name}</h3>
 				<p>등록일자: ${interests.create_date}</p>
 				<p class="enddate">종료일자: ${interests.end_date}</p>
-				<a href="#" class="grayfont">상세보기 ></a>
+				<a href="../auction/auctionDetail?item_id=${interests.item_id}" class="grayfont">상세보기 ></a>
 			</div>
 			<div class="status-section">
 				<c:set var="endDate" value="${interests.end_date}" />

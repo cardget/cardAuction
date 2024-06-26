@@ -26,8 +26,7 @@ import com.cardproject.myapp.service.MyPageService;
 @Controller
 @RequestMapping("/mypage")
 public class MyPageController {
-
-    
+	
 	@Autowired
 	MyPageService mpService;
 
@@ -41,12 +40,13 @@ public class MyPageController {
 		if (userid == null) {
 			return "redirect:../auth/login.do";
 		}
-
+		
 		UserDTO user = mpService.selectUserById(userid);
 		List<NotificationDTO> nlist = mpService.selectFiveNotifications(userid);
 		
 		model.addAttribute("user", user);
 		model.addAttribute("nlist", nlist);
+		
 
 		return "mypage/myPage";
 	}
@@ -76,17 +76,19 @@ public class MyPageController {
 	}
 
 	@PostMapping("/editProfile.do")
-	public String updateProfile(@RequestParam("nickname") String nickname,
-			@RequestParam("phone_number") String phoneNumber, @RequestParam("email") String email, @RequestParam("domain") String domain,
-			@RequestParam("address") String address, @RequestParam("address_detail") String addressDetail,
+	public String updateProfile(@RequestParam("password") String password, @RequestParam("nickname") String nickname,
+			@RequestParam("email") String email, @RequestParam("domain") String domain,
+			@RequestParam("address") String address, @RequestParam("detailAddress") String addressDetail,
+			@RequestParam("zipCode") String zipCode,
 			@RequestParam("accnt") String account, @SessionAttribute("user") UserDTO user,
 			RedirectAttributes redirectAttributes) {
+		String fullEmail = email + "@" + domain;
+		user.setPw(password);
 		user.setNickname(nickname);
-		user.setPhone_number(phoneNumber);
-		user.setEmail(email);
+		user.setEmail(fullEmail);
+		user.setZip_code(zipCode);
 		user.setAddress(address);
 		user.setAddress_detail(addressDetail);
-		user.setAccnt(account);
 
 		mpService.userUpdate(user);
 		redirectAttributes.addFlashAttribute("message", "회원정보가 성공적으로 수정되었습니다.");
