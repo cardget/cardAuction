@@ -64,7 +64,14 @@
 <body>
 <c:set var="path" value="${pageContext.servletContext.contextPath}" />
 <!--header-->
-    <%@ include file="/WEB-INF/views/main/header.jsp" %>
+    <c:choose>
+    	<c:when test="${empty userid}">
+    		<%@ include file="/WEB-INF/views/main/defaultHeader.jsp"%>
+    	</c:when>
+    	<c:otherwise>
+    		<%@ include file="/WEB-INF/views/main/loginHeader.jsp"%>
+    	</c:otherwise>
+    </c:choose>
     
 <!-- Body -->
 <div class="topimage"></div>
