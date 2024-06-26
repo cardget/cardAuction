@@ -72,6 +72,10 @@
     		<%@ include file="/WEB-INF/views/main/loginHeader.jsp"%>
     	</c:otherwise>
     </c:choose>
+<<<<<<< HEAD
+=======
+    
+>>>>>>> branch 'main' of https://github.com/cardget/cardAuction.git
 <!-- Body -->
 <div class="topimage"></div>
 <!-- 검색창 -->
