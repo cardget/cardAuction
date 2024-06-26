@@ -4,16 +4,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cardproject.myapp.dto.UserDTO;
+import com.cardproject.myapp.service.AWSS3Service;
 import com.cardproject.myapp.service.AuthService;
+
+import io.jsonwebtoken.io.IOException;
 
 @Controller
 @RequestMapping("/auth")
@@ -21,16 +25,37 @@ public class AuthController {
 
 	@Autowired
 	AuthService aService;
+	@Autowired
+	private AWSS3Service s3Service;
 
 	@GetMapping("/signUp.do")
 	public void signUp() {
 		System.out.println("signUp page");
-	}
+	}	
+	
 	@PostMapping("/insertSignUp.do")
-	public void insertSignUp(UserDTO user) {
-		aService.insertSignUp(user); 
-	}
-
+    public String profileUpload(@RequestParam(value= "profile_image_name", required=false) MultipartFile file, Model model, UserDTO user ) {
+		
+    	if(file!=null&& !file.isEmpty()) {
+    		String fileName="profile/"+file.getOriginalFilename()+System.currentTimeMillis();
+	    	try {
+				String url=s3Service.uploadObject(file, fileName);
+				user.setProfile_image(url);	// 이미지 URL을 UserDTO 에 설정
+			} catch (java.io.IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				model.addAttribute("error","이미지 업로드 중 오류가 발생했습니다.");
+				return "redirect:signUp.do";
+			}    		
+    	}else {
+    		user.setProfile_image(null);
+    	}   	    
+    	
+    	aService.insertSignUp(user);
+    	return "redirect:login.do";
+    }
+	
+	
 	@GetMapping("/login.do")
 	public void login() {
 		System.out.println("login page");
@@ -63,16 +88,28 @@ public class AuthController {
 			return "redirect:" + goPage;
 		}
 	}
+	@GetMapping("/logout.do")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:login.do";
+	}	
 
 	@GetMapping("/findId.do")
 	public void findId() {
-		System.out.println("findId page");
-	}
-
+		System.out.println("findId Page");
+	}	
+	
 	@GetMapping("/findIdResult.do")
 	public void findIdResult() {
 		System.out.println("findIdResult page");
 	}
+	@PostMapping("/findIdResult.do")
+    public String findIdResult(@RequestParam("userName") String userName, @RequestParam("phoneNumber") String phoneNumber, Model model) {
+        System.out.println("POST 요청을 받았습니다."); // 디버깅 로그
+        String userId = aService.findUserId(userName, phoneNumber);
+        model.addAttribute("userId", userId);
+        return "auth/findIdResult";
+    }
 
 	@GetMapping("/findPassword.do")
 	public void findPassword() {
@@ -91,17 +128,17 @@ public class AuthController {
 	@GetMapping("/checkUserId")
 	@ResponseBody
     public String checkUserId(@RequestParam String userId) {		
-        int isDuplicate = aService.isUserIdDuplicate(userId);
-        System.out.println("ctrl: " + isDuplicate);
+        int isDuplicate = aService.isUserIdDuplicate(userId);        
         return isDuplicate+"";
     }	
 
     @GetMapping("/checkNickname")
     @ResponseBody
-    public int checkNickname(@RequestParam String nickname) {
-    	//콘솔 확인
-		System.out.println("checkUserId called with nickname: " + nickname);
+    public String checkNickname(@RequestParam String nickname) {    
         int isDuplicate = aService.isNicknameDuplicate(nickname);
-        return isDuplicate;
+        return isDuplicate+"";
     }
+    
+    
+   
 }

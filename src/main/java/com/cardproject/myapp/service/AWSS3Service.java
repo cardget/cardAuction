@@ -10,6 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
+
 
 @Service
 public class AWSS3Service {
@@ -29,5 +31,9 @@ public class AWSS3Service {
         
         s3Client.putObject(new PutObjectRequest(bucketName, storedFileName, multipartFile.getInputStream(), metadata));
         return s3Client.getUrl(bucketName, storedFileName).toString();
+    }
+    
+    public void deleteFile(String bucketName, String fileName) {
+    	s3Client.deleteObject(new DeleteObjectRequest(bucketName, fileName));
     }
 }

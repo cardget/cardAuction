@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cardproject.myapp.dto.BiddingDTO;
 import com.cardproject.myapp.dto.ItemDTO;
 import com.cardproject.myapp.dto.ItemDetailDTO;
 import com.cardproject.myapp.dto.LikeDTO;
@@ -65,10 +66,18 @@ public class AuctionDAO {
 	// 경매물품 등록 items Insert
 	public int itemInsert(ItemDTO item) {
 		int result = sqlSession.insert(namespace + "itemInsert", item);
-		logger.info(result + "건 조회됨.");
+		logger.info(result + "건 추가됨.");
 		return result;
 	}
-	
+	// 입찰 biddings insert
+	public int biddingInsert(BiddingDTO bid) {
+		int result = sqlSession.insert(namespace + "biddingInsert", bid);
+		logger.info(result+"건 추가됨.");
+		return result;
+	}
+	public BiddingDTO userBidsForItem(Map<String, Object> params) {
+		return sqlSession.selectOne(namespace + "userBidsForItem", params);
+	}
 	// 포켓몬 카드 조회
 	public List<PokemonDTO> selectPCard() {
 		List<PokemonDTO> plist = sqlSession.selectList(namespace + "selectPCard");

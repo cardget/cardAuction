@@ -36,45 +36,49 @@
 		<img src="${path}/resources/icon/location.png" alt="주소아이콘"
 			class="info">
 		<h3 class="info">${user.address} ${user.address_detail}</h3><br /> 
+		<!--  
 		<img src="${path}/resources/icon/account.png" alt="계좌아이콘"
 			height=20 class="info">
 		<h3 class="info">${user.bank} ${user.accnt}</h3>
+		-->
+		<h3 class="grayfont">알림 서비스 수신 동의</h3>
+		<div id="auctionAlarm">
+		<!--  
+			<div class="alarmSetting">
+				<div>
+					<img src="${path}/resources/icon/phone.png" alt="핸드폰아이콘" height=20
+						class="info">
+					<h3 class="info">휴대전화</h3>
+				</div>
+				<div class="slider-button">
+					<label class="switch"> <input class="alarm" type="checkbox"
+						<c:if test="${user.phone_agreement == 1}">
+	                                        checked="checked"
+	                                    </c:if>>
+						<span class="slider round"></span>
+					</label>
+				</div>
+			</div>
+			<hr>
+		-->
+			<div class="alarmSetting">
+				<div>
+					<img src="${path}/resources/icon/mail.png" alt="메일아이콘" height=20
+						class="info">
+					<h3 class="info">이메일</h3>
+				</div>
+				<div class="slider-button">
+					<label class="switch"> <input class="alarm" type="checkbox"
+						<c:if test="${user.email_agreement == 1}">
+	                                        checked="checked"
+	                                    </c:if> disabled>
+						<span class="slider round"></span>
+					</label>
+				</div>
+			</div>
+		</div>
 		<div class="button-section">
 			<button class="revision">수정</button>
-		</div>
-	</div>
-	<h2 class="grayfont">알림 서비스 수신 동의</h2>
-	<div id="auctionAlarm">
-		<div class="alarmSetting">
-			<div>
-				<img src="${path}/resources/icon/phone.png" alt="핸드폰아이콘" height=20
-					class="info">
-				<h3 class="info">휴대전화</h3>
-			</div>
-			<div class="slider-button">
-				<label class="switch"> <input class="alarm" type="checkbox"
-					<c:if test="${user.phone_agreement == 1}">
-                                        checked="checked"
-                                    </c:if>>
-					<span class="slider round"></span>
-				</label>
-			</div>
-		</div>
-		<hr>
-		<div class="alarmSetting">
-			<div>
-				<img src="${path}/resources/icon/mail.png" alt="메일아이콘" height=20
-					class="info">
-				<h3 class="info">이메일</h3>
-			</div>
-			<div class="slider-button">
-				<label class="switch"> <input class="alarm" type="checkbox"
-					<c:if test="${user.email_agreement == 1}">
-                                        checked="checked"
-                                    </c:if>>
-					<span class="slider round"></span>
-				</label>
-			</div>
 		</div>
 	</div>
 </body>

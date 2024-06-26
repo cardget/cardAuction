@@ -1,6 +1,8 @@
 package com.cardproject.myapp.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import com.cardproject.myapp.dto.DeliveryDTO;
 import com.cardproject.myapp.dto.ItemDTO;
 import com.cardproject.myapp.dto.NotificationDTO;
 import com.cardproject.myapp.dto.PointDTO;
+import com.cardproject.myapp.dto.TradeDTO;
 import com.cardproject.myapp.dto.UserDTO;
 
 @Service
@@ -42,6 +45,11 @@ public class MyPageService {
  	// 판매내역
  	public List<ItemDTO> selectAllSales(String userid) {
  		return myPageDAO.selectAllSales(userid);
+ 	}
+ 	
+	// 낙찰내역
+ 	public List<TradeDTO> selectAllTrades(String userid) {
+ 		return myPageDAO.selectAllTrades(userid);
  	}
  	
  	// 포인트
@@ -103,4 +111,9 @@ public class MyPageService {
  	public int deleteAllNotificationRead(String userid) {
  		return myPageDAO.deleteAllNotificationRead(userid);
  	}
+ 	
+ 	// 회원 탈퇴
+ 	public int updateUserDisabled(String userid, String password) {
+		return myPageDAO.updateUserDisabled(userid, password);
+	}
 }

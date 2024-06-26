@@ -14,31 +14,42 @@
 <body>
 	<div class="header">
 		<h2>관심목록</h2>
-		<a href="#" class="grayfont">전체삭제</a>
+		<a href="deleteInterest.do" class="grayfont">전체삭제</a>
 	</div>
-	<c:forEach var="interests" items="${interests}">
-		<div class="item-section">
-			<div class="image-section">
-				<img src="${interests.image1}" alt="Product Image">
+	<c:choose>
+		<c:when test="${empty interests}">
+			<div class="item-section">
+				<div class="info-section">
+					<h3>관심 상품이 없습니다</h3>
+				</div>
 			</div>
-			<div class="info-section">
-				<h3>${interests.item_name}</h3>
-				<p>등록일자: ${interests.create_date}</p>
-				<p class="enddate">종료일자: ${interests.end_date}</p>
-				<a href="#" class="grayfont">상세보기 ></a>
-			</div>
-			<div class="status-section">
-				<c:set var="endDate" value="${interests.end_date}" />
-				<c:choose>
-					<c:when test="${now le endDate}">
-						<button class="status-button-proceeding">진행중</button>
-					</c:when>
-					<c:otherwise>
-						<button class="status-button-sold">종료됨</button>
-					</c:otherwise>
-				</c:choose>
-			</div>
-		</div>
-	</c:forEach>
+		</c:when>
+		<c:otherwise>
+			<c:forEach var="interests" items="${interests}">
+				<div class="item-section">
+					<div class="image-section">
+						<img src="${interests.image1}" alt="Product Image">
+					</div>
+					<div class="info-section">
+						<h3>${interests.item_name}</h3>
+						<p>등록일자: ${interests.create_date}</p>
+						<p class="enddate">종료일자: ${interests.end_date}</p>
+						<a href="../auction/auctionDetail.do?item_id=${interests.item_id}" class="grayfont">상세보기 ></a>
+					</div>
+					<div class="status-section">
+						<c:set var="endDate" value="${interests.end_date}" />
+						<c:choose>
+							<c:when test="${now le endDate}">
+								<button class="status-button-proceeding">진행중</button>
+							</c:when>
+							<c:otherwise>
+								<button class="status-button-sold">종료됨</button>
+							</c:otherwise>
+						</c:choose>
+					</div>
+				</div>
+			</c:forEach>
+		</c:otherwise>
+	</c:choose>
 </body>
 </html>

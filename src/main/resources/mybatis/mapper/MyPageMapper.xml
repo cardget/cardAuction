@@ -44,6 +44,35 @@
 	    ON 
 	        b.item_id = i.item_id
 		WHERE b.USER_ID = #{userid}
+		AND b.IS_WIN = 0
+		ORDER BY b.BID_ID DESC
+	</select>
+	
+	<delete id="deleteAllBids" parameterType="string">
+		DELETE FROM BIDS WHERE USER_ID = #{userid}
+	</delete>
+	
+	<!-- 낙찰내역 -->
+	<select id="selectAllTrades" resultType="tradevo">
+		SELECT 
+			t.TRADE_ID,
+			t.USER_ID,
+			t.ITEM_ID,
+			t.PRICE,
+			t.TRADE_TYPE,
+			TO_CHAR(t.CREATE_DATE, 'YYYY-MM-DD') AS CREATE_DATE,
+			t.CONFIRM_DATE,
+			t.IS_RECOMMEND,
+			t.STAGE,
+			i.IMAGE1,
+			i.ITEM_NAME
+		FROM 
+			TRADES t
+		INNER JOIN
+			ITEMS i
+		ON
+			t.ITEM_ID = i.ITEM_ID
+		WHERE t.USER_ID = #{userid}
 	</select>
 	
 	<!-- 판매내역 -->
@@ -69,7 +98,9 @@
 				Y_CARD_ID,  
 				S_CARD_ID,  
 				O_CARD_ID   
-		FROM ITEMS WHERE USER_ID = #{userid}
+		FROM ITEMS 
+		WHERE USER_ID = #{userid}
+		ORDER BY ITEM_ID DESC
 	</select>
 	
 	<!-- 포인트 -->
@@ -116,6 +147,7 @@
 		FROM ITEMS WHERE ITEM_ID IN
 								(SELECT ITEM_ID FROM LIKES WHERE USER_ID = #{userid})
 	</select>
+	
 	<delete id="deleteAllLikes" parameterType="string">
 		DELETE * FROM LIKES WHERE USER_ID = #{userid}
 	</delete>
@@ -216,4 +248,11 @@
 		DELETE FROM NOTIFICATIONS 
 		WHERE USER_ID = #{userid} AND IS_READ = 1
 	</delete>
+	
+	<!-- 회원 탈퇴 -->
+	<update id="updateUserDisabled" parameterType="map">
+		UPDATE USERS 
+		SET IS_ABLE = 0
+		WHERE USER_ID = #{userid} AND PW = #{password}
+	</update>
 </mapper>

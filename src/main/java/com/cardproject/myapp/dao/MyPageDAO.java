@@ -13,6 +13,7 @@ import com.cardproject.myapp.dto.DeliveryDTO;
 import com.cardproject.myapp.dto.ItemDTO;
 import com.cardproject.myapp.dto.NotificationDTO;
 import com.cardproject.myapp.dto.PointDTO;
+import com.cardproject.myapp.dto.TradeDTO;
 import com.cardproject.myapp.dto.UserDTO;
 
 @Repository
@@ -44,6 +45,11 @@ public class MyPageDAO{
 	// 입찰내역
 	public List<BiddingResultDTO> selectAllBids(String userid) {
 		return sqlSession.selectList(namespace + ".selectAllBids", userid);
+	}
+	
+	// 낙찰내역
+	public List<TradeDTO> selectAllTrades(String userid) {
+		return sqlSession.selectList(namespace + ".selectAllTrades", userid);
 	}
 	
 	// 판매내역
@@ -112,5 +118,13 @@ public class MyPageDAO{
 	// 읽은 알림 전체 삭제
 	public int deleteAllNotificationRead(String userid) {
 		return sqlSession.delete(namespace + ".deleteAllNotificationRead", userid);
+	}
+	
+	// 회원 탈퇴
+	public int updateUserDisabled(String userid, String password) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("userid", userid);
+		params.put("password", password);
+		return sqlSession.update(namespace + ".updateUserDisabled", params);
 	}
 }

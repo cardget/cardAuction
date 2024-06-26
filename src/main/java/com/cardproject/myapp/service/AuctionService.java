@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cardproject.myapp.dao.AuctionDAO;
+import com.cardproject.myapp.dto.BiddingDTO;
 import com.cardproject.myapp.dto.ItemDTO;
 import com.cardproject.myapp.dto.ItemDetailDTO;
 import com.cardproject.myapp.dto.LikeDTO;
@@ -46,7 +47,11 @@ public class AuctionService {
 		System.out.println(item);
 		return aucDAO.itemInsert(item);
 	}
-
+	public int biddingInsert(BiddingDTO bid) {
+		System.out.println(bid);
+		
+		return aucDAO.biddingInsert(bid);
+	}
 	public List<PokemonDTO> selectPCard() {
 		return aucDAO.selectPCard();
 	}
@@ -101,5 +106,12 @@ public class AuctionService {
         return like != null;
     }
 	
-    
+    public boolean isBidding(String userId, Integer itemId) {
+    	Map<String, Object> params = new HashMap<>();
+    	params.put("user_id", userId);
+        params.put("item_id", itemId);
+        BiddingDTO bid = aucDAO.userBidsForItem(params);
+        System.out.println("isBidding result for userId: " + userId + " and itemId: " + itemId + " -> " + (bid != null));
+    	return bid != null; //입찰한경우 true, 아닌경우 false
+    }
 }

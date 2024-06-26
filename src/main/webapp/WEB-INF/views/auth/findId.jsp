@@ -24,22 +24,24 @@
 		<hr style="width:440px;">
 		
 		<h6 style="margin-top:0px;"><img src="${path}/resources/icon/blue_error.png">&nbsp;회원정보에 등록한 휴대전화 번호와 입력한 휴대전화 번호가 같아야 인증 번호를 받을 수 있습니다.</h6>
-		<form class="custom-form">
+		<form action="findIdResult.do "class="custom-form" method="post">
 			<div >
 				<div class="form-group">
-			        <label class="input-label">이름</label>
-			        <input type="text" id="username" name="username" class="input-field" placeholder="로로뽀" required>
+			        <label class="input-label" for="userName">이름</label>
+			        <input type="text" id="userName" name="userName" class="input-field" placeholder="로로뽀" required>
 			    </div>
 			    <div class="form-group">
 			        <label class="input-label">전화번호</label>
-			        <input type="phone" id="phone" name="phone" class="input-field" placeholder="010-1234-1234" required>
-			        <button class="check-button">인증번호 발송</button>
-			    </div>
-			    <input type="tel" class="input-field" style="margin-left: 80px;" placeholder="인증번호 입력" >
-			    <button type="submit" class="check-button">확인</button>
-			</div>		
-			
-			<h6 style="margin-left: 80px; margin-top:1px;"><img src="${path}/resources/icon/red_error.png">&nbsp;인증번호를 다시 입력해주세요</h6>
+			        <input type="phone" id="phoneNumber" name="phoneNumber" class="input-field" required>
+			        <button class="check-button" onclick="sendCode()">인증번호 발송</button>
+			        <input type="text" id="verificationCode" class="input-field" style="margin-left: 80px;" placeholder="인증번호 입력" >
+			   	 	<button type="button" class="check-button" onclick="verifyCode()">확인</button>
+			   	 	<h6 style="margin-left: 80px; margin-top:1px;">
+			   	 		<img src="${path}/resources/icon/red_error.png">&nbsp;인증번호를 다시 입력해주세요
+			   	 	</h6>
+
+			    </div>			    
+			</div>					
 			<button type="submit" class="submit-button">아이디 찾기</button>
 		</form>
 		

@@ -138,11 +138,11 @@ form {
 	font-size: 16px
 }
 .image-format{
-	width:500px;
+	width:700px;
 	height:44px;
 	font-size:14px;
 	display: flex;
-	justify-content: center; /* 가로 가운데 정렬 */
+	
     align-items: center; /* 세로 가운데 정렬 */
 	margin-left:38px;
 	

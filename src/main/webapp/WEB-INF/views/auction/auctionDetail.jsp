@@ -12,7 +12,6 @@
 <link rel="stylesheet" href="${path }/resources/css/auctionDetail.css" />
 <link rel="stylesheet" href="${path }/resources/css/main.css" />
 
-
 <title>카드득</title>
 <style>
 .like-btn {
@@ -44,6 +43,16 @@
 	align-items: center;
 	gap: 10px;
 	font-size: 18px;
+}
+
+.bidding-form {
+	display: grid;
+	grid-template-columns: auto auto auto;
+	gap: 10px;
+}
+
+.hidden-input-itemId {
+	display: none;
 }
 </style>
 
@@ -112,10 +121,11 @@
 
 							<div class="slider__btn">
 								<a href="#" class="prev" role="button" aria-label="왼쪽 이미지">
-								<img src="${path}/resources/images/leftBtn.png" alt="leftBtn" class="left-icon">
-								</a>
-								<a href="#" class="next" role="button" aria-label="오른쪽 이미지">
-								<img src="${path}/resources/images/rightBtn.png" alt="rightBtn" class="right-icon">
+									<img src="${path}/resources/images/leftBtn.png" alt="leftBtn"
+									class="left-icon">
+								</a> <a href="#" class="next" role="button" aria-label="오른쪽 이미지">
+									<img src="${path}/resources/images/rightBtn.png" alt="rightBtn"
+									class="right-icon">
 								</a>
 							</div>
 						</div>
@@ -181,12 +191,24 @@
 				<hr class="hr1">
 				<div class="seller-nick">판매자닉네임 : ${itemDetailOne.nickname}</div>
 				<div class="seller-rank">판매자등급 : ${itemDetailOne.user_tier}</div>
+				
 				<div class="bidding-wrapper">
-					<input type="number" id="bidding_price" class="bidding-price-field"
-						placeholder="입찰 가격을 입력하세요.">
-					<button class="bidding-btn">경매 참여</button>
-					<button class="like-btn" id="likeBtn">관심 물품</button>
-				</div>
+					<form class="bidding-form"
+						action="${path}/auction/auctionBidding.do" method="post">
+						<input type="number" id="item_id" name="item_id"
+							class="hidden-input-itemId" value="${itemDetailOne.item_id}">
+						<input type="number" id="price" name="price"
+							class="bidding-price-field" placeholder="입찰 가격을 입력하세요." step="1000" min="1000">
+						<button type="submit" class="bidding-btn">경매 참여</button>
+						<button class="like-btn" id="likeBtn">관심 물품</button>
+					</form>
+					
+				</div><!--
+				<c:if test="${not empty sessionScope.errorMessage}">
+						<div class="error">${sessionScope.errorMessage}</div>
+						<c:remove var="errorMessage" scope="session" />
+				</c:if>-->
+				 <div id="errorMessage" class="error"></div> 
 			</div>
 
 		</div>
@@ -197,6 +219,65 @@
 
 
 	<script>
+	document.addEventListener("DOMContentLoaded", function() {
+	    const biddingForm = document.querySelector(".bidding-form");
+
+	    if (!biddingForm) {
+	        console.error("Bidding form not found");
+	        return;
+	    }
+
+	    // 가격 유효성 검사
+	    function validatePrice() {
+	        const priceField = document.getElementById("price");
+	        const price = priceField.value;
+	        if (!price) {
+	            alert("입찰가를 입력해주세요.");
+	            return false; // 폼 제출 중지
+	        }
+	        if (price % 1000 !== 0) {
+	            alert("입찰 가격은 1000 단위로 입력해야 합니다.");
+	            return false; // 폼 제출 중지
+	        }
+	        return true; // 폼 제출 허용
+	    }
+
+	    biddingForm.addEventListener("submit", function(e) {
+	        e.preventDefault();
+
+	        if (!validatePrice()) {
+	            return; // 유효성 검사가 실패하면 폼 제출을 중단
+	        }
+
+	        const item_id = document.getElementById("item_id").value;
+	        const price = document.getElementById("price").value;
+	        
+	        const formData = {
+	            item_id: item_id,
+	            price: price
+	        };
+
+	        fetch(`<%=request.getContextPath()%>/auction/auctionBidding.do`, {
+	            method: 'POST',
+	            headers: {
+	                'Content-Type': 'application/json'
+	            },
+	            body: JSON.stringify(formData)
+	        })
+	        .then(response => {
+	            if (!response.ok) {
+	                throw new Error('Network response was not ok');
+	            }
+	            console.log(response)
+	            return response.json();
+	        })
+	        .then(data=> {
+	        	const errorMessageElement = document.getElementById("errorMessage");
+	            errorMessageElement.textContent = data.message;
+	        });
+	    });
+	});
+	//이미지슬라이더
 	const sliderWrap = document.querySelector(".slider__wrap");
 	const sliderImg = document.querySelector(".slider__img"); // 보여지는 영역
 	const sliderInner = document.querySelector(".slider__inner"); // 움직이는 영역
