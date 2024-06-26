@@ -51,39 +51,77 @@
     function loadComments() {
         var commId = "${board.comm_id}";
         $.ajax({
-            url : "${path}/community/getReplieList.do",
-            data : {
-                "commId" : commId
+            url: "${path}/community/getReplieList.do",
+            data: {
+                "commId": commId
             },
-            type : "get",
-            success : function(data) {
+            dataType: "json",
+            type: "get",
+            success: function(data) {
                 var commentBox = $('#comment-box');
                 commentBox.empty();
 
                 $.each(data, function(index, board) {
-                    var card = '<div class="card mb-3">'
-                            + '<div class="card-body d-flex">'
-                            + '<img src="../resources/images/default/defaultprofile.png" alt="이미지 설명" class="comment-image me-2">'
-                            + '<div>'
-                            + '<h5 class="card-title">'
-                            + board.nickname
-                            + '</h5>'
-                            + '<p class="card-text">'
-                            + board.cmt
-                            + '</p>'
-                            + '<p class="text-muted">작성일 : '
-                            + board.create_time
-                            + '</p>'
-                            + '</div>'
-                            + '</div>' + '</div>';
-                    commentBox.append(card);
+                    if (index < 5) { // 최대 5개만 먼저 보여줌
+                        var card = '<div class="card mb-3">'
+                                + '<div class="card-body d-flex">'
+                                + '<img src="../resources/images/default/defaultprofile.png" alt="이미지 설명" class="comment-image me-2">'
+                                + '<div>'
+                                + '<h5 class="card-title">'
+                                + board.nickname
+                                + '</h5>'
+                                + '<p class="card-text">'
+                                + board.cmt
+                                + '</p>'
+                                + '<p class="text-muted">작성일 : '
+                                + board.create_time
+                                + '</p>'
+                                + '</div>'
+                                + '</div>' + '</div>';
+                        commentBox.append(card);
+                    }
                 });
+
+                if (data.length > 5) {
+                    // 댓글 전체보기 버튼 추가
+                    commentBox.append('<div class="d-flex justify-content-center mt-3">'
+                                        + '<a href="#" id="loadMoreComments" class="btn btn-primary">전체 댓글보기</a>'
+                                      + '</div>');
+                    
+                    // 더보기 버튼 클릭 이벤트
+                    $('#loadMoreComments').on('click', function(event) {
+                        event.preventDefault();
+                        $(this).parent().remove(); // 더보기 버튼 제거
+                        $.each(data, function(index, board) {
+                            if (index >= 5) { // 나머지 댓글들 불러오기
+                                var card = '<div class="card mb-3">'
+                                    + '<div class="card-body d-flex">'
+                                    + '<img src="../resources/images/default/defaultprofile.png" alt="이미지 설명" class="comment-image me-2">'
+                                    + '<div>'
+                                    + '<h5 class="card-title">'
+                                    + board.nickname
+                                    + '</h5>'
+                                    + '<p class="card-text">'
+                                    + board.cmt
+                                    + '</p>'
+                                    + '<p class="text-muted">작성일 : '
+                                    + board.create_time
+                                    + '</p>'
+                                    + '</div>'
+                                    + '</div>' + '</div>';
+                                commentBox.append(card);
+                            }
+                        });
+                    });
+                }
             },
-            error : function(error) {
+            error: function(error) {
                 console.error("Error fetching data: ", error);
             }
         });
     }
+
+
 
     function loadCommentsCount() {
         var commId = "${board.comm_id}";
@@ -92,6 +130,7 @@
             data : {
                 "commId" : commId
             },
+            dataType: "json",
             type : "get",
             success : function(responseData) {
                 if (responseData !== "fail") {
@@ -134,6 +173,16 @@
             }
         });
     }
+    
+    function copyCurrentUrl() {
+        var dummy = document.createElement('textarea');
+        document.body.appendChild(dummy);
+        dummy.value = window.location.href;
+        dummy.select();
+        document.execCommand('copy');
+        document.body.removeChild(dummy);
+        alert('URL이 복사되었습니다.');
+    }
 </script>
 
 </head>
@@ -168,8 +217,8 @@
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <li><a class="dropdown-item"
                                     href="${path}/community/BoardModify.do?commId=${board.comm_id}">수정하기</a></li>
-                                <li><a class="dropdown-item" href="#">삭제하기</a></li>
-                                <li><a class="dropdown-item" href="#">공유하기</a></li>
+                                <li><a class="dropdown-item" href="${path}/community/BoardDelete.do?commId=${board.comm_id}">삭제하기</a></li>
+                                <li><a class="dropdown-item" onclick="copyCurrentUrl()">공유하기</a></li>
                             </ul>
                         </div>
                     </div>

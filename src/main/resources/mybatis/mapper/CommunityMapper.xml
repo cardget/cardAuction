@@ -4,22 +4,84 @@
 
 <mapper namespace="com.cardproject.myapp.dao">
 
-	<!-- 게시글 리스트 조회 -->
-	<select id="selectBoardList" resultType="boardlistvo">
-		SELECT
-		COMMUNITY.COMM_ID,
-		COMMUNITY.TAG,
-		COMMUNITY.TITLE,
-		USERS.NICKNAME,
-		COMMUNITY.CREATE_DATE,
-		COMMUNITY.RECOMMEND,
-		COMMUNITY.VIEWS
-		FROM
+	<!-- 총 게시글 수 -->
+	<select id="getTotalBoardCount" resultType="int">
+		SELECT COUNT(*) FROM
 		COMMUNITY
-		JOIN
-		USERS ON
-		COMMUNITY.USER_ID = USERS.USER_ID
 	</select>
+
+	<!-- 검색 게시글 수 -->
+	<select id="getTotalBoardCountByKeyword" parameterType="map"
+		resultType="int">
+		SELECT COUNT(*)
+		FROM COMMUNITY
+		JOIN USERS ON COMMUNITY.USER_ID = USERS.USER_ID
+		<if test="keyword != null">
+			WHERE COMMUNITY.TITLE LIKE #{keyword}
+			OR COMMUNITY.TAG LIKE #{keyword}
+			OR USERS.NICKNAME LIKE #{keyword}
+		</if>
+	</select>
+
+	<!-- 태그 게시글 수 -->
+	<select id="getTotalBoardCountByKeywordAndTag" parameterType="map" resultType="int">
+    SELECT COUNT(*)
+    FROM COMMUNITY
+    JOIN USERS ON COMMUNITY.USER_ID = USERS.USER_ID
+    <where>
+        <if test="keyword != null">
+            (COMMUNITY.TITLE LIKE #{keyword}
+            OR COMMUNITY.TAG LIKE #{keyword}
+            OR USERS.NICKNAME LIKE #{keyword})
+        </if>
+        <if test="tag != null">
+            AND COMMUNITY.TAG = #{tag}
+        </if>
+    </where>
+</select>
+
+	<!-- 게시글 리스트 조회 (조건 검색 + 페이징) -->
+	<select id="selectBoardList" parameterType="map" resultType="boardlistvo">
+    SELECT *
+    FROM (
+        SELECT
+            COMMUNITY.COMM_ID,
+            COMMUNITY.TAG,
+            COMMUNITY.TITLE,
+            USERS.NICKNAME,
+            COMMUNITY.CREATE_DATE,
+            COMMUNITY.RECOMMEND,
+            COMMUNITY.VIEWS,
+            ROW_NUMBER() OVER (
+                ORDER BY
+                    <choose>
+                        <when test="sort == 'recommend'">
+                            COMMUNITY.RECOMMEND DESC, COMMUNITY.CREATE_DATE DESC
+                        </when>
+                        <when test="sort == 'view'">
+                            COMMUNITY.VIEWS DESC, COMMUNITY.CREATE_DATE DESC
+                        </when>
+                        <otherwise>
+                            COMMUNITY.CREATE_DATE DESC
+                        </otherwise>
+                    </choose>
+            ) AS ROWNUMBER
+        FROM
+            COMMUNITY
+        JOIN
+            USERS ON COMMUNITY.USER_ID = USERS.USER_ID
+        <where>
+            <if test="keyword != null">
+                (COMMUNITY.TITLE LIKE #{keyword}
+                OR USERS.NICKNAME LIKE #{keyword})
+            </if>
+            <if test="tag != null">
+                AND COMMUNITY.TAG = #{tag}
+            </if>
+        </where>
+    ) subquery
+    WHERE ROWNUMBER BETWEEN #{offset} + 1 AND #{offset} + #{pageSize}
+</select>
 
 	<!-- 게시글 상세 조회 -->
 	<select id="selectByCommId" parameterType="int"
@@ -69,6 +131,18 @@
 		WHERE COMM_ID=#{comm_id}
 	</update>
 
+	<!-- 게시글 삭제 -->
+	<insert id="deleteBoard" parameterType="int">
+		DELETE FROM COMMUNITY
+		WHERE COMM_ID=#{commid}
+	</insert>
+
+	<!-- 게시글에 대한 댓글 cascade 수행 -->
+	<delete id="deleteRepliesByCommId" parameterType="int">
+		DELETE FROM
+		REPLIES WHERE COMM_ID = #{commId}
+	</delete>
+
 	<!-- 추천 -->
 	<update id="incrementRecommend" parameterType="int">
 		UPDATE COMMUNITY
@@ -103,7 +177,8 @@
 
 	<!-- 댓글 작성 -->
 	<insert id="insertComment" parameterType="replievo">
-		INSERT INTO REPLIES(REPLY_ID, CMT, COMM_ID, CREATE_TIME, USER_ID)
+		INSERT INTO
+		REPLIES(REPLY_ID, CMT, COMM_ID, CREATE_TIME, USER_ID)
 		VALUES(REPLY_SEQ.NEXTVAL,#{cmt},#{comm_id}, SYSDATE, #{user_id})
 	</insert>
 </mapper>

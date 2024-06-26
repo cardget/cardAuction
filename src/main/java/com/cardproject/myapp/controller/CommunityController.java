@@ -29,13 +29,28 @@ public class CommunityController {
 	@Autowired
 	CommunityService cService;
 
-	// 게시글 리스트 조회
+	// 게시글 리스트 조회 (조건검색 + 페이징)
 	@GetMapping("/BoardSelect.do")
-	public String BoardSelect(Model model) {
+	public String BoardSelect(@RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "10") int pageSize, @RequestParam(defaultValue = "date") String sort,
+			@RequestParam(required = false) String keyword, @RequestParam(defaultValue = "all") String tag,
+			Model model) {
 		System.out.println("/community/BoardSelect.do get 요청");
 
-		List<BoardListDTO> blist = cService.selectBoardList();
+		int totalCount = (keyword != null && !keyword.isEmpty()) || (tag != null && !tag.equals("all"))
+				? cService.getTotalBoardCount(keyword, tag)
+				: cService.getTotalBoardCount();
+
+		List<BoardListDTO> blist = cService.selectBoardList(page, pageSize, sort, keyword, tag);
+
 		model.addAttribute("blist", blist);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("pageSize", pageSize);
+		model.addAttribute("sort", sort);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("tag", tag);
+
 		return "community/BoardSelect";
 	}
 
@@ -97,6 +112,7 @@ public class CommunityController {
 	// 게시글 수정
 	@PostMapping("/BoardModify.do")
 	public String BoardModify(CommunityDTO board, MultipartHttpServletRequest file, HttpSession session) {
+		System.out.println("/community/BoardModify.do post 요청");
 
 		// 이미지 등록 or 수정
 		HttpServletRequest request = (HttpServletRequest) file;
@@ -121,6 +137,14 @@ public class CommunityController {
 		return "redirect:BoardDetail.do?commId=" + commId;
 	}
 
+	// 게시글 삭제
+	@GetMapping("/BoardDelete.do")
+	public String BoardDelete(Integer commId) {
+		cService.deleteRepliesByCommId(commId); // 게시글에 대한 댓글 우선 삭제
+		cService.deleteBoard(commId);
+		return "redirect:BoardSelect.do";
+	}
+
 	// 추천
 	@GetMapping("/recommendUp.do")
 	@ResponseBody
@@ -139,7 +163,8 @@ public class CommunityController {
 	@GetMapping("/getReplieList.do")
 	@ResponseBody
 	public List<ReplieDTO> selectReplieList(Integer commId) {
-		System.out.println("/community/replieList.do 요청");
+		System.out.println("/community/getReplieList.do 요청");
+
 		List<ReplieDTO> rlist = cService.selectReplieList(commId);
 		return rlist;
 	}
@@ -148,6 +173,8 @@ public class CommunityController {
 	@GetMapping("/getReplieCount.do")
 	@ResponseBody
 	public int getReplieCount(Integer commId) {
+		System.out.println("/community/getReplieCount.do 요청");
+
 		return cService.getReplieCount(commId);
 	}
 
@@ -155,11 +182,12 @@ public class CommunityController {
 	@PostMapping("/insertReplie.do")
 	@ResponseBody
 	public String insertReplie(@RequestParam Integer commId, @RequestParam String cmt, @RequestParam String userId) {
+		System.out.println("/community/insertReplie.do 요청");
+
 		ReplieDTO replie = new ReplieDTO();
 		replie.setComm_id(commId);
 		replie.setCmt(cmt);
 		replie.setUser_id(userId);
-		System.out.println(replie);
 
 		int result = cService.insertComment(replie);
 		if (result > 0) {
