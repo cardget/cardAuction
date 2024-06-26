@@ -13,6 +13,7 @@ import com.cardproject.myapp.dto.DeliveryDTO;
 import com.cardproject.myapp.dto.ItemDTO;
 import com.cardproject.myapp.dto.NotificationDTO;
 import com.cardproject.myapp.dto.PointDTO;
+import com.cardproject.myapp.dto.TradeDTO;
 import com.cardproject.myapp.dto.UserDTO;
 
 @Repository
@@ -44,6 +45,11 @@ public class MyPageDAO{
 	// 입찰내역
 	public List<BiddingResultDTO> selectAllBids(String userid) {
 		return sqlSession.selectList(namespace + ".selectAllBids", userid);
+	}
+	
+	// 낙찰내역
+	public List<TradeDTO> selectAllTrades(String userid) {
+		return sqlSession.selectList(namespace + ".selectAllTrades", userid);
 	}
 	
 	// 판매내역

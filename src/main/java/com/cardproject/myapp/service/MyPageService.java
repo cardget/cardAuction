@@ -11,6 +11,7 @@ import com.cardproject.myapp.dto.DeliveryDTO;
 import com.cardproject.myapp.dto.ItemDTO;
 import com.cardproject.myapp.dto.NotificationDTO;
 import com.cardproject.myapp.dto.PointDTO;
+import com.cardproject.myapp.dto.TradeDTO;
 import com.cardproject.myapp.dto.UserDTO;
 
 @Service
@@ -42,6 +43,11 @@ public class MyPageService {
  	// 판매내역
  	public List<ItemDTO> selectAllSales(String userid) {
  		return myPageDAO.selectAllSales(userid);
+ 	}
+ 	
+	// 낙찰내역
+ 	public List<TradeDTO> selectAllTrades(String userid) {
+ 		return myPageDAO.selectAllTrades(userid);
  	}
  	
  	// 포인트

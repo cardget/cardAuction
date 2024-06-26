@@ -49,7 +49,7 @@
 	<div class="header">
 		<h2>알림 내역</h2>
 		<div class="noti-control">
-			<a href="${path}/mypage//readUpdate.do" class="grayfont">전체 읽음 표시</a> /
+			<a href="${path}/mypage/readUpdate.do" class="grayfont">전체 읽음 표시</a> /
 			<a href="${path}/mypage/deleteAllNoti.do" class="grayfont">읽은 알림 삭제</a>
 		</div>
 	</div>
@@ -79,6 +79,5 @@
 			</c:forEach>
 		</c:otherwise>
 	</c:choose>
-	
 </body>
 </html>

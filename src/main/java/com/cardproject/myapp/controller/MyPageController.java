@@ -20,6 +20,7 @@ import com.cardproject.myapp.dto.DeliveryDTO;
 import com.cardproject.myapp.dto.ItemDTO;
 import com.cardproject.myapp.dto.NotificationDTO;
 import com.cardproject.myapp.dto.PointDTO;
+import com.cardproject.myapp.dto.TradeDTO;
 import com.cardproject.myapp.dto.UserDTO;
 import com.cardproject.myapp.service.MyPageService;
 
@@ -116,6 +117,20 @@ public class MyPageController {
 
 		return "mypage/myBid";
 	}
+	
+	// 낙찰내역 조회
+	@GetMapping("/myTrade.do")
+	public String myTrade(Model model) {
+		String userid = (String) session.getAttribute("userid");
+		if (userid == null) {
+			return "redirect:../auth/login.do";
+		}
+		
+		List<TradeDTO> tlist = mpService.selectAllTrades(userid);
+		model.addAttribute("tlist", tlist);
+		
+		return "mypage/myTrade";
+	}
 
 	// 판매내역 조회
 	@GetMapping("/mySale.do")
@@ -170,7 +185,7 @@ public class MyPageController {
 		}
 		
 		model.addAttribute(message);
-		return "redirect:mypage/myInterest";
+		return "mypage/myInterest";
 	}
 
 	// 포인트 조회

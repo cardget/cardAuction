@@ -41,7 +41,7 @@
 	$(function() {
 		$(".revision").click(function() {
 			$.ajax({
-				url : '${path}/mypage/editProfile.do',
+				url : '/myapp/mypage/editProfile.do',
 				method : 'GET',
 				success : function(response) {
 					$(".content").html(response);
@@ -80,6 +80,26 @@
 		});
 	});
 
+	$(function() {
+		$(".header a").click(function(event) {
+			event.preventDefault();
+			
+			var url = $(this).attr("href");
+			$.ajax({
+				url : url,
+				method : 'GET',
+				success : function(response) {
+					$(".content").html(response);
+				},
+				error : function(xhr, status, error) {
+					console.log("Error: " + error);
+					console.log("Status: " + status);
+					console.dir(xhr);
+					alert("Failed to load the page.");
+				}
+			});
+		});
+	});
 </script>
 </head>
 <body>
@@ -114,6 +134,7 @@
 					<li><a href="myInfo.do" class="selected">내정보</a></li>
 					<li><a href="myBid.do">입찰내역</a></li>
 					<li><a href="mySale.do">판매내역</a></li>
+					<li><a href="myTrade.do">낙찰내역</a></li>
 					<li><a href="myPoint.do">포인트</a></li>
 					<li><a href="myInterest.do">관심목록</a></li>
 					<li><a href="myDelivery.do">배송조회</a></li>
@@ -135,47 +156,47 @@
 						<img src="${path}/resources/icon/uncheckedchat.png" alt="채팅" height=30>
 					</a>
 					<div class="dropdown-content">
-						<div class="chat-brief">
-							<div class="chat-image">
+						<div class="noti-brief">
+							<div class="noti-image">
 								<img src="${path}/resources/images/test/pikachucard.png" alt="Product Image">
 							</div>
-							<div class="chat-content">
+							<div class="noti-content">
 								<h3>[포켓몬] 1998 피카츄 일러스트레이터...</h3>
 								<p>네고가능한가요?</p>
 							</div>
 						</div>
-						<div class="chat-brief">
-							<div class="chat-image">
+						<div class="noti-brief">
+							<div class="noti-image">
 								<img src="${path}/resources/images/test/pikachucard.png" alt="Product Image">
 							</div>
-							<div class="chat-content">
+							<div class="noti-content">
 								<h3>[포켓몬] 1998 피카츄 일러스트레이터...</h3>
 								<p>이거 경맨데요?</p>
 							</div>
 						</div>
-						<div class="chat-brief">
-							<div class="chat-image">
+						<div class="noti-brief">
+							<div class="noti-image">
 								<img src="${path}/resources/images/test/pikachucard.png" alt="Product Image">
 							</div>
-							<div class="chat-content">
+							<div class="noti-content">
 								<h3>[포켓몬] 1998 피카츄 일러스트레이터...</h3>
 								<p>너무 비싸게 낙찰돼서요 ㅠ</p>
 							</div>
 						</div>
-						<div class="chat-brief">
-							<div class="chat-image">
+						<div class="noti-brief">
+							<div class="noti-image">
 								<img src="${path}/resources/images/test/pikachucard.png" alt="Product Image">
 							</div>
-							<div class="chat-content">
+							<div class="noti-content">
 								<h3>[포켓몬] 1998 피카츄 일러스트레이터...</h3>
 								<p>차단하고 신고할게요</p>
 							</div>
 						</div>
-						<div class="chat-brief">
-							<div class="chat-image">
+						<div class="noti-brief">
+							<div class="noti-image">
 								<img src="${path}/resources/images/test/pikachucard.png" alt="Product Image">
 							</div>
-							<div class="chat-content">
+							<div class="noti-content">
 								<h3>[포켓몬] 1998 피카츄 일러스트레이터...</h3>
 								<p>저도 차단하고 신고할게요</p>
 							</div>
@@ -204,11 +225,11 @@
 							</c:when>
 							<c:otherwise>
 								<c:forEach var="noti" items="${nlist}">
-									<div class="chat-brief">
-										<div class="chat-image">
+									<div class="noti-brief">
+										<div class="noti-image">
 											<img src="${noti.image1 }" alt="Product Image">
 										</div>
-										<div class="chat-content">
+										<div class="noti-content">
 											<h3>${noti.item_name }</h3>
 											<p>${noti.cmt }</p>
 										</div>
