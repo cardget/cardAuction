@@ -40,27 +40,20 @@
 		</div>
 		<div id="filter-options" class="filter-options">
 			<form id="conditionForm" action="conditionSearch" method="get">
-				카드타입 <select class="optionBox" id="card_type" name="card_type">
-					<option value="0">전체</option>
-					<option value="풀">풀</option>
-					<option value="불꽃">불꽃</option>
-					<option value="물">물</option>
-					<option value="번개">번개</option>
-					<option value="초">초</option>
-					<option value="격투">격투</option>
-					<option value="악">악</option>
-					<option value="강철">강철</option>
-					<option value="드래곤">드래곤</option>
-					<option value="무색">무색</option>
+				카드타입 <select class="optionBox" id="card_attr" name="card_attr">
+					<option value="a">전체</option>
+					<option value="사격">사격</option>
+					<option value="지혜">지혜</option>
+					<option value="참격">참격</option>
+					<option value="타격">타격</option>
+					<option value="특수">특수</option>
 				</select> 
-				아이템선택 : <select class="optionBox" id="card_sort" name="card_sort">
-					<option value="0">전체</option>
+				속성 : <select class="optionBox" id="card_sort" name="card_sort">
+					<option value="s">전체</option>
 					<option value="리더">리더</option>
-					<option value="아이템">아이템</option>
-					<option value="포켓몬의 도구">포켓몬의 도구</option>
-					<option value="스타디움">스타디움</option>
-					<option value="특수에너지">특수에너지</option>
-					<option value="기본에너지">기본에너지</option>
+					<option value="스테이지">스테이지</option>
+					<option value="이벤트">이벤트</option>
+					<option value="캐릭터">캐릭터</option>
 				</select>
 			</form>
 			<button class="conditionSearch" id="conditionSearch"
@@ -161,7 +154,7 @@
 		function toggleFilterOptions() {
 			var filterOptions = document.getElementById('filter-options');
 			if (filterOptions.style.display === 'none') {
-				filterOptions.style.display = 'block';
+				filterOptions.style.display = 'flex';
 			} else {
 				filterOptions.style.display = 'none';
 			}

@@ -35,8 +35,8 @@
                 <if test='card_sort != null and card_sort != "s"'>
                     AND CARD_SORT = #{card_sort}
                 </if>
-                <if test='card_type != null and card_type != "t"'>
-                    AND CARD_TYPE = #{card_type}
+                <if test='card_attr != null and card_attr != "a"'>
+                    AND card_attr = #{card_attr}
                 </if>
                 ORDER BY CARD_ID
             ) a
@@ -45,7 +45,7 @@
         WHERE rnum &gt;= #{startRow}
     </select>
 
-	<select id="selectOrFilterDCard" parameterType="map" resultType="digimonhvo">
+	<select id="selectOrFilterDCard" parameterType="map" resultType="digimonvo">
          SELECT * FROM (
             SELECT
             a.*, ROWNUM rnum
@@ -55,8 +55,8 @@
                 <if test='card_sort != null and card_sort != "s"'>
                     AND CARD_SORT = #{card_sort}
                 </if>
-                <if test='card_type != null and card_type != "t"'>
-                    AND CARD_TYPE = #{card_type}
+                <if test='card_attr != null and card_attr != "a"'>
+                    AND card_attr = #{card_attr}
                 </if>
                 ORDER BY CARD_ID
             ) a
@@ -65,7 +65,7 @@
         WHERE rnum &gt;= #{startRow}
     </select>
     
-    <select id="selectOrFilterOCard" parameterType="map" resultType="onepiecehvo">
+    <select id="selectOrFilterOCard" parameterType="map" resultType="onepiecevo">
          SELECT * FROM (
             SELECT
             a.*, ROWNUM rnum
@@ -75,8 +75,8 @@
                 <if test='card_sort != null and card_sort != "s"'>
                     AND CARD_SORT = #{card_sort}
                 </if>
-                <if test='card_type != null and card_type != "t"'>
-                    AND CARD_TYPE = #{card_type}
+                <if test='card_attr != null and card_attr != "a"'>
+                    AND card_attr = #{card_attr}
                 </if>
                 ORDER BY CARD_ID
             ) a

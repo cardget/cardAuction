@@ -82,11 +82,11 @@ public class DeckMakerController {
 	// 유희왕카드 -------------------------------------------------------------------
 	@RequestMapping("/yugiohDeckMaker.do")
 	public void yugiohDeckMaker(Model model, @RequestParam(defaultValue = "1") int page,
-			@RequestParam(value = "card_type", required = false, defaultValue = "t") String cardType,
+			@RequestParam(value = "card_attr", required = false, defaultValue = "a") String cardAttr,
 			@RequestParam(value = "card_sort", required = false, defaultValue = "s") String cardSort) {
 		Map<String, String> params = new HashMap<>();
 
-		params.put("card_type", cardType);
+		params.put("card_attr", cardAttr);
 		params.put("card_sort", cardSort);
 		List<YugiohDTO> yCardList = deckMakerService.getYCardList(page, params);
 		System.out.println(yCardList.size());
@@ -96,11 +96,11 @@ public class DeckMakerController {
 
 	@GetMapping(value="/loadMoreYCard.do", produces="application/json")
 	public @ResponseBody List<YugiohDTO> loadMoreYCard(Model model, @RequestParam(defaultValue = "1") int page,
-			@RequestParam(value = "card_type", required = false, defaultValue = "t") String cardType,
+			@RequestParam(value = "card_attr", required = false, defaultValue = "a") String cardAttr,
 			@RequestParam(value = "card_sort", required = false, defaultValue = "s") String cardSort) {
 		Map<String, String> params = new HashMap<>();
 
-		params.put("card_type", cardType);
+		params.put("card_attr", cardAttr);
 		params.put("card_sort", cardSort);
 		List<YugiohDTO> yCardList = deckMakerService.getYCardList(page, params);
 		System.out.println(yCardList.size());
@@ -110,11 +110,11 @@ public class DeckMakerController {
 	// 디지몬카드 -------------------------------------------------------------------
 	@RequestMapping("/digimonDeckMaker.do")
 	public void digimonDeckMaker(Model model, @RequestParam(defaultValue = "1") int page,
-			@RequestParam(value = "card_type", required = false, defaultValue = "t") String cardType,
+			@RequestParam(value = "card_attr", required = false, defaultValue = "a") String cardAttr,
 			@RequestParam(value = "card_sort", required = false, defaultValue = "s") String cardSort) {
 		Map<String, String> params = new HashMap<>();
 
-		params.put("card_type", cardType);
+		params.put("card_attr", cardAttr);
 		params.put("card_sort", cardSort);
 		List<DigimonDTO> dCardList = deckMakerService.getDCardList(page, params);
 		System.out.println(dCardList.size());
@@ -124,11 +124,11 @@ public class DeckMakerController {
 
 	@GetMapping(value="/loadMoreDCard.do", produces="application/json")
 	public @ResponseBody List<DigimonDTO> loadMoreDCard(Model model, @RequestParam(defaultValue = "1") int page,
-			@RequestParam(value = "card_type", required = false, defaultValue = "t") String cardType,
+			@RequestParam(value = "card_attr", required = false, defaultValue = "a") String cardAttr,
 			@RequestParam(value = "card_sort", required = false, defaultValue = "s") String cardSort) {
 		Map<String, String> params = new HashMap<>();
 
-		params.put("card_type", cardType);
+		params.put("card_attr", cardAttr);
 		params.put("card_sort", cardSort);
 		List<DigimonDTO> dCardList = deckMakerService.getDCardList(page, params);
 		System.out.println(dCardList.size());
@@ -138,11 +138,11 @@ public class DeckMakerController {
 	// 원피스카드 -------------------------------------------------------------------
 	@RequestMapping("/onepieceDeckMaker.do")
 	public void onepieceDeckMaker(Model model, @RequestParam(defaultValue = "1") int page,
-			@RequestParam(value = "card_type", required = false, defaultValue = "t") String cardType,
+			@RequestParam(value = "card_attr", required = false, defaultValue = "a") String cardAttr,
 			@RequestParam(value = "card_sort", required = false, defaultValue = "s") String cardSort) {
 		Map<String, String> params = new HashMap<>();
 
-		params.put("card_type", cardType);
+		params.put("card_attr", cardAttr);
 		params.put("card_sort", cardSort);
 		List<OnepieceDTO> oCardList = deckMakerService.getOCardList(page, params);
 		System.out.println(oCardList.size());
@@ -152,11 +152,11 @@ public class DeckMakerController {
 
 	@GetMapping(value="/loadMoreOCard.do", produces="application/json")
 	public @ResponseBody List<OnepieceDTO> loadMoreOCard(Model model, @RequestParam(defaultValue = "1") int page,
-			@RequestParam(value = "card_type", required = false, defaultValue = "t") String cardType,
+			@RequestParam(value = "card_attr", required = false, defaultValue = "a") String cardAttr,
 			@RequestParam(value = "card_sort", required = false, defaultValue = "s") String cardSort) {
 		Map<String, String> params = new HashMap<>();
 
-		params.put("card_type", cardType);
+		params.put("card_attr", cardAttr);
 		params.put("card_sort", cardSort);
 		List<OnepieceDTO> oCardList = deckMakerService.getOCardList(page, params);
 		System.out.println(oCardList.size());
