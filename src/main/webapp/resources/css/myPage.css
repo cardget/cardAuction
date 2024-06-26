@@ -126,7 +126,7 @@ li {
 	background-color: #fff;
 }
 
-.chat-brief {
+.noti-brief {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -135,20 +135,20 @@ li {
     background-color: #fff;
 }
 
-.chat-image img {
+.noti-image img {
     height: 50px;
     border-radius: 4px;
     object-fit: cover;
 }
 
-.chat-content {
+.noti-content {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.chat-content h3 {
+.noti-content h3 {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 5px;
@@ -156,7 +156,7 @@ li {
     text-align: left;
 }
 
-.chat-content p {
+.noti-content p {
     font-size: 12px;
     margin: 2px 0;
     text-align: left;
@@ -393,6 +393,16 @@ input:focus + .slider {
     font-size: 14px;
     background-color: #fff;
     color: #F8C501;
+}
+
+.status-section .status-button-done {
+    padding: 10px 20px;
+    border: 1px solid #007FFF;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    background-color: #fff;
+    color: #007FFF;
 }
 
 .status-section .status-button-delivered {
@@ -689,4 +699,18 @@ tbody tr {
 .no-unread-noti {
 	text-align: center!important;
 	border-bottom: 1px solid #ddd;
+}
+
+/* 회원탈퇴 */
+.warning {
+	color: #FE3838;
+}
+
+.submit-button-withdrawl {
+	background-color: #FE3838;
+	color: white;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
 }

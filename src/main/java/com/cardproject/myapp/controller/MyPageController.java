@@ -1,7 +1,9 @@
 package com.cardproject.myapp.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -20,13 +23,14 @@ import com.cardproject.myapp.dto.DeliveryDTO;
 import com.cardproject.myapp.dto.ItemDTO;
 import com.cardproject.myapp.dto.NotificationDTO;
 import com.cardproject.myapp.dto.PointDTO;
+import com.cardproject.myapp.dto.TradeDTO;
 import com.cardproject.myapp.dto.UserDTO;
 import com.cardproject.myapp.service.MyPageService;
 
 @Controller
 @RequestMapping("/mypage")
 public class MyPageController {
-	
+
 	@Autowired
 	MyPageService mpService;
 
@@ -40,13 +44,12 @@ public class MyPageController {
 		if (userid == null) {
 			return "redirect:../auth/login.do";
 		}
-		
+
 		UserDTO user = mpService.selectUserById(userid);
 		List<NotificationDTO> nlist = mpService.selectFiveNotifications(userid);
-		
+
 		model.addAttribute("user", user);
 		model.addAttribute("nlist", nlist);
-		
 
 		return "mypage/myPage";
 	}
@@ -55,7 +58,7 @@ public class MyPageController {
 	@GetMapping("/myInfo.do")
 	public String myInfo(Model model) {
 		String userid = (String) session.getAttribute("userid");
-		
+
 		UserDTO user = mpService.selectUserById(userid);
 		model.addAttribute("user", user);
 		return "mypage/myInfo";
@@ -79,9 +82,8 @@ public class MyPageController {
 	public String updateProfile(@RequestParam("password") String password, @RequestParam("nickname") String nickname,
 			@RequestParam("email") String email, @RequestParam("domain") String domain,
 			@RequestParam("address") String address, @RequestParam("detailAddress") String addressDetail,
-			@RequestParam("zipCode") String zipCode,
-			@RequestParam("accnt") String account, @SessionAttribute("user") UserDTO user,
-			RedirectAttributes redirectAttributes) {
+			@RequestParam("zipCode") String zipCode, @RequestParam("accnt") String account,
+			@SessionAttribute("user") UserDTO user, RedirectAttributes redirectAttributes) {
 		String fullEmail = email + "@" + domain;
 		user.setPw(password);
 		user.setNickname(nickname);
@@ -93,7 +95,7 @@ public class MyPageController {
 		mpService.userUpdate(user);
 		redirectAttributes.addFlashAttribute("message", "회원정보가 성공적으로 수정되었습니다.");
 
-		return "redirect:mypage/";
+		return "redirect:mypage/main.do";
 	}
 
 	// 입찰내역 조회
@@ -115,6 +117,20 @@ public class MyPageController {
 		model.addAttribute("now", nowStr);
 
 		return "mypage/myBid";
+	}
+
+	// 낙찰내역 조회
+	@GetMapping("/myTrade.do")
+	public String myTrade(Model model) {
+		String userid = (String) session.getAttribute("userid");
+		if (userid == null) {
+			return "redirect:../auth/login.do";
+		}
+
+		List<TradeDTO> tlist = mpService.selectAllTrades(userid);
+		model.addAttribute("tlist", tlist);
+
+		return "mypage/myTrade";
 	}
 
 	// 판매내역 조회
@@ -156,21 +172,21 @@ public class MyPageController {
 		model.addAttribute("now", nowStr);
 		return "mypage/myInterest";
 	}
-	
+
 	@GetMapping("/deleteInterest.do")
 	public String deleteInterest(Model model) {
 		String userid = (String) session.getAttribute("userid");
-		
+
 		int result = mpService.deleteAllLikes(userid);
 		String message;
 		if (result > 0) {
 			message = "관심 물픔을 모두 삭제하였습니다.";
-		}else {
+		} else {
 			message = "삭제할 대상이 없거나 실패하였습니다.";
 		}
-		
+
 		model.addAttribute(message);
-		return "redirect:mypage/myInterest";
+		return "mypage/myInterest";
 	}
 
 	// 포인트 조회
@@ -215,7 +231,7 @@ public class MyPageController {
 		model.addAttribute("dlist", dlist);
 		return "mypage/myDelivery";
 	}
-	
+
 	// 모든 알림 조회
 	@GetMapping("/myNoti.do")
 	public String myNoti(Model model) {
@@ -223,52 +239,67 @@ public class MyPageController {
 		if (userid == null) {
 			return "redirect:../auth/login.do";
 		}
-		
+
+		UserDTO user = mpService.selectUserById(userid);
 		List<NotificationDTO> nlist = mpService.selectAllNotifications(userid);
-		
+		model.addAttribute("user", user);
 		model.addAttribute("nlist", nlist);
 		return "mypage/myNotification";
 	}
-	
+
 	@GetMapping("/readUpdate.do")
 	public String readUpdate(Model model) {
 		String userid = (String) session.getAttribute("userid");
 		if (userid == null) {
 			return "redirect:../auth/login.do";
 		}
-		
+
 		int result = mpService.isReadUpdateAll(userid);
-		String message = result>0?"success":"failure";
-		
+		String message = result > 0 ? "success" : "failure";
+
 		List<NotificationDTO> nlist = mpService.selectAllNotifications(userid);
 		model.addAttribute("nlist", nlist);
 		model.addAttribute("message", message);
 		return "mypage/myNotification";
 	}
-	
+
 	@GetMapping("/deleteAllNoti.do")
 	public String deleteAllNoti(Model model) {
 		String userid = (String) session.getAttribute("userid");
 		if (userid == null) {
 			return "redirect:../auth/login.do";
 		}
-		
+
 		int result = mpService.deleteAllNotificationRead(userid);
-		String message = result>0?"success":"failure";
-		
+		String message = result > 0 ? "success" : "failure";
+
 		List<NotificationDTO> nlist = mpService.selectAllNotifications(userid);
-		
+
 		model.addAttribute("nlist", nlist);
-		
+
 		return "mypage/myNotification";
 	}
-	
+
 	@GetMapping("/markAsRead.do")
-	public String markAsRead(@RequestParam("notiId") int notiId,
-							@RequestParam("itemId") int itemId,
-							Model model) {
+	public String markAsRead(@RequestParam("notiId") int notiId, @RequestParam("itemId") int itemId, Model model) {
 		mpService.isReadUpdate(notiId);
 
-	    return "redirect:../auction/auctionDetail.do?item_id=" + itemId;
+		return "redirect:../auction/auctionDetail.do?item_id=" + itemId;
+	}
+
+	// 회원 탈퇴
+	@GetMapping("/updateUserDisabled.do")
+	public String displayDeleteUser(Model model) {
+		return "mypage/userDisabled";
+	}
+
+	@PostMapping("/updateUserDisabled.do")
+	@ResponseBody
+	public Map<String, Object> updateUserDisabled(@RequestParam("password") String password, HttpSession session) {
+		String userid = (String) session.getAttribute("userid");
+		int result = mpService.updateUserDisabled(userid, password);
+		Map<String, Object> response = new HashMap<>();
+		response.put("success", result > 0);
+		return response;
 	}
 }

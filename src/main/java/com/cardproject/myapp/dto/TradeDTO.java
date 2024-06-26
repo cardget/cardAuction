@@ -13,13 +13,15 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class TradeDTO {
-	private int trade_id; //°Å·¡¹øÈ£
-	private String user_id; //±¸¸ÅÀÚ¾ÆÀÌµð
-	private int item_id; //¹°Ç°¾ÆÀÌµð
-	private int price; //³«Âû±Ý¾×
-	private int trade_type; //°Å·¡¹æ½Ä
-	private Date create_date; //³«ÂûÀÏÀÚ
-	private Date confirm_date; //°Å·¡È®Á¤ÀÏÀÚ
-	private int is_recommend; //ÃßÃµ¿©ºÎ
-	private int stage; //°Å·¡ÇöÈ²
+	private int trade_id; //ï¿½Å·ï¿½ï¿½ï¿½È£
+	private String user_id; //ï¿½ï¿½ï¿½ï¿½ï¿½Ú¾ï¿½ï¿½Ìµï¿½
+	private int item_id; //ï¿½ï¿½Ç°ï¿½ï¿½ï¿½Ìµï¿½
+	private int price; //ï¿½ï¿½ï¿½ï¿½ï¿½Ý¾ï¿½
+	private int trade_type; //ï¿½Å·ï¿½ï¿½ï¿½ï¿½
+	private String create_date; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private Date confirm_date; //ï¿½Å·ï¿½È®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private int is_recommend; //ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½
+	private int stage; //ï¿½Å·ï¿½ï¿½ï¿½È²
+	private String image1;
+	private String item_name;
 }
