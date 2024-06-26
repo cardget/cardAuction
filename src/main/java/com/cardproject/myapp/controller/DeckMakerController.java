@@ -63,12 +63,14 @@ public class DeckMakerController {
 	@RequestMapping("/pokemonDeckMaker.do")
 	public void pokemonDeckMaker(Model model, @RequestParam(defaultValue = "1") int page,
 			@RequestParam(value = "card_type", required = false, defaultValue = "t") String cardType,
-			@RequestParam(value = "card_sort", required = false, defaultValue = "s") String cardSort) {
+			@RequestParam(value = "card_sort", required = false, defaultValue = "s") String cardSort,
+			@RequestParam(value = "query", required = false, defaultValue = "") String cardName) {//추가한부분
 		Map<String, String> params = new HashMap<>();
 		
 		String userid = (String) session.getAttribute("userid");
 		params.put("card_type", cardType);
 		params.put("card_sort", cardSort);
+		params.put("card_name", cardName.isEmpty() ? null : cardName); //추가한부분
 		List<PokemonDTO> pCardList = deckMakerService.getPCardList(page, params);
 		System.out.println(pCardList.size());
 		model.addAttribute("pCardList", pCardList);
@@ -87,12 +89,12 @@ public class DeckMakerController {
 	public @ResponseBody List<PokemonDTO> loadMorePCard(Model model, @RequestParam(defaultValue = "1") int page,
 			@RequestParam(value = "card_type", required = false, defaultValue = "t") String cardType,
 			@RequestParam(value = "card_sort", required = false, defaultValue = "s") String cardSort,
-			@RequestParam String cardName) {//추가한부분
+			@RequestParam(value = "query", required = false, defaultValue = "") String cardName) {//추가한부분
 		Map<String, String> params = new HashMap<>();
 
 		params.put("card_type", cardType);
 		params.put("card_sort", cardSort);
-		params.put("card_name", cardName); //추가한부분
+		params.put("card_name", cardName.isEmpty() ? null : cardName); //추가한부분
 		List<PokemonDTO> pCardList = deckMakerService.getPCardList(page, params);
 		System.out.println(pCardList.size());
 		return pCardList;

@@ -19,7 +19,7 @@
 		<if test='card_type != null and card_type != "t"'>
 			AND CARD_TYPE = #{card_type}
 		</if>
-		<if test='card_name != null and card_name != ""'>  <!-- 추가부분 -->
+		<if test='card_name != null'>  <!-- 추가부분 -->
 			AND CARD_NAME LIKE '%' || #{card_name} || '%'
 		</if>
 		ORDER BY CARD_ID

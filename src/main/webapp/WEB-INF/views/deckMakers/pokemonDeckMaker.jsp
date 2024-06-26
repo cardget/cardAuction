@@ -21,24 +21,25 @@
 <body>
 	<!--header-->
 	<c:choose>
-    	<c:when test="${empty userid}">
-    		<%@ include file="/WEB-INF/views/main/defaultHeader.jsp"%>
-    	</c:when>
-    	<c:otherwise>
-    		<%@ include file="/WEB-INF/views/main/loginHeader.jsp"%>
-    	</c:otherwise>
-    </c:choose>
+		<c:when test="${empty userid}">
+			<%@ include file="/WEB-INF/views/main/defaultHeader.jsp"%>
+		</c:when>
+		<c:otherwise>
+			<%@ include file="/WEB-INF/views/main/loginHeader.jsp"%>
+		</c:otherwise>
+	</c:choose>
 	<div class="header-image">
 		<img src="${path }/resources/images/default/pokemon_banner.png">
 	</div>
 	<div class="top-container">
 		<div class="search-area-full">
 			<div class="search-input-wrapper">
-				<form action="${path}/deckMakers/searchP" method="get">
-					<input type="text" class="card-search-box" name="query"
-						placeholder="검색어를 입력하세요.">
+				<form id="conditionForm" action="/myapp/deckMakers/loadMorePCard.do"
+					method="get" onsubmit="con_search(); return false;">
+					<input type="text" class="card-search-box" id="card-search-box"
+						name="query" placeholder="검색어를 입력하세요.">
 					<button type="submit" class="card-search">
-						<img src="${path }/resources/icon/search.png" alt="search"
+						<img src="${path}/resources/icon/search.png" alt="search"
 							class="card-search-icon">
 					</button>
 				</form>
@@ -117,7 +118,7 @@
 	<script type="module" src="${path}/resources/js/main.js"></script>
 	<script>
 	//검색쿼리 추가
-	$(document).ready(function() {
+	/*$(document).ready(function() {
         $('form').on('submit', function(e) {
             e.preventDefault();
             var query = $('.card-search-box').val();
@@ -146,41 +147,44 @@
                 }
             });
         });
-    });
+    });*/
 	
 	//조건검색
-	function con_search() {
-        var form = document.getElementById("conditionForm");
-        var formData = $(form).serialize();
-
-        $.ajax({
-            url: "/myapp/deckMakers/loadMorePCard.do",
-            type: "GET",
-            data: formData,
-            dataType: "json",
-            success: function(data) {
-            	console.log("성공")
-            	console.log(data)
-                var deckList = document.getElementById("deckList");
-                deckList.innerHTML = ""; // 기존 내용 삭제
-                var here = document.getElementById("here");
-                here.innerHTML = ""; // 기존 내용 삭제
-
-                data.forEach(card => {
-                	console.log(card);
-                    var cardDiv = document.createElement("div");
-                    cardDiv.classList.add("card-count");
-                    cardDiv.innerHTML = `
-                        <img src="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}')">
-                    `;
-                    deckList.appendChild(cardDiv);
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error("Error:", error);
-            }
-        });
-    }
+	 function con_search() {
+	    var form = document.getElementById("conditionForm");
+	    var formData = new FormData(form);
+	    var query = document.getElementById("card-search-box").value;
+	
+	    formData.append("query", query);
+	
+	    $.ajax({
+	        url: "/myapp/deckMakers/loadMorePCard.do",
+	        type: "GET",
+	        data: Object.fromEntries(formData.entries()),  // FormData 객체를 일반 객체로 변환
+	        dataType: "json",
+	        success: function(data) {
+	            console.log("성공");
+	            console.log(data);
+	            var deckList = document.getElementById("deckList");
+	            deckList.innerHTML = ""; // 기존 내용 삭제
+	            var here = document.getElementById("here");
+	            here.innerHTML = ""; // 기존 내용 삭제
+	
+	            data.forEach(card => {
+	                console.log(card);
+	                var cardDiv = document.createElement("div");
+	                cardDiv.classList.add("card-count");
+	                cardDiv.innerHTML = `
+	                    <img src="${card.card_id}" class="listCard" onclick="call('${card.card_id}')">
+	                `;
+	                here.appendChild(cardDiv);
+	            });
+	        },
+	        error: function(xhr, status, error) {
+	            console.error("Error:", error);
+	        }
+	    });
+	}
 	
 	//덱만들기 등록
 	    function insertCard(){
