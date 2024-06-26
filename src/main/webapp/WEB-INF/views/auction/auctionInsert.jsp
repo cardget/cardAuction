@@ -56,7 +56,7 @@
 		</div>
 
 		<div class="image-format">
-			<img src="${path}/resources/icon/error.png" class="icon-error" alt="icon"> 실제 카드 이미지 1개 필수 ( 최대 5개 )
+			<img src="${path}/resources/icon/error.png" class="icon-error" alt="icon"> 실제 카드 이미지 1개 필수 ( 이미지 권장 크기 : 550 X 550 )
 			<div class="input-container3">
 				<label for="image-input" class="image-upload-label">물품 이미지 업로드</label>
 				<input type="file" id="image-input" name="images" accept="image/*" multiple required>

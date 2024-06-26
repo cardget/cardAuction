@@ -22,7 +22,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.cardproject.myapp.dto.BiddingDTO;
 import com.cardproject.myapp.dto.ItemDTO;
 import com.cardproject.myapp.dto.ItemDetailDTO;
 import com.cardproject.myapp.dto.LikeDTO;
@@ -52,18 +54,12 @@ public class AuctionController {
 	}
 
 	@GetMapping("/auctionDetail.do")
-	public void auctionDetail(Model model, Integer item_id, HttpSession session) {
+	public void auctionDetail(Model model,@RequestParam("item_id") Integer item_id, HttpSession session) {
 		System.out.println("auctionDetail page");
 		System.out.println(item_id);
-		// ItemDetailDTO itemDetailOne = aucs.selectItemOne(item_id);
-		// System.out.println(itemDetailOne);
+
 		model.addAttribute("itemDetailOne", aucs.selectItemOne(item_id));
-//		String userId = (String) session.getAttribute("userid");
-//		int itemId = item_id;
-//		HashMap<String, Object> map = new HashMap<String, Object>();
-//		map.put("user_id", userId);
-//		map.put("item_id", itemId);
-//		aucs.likeDelete(map);
+
 	}
 
 	@GetMapping("/auctionInsert.do")
@@ -91,7 +87,7 @@ public class AuctionController {
 				// 에러 처리
 			}
 		}
-		// 이미지 URL을 ItemDTO에 설정합니다.
+		// 이미지 URL을 ItemDTO에 설정
 		if (!uploadedImageUrls.isEmpty()) {
 			for (int i = 0; i < uploadedImageUrls.size(); i++) {
 				switch (i) {
@@ -113,13 +109,54 @@ public class AuctionController {
 				}
 			}
 		}
-		// 경매 데이터와 업로드된 이미지 URL을 저장합니다.
-		// model.addAttribute("uploadedImageUrls", uploadedImageUrls);
+		
 		aucs.itemInsert(item);
 		return "redirect:auctionMain.do";
 
 	}
+//	@PostMapping("/auctionBidding.do")
+//	public String insertBidding(BiddingDTO bid, Model model, HttpSession session ) {
+//
+//		System.out.println("auction Bidding");
+//		System.out.println(bid);
+//		String userId = (String) session.getAttribute("userid");
+//		bid.setUser_id(userId);
+//		bid.setIs_win(0);
+//		
+//		
+//	    //동일물품에 입찰하려는 경우
+//	    if (aucs.isBidding(userId, bid.getItem_id())) {
+//	    	session.setAttribute("errorMessage", "이미 입찰하신 경매물품 입니다.");
+//	        return "redirect:auctionDetail.do?item_id=" + bid.getItem_id();
+//	    }
+//	    
+//		aucs.biddingInsert(bid);
+//		
+//		return "redirect:auctionDetail.do?item_id=" + bid.getItem_id();
+//	}
+	@PostMapping(value= "/auctionBidding.do", produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public ResponseEntity<Map<String,Object>> insertBidding(@RequestBody BiddingDTO bid, HttpSession session) {
+	    System.out.println("auction Bidding");
+	    String userId = (String) session.getAttribute("userid");
+	    bid.setUser_id(userId);
+	    bid.setIs_win(0);
+	    
+	    Map<String, Object> response = new HashMap<String,Object>();
+	    
+	    // 동일물품에 입찰하려는 경우
+	    if (aucs.isBidding(userId, bid.getItem_id())) {
+	    	response.put("success", false);
+	    	response.put("message", "이미 입찰한 물품입니다.");
+	        System.out.println("이미 입찰한 물품");
+	        return ResponseEntity.ok(response);
+	    }
 
+	    aucs.biddingInsert(bid);
+	    response.put("success", true);
+    	response.put("message", "입찰에 성공했습니다.");
+	    return ResponseEntity.ok(response);
+	}
 	@PostMapping("/like/toggle")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> toggleLike(@RequestBody Map<String, String> request,

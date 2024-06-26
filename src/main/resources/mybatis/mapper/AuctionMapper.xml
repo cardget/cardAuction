@@ -137,17 +137,38 @@
 	
 	<!-- 입찰 (biddings테이블에 Insert) -->
 	<insert id="biddingInsert" parameterType="biddingvo">
-		insert into
-		biddings(bid_id,price,bid_time,user_id,item_id)
-		values
-		(BID_SEQ.NEXTVAL, #{price},#{bid_time},#{user_id},#{item_id})
+		insert into biddings(bid_id,price,user_id,item_id) 
+		values(BID_SEQ.NEXTVAL, #{price},#{user_id},#{item_id})
 	</insert>
+	<!-- 사용자가 동일 물품에 입찰하는지 확인용 -->
+	<select id="userBidsForItem" parameterType="map" resultType="biddingvo">
+		SELECT *
+		FROM biddings 
+		WHERE user_id = #{user_id} AND item_id = #{item_id}
+	</select>
+
 
 	<!-- 포켓몬카드 불러오기 -->
 	<select id="selectPCard" resultType="pokemonvo">
 		select * from pokemon
 	</select>
-
+	<!-- 원피스카드 불러오기 -->
+	<select id="selectOCard" resultType="onepiecevo">
+		select * from onepiece
+	</select>
+	<!-- 디지몬카드 불러오기 -->
+	<select id="selectDCard" resultType="digimonvo">
+		select * from digimon
+	</select>
+	<!-- 유희왕카드 불러오기 -->
+	<select id="selectYCard" resultType="yugiohvo">
+		select * from yugioh
+	</select>
+	<!-- 스포츠카드 불러오기 -->
+	<select id="selectSCard" resultType="sportvo">
+		select * from sports
+	</select>
+	
 
 
 
