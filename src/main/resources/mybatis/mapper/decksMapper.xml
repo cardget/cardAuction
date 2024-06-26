@@ -12,13 +12,15 @@
 		a.*, ROWNUM rnum
 		FROM (
 		SELECT * FROM POKEMON
-		WHERE
-		1=1
+		WHERE 1=1
 		<if test='card_sort != null and card_sort != "s"'>
 			AND CARD_SORT = #{card_sort}
 		</if>
 		<if test='card_type != null and card_type != "t"'>
 			AND CARD_TYPE = #{card_type}
+		</if>
+		<if test='card_name != null and card_name != ""'>  <!-- 추가부분 -->
+			AND CARD_NAME LIKE '%' || #{card_name} || '%'
 		</if>
 		ORDER BY CARD_ID
 		) a
@@ -114,13 +116,20 @@
 	<insert id="insertDeckSource" parameterType="decksourcevo">
 		INSERT INTO
 		deckSources (decksource_id, deck_id, p_card, o_card, d_card,
-		y_card, is_thumbnail)
-		VALUES (decksource_seq.NEXTVAL, #{deck_id}, #{p_card}, #{o_card},
+		y_card,
+		is_thumbnail)
+		VALUES (decksource_seq.NEXTVAL, #{deck_id}, #{p_card},
+		#{o_card},
 		#{d_card},
 		#{y_card}, #{is_thumbnail})
 	</insert>
-	<!-- **덱저장** -->
-	
-	
+	<!-- **덱저장** 
+	<select id="searchPCard" parameterType="map"
+		resultType="pokemonvo">
+		SELECT * FROM POKEMON
+		WHERE CARD_NAME LIKE '%' ||
+		'#{card_name' || '%'
+	</select>-->
+
 
 </mapper>

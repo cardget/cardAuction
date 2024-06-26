@@ -116,7 +116,39 @@
 	<%@ include file="/WEB-INF/views/main/footer.jsp"%>
 	<script type="module" src="${path}/resources/js/main.js"></script>
 	<script>
+	//검색쿼리 추가
+	$(document).ready(function() {
+        $('form').on('submit', function(e) {
+            e.preventDefault();
+            var query = $('.card-search-box').val();
+            $.ajax({
+                url: '${path}/deckMakers/loadMorePCard.do',
+                method: 'GET',
+                data: { query: query },
+                success: function(data) {
+                    var deckList = document.getElementById("deckList");
+                    deckList.innerHTML = "";
+                    var here = document.getElementById("here");
+                    here.innerHTML = "";
+
+                    data.forEach(card => {
+                    	console.log(card);
+                        var cardDiv = document.createElement("div");
+                        cardDiv.classList.add("card-count");
+                        cardDiv.innerHTML = `
+                            <img src="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}')">
+                        `;
+                        deckList.appendChild(cardDiv);
+                    });
+                },
+                error: function() {
+                    alert('결과값이 없습니다');
+                }
+            });
+        });
+    });
 	
+	//조건검색
 	function con_search() {
         var form = document.getElementById("conditionForm");
         var formData = $(form).serialize();

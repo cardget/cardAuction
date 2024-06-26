@@ -86,11 +86,13 @@ public class DeckMakerController {
 	@GetMapping(value="/loadMorePCard.do", produces="application/json")
 	public @ResponseBody List<PokemonDTO> loadMorePCard(Model model, @RequestParam(defaultValue = "1") int page,
 			@RequestParam(value = "card_type", required = false, defaultValue = "t") String cardType,
-			@RequestParam(value = "card_sort", required = false, defaultValue = "s") String cardSort) {
+			@RequestParam(value = "card_sort", required = false, defaultValue = "s") String cardSort,
+			@RequestParam String cardName) {//추가한부분
 		Map<String, String> params = new HashMap<>();
 
 		params.put("card_type", cardType);
 		params.put("card_sort", cardSort);
+		params.put("card_name", cardName); //추가한부분
 		List<PokemonDTO> pCardList = deckMakerService.getPCardList(page, params);
 		System.out.println(pCardList.size());
 		return pCardList;
