@@ -12,6 +12,7 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="${path}/resources/js/signUp.js"></script>
 <script src="${path}/resources/js/verificationSMS_API.js"></script>
+<script src="${path}/resources/js/mapAPI.js"></script>
 <script>
        
 function f_checkUserId() {
@@ -22,12 +23,8 @@ function f_checkUserId() {
         data: { "userId": userId },
         success: function(isDuplicate) {
             if (isDuplicate > 0) {
-            	console.log(isDuplicate);
-            	console.log(isDuplicate>0);
                 alert("이미 사용중인 아이디입니다.");
             } else {
-            	console.log("isDuplicate:" + isDuplicate);
-            	console.log(isDuplicate>0);
                 alert("사용 가능한 아이디입니다.");
             }
         },
@@ -87,7 +84,7 @@ function f_checkNickname() {
 
         <h4>회원정보 입력</h4>
         <hr style="border: 1px solid blue; margin-bottom: 25px;">
-        <form action="insertSignUp.do" class="custom-form" onsubmit="return validatePasswords()" method="post">
+        <form action="${path}/auth/insertSignUp.do" class="custom-form" onsubmit="return validatePasswords()" method="post" enctype="multipart/form-data">
 		    <div class="form-group">
 		        <label for="user_name" class="input-label">이름</label>
 		        <input type="text" id="user_name" name="user_name" required class="input-field">
@@ -98,7 +95,7 @@ function f_checkNickname() {
 		            <label class="input-label">전화번호</label>
 		            <input type="text" id="phone_number" name="phone_number" class="input-field" required>
 		            <button type="button" class="check-button" onclick="sendCode()">인증번호 발송</button>
-		            <input type="tel" id="verificationCode" class="input-field" style="margin-left: 190px;" placeholder="인증번호 입력">
+		            <input type="text" id="verificationCode" class="input-field" style="margin-left: 190px;" placeholder="인증번호 입력">
 		            <button type="button" class="check-button" onclick="verifyCode()">확인</button>  
 		            <p id="result"></p>            
 		        </div>                
@@ -112,25 +109,25 @@ function f_checkNickname() {
 		    <hr class="form-divider">
 		    <div class="form-group">
 		        <label for="pw" class="input-label">비밀번호</label>
-		        <input type="password" id="pw" name="pw" placeholder="●●●●●●●●●●" required class="input-field" onkeyup="checkPasswordMatch()">
+		        <input type="password" id="pw" name="pw" placeholder="●●●●●●●●●●" required class="input-field" onkeyup="checkPasswordMatch()" required>
 		    </div>
 		    <p class="noti-info-text">※ 영문/숫자/특수문자를 2가지 이상 포함하여 6~12자로 작성해주세요. </p>
 		    <hr class="form-divider">
 		    <div class="form-group">
 		        <label for="confirmPassword" class="input-label">비밀번호 확인</label>
-		        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="●●●●●●●●●●" required class="input-field" onkeyup="checkPasswordMatch()">
+		        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="●●●●●●●●●●" required class="input-field" onkeyup="checkPasswordMatch()" required>
 		        <span id="passwordMessage" style="margin-left: 160px; margin-top: 8px; font-size: 10px;"></span>
 		    </div>
 		    <hr class="form-divider">
 		    <div class="form-group">
 		        <label for="nickname" class="input-label">닉네임</label>
-		        <input type="text" id="nickname" name="nickname" placeholder="로로뽀" required class="input-field">
+		        <input type="text" id="nickname" name="nickname" placeholder="로로뽀" required class="input-field" required>
 		        <button type="button" class="check-button" id="checkNickname" onclick="f_checkNickname()">중복확인</button>
 		    </div>
 		    <hr class="form-divider">
 		    <div class="form-group">
 		        <label for="email" class="input-label">이메일</label>
-		        <input type="text" id="email" name="email" required class="email-input-field">
+		        <input type="text" id="emailName" name="emailName" required class="email-input-field" required>
 		        <span>@</span>
 		        <input type="text" id="domain" name="domain" required class="email-input-field">
 		        <select class="email-select" name="emailList" size="1" onchange="checkEmail(this)">
@@ -141,12 +138,14 @@ function f_checkNickname() {
 		            <option value="nate.com">nate.com</option>
 		        </select>
 		    </div>
-		    <input type="hidden" id="fullEmail" name="fullEmail">
+		    <!-- 이메일을 결합하여 숨겨진 필드에 저장 -->
+            <input type="hidden" id="email" name="email">
+		    
 		    <hr class="form-divider"> 
 		    <div class="form-group address-group">
 		        <label for="address" class="input-label">주소</label>
 		        <div class="address-container">
-		            <input type="text" id="sample6_postcode" name="zip_code" placeholder="우편번호" class="input-field">
+		            <input type="text" id="sample6_postcode" name="zip_code" placeholder="우편번호" class="input-field" >
 		            <input type="button" onclick="sample6_execDaumPostcode()" value="주소 찾기" class="check-button">
 		        </div>
 		        <div class="address-fields">
@@ -160,7 +159,8 @@ function f_checkNickname() {
 		        <div class="profile-image-container">
 		            <img id="profile-image" src="${path}/resources/images/기본 이미지.png" alt="Profile Image">
 		        </div>
-		        <input type="file" id="profile_image" name="profile_image" onchange="previewImage(this)" accept="image/*" class="input-field" style="margin-left:10px;">
+		        <input type="file" id="profile_image" name="profile_image_name" onchange="previewImage(this)" accept="image/*" class="input-field" style="margin-left:10px;" multiple required>
+		    	<button type="button" onclick="restProfileImage()" class="check-button">삭제</button>
 		    </div>
 		    <hr class="form-divider">
 		    <div class="form-group">
