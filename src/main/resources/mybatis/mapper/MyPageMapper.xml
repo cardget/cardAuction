@@ -248,4 +248,11 @@
 		DELETE FROM NOTIFICATIONS 
 		WHERE USER_ID = #{userid} AND IS_READ = 1
 	</delete>
+	
+	<!-- 회원 탈퇴 -->
+	<update id="updateUserDisabled" parameterType="map">
+		UPDATE USERS 
+		SET IS_ABLE = 0
+		WHERE USER_ID = #{userid} AND PW = #{password}
+	</update>
 </mapper>

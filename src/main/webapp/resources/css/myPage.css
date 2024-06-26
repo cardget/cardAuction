@@ -700,3 +700,17 @@ tbody tr {
 	text-align: center!important;
 	border-bottom: 1px solid #ddd;
 }
+
+/* 회원탈퇴 */
+.warning {
+	color: #FE3838;
+}
+
+.submit-button-withdrawl {
+	background-color: #FE3838;
+	color: white;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}

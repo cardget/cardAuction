@@ -1,6 +1,8 @@
 package com.cardproject.myapp.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -109,4 +111,9 @@ public class MyPageService {
  	public int deleteAllNotificationRead(String userid) {
  		return myPageDAO.deleteAllNotificationRead(userid);
  	}
+ 	
+ 	// 회원 탈퇴
+ 	public int updateUserDisabled(String userid, String password) {
+		return myPageDAO.updateUserDisabled(userid, password);
+	}
 }

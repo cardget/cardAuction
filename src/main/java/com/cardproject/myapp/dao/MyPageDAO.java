@@ -119,4 +119,12 @@ public class MyPageDAO{
 	public int deleteAllNotificationRead(String userid) {
 		return sqlSession.delete(namespace + ".deleteAllNotificationRead", userid);
 	}
+	
+	// 회원 탈퇴
+	public int updateUserDisabled(String userid, String password) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("userid", userid);
+		params.put("password", password);
+		return sqlSession.update(namespace + ".updateUserDisabled", params);
+	}
 }
