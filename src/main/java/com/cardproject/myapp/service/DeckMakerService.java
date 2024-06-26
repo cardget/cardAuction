@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.cardproject.myapp.dao.DeckMakerDAO;
 import com.cardproject.myapp.dto.DeckDTO;
 import com.cardproject.myapp.dto.DeckSourceDTO;
+import com.cardproject.myapp.dto.DeckUpdateDTO;
 import com.cardproject.myapp.dto.DigimonDTO;
 import com.cardproject.myapp.dto.OnepieceDTO;
 import com.cardproject.myapp.dto.PokemonDTO;
@@ -21,82 +22,91 @@ import com.cardproject.myapp.dto.YugiohDTO;
 @Service
 public class DeckMakerService {
 
-    @Autowired
+	@Autowired
     private DeckMakerDAO deckMakerDAO;
 
-    public List<PokemonDTO> selectAllPCard(int page) {
-    	int itemsPerPage = 30;
+    public List<PokemonDTO> getPCardList(int page, Map<String, String> filters) {
+        int itemsPerPage = 30;
         int startRow = (page - 1) * itemsPerPage + 1;
         int endRow = page * itemsPerPage;
-        return deckMakerDAO.selectAllPCard(startRow, endRow);
+
+        Map<String, Object> params = new HashMap<>(filters);
+        params.put("startRow", startRow);
+        params.put("endRow", endRow);
+
+        System.out.println("serviceParams:" + params);
+        return deckMakerDAO.selectOrFilterPCard(params);
     }
     
-    public List<YugiohDTO> selectAllYCard(int page) {
-    	 int itemsPerPage = 30;
-         int startRow = (page - 1) * itemsPerPage + 1;
-         int endRow = page * itemsPerPage;
-         return deckMakerDAO.selectAllYCard(startRow, endRow);
-    }
-
-    public List<DigimonDTO> selectAllDCard(int page) {
-    	int itemsPerPage = 30;
+    public List<YugiohDTO> getYCardList(int page, Map<String, String> filters) {
+        int itemsPerPage = 30;
         int startRow = (page - 1) * itemsPerPage + 1;
         int endRow = page * itemsPerPage;
-        return deckMakerDAO.selectAllDCard(startRow, endRow);
+
+        Map<String, Object> params = new HashMap<>(filters);
+        params.put("startRow", startRow);
+        params.put("endRow", endRow);
+
+        System.out.println("serviceParams:" + params);
+        return deckMakerDAO.selectOrFilterYCard(params);
     }
 
-    public List<OnepieceDTO> selectAllOCard(int page) {
-            int itemsPerPage = 30;
-            int startRow = (page - 1) * itemsPerPage + 1;
-            int endRow = page * itemsPerPage;
-            return deckMakerDAO.selectAllOCard(startRow, endRow);
+    public List<DigimonDTO> getDCardList(int page, Map<String, String> filters) {
+        int itemsPerPage = 30;
+        int startRow = (page - 1) * itemsPerPage + 1;
+        int endRow = page * itemsPerPage;
+
+        Map<String, Object> params = new HashMap<>(filters);
+        params.put("startRow", startRow);
+        params.put("endRow", endRow);
+
+        System.out.println("serviceParams:" + params);
+        return deckMakerDAO.selectOrFilterDCard(params);
     }
+    public List<OnepieceDTO> getOCardList(int page, Map<String, String> filters) {
+        int itemsPerPage = 30;
+        int startRow = (page - 1) * itemsPerPage + 1;
+        int endRow = page * itemsPerPage;
+
+        Map<String, Object> params = new HashMap<>(filters);
+        params.put("startRow", startRow);
+        params.put("endRow", endRow);
+
+        System.out.println("serviceParams:" + params);
+        return deckMakerDAO.selectOrFilterOCard(params);
+    }
+
     
-   // public int saveDeck(DeckDTO deckDTO) {
-   //     return deckMakerDAO.insertDeck(deckDTO);
-   // }
-
     public void saveDeckSource(DeckDTO deckDTO, String[] imgList, String kind) {
     	deckMakerDAO.insertDeck(deckDTO);
     	int deckId = deckMakerDAO.deckId();
     	
     	System.out.println("deckId:" + deckId);
-    	for (String img : imgList) {
+    	for (int i=0; i<imgList.length; i++) {
             DeckSourceDTO deckSourceDTO = new DeckSourceDTO();
+            if(i==0) 
+            	deckSourceDTO.setIs_thumbnail(1);
+            else
+            	deckSourceDTO.setIs_thumbnail(0);
             switch (kind) {
                 case "P":
-                    deckSourceDTO.setP_card(img);
+                    deckSourceDTO.setP_card(imgList[i]);
                     break;
                 case "Y":
-                    deckSourceDTO.setY_card(img);
+                    deckSourceDTO.setY_card(imgList[i]);
                     break;
                 case "D":
-                    deckSourceDTO.setD_card(img);
+                    deckSourceDTO.setD_card(imgList[i]);
                     break;
                 case "O":
-                    deckSourceDTO.setO_card(img);
+                    deckSourceDTO.setO_card(imgList[i]);
                     break;
             }
             deckSourceDTO.setDeck_id(deckId);
             deckMakerDAO.insertDeckSource(deckSourceDTO);
+            //deckMakerDAO.updateThumbnail(deckId, kind);
         }
     }
     
-    public List<PokemonDTO> filterPCard(Map<String, String> params) {
-    	System.out.println("serviceParams:"+params);
-        return deckMakerDAO.filterPCard(params);
-    }
-    public List<DigimonDTO> filterDCard(Map<String, String> params) {
-    	System.out.println("serviceParams:"+params);
-        return deckMakerDAO.filterDCard(params);
-    }
-    public List<OnepieceDTO> filterOCard(Map<String, String> params) {
-    	System.out.println("serviceParams:"+params);
-        return deckMakerDAO.filterOCard(params);
-    }
-    public List<YugiohDTO> filterYCard(Map<String, String> params) {
-    	System.out.println("serviceParams:"+params);
-        return deckMakerDAO.filterYCard(params);
-    }
     
 }

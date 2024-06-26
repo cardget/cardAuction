@@ -20,7 +20,14 @@
 
 <body>
 	<!--header-->
-	<%@ include file="/WEB-INF/views/main/header.jsp"%>
+	<c:choose>
+    	<c:when test="${empty userid}">
+    		<%@ include file="/WEB-INF/views/main/defaultHeader.jsp"%>
+    	</c:when>
+    	<c:otherwise>
+    		<%@ include file="/WEB-INF/views/main/loginHeader.jsp"%>
+    	</c:otherwise>
+    </c:choose>
 	<div class="header-image">
 		<img src="${path }/resources/images/default/pokemon_banner.png">
 	</div>
@@ -40,27 +47,19 @@
 		</div>
 		<div id="filter-options" class="filter-options">
 			<form id="conditionForm" action="conditionSearch" method="get">
-				카드타입 <select class="optionBox" id="card_type" name="card_type">
-					<option value="0">전체</option>
-					<option value="풀">풀</option>
-					<option value="불꽃">불꽃</option>
-					<option value="물">물</option>
-					<option value="번개">번개</option>
-					<option value="초">초</option>
-					<option value="격투">격투</option>
-					<option value="악">악</option>
-					<option value="강철">강철</option>
-					<option value="드래곤">드래곤</option>
-					<option value="무색">무색</option>
+				카드타입 <select class="optionBox" id="card_type" name="card_attr">
+					<option value="a">전체</option>
+					<option value="데이터종">데이터종</option>
+					<option value="바이러스종">바이러스종</option>
+					<option value="백신종">백신종</option>
+					<option value="불명">불명</option>
 				</select> 
-				아이템선택 : <select class="optionBox" id="card_sort" name="card_sort">
-					<option value="0">전체</option>
+				속성 : <select class="optionBox" id="card_sort" name="card_sort">
+					<option value="s">전체</option>
+					<option value="디지몬">디지몬</option>
 					<option value="디지타마">디지타마</option>
-					<option value="아이템">아이템</option>
-					<option value="포켓몬의 도구">포켓몬의 도구</option>
-					<option value="스타디움">스타디움</option>
-					<option value="특수에너지">특수에너지</option>
-					<option value="기본에너지">기본에너지</option>
+					<option value="옵션">옵션</option>
+					<option value="테이머">테이머</option>
 				</select>
 			</form>
 			<button class="conditionSearch" id="conditionSearch"
@@ -113,7 +112,7 @@
         var formData = $(form).serialize();
 
         $.ajax({
-            url: "/myapp/deckMakers/conditionDSearch.do",
+            url: "/myapp/deckMakers/loadMoreDCard.do",
             type: "GET",
             data: formData,
             dataType: "json",
@@ -122,12 +121,14 @@
             	console.log(data)
                 var deckList = document.getElementById("deckList");
                 deckList.innerHTML = ""; // 기존 내용 삭제
+                var here = document.getElementById("here");
+                here.innerHTML = ""; // 기존 내용 삭제
 
                 data.forEach(card => {
                     var cardDiv = document.createElement("div");
                     cardDiv.classList.add("card-count");
                     cardDiv.innerHTML = `
-                        <img src="${card.card_id}" class="listCard" onclick="call('${card.card_id}')">
+                        <img src="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}')">
                     `;
                     deckList.appendChild(cardDiv);
                 });
@@ -159,7 +160,7 @@
 		function toggleFilterOptions() {
 			var filterOptions = document.getElementById('filter-options');
 			if (filterOptions.style.display === 'none') {
-				filterOptions.style.display = 'block';
+				filterOptions.style.display = 'flex';
 			} else {
 				filterOptions.style.display = 'none';
 			}

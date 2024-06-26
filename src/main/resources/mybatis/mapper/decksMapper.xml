@@ -5,49 +5,95 @@
 <mapper namespace="com.cardproject.myapp.dao">
 
 	<!-- test -->
-	<select id="selectAllPCard" resultType="pokemonvo">
+	<select id="selectOrFilterPCard" parameterType="map"
+		resultType="pokemonvo">
 		SELECT * FROM (
 		SELECT
 		a.*, ROWNUM rnum
-		FROM (SELECT * FROM POKEMON ORDER BY CARD_ID) a
+		FROM (
+		SELECT * FROM POKEMON
 		WHERE
-		ROWNUM &lt;= #{endRow}
+		1=1
+		<if test='card_sort != null and card_sort != "s"'>
+			AND CARD_SORT = #{card_sort}
+		</if>
+		<if test='card_type != null and card_type != "t"'>
+			AND CARD_TYPE = #{card_type}
+		</if>
+		ORDER BY CARD_ID
+		) a
+		WHERE ROWNUM &lt;= #{endRow}
 		)
-		WHERE rnum &gt;= #{startRow}
+		WHERE rnum &gt;=
+		#{startRow}
 	</select>
 
-	<select id="selectAllYCard" resultType="yugiohvo">
+	<select id="selectOrFilterYCard" parameterType="map"
+		resultType="yugiohvo">
 		SELECT * FROM (
 		SELECT
 		a.*, ROWNUM rnum
-		FROM (SELECT * FROM YUGIOH ORDER BY CARD_ID) a
+		FROM (
+		SELECT * FROM YUGIOH
 		WHERE
-		ROWNUM &lt;= #{endRow}
+		1=1
+		<if test='card_sort != null and card_sort != "s"'>
+			AND CARD_SORT = #{card_sort}
+		</if>
+		<if test='card_attr != null and card_attr != "a"'>
+			AND card_attr = #{card_attr}
+		</if>
+		ORDER BY CARD_ID
+		) a
+		WHERE ROWNUM &lt;= #{endRow}
 		)
-		WHERE rnum &gt;= #{startRow}
-		
+		WHERE rnum &gt;=
+		#{startRow}
 	</select>
 
-	<select id="selectAllDCard" resultType="digimonvo">
+	<select id="selectOrFilterDCard" parameterType="map"
+		resultType="digimonvo">
 		SELECT * FROM (
 		SELECT
 		a.*, ROWNUM rnum
-		FROM (SELECT * FROM DIGIMON ORDER BY CARD_ID) a
+		FROM (
+		SELECT * FROM DIGIMON
 		WHERE
-		ROWNUM &lt;= #{endRow}
+		1=1
+		<if test='card_sort != null and card_sort != "s"'>
+			AND CARD_SORT = #{card_sort}
+		</if>
+		<if test='card_attr != null and card_attr != "a"'>
+			AND card_attr = #{card_attr}
+		</if>
+		ORDER BY CARD_ID
+		) a
+		WHERE ROWNUM &lt;= #{endRow}
 		)
-		WHERE rnum &gt;= #{startRow}
+		WHERE rnum &gt;=
+		#{startRow}
 	</select>
 
-	<select id="selectAllOCard" resultType="onepiecevo">
+	<select id="selectOrFilterOCard" parameterType="map"
+		resultType="onepiecevo">
 		SELECT * FROM (
 		SELECT
 		a.*, ROWNUM rnum
-		FROM (SELECT * FROM ONEPIECE ORDER BY CARD_ID) a
-		WHERE
-		ROWNUM &lt;= #{endRow}
+		FROM (
+		SELECT * FROM ONEPIECE
+		WHERE 1=1
+		<if test='card_sort != null and card_sort != "s"'>
+			AND CARD_SORT = #{card_sort}
+		</if>
+		<if test='card_attr != null and card_attr != "a"'>
+			AND card_attr = #{card_attr}
+		</if>
+		ORDER BY CARD_ID
+		) a
+		WHERE ROWNUM &lt;= #{endRow}
 		)
-		WHERE rnum &gt;= #{startRow}
+		WHERE rnum &gt;=
+		#{startRow}
 	</select>
 
 	<!-- 덱저장 -->
@@ -68,55 +114,13 @@
 	<insert id="insertDeckSource" parameterType="decksourcevo">
 		INSERT INTO
 		deckSources (decksource_id, deck_id, p_card, o_card, d_card,
-		y_card)
+		y_card, is_thumbnail)
 		VALUES (decksource_seq.NEXTVAL, #{deck_id}, #{p_card}, #{o_card},
 		#{d_card},
-		#{y_card})
+		#{y_card}, #{is_thumbnail})
 	</insert>
 	<!-- **덱저장** -->
+	
+	
 
-	<select id="filterPCard" parameterType="map"
-		resultType="pokemonvo">
-		SELECT * FROM POKEMON
-		WHERE 1=1
-		<if test='card_sort != "0" and card_sort != ""'>
-			AND CARD_SORT = #{card_sort}
-		</if>
-		<if test='card_type != "0" and card_type != ""'>
-			AND CARD_TYPE = #{card_type}
-		</if>
-	</select>
-	<select id="filterDCard" parameterType="map"
-		resultType="digimonvo">
-		SELECT * FROM DIGIMON
-		WHERE 1=1
-		<if test='card_sort != "0" and card_sort != ""'>
-			AND CARD_SORT = #{card_sort}
-		</if>
-		<if test='card_type != "0" and card_type != ""'>
-			AND CARD_TYPE = #{card_type}
-		</if>
-	</select>
-	<select id="filterOCard" parameterType="map"
-		resultType="onepiecevo">
-		SELECT * FROM ONEPIECE
-		WHERE 1=1
-		<if test='card_sort != "0" and card_sort != ""'>
-			AND CARD_SORT = #{card_sort}
-		</if>
-		<if test='card_type != "0" and card_type != ""'>
-			AND CARD_TYPE = #{card_type}
-		</if>
-	</select>
-	<select id="filterYCard" parameterType="map"
-		resultType="yugiohvo">
-		SELECT * FROM YUGIOH
-		WHERE 1=1
-		<if test='card_sort != "0" and card_sort != ""'>
-			AND CARD_SORT = #{card_sort}
-		</if>
-		<if test='card_type != "0" and card_type != ""'>
-			AND CARD_TYPE = #{card_type}
-		</if>
-	</select>
 </mapper>

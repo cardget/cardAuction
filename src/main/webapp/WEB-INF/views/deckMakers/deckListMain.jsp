@@ -20,7 +20,14 @@
 
 <body>
     <!--header-->
-    <%@ include file="/WEB-INF/views/main/header.jsp" %>
+    <c:choose>
+    	<c:when test="${empty userid}">
+    		<%@ include file="/WEB-INF/views/main/defaultHeader.jsp"%>
+    	</c:when>
+    	<c:otherwise>
+    		<%@ include file="/WEB-INF/views/main/loginHeader.jsp"%>
+    	</c:otherwise>
+    </c:choose>
     <!--헤더이미지-->
     <div class="header-image">
         <img src="${path }/resources/images/default/pokemon_banner.png">

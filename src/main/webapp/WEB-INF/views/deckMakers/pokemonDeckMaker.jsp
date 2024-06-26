@@ -20,18 +20,28 @@
 
 <body>
 	<!--header-->
-	<%@ include file="/WEB-INF/views/main/header.jsp"%>
+	<c:choose>
+    	<c:when test="${empty userid}">
+    		<%@ include file="/WEB-INF/views/main/defaultHeader.jsp"%>
+    	</c:when>
+    	<c:otherwise>
+    		<%@ include file="/WEB-INF/views/main/loginHeader.jsp"%>
+    	</c:otherwise>
+    </c:choose>
 	<div class="header-image">
 		<img src="${path }/resources/images/default/pokemon_banner.png">
 	</div>
 	<div class="top-container">
 		<div class="search-area-full">
 			<div class="search-input-wrapper">
-				<input type="text" class="card-search-box" placeholder="검색어를 입력하세요.">
-				<button type="submit" class="card-search" onclick="searchCard()">
-					<img src="${path }/resources/icon/search.png" alt="search"
-						class="card-search-icon">
-				</button>
+				<form action="${path}/deckMakers/searchP" method="get">
+					<input type="text" class="card-search-box" name="query"
+						placeholder="검색어를 입력하세요.">
+					<button type="submit" class="card-search">
+						<img src="${path }/resources/icon/search.png" alt="search"
+							class="card-search-icon">
+					</button>
+				</form>
 			</div>
 			<button type="button" class="filter-btn"
 				onclick="toggleFilterOptions()">
@@ -41,7 +51,7 @@
 		<div id="filter-options" class="filter-options">
 			<form id="conditionForm" action="conditionSearch" method="get">
 				카드타입 <select class="optionBox" id="card_type" name="card_type">
-					<option value="0">전체</option>
+					<option value="t">전체</option>
 					<option value="풀">풀</option>
 					<option value="불꽃">불꽃</option>
 					<option value="물">물</option>
@@ -52,9 +62,8 @@
 					<option value="강철">강철</option>
 					<option value="드래곤">드래곤</option>
 					<option value="무색">무색</option>
-				</select> 
-				아이템선택 : <select class="optionBox" id="card_sort" name="card_sort">
-					<option value="0">전체</option>
+				</select> 아이템선택 : <select class="optionBox" id="card_sort" name="card_sort">
+					<option value="s">전체</option>
 					<option value="서포트">서포트</option>
 					<option value="아이템">아이템</option>
 					<option value="포켓몬의 도구">포켓몬의 도구</option>
@@ -76,7 +85,7 @@
 						<c:forEach items="${pCardList}" var="card">
 							<div class="card-count">
 								<img src="${card.card_id}" onclick="call('${card.card_id}')"
-									class="listCard"">
+									class="listCard">
 							</div>
 						</c:forEach>
 					</div>
@@ -113,7 +122,7 @@
         var formData = $(form).serialize();
 
         $.ajax({
-            url: "/myapp/deckMakers/conditionPSearch.do",
+            url: "/myapp/deckMakers/loadMorePCard.do",
             type: "GET",
             data: formData,
             dataType: "json",
@@ -122,12 +131,15 @@
             	console.log(data)
                 var deckList = document.getElementById("deckList");
                 deckList.innerHTML = ""; // 기존 내용 삭제
+                var here = document.getElementById("here");
+                here.innerHTML = ""; // 기존 내용 삭제
 
                 data.forEach(card => {
+                	console.log(card);
                     var cardDiv = document.createElement("div");
                     cardDiv.classList.add("card-count");
                     cardDiv.innerHTML = `
-                        <img src="${card.card_id}" class="listCard" onclick="call('${card.card_id}')">
+                        <img src="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}')">
                     `;
                     deckList.appendChild(cardDiv);
                 });
@@ -153,7 +165,15 @@
 	    		data:{kind:"P",deckTitle:$("#deckTitle").val(),
 	    			commentBox:$("#commentBox").val(),
 	    		    imgList : arr	
-	    		}
+	    		},
+	    		success: function(response) {
+	    			alert("등록에 성공했습니다!")
+	                window.location.href = "${path}/deckMakers/deckListMain.do";
+	            },
+	            error: function(xhr, status, error) {
+	                console.error("Error:", error);
+	                alert("덱 등록에 실패했습니다. 다시 시도해 주세요.");
+	            }
 	    	});
 	    }
 	//필터옵션

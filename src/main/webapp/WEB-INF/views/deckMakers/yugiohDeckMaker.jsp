@@ -20,7 +20,14 @@
 
 <body>
 	<!--header-->
-	<%@ include file="/WEB-INF/views/main/header.jsp"%>
+	<c:choose>
+    	<c:when test="${empty userid}">
+    		<%@ include file="/WEB-INF/views/main/defaultHeader.jsp"%>
+    	</c:when>
+    	<c:otherwise>
+    		<%@ include file="/WEB-INF/views/main/loginHeader.jsp"%>
+    	</c:otherwise>
+    </c:choose>
 	<div class="header-image">
 		<img src="${path }/resources/images/default/pokemon_banner.png">
 	</div>
@@ -40,27 +47,21 @@
 		</div>
 		<div id="filter-options" class="filter-options">
 			<form id="conditionForm" action="conditionSearch" method="get">
-				카드타입 <select class="optionBox" id="card_type" name="card_type">
-					<option value="0">전체</option>
-					<option value="풀">풀</option>
-					<option value="불꽃">불꽃</option>
+				카드타입 <select class="optionBox" id="card_attr" name="card_attr">
+					<option value="a">전체</option>
+					<option value="땅">땅</option>
 					<option value="물">물</option>
-					<option value="번개">번개</option>
-					<option value="초">초</option>
-					<option value="격투">격투</option>
-					<option value="악">악</option>
-					<option value="강철">강철</option>
-					<option value="드래곤">드래곤</option>
-					<option value="무색">무색</option>
+					<option value="바람">바람</option>
+					<option value="빛">빛</option>
+					<option value="어둠">어둠</option>
+					<option value="화염">화염</option>
+					<option value="신">신</option>
 				</select> 
-				아이템선택 : <select class="optionBox" id="card_sort" name="card_sort">
-					<option value="0">전체</option>
+				속성 : <select class="optionBox" id="card_sort" name="card_sort">
+					<option value="s">전체</option>
+					<option value="함정">마법</option>
+					<option value="아이템">몬스터</option>
 					<option value="함정">함정</option>
-					<option value="아이템">아이템</option>
-					<option value="포켓몬의 도구">포켓몬의 도구</option>
-					<option value="스타디움">스타디움</option>
-					<option value="특수에너지">특수에너지</option>
-					<option value="기본에너지">기본에너지</option>
 				</select>
 			</form>
 			<button class="conditionSearch" id="conditionSearch"
@@ -113,7 +114,7 @@
         var formData = $(form).serialize();
 
         $.ajax({
-            url: "/myapp/deckMakers/conditionYSearch.do",
+            url: "/myapp/deckMakers/loadMoreYCard.do",
             type: "GET",
             data: formData,
             dataType: "json",
@@ -122,12 +123,14 @@
             	console.log(data)
                 var deckList = document.getElementById("deckList");
                 deckList.innerHTML = ""; // 기존 내용 삭제
+                var here = document.getElementById("here");
+                here.innerHTML = ""; // 기존 내용 삭제
 
                 data.forEach(card => {
                     var cardDiv = document.createElement("div");
                     cardDiv.classList.add("card-count");
                     cardDiv.innerHTML = `
-                        <img src="${card.card_id}" class="listCard" onclick="call('${card.card_id}')">
+                        <img src="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}')">
                     `;
                     deckList.appendChild(cardDiv);
                 });
@@ -155,10 +158,11 @@
     		}
     	});
     }
+    
 		function toggleFilterOptions() {
 			var filterOptions = document.getElementById('filter-options');
 			if (filterOptions.style.display === 'none') {
-				filterOptions.style.display = 'block';
+				filterOptions.style.display = 'flex';
 			} else {
 				filterOptions.style.display = 'none';
 			}
