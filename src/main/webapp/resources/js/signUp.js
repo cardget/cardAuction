@@ -1,3 +1,68 @@
+
+$(function(){
+			$("form").on("submit", f);
+			$("#userid").val(localStorage.getItem("userid"));
+			$("#password").val(localStorage.getItem("password"));
+			var checkStatus = localStorage.getItem("checkStatus");
+			if (checkStatus == 1){
+				$("#remember").prop("checked", true);
+			}
+		});
+	function f(){
+		var check = $("#remember").prop("checked");
+		if(check){
+			localStorage.setItem("userid", $("#userid").val());
+			localStorage.setItem("password", $("#password").val());
+			localStorage.setItem("checkStatus", 1);
+		}else {
+			localStorage.removeItem("userid");
+			localStorage.removeItem("password");
+			localStorage.removeItem("checkStatus");
+		}
+}
+
+
+
+//signUp.jsp 아이디 중복 체크
+function f_checkUserId() {
+    var userId = $("#user_id").val();
+    $.ajax({
+        url: "/myapp/auth/checkUserId",
+        type: "GET",
+        data: { "userId": userId },
+        success: function(isDuplicate) {
+            if (isDuplicate > 0) {
+                alert("이미 사용중인 아이디입니다.");
+            } else {
+                alert("사용 가능한 아이디입니다.");
+            }
+        },
+        error:function(){
+        	alert("error");
+        }
+    });
+}
+
+//signUp.jsp 닉네임 중복 체크
+function f_checkNickname() {
+    var nickname = $("#nickname").val();
+    $.ajax({
+        url: "/myapp/auth/checkNickname",
+        type: "GET",
+        data: { "nickname": nickname },
+        success: function(isDuplicate) {
+            if (isDuplicate > 0) {
+                alert("이미 사용중인 닉네임입니다.");
+            } else {
+                alert("사용 가능한 닉네임입니다.");
+            }
+        },
+        error:function(){
+        	alert("error");
+        }
+    });
+}
+
 var contextPath = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
 // DOMContentLoaded 이벤트를 사용하여 페이지가 로드된 후에 코드를 실행
 document.addEventListener('DOMContentLoaded', function () {    

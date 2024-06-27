@@ -9,12 +9,23 @@
 <c:set var="path" value="${pageContext.servletContext.contextPath}"/>
 <link rel="stylesheet" href="${path}/resources/css/findIdResult.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Apple+SD+Gothic+Neo&display=swap">
+<script src="${path}/resources/js/signUp.js"></script>
+<script>
+function goToResetPassword() {
+    var userId = document.getElementById("id").value;
+    location.href = "${path}/auth/resetPassword.do?userId=" + userId;
+}
+
+function goToLogin() {
+    var userId = document.getElementById("id").value;
+    location.href = "${path}/auth/login.do?userId=" + userId;
+}
+</script>
 </head>
 <body>
 	<div class="find-id-container">
 		<div class="logo">
-			<img src="${path}/resources/images/로고 이미지.png" alt="로고" class="logo-img">
-			<h1 class="logo-text">카드득</h1>
+			<img src="${path}/resources/image/logo.png" alt="로고이미지" height=41 onclick="location.href='../main.do'">
 		</div>
 		<div style="display: flex; justify-content: space-between; height: 40px;">
 		<h5>아이디 찾기</h5>
@@ -27,8 +38,8 @@
 		<form>	
 			<input type="text" id="id" name="id" class="input-field" value="${userId}" readonly>
 			<img src="${path}/resources/icon/CheckBox_Blue.png">
-			<button type="submit" class="check-button">로그인 하러가기</button>
-			<button type="submit" class="check-button">비밀번호 찾기</button>
+			<button type="button" class="check-button" onclick="goToLogin()">로그인 하러가기</a></button>
+			<button type="button" class="check-button" onclick="goToResetPassword()">비밀번호 재설정</a></button>			
 		</form>		
 	</div>
 </body>

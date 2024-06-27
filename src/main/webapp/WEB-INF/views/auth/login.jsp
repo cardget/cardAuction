@@ -10,13 +10,13 @@
 <c:set var="path" value="${pageContext.servletContext.contextPath}"/>
 <link rel="stylesheet" href="${path}/resources/css/login.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Apple+SD+Gothic+Neo&display=swap">
+<script src="${path}/resources/js/signUp.js"></script>
 
 </head>
 <body>
 	<div class="login-container">
 		<div class="logo-container">
-			<img src="${path}/resources/images/로고 이미지.png" alt="로고" class="logo-img">
-			<h1 class="logo-text">카드득</h1>
+			<img src="${path}/resources/image/logo.png" alt="로고이미지" height=41 onclick="location.href='../main.do'">			
 		</div>
 		<div class="container">
 			<form action="login.do" method="POST">
@@ -36,32 +36,10 @@
 				<button type="submit" class="login-btn">로그인</button>
 			</form>
 			<div class="links">
-				<a href="findId.do">아이디 찾기</a> <a href="findPassword.do">비밀번호 찾기</a> <a href="signUp.do">회원가입</a>
+				<a href="findId.do">아이디 찾기</a> <a href="resetPassword.do">비밀번호 재설정</a> <a href="signUp.do">회원가입</a>
 			</div>
 		</div>
 	</div>
-	<script>
-		$(function(){
-			$("form").on("submit", f);
-			$("#userid").val(localStorage.getItem("userid"));
-			$("#password").val(localStorage.getItem("password"));
-			var checkStatus = localStorage.getItem("checkStatus");
-			if (checkStatus == 1){
-				$("#remember").prop("checked", true);
-			}
-		});
-		function f(){
-			var check = $("#remember").prop("checked");
-			if(check){
-				localStorage.setItem("userid", $("#userid").val());
-				localStorage.setItem("password", $("#password").val());
-				localStorage.setItem("checkStatus", 1);
-			}else {
-				localStorage.removeItem("userid");
-				localStorage.removeItem("password");
-				localStorage.removeItem("checkStatus");
-			}
-		}
-	</script>
+	
 </body>
 </html>

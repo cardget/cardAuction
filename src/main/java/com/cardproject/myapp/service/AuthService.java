@@ -28,4 +28,10 @@ public class AuthService {
   public String findUserId(String userName, String phoneNumber) {
 	  return authDAO.findUserId(userName, phoneNumber);
   }
+  public String findPassword(String userId) {
+	  return authDAO.findPassword(userId);
+  }
+  public int updatePassword(String userId, String password) {
+	  return authDAO.updatePassword(userId, password);
+  }
 }

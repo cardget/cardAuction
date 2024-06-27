@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cardproject.myapp.dto.UserDTO;
 import com.cardproject.myapp.service.AWSS3Service;
@@ -74,18 +75,18 @@ public class AuthController {
 			session.setAttribute("loginResult", "Login Success");
 			session.setAttribute("userid", user.getUser_id());
 
-			String lastRequest = (String) session.getAttribute("lastRequest");
-			String queryString = (String) session.getAttribute("queryString");
-			String goPage;
-			if (lastRequest == null) {
-				goPage = "../";
-			} else {
-				int length = request.getContextPath().length();
-				goPage = lastRequest.substring(length);
-				if (queryString != null)
-					goPage = goPage + "?" + queryString;
-			}
-			return "redirect:" + goPage;
+//			String lastRequest = (String) session.getAttribute("lastRequest");
+//			String queryString = (String) session.getAttribute("queryString");
+//			String goPage;
+//			if (lastRequest == null) {
+//				goPage = "../";
+//			} else {
+//				int length = request.getContextPath().length();
+//				goPage = lastRequest.substring(length);
+//				if (queryString != null)
+//					goPage = goPage + "?" + queryString;
+//			}
+			return "redirect:../main.do";
 		}
 	}
 	@GetMapping("/logout.do")
@@ -111,15 +112,26 @@ public class AuthController {
         return "auth/findIdResult";
     }
 
-	@GetMapping("/findPassword.do")
-	public void findPassword() {
-		System.out.println("findPassword page");
-	}
+//	@GetMapping("/findPassword.do")
+//	public void findPassword() {
+//		System.out.println("findPassword page");
+//	}
 
 	@GetMapping("/resetPassword.do")
-	public void resetPassword() {
+	public String resetPassword(@RequestParam(value = "userId", required = false) String userId, Model model) {		
+		model.addAttribute("userId",userId);
 		System.out.println("resetPassword page");
+		return "auth/resetPassword";
 	}
+	
+	@PostMapping("/updatePassword.do")
+    public String updatePassword(@RequestParam("userId") String userId, @RequestParam("password") String password,
+    		Model model, RedirectAttributes redirectAttributes) {        
+		aService.updatePassword(userId, password);        
+        redirectAttributes.addFlashAttribute("message", "회원정보가 성공적으로 수정되었습니다.");
+        return "redirect:login.do";
+    }
+	
 	@GetMapping("/smsAPI")
 	public String verificationSMS_API(){
 		return "auth/Twilio_Verification";
