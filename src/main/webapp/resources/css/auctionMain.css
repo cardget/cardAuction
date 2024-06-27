@@ -191,6 +191,9 @@ select {
     margin: 10px 270px;
     font-size: 14px;
     font-weight: 300;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .sort-box,
 .option-box,
@@ -200,17 +203,25 @@ select {
     margin: 0;
     padding: 0;
     font-weight: 500;
+    
 }
 .sort-select {
     /*정렬기준*/
     border: none;
-    width: 80px;
+    width: 120px;
     font-size: 14px;
     -webkit-appearance: none;
     background: url('../icon/fullArrow.png') no-repeat 85% 50%/14px auto;
     cursor: pointer;
 }
 
+.sort-item {
+    display: flex;
+    align-items: center;
+}
+.sort-item select {
+    margin-left: 10px;
+}
 
 /*footer*/
 .info-page {

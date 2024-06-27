@@ -20,7 +20,8 @@
 <body>
 <c:set var="path" value="${pageContext.servletContext.contextPath}" />
 <!--header-->
-<c:choose>
+
+    <c:choose>
     	<c:when test="${empty userid}">
     		<%@ include file="/WEB-INF/views/main/defaultHeader.jsp"%>
     	</c:when>
@@ -28,7 +29,7 @@
     		<%@ include file="/WEB-INF/views/main/loginHeader.jsp"%>
     	</c:otherwise>
     </c:choose>
-    
+
 <!-- Body -->
 <div class="container">
 	
