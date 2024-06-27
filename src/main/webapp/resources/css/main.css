@@ -7,6 +7,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
+	position:relative;
 }
 
 button {
@@ -81,16 +82,13 @@ button {
 
 .container, .deck-container {
 	display: flex;
-	padding: 60px 270px 0;
-	margin-bottom: 80px;
-	flex: 1;
+	width:1380px;
+	margin:auto;
 }
 
 .main-container {
-	padding: 124px 270px 0;
-	margin-bottom: 80px;
-	height:53.2vh;
-	flex: 1;
+	width:1380px;
+	margin:190px auto;
 }
 
 .row-content {
@@ -117,7 +115,7 @@ ul {
 }
 
 .header-image {
-	height: 283px;
+	height: 280px;
 	width: 100%;
 }
 .header-image > img{
@@ -249,10 +247,14 @@ select {
 .info-page {
 	background-color: #002E5B;
 	color: #ffffff;
+	width:100wh;
 	padding: 30px 270px;
 	font-size: 12px;
 	font-family: 'Apaple SD Gothic NeoL', sans-serif;
 	bottom: 0;
+	position:absolute;
+	margin-top
+	
 }
 
 .link-container {
@@ -466,6 +468,7 @@ select {
 	display: flex;
 	justify-content: center;
 	margin-top: 80px;
+	margin-bottom:50px;
 }
 
 /*덱리스트 상세*/
@@ -480,7 +483,6 @@ select {
 	flex: 1;
 	overflow-y: auto;
 	height: 700px;
-	width: 1000px;
 }
 
 .main-content-2 {
@@ -542,7 +544,8 @@ select {
 
 .banner-overlay {
 	position: absolute;
-	left: 300px;
+	margin:auto;
+	width:1250px;
 	padding: 20px;
 	color: #fff;
 	font-weight: 1000;
@@ -644,8 +647,14 @@ select {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin-bottom: 50px;
-	padding: 0 270px;
+	width:1320px;
+	margin:auto;
+	margin-bottom: 350px;
+}
+.detail-comment {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .builder-comment {
