@@ -20,7 +20,7 @@
 		</div>
 		<div class="top-nav-category">
 			<ul class="category-box">
-				<li class="category-item"><a href="mypage/"> <img
+				<li class="category-item"><a href="/myapp/mypage/"> <img
 						src="${path }/resources/icon/user.png" class="icon">${user.nickname}님
 				</a></li>
 				<li class="category-item"><a href="auth/logout.do"> <img
