@@ -27,6 +27,9 @@ public class DeckMakerDAO {
         System.out.println("DAOparams:" + params);
         return sqlSession.selectList(namespace + ".selectOrFilterPCard", params);
     }
+    public List<Map<String, Object>> getThumbnail(int cat) {
+        return sqlSession.selectList(namespace + ".getThumbnail", cat);
+    }
 
     public List<YugiohDTO> selectOrFilterYCard(Map<String, Object> params) {
         System.out.println("DAOparams:" + params);

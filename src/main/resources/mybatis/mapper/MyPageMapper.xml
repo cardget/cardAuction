@@ -10,13 +10,14 @@
  	
  	<update id="userUpdate" parameterType="uservo">
 		UPDATE USERS
-				SET PW = #{password},
+				SET PW = #{pw},
 					NICKNAME = #{nickname},
 					EMAIL = #{email},
-					ZIP_CODE = #{zipcode},
+					ZIP_CODE = #{zip_code},
 					ADDRESS = #{address},
-					ADDRESS_DETAIL = #{addressdetail}
-				WHERE USER_ID = #{userid}
+					ADDRESS_DETAIL = #{address_detail},
+					EMAIL_AGREEMENT = #{email_agreement}
+				WHERE USER_ID = #{user_id}
 	</update>
 
 	<update id="userProfileUpdate" parameterType="map">

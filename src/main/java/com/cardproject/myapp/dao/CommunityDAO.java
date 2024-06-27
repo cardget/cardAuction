@@ -108,4 +108,9 @@ public class CommunityDAO {
 	public int insertComment(ReplieDTO replie) {
 		return sqlSession.insert(namespace + "insertComment", replie);
 	}
+	
+	// 세션으로 닉네임 조회
+	public String selectNicknameById(String userid) {
+		return sqlSession.selectOne(namespace + "selectNicknameById", userid);
+	}
 }

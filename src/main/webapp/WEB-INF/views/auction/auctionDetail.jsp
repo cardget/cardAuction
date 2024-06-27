@@ -51,7 +51,7 @@
 	gap: 10px;
 }
 
-.hidden-input-itemId {
+.hidden-input-itemId, .hidden-input-sellerId {
 	display: none;
 }
 </style>
@@ -60,6 +60,7 @@
 <body>
 	<c:set var="path" value="${pageContext.servletContext.contextPath}" />
 	<!--header-->
+
 	<c:choose>
     	<c:when test="${empty userid}">
     		<%@ include file="/WEB-INF/views/main/defaultHeader.jsp"%>
@@ -68,6 +69,7 @@
     		<%@ include file="/WEB-INF/views/main/loginHeader.jsp"%>
     	</c:otherwise>
     </c:choose>
+
 
 	<!-- 상단 이미지 -->
 	<div class="topimage">
@@ -204,6 +206,8 @@
 						action="${path}/auction/auctionBidding.do" method="post">
 						<input type="number" id="item_id" name="item_id"
 							class="hidden-input-itemId" value="${itemDetailOne.item_id}">
+						<input type="text" id="user_id" name="user_id" 
+							class="hidden-input-sellerId" value="${itemDetailOne.user_id}">
 						<input type="number" id="price" name="price"
 							class="bidding-price-field" placeholder="입찰 가격을 입력하세요." step="1000" min="1000">
 						<button type="submit" class="bidding-btn">경매 참여</button>
@@ -248,6 +252,7 @@
 	        }
 	        return true; // 폼 제출 허용
 	    }
+	 	
 
 	    biddingForm.addEventListener("submit", function(e) {
 	        e.preventDefault();
@@ -258,10 +263,12 @@
 
 	        const item_id = document.getElementById("item_id").value;
 	        const price = document.getElementById("price").value;
+	 
 	        
 	        const formData = {
 	            item_id: item_id,
-	            price: price
+	            price: price,
+	        
 	        };
 
 	        fetch(`<%=request.getContextPath()%>/auction/auctionBidding.do`, {

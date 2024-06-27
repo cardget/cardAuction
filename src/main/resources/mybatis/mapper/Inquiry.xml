@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mapper namespace="com.cardproject.myapp.dao">
+
+	<!-- 문의 리스트 조회 -->
+	<select id="selectInquiryList" resultType="questionvo">
+		SELECT TITLE, CTT,
+		CREATE_DATE, USER_ID, IS_SECRET
+		FROM QUESTIONS
+		WHERE #{
+	</select>
+</mapper>

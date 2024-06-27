@@ -4,5 +4,3 @@ function updateCharCount() {
     var charCount = commentInput.value.length;
     document.getElementById('charCount').innerText = charCount;
 }
-
-// wtp 임시 서버 경로

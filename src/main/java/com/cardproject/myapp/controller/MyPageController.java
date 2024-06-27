@@ -79,15 +79,20 @@ public class MyPageController {
 	}
 
 	@PostMapping("/editProfile.do")
-	public String updateProfile(@RequestParam("password") String password, @RequestParam("nickname") String nickname,
+	public String updateProfile(
+			@RequestParam("pw") String pw, @RequestParam("nickname") String nickname,
 			@RequestParam("email") String email, @RequestParam("domain") String domain,
-			@RequestParam("address") String address, @RequestParam("detailAddress") String addressDetail,
-			@RequestParam("zipCode") String zipCode, @RequestParam("accnt") String account,
-			@SessionAttribute("user") UserDTO user, RedirectAttributes redirectAttributes) {
+			@RequestParam("email_agreement") String email_agreement, @RequestParam("address") String address,
+			@RequestParam("detailAddress") String addressDetail, @RequestParam("zipCode") String zipCode,
+			@SessionAttribute("userid") String userid, RedirectAttributes redirectAttributes) {
+		UserDTO user = mpService.selectUserById(userid);
 		String fullEmail = email + "@" + domain;
-		user.setPw(password);
+		int i_email_agreement = Integer.parseInt(email_agreement);
+		
+		user.setPw(pw);
 		user.setNickname(nickname);
 		user.setEmail(fullEmail);
+		user.setEmail_agreement(i_email_agreement);
 		user.setZip_code(zipCode);
 		user.setAddress(address);
 		user.setAddress_detail(addressDetail);
@@ -95,7 +100,7 @@ public class MyPageController {
 		mpService.userUpdate(user);
 		redirectAttributes.addFlashAttribute("message", "회원정보가 성공적으로 수정되었습니다.");
 
-		return "redirect:mypage/main.do";
+		return "redirect:/mypage/";
 	}
 
 	// 입찰내역 조회

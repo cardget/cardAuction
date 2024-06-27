@@ -10,7 +10,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Apple+SD+Gothic+Neo&display=swap">
 <title>카드득</title>
 <link rel="stylesheet" href="${path }/resources/css/auctionMain.css" />
-
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 
 <script>
@@ -59,20 +60,38 @@
 	width: 120px;
 	height: 34px;
 }
+    .sort-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 20px 270px;
+    }
+    .sort-item {
+        display: flex;
+        align-items: center;
+    }
+    .sort-right {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+    }
+    .sort-right span {
+        margin-right: 10px;
+    }
 </style>
 </head>
 <body>
 <c:set var="path" value="${pageContext.servletContext.contextPath}" />
-<!--header-->
-    <c:choose>
+<!--header
+
+	<c:choose>
     	<c:when test="${empty userid}">
     		<%@ include file="/WEB-INF/views/main/defaultHeader.jsp"%>
     	</c:when>
     	<c:otherwise>
     		<%@ include file="/WEB-INF/views/main/loginHeader.jsp"%>
     	</c:otherwise>
-    </c:choose>
-    
+    </c:choose>-->
 <!-- Body -->
 <div class="topimage"></div>
 <!-- 검색창 -->
@@ -115,32 +134,35 @@
             </ul>
     </div>
 	
-		 <div class="sort-container">
-            <div class="sort-nav">
-                <ul class="sort-box">
-                    <li class="sort-item">
-                        <a href="main.html">홈 > </a><a href="#">포켓몬 > </a><a href="#">카드경매</a>
-                    </li>
-                    <li class="sort-item">
-                        정렬기준 :
-                        <form action="${path}/auction/auctionMain.do" method="get" id="sortForm">
-    						<select class="sort-select" name="sortOption" onchange="document.getElementById('sortForm').submit()">
-						        <option value="recent" <c:if test="${selectedSortOption == 'recent'}">selected</c:if>>최신순</option>
-						        <option value="ending" <c:if test="${selectedSortOption == 'ending'}">selected</c:if>>종료임박순</option>
-						        <option value="mostpeople" <c:if test="${selectedSortOption == 'mostpeople'}">selected</c:if>>참여자많은순</option>
-						        <option value="leastpeople" <c:if test="${selectedSortOption == 'leastpeople'}">selected</c:if>>참여자적은순</option>
-						    </select>
-						</form>
-                    </li>
-                </ul>
-            </div>
+	<div class="sort-container">
+        <div class="sort-item">
+            <a href="main.html">홈 > </a><a href="#">포켓몬 > </a><a href="#">카드경매</a>
         </div>
+        <div class="sort-right">
+            <span>정렬기준:</span>
+            <form action="${path}/auction/auctionMain.do" method="get" id="sortForm">
+                <select class="sort-select" name="sortOption" onchange="document.getElementById('sortForm').submit()">
+                    <option value="recent" <c:if test="${selectedSortOption == 'recent'}">selected</c:if>>최신순</option>
+                    <option value="ending" <c:if test="${selectedSortOption == 'ending'}">selected</c:if>>종료임박순</option>
+                    <option value="mostpeople" <c:if test="${selectedSortOption == 'mostpeople'}">selected</c:if>>참여자많은순</option>
+                    <option value="leastpeople" <c:if test="${selectedSortOption == 'leastpeople'}">selected</c:if>>참여자적은순</option>
+                </select>
+            </form>
+        </div>
+    </div>
         
 	
 	<div class="auction-list-wrapper">
 	<c:forEach var="itemd" items="${itemDlist}">
 		<div class="auction-item">
-			<img src="https://s3.ap-southeast-2.amazonaws.com/shinhan.cardauction/images/피카츄+ex.png" alt="card image" class="card-image">
+			<c:choose>
+                    <c:when test="${itemd.card_image != null}">
+                        <img src="${itemd.card_image}" alt="card image" class="card-image">
+                    </c:when>
+                    <c:otherwise>
+                        <img src="${path}/resources/image/defaultPCard.png" alt="card image" class="card-image">
+                    </c:otherwise>
+            </c:choose>
 			<div class="title-wrapper">
 				${itemd.item_name}
 			</div>

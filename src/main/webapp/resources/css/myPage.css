@@ -571,6 +571,13 @@ tbody tr {
 	margin-right: 10px;
 }
 
+.alarm-label {
+	color: gray;
+	width: 70px;
+	height: 20px;
+	font-size: 14px;
+}
+
 .form-group {
 	margin-bottom: 20px;
 	display: flex;
