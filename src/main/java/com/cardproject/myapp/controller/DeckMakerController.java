@@ -44,11 +44,15 @@ public class DeckMakerController {
 
 	}
 
+    
 	@GetMapping("/pokemonDeckListMain.do")
-	public void auctionDetail() {
-		System.out.println("pokemonDeckListMain page");
-
-	}
+	
+	public void getDecks(Model model) {
+        System.out.println("pokemonDeckListMain page");
+        int cat = 1;
+        List<Map<String, Object>> decks = deckMakerService.getThumbnail(cat);
+        model.addAttribute("decks", decks);
+    }
 	
 
 	@Autowired
@@ -99,6 +103,7 @@ public class DeckMakerController {
 		System.out.println(pCardList.size());
 		return pCardList;
 	}
+	
 
 	// 유희왕카드 -------------------------------------------------------------------
 	@RequestMapping("/yugiohDeckMaker.do")

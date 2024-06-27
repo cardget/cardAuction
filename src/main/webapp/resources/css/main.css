@@ -120,6 +120,9 @@ ul {
 	height: 283px;
 	width: 100%;
 }
+.header-image > img{
+	width:100%
+}
 
 /*상단 검색창*/
 .search-area {
@@ -383,14 +386,21 @@ select {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 }
-
+.deck-container{
+	gap:110px;
+}
 .deck-overlay-container {
 	position: relative;
-	display: inline-block;
+	width:380px;
+	height:250px;
+	border-radius:10px;
+	/*display: inline-block;*/
 }
 
 .deck-overlay-container img {
-	display: block;
+	/*display: block;*/
+	position:absolute;
+	clip:rect(0 380px 250px 0);
 }
 
 .overlay-text {
@@ -427,7 +437,7 @@ select {
 	display: flex;
 	justify-content: center;
 	padding: 20px 0;
-	margin: 20px 0;
+	margin: 90px 0;
 }
 
 .pagination a {

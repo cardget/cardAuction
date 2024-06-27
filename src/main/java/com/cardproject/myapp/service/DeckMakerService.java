@@ -36,6 +36,9 @@ public class DeckMakerService {
         System.out.println("serviceParams:" + params);
         return deckMakerDAO.selectOrFilterPCard(params);
     }
+    public List<Map<String, Object>> getThumbnail(int cat) {
+        return deckMakerDAO.getThumbnail(cat);
+    }
     
     public List<YugiohDTO> getYCardList(int page, Map<String, String> filters) {
         int itemsPerPage = 30;
