@@ -23,7 +23,7 @@
 		<hr style="width:440px;">
 		<h6 style="margin-top:0px;"><img src="${path}/resources/icon/blue_error.png">&nbsp;비밀번호를 변경해주세요</h6>
 		
-		<form action="${path}/auth/updatePassword.do" method="post" class="custom-form">
+		<form action="${path}/auth/updatePassword.do" method="post" class="custom-form" onsubmit="return validatePasswords()">
 			<div >
 				<div class="form-group">
 					<label class="input-label" >아이디  </label>
@@ -44,7 +44,7 @@
 			    <div class="form-group">
 			        <label for="confirmPassword" class="input-label">비밀번호 확인</label>
 			        <input type="password" id="confirmPassword" name="confirmPassword" class="input-field" onkeyup="checkPasswordMatch()" required>
-			        <span id="passwordMessage" style="margin-left: 160px; margin-top: 8px; font-size: 10px;"></span>
+			        <span id="passwordMessage" style="margin-left: 120px; margin-top: 8px; font-size: 10px;"></span>
 			        <h6>※ 영문, 숫자, 특수문자를 함께 사용하면(8자 이상 16자 이하)보다 안전합니다.</h6>			        
 			    </div>
 			    

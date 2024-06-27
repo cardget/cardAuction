@@ -66,7 +66,7 @@ public class AuthController {
 	public String loginCheck(@RequestParam("userid") String userid, @RequestParam("password") String password,
 			HttpSession session, HttpServletRequest request) {
 
-		UserDTO user = aService.loginChk(userid, password);
+		UserDTO user = aService.login(userid, password);
 		if (user == null) {
 			session.setAttribute("loginResult", "Login Failure: Invalid Email or Password");
 			return "redirect:login.do";
@@ -86,6 +86,7 @@ public class AuthController {
 //				if (queryString != null)
 //					goPage = goPage + "?" + queryString;
 //			}
+			
 			return "redirect:../main.do";
 		}
 	}

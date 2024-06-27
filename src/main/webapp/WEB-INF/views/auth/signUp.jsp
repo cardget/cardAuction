@@ -18,7 +18,7 @@
 <body>
 	<div style="text-align: left; position: relative; margin-bottom: 30px">
 	<div class="logo-container">
-		<img src="${path}/resources/image/logo.png" alt="로고이미지" height=41 onclick="location.href='../main.do'">
+		<img src="${path}/resources/image/logo.png" alt="로고이미지" height=41 onclick="location.href='../main.do'" style="top:20px;">
 	</div>	    
 	    <h5 style="position: absolute; left: 435px; top: 25px; margin: 0;">회원 가입</h5>
 	</div>

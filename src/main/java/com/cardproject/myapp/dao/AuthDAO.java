@@ -59,4 +59,9 @@ public class AuthDAO {
       params.put("password", password);
       return sqlSession.update(namespace + ".updatePassword", params);      
   }
+  //비밀번호 암호화 로그인
+  public UserDTO findByUserId(String userId) {
+	  return sqlSession.selectOne(namespace + ".findByUserId", userId);
+  }
+  
 }

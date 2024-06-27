@@ -67,5 +67,10 @@
 		SET PW=#{password} 
 		WHERE USER_ID=#{userId}
 	</update>
+	<select id="findByUserId" parameterType="string" resultType="com.cardproject.myapp.dto.UserDTO">
+		SELECT * 
+		FROM USERS 
+		WHERE USER_ID = #{userId}
+	</select>
 	
 </mapper>
