@@ -3,7 +3,7 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
 <mapper namespace = "com.cardproject.myapp.dao">
-	<select id="selectTradeById" parameterType = "int" resultType="tradevo">
+	<select id="selectTradeById" parameterType = "Integer" resultType="tradevo">
 		SELECT * FROM TRADES WHERE TRADE_ID = #{tradeId}
 	</select>
 </mapper>
