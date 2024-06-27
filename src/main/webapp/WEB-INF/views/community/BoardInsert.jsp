@@ -10,14 +10,26 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
 	rel="stylesheet">
-<link href="../resources/css/BoardInsert.css?after" rel="stylesheet">
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../resources/js/BoardInsert.js"></script>
+<link href="../resources/css/BoardInsert.css?after" rel="stylesheet">
+<link rel="icon" href="${path}/resources/icon/favicon.ico"
+	type="image/x-icon">
 </head>
 <body>
 	<c:set var="path" value="${pageContext.servletContext.contextPath}" />
-	<div class="container custom-container mt-3">
+	<!--header-->
+	<c:choose>
+		<c:when test="${empty userid}">
+			<%@ include file="/WEB-INF/views/main/defaultHeader.jsp"%>
+		</c:when>
+		<c:otherwise>
+			<%@ include file="/WEB-INF/views/main/loginHeader.jsp"%>
+		</c:otherwise>
+	</c:choose>
+
+	<div class="container2 custom-container2 mt-3">
 		<form action="${path}/community/BoardInsert.do" method="post"
 			id="myForm" enctype="multipart/form-data">
 			<div class="right-aligned-button">

@@ -46,14 +46,17 @@
 }
 
 #title {
-    min-width: 300px; /* 제목 입력란의 최소 너비를 줄임 */
+    min-width: 400px; /* 제목 칸의 최소 너비를 200px로 줄임 */
     color: #666666; /* 회색으로 설정 */
+    flex: 2; /* 유연성 조절, 더 적은 공간 차지 */
 }
 
 #writer, #date {
-    flex: none; /* 기본 크기로 설정 */
+    flex: 3; /* 유연성 증가, 더 많은 공간 차지 */
     width: auto; /* 자동 너비 설정 */
+    min-width: 200px; /* 최소 너비를 늘림 */
 }
+
 
 .input-group {
     display: flex;
