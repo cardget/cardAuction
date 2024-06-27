@@ -34,9 +34,13 @@
 	<div class="top-container">
 		<div class="search-area-full">
 			<div class="search-input-wrapper">
-				<input type="text" class="card-search-box" placeholder="검색어를 입력하세요.">
-				<button type="submit" class="card-search">
-					<img src="${path }/resources/icon/search.png" alt="search"
+				<form id="conditionForm" action="querySearch" method="get">
+					<input type="text" class="card-search-box" id="card-search-box"
+						name="query" placeholder="검색어를 입력하세요.">
+				</form>
+				<button type="submit" class="card-search" id="querySearch"
+					onclick="con_search()">
+					<img src="${path}/resources/icon/search.png" alt="search"
 						class="card-search-icon">
 				</button>
 			</div>
@@ -108,38 +112,49 @@
 	<%@ include file="/WEB-INF/views/main/footer.jsp"%>
 	<script type="module" src="${path}/resources/js/main.js"></script>
 	<script>
-	
-	function con_search() {
-        var form = document.getElementById("conditionForm");
-        var formData = $(form).serialize();
-
-        $.ajax({
-            url: "/myapp/deckMakers/loadMoreYCard.do",
-            type: "GET",
-            data: formData,
-            dataType: "json",
-            success: function(data) {
-            	console.log("성공")
-            	console.log(data)
-                var deckList = document.getElementById("deckList");
-                deckList.innerHTML = ""; // 기존 내용 삭제
-                var here = document.getElementById("here");
-                here.innerHTML = ""; // 기존 내용 삭제
-
-                data.forEach(card => {
-                    var cardDiv = document.createElement("div");
-                    cardDiv.classList.add("card-count");
-                    cardDiv.innerHTML = `
-                        <img src="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}')">
-                    `;
-                    deckList.appendChild(cardDiv);
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error("Error:", error);
-            }
+	$(document).ready(function() {
+        $('#conditionForm').submit(function(event) {
+            event.preventDefault();
+            filterCards();
         });
-    }
+    });
+    
+	 function con_search() {
+    	var cardAttr = $('#card_attr').val();
+        var cardSort = $('#card_sort').val();
+        var cardName = $('#card-search-box').val();
+	
+	    $.ajax({
+	        url: "/myapp/deckMakers/loadMoreYCard.do",
+	        type: "GET",
+	        data: {
+	        	card_attr: cardAttr,
+	        	card_sort: cardSort,
+	        	query: cardName
+	        },
+	        success: function(data) {
+	            console.log("성공");
+	            console.log(data);
+	            var deckList = document.getElementById("deckList");
+	            deckList.innerHTML = ""; // 기존 내용 삭제
+	            var here = document.getElementById("here");
+	            here.innerHTML = ""; // 기존 내용 삭제
+	
+	            data.forEach(card => {
+	                console.log(card);
+	                var cardDiv = document.createElement("div");
+	                cardDiv.classList.add("card-count");
+	                cardDiv.innerHTML = `
+	                    <img src="\${card.card_id}" alt="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}')">
+	                `;
+	                here.appendChild(cardDiv);
+	            });
+	        },
+	        error: function(xhr, status, error) {
+	            console.error("Error:", error);
+	        }
+	    });
+	}
 
     function insertCard(){
     	console.log($("#deckTitle").val());

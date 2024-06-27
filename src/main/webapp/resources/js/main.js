@@ -80,109 +80,87 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-  const decks = [
-      { number: '1번덱', username: '사용자명1', date: '2023-01-01', recommend: '추천수 : 5' },
-      { number: '2번덱', username: '사용자명2', date: '2023-01-02', recommend: '추천수 : 5' },
-      { number: '3번덱', username: '사용자명3', date: '2023-01-03', recommend: '추천수 : 5' },
-      { number: '4번덱', username: '사용자명4', date: '2023-01-04', recommend: '추천수 : 5' },
-      { number: '5번덱', username: '사용자명5', date: '2023-01-05', recommend: '추천수 : 5' },
-      { number: '6번덱', username: '사용자명6', date: '2023-01-06', recommend: '추천수 : 5' },
-      { number: '7번덱', username: '사용자명7', date: '2023-01-07' },
-      { number: '8번덱', username: '사용자명8', date: '2023-01-08' },
-      { number: '9번덱', username: '사용자명9', date: '2023-01-09' },
-      { number: '10번덱', username: '사용자명10', date: '2023-01-10' },
-      { number: '11번덱', username: '사용자명11', date: '2023-01-11' },
-      { number: '12번덱', username: '사용자명12', date: '2023-01-12' },
-      { number: '13번덱', username: '사용자명13', date: '2023-01-12' },
-      { number: '14번덱', username: '사용자명14', date: '2023-01-12' },
-      { number: '15번덱', username: '사용자명15', date: '2023-01-12' },
-      { number: '16번덱', username: '사용자명16', date: '2023-01-12' },
-      { number: '17번덱', username: '사용자명17', date: '2023-01-12' },
-      { number: '18번덱', username: '사용자명18', date: '2023-01-12' },
-      { number: '19번덱', username: '사용자명19', date: '2023-01-12' },
-  ];
+    const itemsPerPage = 9;
+    let currentPage = 1;
 
-  const itemsPerPage = 9;
-  let currentPage = 1;
+    function renderDecks(page, decks) {
+        const deckContainer = document.getElementById('deckContainer');
+        deckContainer.innerHTML = '';
 
-  function renderDecks(page) {
-      const deckContainer = document.getElementById('deckContainer');
-      deckContainer.innerHTML = '';
+        const start = (page - 1) * itemsPerPage;
+        const end = page * itemsPerPage;
+        const paginatedDecks = decks.slice(start, end);
 
-      const start = (page - 1) * itemsPerPage;
-      const end = page * itemsPerPage;
-      const paginatedDecks = decks.slice(start, end);
+        paginatedDecks.forEach(deck => {
+            const deckDiv = document.createElement('div');
+            deckDiv.classList.add('deckType');
+            deckDiv.innerHTML = `
+                <a href="deckListDetail.do">
+                    <div class="deck-overlay-container">
+                        <img src="\${deck.thumbnail}" alt="Thumbnail">
+                        <div class="overlay-text">
+                            <div class="deck-number">\${deck.deckTitle}</div>
+                            <div class="deck-info">
+                                <div class="username">\${deck.userId}</div>
+                                <div class="date">\${deck.createDate}</div>
+                                <div class="recommend">\${deck.recommend}</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            `;
+            deckContainer.appendChild(deckDiv);
+        });
+    }
 
-      paginatedDecks.forEach(deck => {
-          const deckDiv = document.createElement('div');
-          deckDiv.classList.add('deckType');
-          deckDiv.innerHTML = `
-              <a href="deckListDetail.html">
-                  <div class="deck-overlay-container">
-                      <img src="../image/deckSample.png">
-                      <div class="overlay-text">
-                          <div class="deck-number">\${deck.number}</div>
-                          <div class="deck-info">
-                              <div class="username">\${deck.username}</div>
-                              <div class="date">\${deck.date}</div>
-                              <div class="date">\${deck.recommend}</div>
-                          </div>
-                      </div>
-                  </div>
-              </a>
-          `;
-          deckContainer.appendChild(deckDiv);
-      });
-  }
+  function renderPagination(decks) {
+        const paginationContainer = document.getElementById('paginationContainer');
+        paginationContainer.innerHTML = '';
 
-  function renderPagination() {
-      const paginationContainer = document.getElementById('paginationContainer');
-      paginationContainer.innerHTML = '';
+        const pageCount = Math.ceil(decks.length / itemsPerPage);
 
-      const pageCount = Math.ceil(decks.length / itemsPerPage);
+        const prevButton = document.createElement('a');
+        prevButton.href = "#";
+        prevButton.innerHTML = "&laquo;";
+        prevButton.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                renderDecks(currentPage, decks);
+                renderPagination(decks);
+            }
+        });
+        paginationContainer.appendChild(prevButton);
 
-      const prevButton = document.createElement('a');
-      prevButton.href = "#";
-      prevButton.innerHTML = "&laquo;";
-      prevButton.addEventListener('click', () => {
-          if (currentPage > 1) {
-              currentPage--;
-              renderDecks(currentPage);
-              renderPagination();
-          }
-      });
-      paginationContainer.appendChild(prevButton);
+        for (let i = 1; i <= pageCount; i++) {
+            const pageButton = document.createElement('a');
+            pageButton.href = "#";
+            pageButton.innerHTML = i;
+            if (i === currentPage) {
+                pageButton.classList.add('active');
+            }
+            pageButton.addEventListener('click', () => {
+                currentPage = i;
+                renderDecks(currentPage, decks);
+                renderPagination(decks);
+            });
+            paginationContainer.appendChild(pageButton);
+        }
 
-      for (let i = 1; i <= pageCount; i++) {
-          const pageButton = document.createElement('a');
-          pageButton.href = "#";
-          pageButton.innerHTML = i;
-          if (i === currentPage) {
-              pageButton.classList.add('active');
-          }
-          pageButton.addEventListener('click', () => {
-              currentPage = i;
-              renderDecks(currentPage);
-              renderPagination();
-          });
-          paginationContainer.appendChild(pageButton);
-      }
-
-      const nextButton = document.createElement('a');
-      nextButton.href = "#";
-      nextButton.innerHTML = "&raquo;";
-      nextButton.addEventListener('click', () => {
-          if (currentPage < pageCount) {
-              currentPage++;
-              renderDecks(currentPage);
-              renderPagination();
-          }
-      });
-      paginationContainer.appendChild(nextButton);
-  }
-
-  renderDecks(currentPage);
-  renderPagination();
+        const nextButton = document.createElement('a');
+        nextButton.href = "#";
+        nextButton.innerHTML = "&raquo;";
+        nextButton.addEventListener('click', () => {
+            if (currentPage < pageCount) {
+                currentPage++;
+                renderDecks(currentPage, decks);
+                renderPagination(decks);
+            }
+        });
+        paginationContainer.appendChild(nextButton);
+    }
+ 	const decks = window.decksData; 
+    renderDecks(currentPage, decks);
+    renderPagination(decks);
 });
 
 

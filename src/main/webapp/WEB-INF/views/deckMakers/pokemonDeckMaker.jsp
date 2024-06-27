@@ -34,15 +34,14 @@
 	<div class="top-container">
 		<div class="search-area-full">
 			<div class="search-input-wrapper">
-				<form id="conditionForm" action="/myapp/deckMakers/loadMorePCard.do"
-					method="get" onsubmit="con_search(); return false;">
+				<form id="conditionForm" action="querySearch" method="get">
 					<input type="text" class="card-search-box" id="card-search-box"
 						name="query" placeholder="검색어를 입력하세요.">
-					<button type="submit" class="card-search">
+				</form>
+					<button type="submit" class="card-search" id="querySearch" onclick="con_search()">
 						<img src="${path}/resources/icon/search.png" alt="search"
 							class="card-search-icon">
 					</button>
-				</form>
 			</div>
 			<button type="button" class="filter-btn"
 				onclick="toggleFilterOptions()">
@@ -85,8 +84,8 @@
 					<div class="accordion-content active" id="deckList">
 						<c:forEach items="${pCardList}" var="card">
 							<div class="card-count">
-								<img src="${card.card_id}" onclick="call('${card.card_id}')"
-									class="listCard">
+								<img src="${card.card_id}" alt="${card.card_id}"
+									onclick="call('${card.card_id}')" class="listCard">
 							</div>
 						</c:forEach>
 					</div>
@@ -117,51 +116,27 @@
 	<%@ include file="/WEB-INF/views/main/footer.jsp"%>
 	<script type="module" src="${path}/resources/js/main.js"></script>
 	<script>
-	//검색쿼리 추가
-	/*$(document).ready(function() {
-        $('form').on('submit', function(e) {
-            e.preventDefault();
-            var query = $('.card-search-box').val();
-            $.ajax({
-                url: '${path}/deckMakers/loadMorePCard.do',
-                method: 'GET',
-                data: { query: query },
-                success: function(data) {
-                    var deckList = document.getElementById("deckList");
-                    deckList.innerHTML = "";
-                    var here = document.getElementById("here");
-                    here.innerHTML = "";
-
-                    data.forEach(card => {
-                    	console.log(card);
-                        var cardDiv = document.createElement("div");
-                        cardDiv.classList.add("card-count");
-                        cardDiv.innerHTML = `
-                            <img src="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}')">
-                        `;
-                        deckList.appendChild(cardDiv);
-                    });
-                },
-                error: function() {
-                    alert('결과값이 없습니다');
-                }
-            });
-        });
-    });*/
-	
 	//조건검색
+	$(document).ready(function() {
+        $('#conditionForm').submit(function(event) {
+            event.preventDefault();
+            filterCards();
+        });
+    });
+    
 	 function con_search() {
-	    var form = document.getElementById("conditionForm");
-	    var formData = new FormData(form);
-	    var query = document.getElementById("card-search-box").value;
-	
-	    formData.append("query", query);
+    	var cardType = $('#card_type').val();
+        var cardSort = $('#card_sort').val();
+        var cardName = $('#card-search-box').val();
 	
 	    $.ajax({
 	        url: "/myapp/deckMakers/loadMorePCard.do",
 	        type: "GET",
-	        data: Object.fromEntries(formData.entries()),  // FormData 객체를 일반 객체로 변환
-	        dataType: "json",
+	        data: {
+	        	card_type: cardType,
+	        	card_sort: cardSort,
+	        	query: cardName
+	        },
 	        success: function(data) {
 	            console.log("성공");
 	            console.log(data);
@@ -175,7 +150,7 @@
 	                var cardDiv = document.createElement("div");
 	                cardDiv.classList.add("card-count");
 	                cardDiv.innerHTML = `
-	                    <img src="${card.card_id}" class="listCard" onclick="call('${card.card_id}')">
+	                    <img src="\${card.card_id}" alt="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}')">
 	                `;
 	                here.appendChild(cardDiv);
 	            });
@@ -238,7 +213,7 @@
 		                const cardDiv = document.createElement('div');
 		                cardDiv.classList.add('card-count');
 		                cardDiv.innerHTML += `
-		                    <img src="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}')">
+		                    <img src="\${card.card_id}" alt="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}')">
 		                `;
 		                deckList.appendChild(cardDiv);
 		            });
@@ -247,7 +222,7 @@
 		//카드리스트에추가
 		function call(card_id){
 			document.querySelector("#deckListContainer").innerHTML += `
-                <li class="addCard"><img src="\${card_id}" data-card="\${card_id}" onclick="removeCard(this)"></li>
+                <li class="addCard"><img src="\${card_id}" alt="\${card_id}" data-card="\${card_id}" onclick="removeCard(this)"></li>
             `;
 		}
 		

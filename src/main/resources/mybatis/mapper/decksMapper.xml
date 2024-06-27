@@ -12,14 +12,15 @@
 		a.*, ROWNUM rnum
 		FROM (
 		SELECT * FROM POKEMON
-		WHERE 1=1
+		WHERE
+		1=1
 		<if test='card_sort != null and card_sort != "s"'>
 			AND CARD_SORT = #{card_sort}
 		</if>
 		<if test='card_type != null and card_type != "t"'>
 			AND CARD_TYPE = #{card_type}
 		</if>
-		<if test='card_name != null'>  <!-- 추가부분 -->
+		<if test='card_name != null'>
 			AND CARD_NAME LIKE '%' || #{card_name} || '%'
 		</if>
 		ORDER BY CARD_ID
@@ -45,6 +46,9 @@
 		<if test='card_attr != null and card_attr != "a"'>
 			AND card_attr = #{card_attr}
 		</if>
+		<if test='card_name != null'>
+			AND CARD_NAME LIKE '%' || #{card_name} || '%'
+		</if>
 		ORDER BY CARD_ID
 		) a
 		WHERE ROWNUM &lt;= #{endRow}
@@ -68,6 +72,9 @@
 		<if test='card_attr != null and card_attr != "a"'>
 			AND card_attr = #{card_attr}
 		</if>
+		<if test='card_name != null'>
+			AND CARD_NAME LIKE '%' || #{card_name} || '%'
+		</if>
 		ORDER BY CARD_ID
 		) a
 		WHERE ROWNUM &lt;= #{endRow}
@@ -89,6 +96,9 @@
 		</if>
 		<if test='card_attr != null and card_attr != "a"'>
 			AND card_attr = #{card_attr}
+		</if>
+		<if test='card_name != null'>
+			AND CARD_NAME LIKE '%' || #{card_name} || '%'
 		</if>
 		ORDER BY CARD_ID
 		) a
@@ -123,13 +133,7 @@
 		#{d_card},
 		#{y_card}, #{is_thumbnail})
 	</insert>
-	<!-- **덱저장** 
-	<select id="searchPCard" parameterType="map"
-		resultType="pokemonvo">
-		SELECT * FROM POKEMON
-		WHERE CARD_NAME LIKE '%' ||
-		'#{card_name' || '%'
-	</select>-->
-
+	<!-- **덱저장** -->
+	
 
 </mapper>
