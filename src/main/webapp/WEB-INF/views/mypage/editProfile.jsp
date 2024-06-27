@@ -15,7 +15,7 @@
 </head>
 <body>
 	<div class="container">
-        <form class="custom-form">
+        <form class="custom-form" method="post" action="editProfile.do">
         	<div class="form-group">
                 <label for="profileImage" class="input-label">프로필 이미지 등록</label>
                 <div class="profile-image-container">
@@ -39,19 +39,20 @@
             <hr class="form-divider">
             <div class="form-group">
                 <label for="password" class="input-label">비밀번호</label>
-                <input type="password" id="password" name="password" value="${user.pw}" required class="input-field">
+                <input type="password" id="password" name="pw" value="${user.pw}" required class="input-field">
             </div>
+            <p class="noti-info-text">※ 영문/숫자/특수문자를 2가지 이상 포함하여 6~12자로 작성해주세요. </p>
             <hr class="form-divider">
             <div class="form-group">
                 <label for="confirmPassword" class="input-label">비밀번호 확인</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" value="${user.pw}" required class="input-field">
+                <input type="password" id="confirmPassword" name="confirmPassword" required class="input-field">
             </div>
             <hr class="form-divider">
             <div class="form-group">
-                <label for="nickname" class="input-label">닉네임</label>
-                <input type="text" id="nickname" name="nickname" value="${user.nickname}" required class="input-field">
-                <button class="check-button">중복확인</button>
-            </div>
+		        <label for="nickname" class="input-label">닉네임</label>
+		        <input type="text" id="nickname" name="nickname" value="${user.nickname }" required class="input-field" required>
+		        <button type="button" class="check-button" id="checkNickname" onclick="f_checkNickname()">중복확인</button>
+		    </div>
             <hr class="form-divider">
             <div class="form-group">
                 <label for="email" class="input-label">이메일</label>
@@ -59,13 +60,13 @@
                 <span>@</span>
                 <input type="text" id="domain" name="domain" required value="${domainPart}" class="email-input-field">
                 &nbsp;
-                <select class="email-select" name="emailList" size="1" onchange="return checkEmail()">
-                    <option value="" >직접 입력</option>
-                    <option value="naver.com">naver.com</option>
-                    <option value="gmail.com">gmail.com</option>
-                    <option value="daum.net">daum.net</option>
-                    <option value="nate.com">nate.com</option>
-                </select>
+                <select class="email-select" name="emailList" size="1" onchange="checkEmail(this)">
+		            <option value="">직접 입력</option>
+		            <option value="naver.com">naver.com</option>
+		            <option value="gmail.com">gmail.com</option>
+		            <option value="daum.net">daum.net</option>
+		            <option value="nate.com">nate.com</option>
+		        </select>
             </div>
             <hr class="form-divider"> 
             <div class="form-group address-group">
@@ -79,6 +80,26 @@
 			        <input type="text" id="sample6_detailAddress" name="detailAddress" value="${user.address_detail}" class="input-field">
 			    </div>
 			</div>
+			<hr class="form-divider">
+            <div class="form-group">
+		        <label class="input-label">알림 서비스</label>
+		        <div class="notification-options">
+		            <div class="notification-option">
+		                <label><input type="radio" name="email_agreement" value="1"
+		                	<c:if test="${user.email_agreement == 1}">
+							    checked
+							</c:if>
+		                > 동의</label>
+		                <label><input type="radio" name="email_agreement" value="0" 
+		                	<c:if test="${user.email_agreement == 0}">
+							    checked
+							</c:if>
+		                > 비동의</label>                        
+		            </div>                               
+		        </div>
+		        <br>
+		        <p class="noti-info-text">※ 알림 서비스에 동의하시면 인기 경매 물품과 회원님의 관심 정보와 관련된 알람을 보내드립니다.</p>
+		    </div>
             <div class=button-section>
             	<button type="submit" class="submit-button">수정완료</button>
             </div>
