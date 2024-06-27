@@ -20,7 +20,7 @@
 <body>
 <c:set var="path" value="${pageContext.servletContext.contextPath}" />
 <!--header-->
-<<<<<<< HEAD
+
     <c:choose>
     	<c:when test="${empty userid}">
     		<%@ include file="/WEB-INF/views/main/defaultHeader.jsp"%>
@@ -29,17 +29,7 @@
     		<%@ include file="/WEB-INF/views/main/loginHeader.jsp"%>
     	</c:otherwise>
     </c:choose>
-=======
-<c:choose>
-    	<c:when test="${empty userid}">
-    		<%@ include file="/WEB-INF/views/main/defaultHeader.jsp"%>
-    	</c:when>
-    	<c:otherwise>
-    		<%@ include file="/WEB-INF/views/main/loginHeader.jsp"%>
-    	</c:otherwise>
-    </c:choose>
-    
->>>>>>> branch 'main' of https://github.com/cardget/cardAuction.git
+
 <!-- Body -->
 <div class="container">
 	

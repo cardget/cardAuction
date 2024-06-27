@@ -114,4 +114,12 @@ public class AuctionService {
         System.out.println("isBidding result for userId: " + userId + " and itemId: " + itemId + " -> " + (bid != null));
     	return bid != null; //입찰한경우 true, 아닌경우 false
     }
+    public boolean isSeller(String userId, Integer itemId) {
+    	Map<String, Object> params = new HashMap<>();
+    	params.put("user_id", userId);
+        params.put("item_id", itemId);
+        ItemDTO item = aucDAO.sellerBidsForItem(params);
+        System.out.println("isBidding result for userId: " + userId + " and itemId: " + itemId + " -> " + (item != null));
+    	return item != null; //자신의 경매물품일경우 true, 아닌경우 false
+    }
 }

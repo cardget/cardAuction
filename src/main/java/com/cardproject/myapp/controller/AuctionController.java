@@ -36,21 +36,21 @@ import com.cardproject.myapp.service.MyPageService;
 
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
+
 @Controller
 @RequestMapping("/auction")
 public class AuctionController {
 
-	
-	final AuctionService aucs;
-
-	private final AWSS3Service s3Service;
-	
-	final MyPageService mpService; 
+	@Autowired
+	AuctionService aucs;
+	@Autowired
+	private AWSS3Service s3Service;
+	@Autowired
+	MyPageService mpService; 
 
 
 	@RequestMapping("/auctionMain.do")
-	public String auctionMain(@RequestParam(value = "sortOption", required = false) String sortOption,HttpSession session, Model model) {
+	public String auctionMain(@RequestParam(value = "sortOption", required = false) String sortOption, Model model,HttpSession session) {
 		System.out.println("auctionmain page");
 		if (sortOption == null) {
 			sortOption = "recent";
@@ -59,14 +59,15 @@ public class AuctionController {
 		List<ItemDetailDTO> itemDlist = aucs.getSortedItemList(sortOption);
 		model.addAttribute("selectedSortOption", sortOption);
 		model.addAttribute("itemDlist", itemDlist);
-		String userid = (String) session.getAttribute("userid");
-    	
-    	if (userid != null) {
-			UserDTO user = mpService.selectUserById(userid);
-			List<NotificationDTO> nlist = mpService.selectFiveNotifications(userid);
-			model.addAttribute("user", user);
-			model.addAttribute("nlist", nlist);
-		}
+		
+//		String userid = (String) session.getAttribute("userid");
+//    	
+//    	if (userid != null) {
+//			UserDTO user = mpService.selectUserById(userid);
+//			List<NotificationDTO> nlist = mpService.selectFiveNotifications(userid);
+//			model.addAttribute("user", user);
+//			model.addAttribute("nlist", nlist);
+//		}
 		return "auction/auctionMain";
 	}
 
@@ -131,36 +132,24 @@ public class AuctionController {
 		return "redirect:auctionMain.do";
 
 	}
-//	@PostMapping("/auctionBidding.do")
-//	public String insertBidding(BiddingDTO bid, Model model, HttpSession session ) {
-//
-//		System.out.println("auction Bidding");
-//		System.out.println(bid);
-//		String userId = (String) session.getAttribute("userid");
-//		bid.setUser_id(userId);
-//		bid.setIs_win(0);
-//		
-//		
-//	    //동일물품에 입찰하려는 경우
-//	    if (aucs.isBidding(userId, bid.getItem_id())) {
-//	    	session.setAttribute("errorMessage", "이미 입찰하신 경매물품 입니다.");
-//	        return "redirect:auctionDetail.do?item_id=" + bid.getItem_id();
-//	    }
-//	    
-//		aucs.biddingInsert(bid);
-//		
-//		return "redirect:auctionDetail.do?item_id=" + bid.getItem_id();
-//	}
+	
 	@PostMapping(value= "/auctionBidding.do", produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public ResponseEntity<Map<String,Object>> insertBidding(@RequestBody BiddingDTO bid, HttpSession session) {
 	    System.out.println("auction Bidding");
-	    String userId = (String) session.getAttribute("userid");
-	    bid.setUser_id(userId);
-	    bid.setIs_win(0);
+	    System.out.println(bid);
 	    
 	    Map<String, Object> response = new HashMap<String,Object>();
+	    String userId = (String) session.getAttribute("userid");
+	    bid.setIs_win(0);
 	    
+	    //자신의 물품에 입찰하려는 경우
+	    if (aucs.isSeller(userId,bid.getItem_id())) {
+	    	response.put("success", false);
+	    	response.put("message","본인의 경매 물품에는 입찰할 수 없습니다.");
+	    	return ResponseEntity.ok(response);
+	    }
+
 	    // 동일물품에 입찰하려는 경우
 	    if (aucs.isBidding(userId, bid.getItem_id())) {
 	    	response.put("success", false);
@@ -168,7 +157,8 @@ public class AuctionController {
 	        System.out.println("이미 입찰한 물품");
 	        return ResponseEntity.ok(response);
 	    }
-
+	    
+	    bid.setUser_id(userId);
 	    aucs.biddingInsert(bid);
 	    response.put("success", true);
     	response.put("message", "입찰에 성공했습니다.");

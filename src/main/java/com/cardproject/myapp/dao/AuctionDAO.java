@@ -78,6 +78,9 @@ public class AuctionDAO {
 	public BiddingDTO userBidsForItem(Map<String, Object> params) {
 		return sqlSession.selectOne(namespace + "userBidsForItem", params);
 	}
+	public ItemDTO sellerBidsForItem(Map<String, Object> params) {
+		return sqlSession.selectOne(namespace +"sellerBidsForItem",params);
+	}
 	// 포켓몬 카드 조회
 	public List<PokemonDTO> selectPCard() {
 		List<PokemonDTO> plist = sqlSession.selectList(namespace + "selectPCard");
