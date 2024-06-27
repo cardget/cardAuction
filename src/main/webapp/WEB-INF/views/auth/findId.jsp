@@ -9,13 +9,12 @@
 <c:set var="path" value="${pageContext.servletContext.contextPath}"/>
 <link rel="stylesheet" href="${path}/resources/css/findId.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Apple+SD+Gothic+Neo&display=swap">
-
+<script src="${path}/resources/js/verificationSMS_API.js"></script>
 </head>
 <body>
 	<div class="find-id-container">
 		<div class="logo">
-			<img src="${path}/resources/images/로고 이미지.png" alt="로고" class="logo-img">
-			<h1 class="logo-text">카드득</h1>
+			<img src="${path}/resources/image/logo.png" alt="로고이미지" height=41 onclick="location.href='../main.do'">
 		</div>
 		<div style="display: flex; justify-content: space-between; height: 40px;">
 		<h5>아이디 찾기</h5>

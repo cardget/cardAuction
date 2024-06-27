@@ -48,4 +48,15 @@ public class AuthDAO {
       String userId = sqlSession.selectOne(namespace + ".findUserId", params);
       return userId;
   }
+  //비밀번호 찾기
+  public String findPassword(String userId) {
+      return sqlSession.selectOne(namespace + ".findPassword", userId);
+  }
+  //비밀번호 업데이트
+  public int updatePassword(String userId, String password) {
+      Map<String, String> params = new HashMap<>();
+      params.put("userId", userId);
+      params.put("password", password);
+      return sqlSession.update(namespace + ".updatePassword", params);      
+  }
 }

@@ -13,55 +13,14 @@
 <script src="${path}/resources/js/signUp.js"></script>
 <script src="${path}/resources/js/verificationSMS_API.js"></script>
 <script src="${path}/resources/js/mapAPI.js"></script>
-<script>
-       
-function f_checkUserId() {
-    var userId = $("#user_id").val();
-    $.ajax({
-        url: "${path}/auth/checkUserId",
-        type: "GET",
-        data: { "userId": userId },
-        success: function(isDuplicate) {
-            if (isDuplicate > 0) {
-                alert("이미 사용중인 아이디입니다.");
-            } else {
-                alert("사용 가능한 아이디입니다.");
-            }
-        },
-        error:function(){
-        	alert("error");
-        }
-    });
-}
 
-function f_checkNickname() {
-    var nickname = $("#nickname").val();
-    $.ajax({
-        url: "${path}/auth/checkNickname",
-        type: "GET",
-        data: { "nickname": nickname },
-        success: function(isDuplicate) {
-            if (isDuplicate > 0) {
-                alert("이미 사용중인 닉네임입니다.");
-            } else {
-                alert("사용 가능한 닉네임입니다.");
-            }
-        },
-        error:function(){
-        	alert("error");
-        }
-    });
-}
-
-</script>
 </head>
 <body>
 	<div style="text-align: left; position: relative; margin-bottom: 30px">
 	<div class="logo-container">
-		<img src="${path}/resources/images/로고 이미지.png" alt="로고" class="logo-img">
-        <h1 class="logo-text">카드득</h1>
+		<img src="${path}/resources/image/logo.png" alt="로고이미지" height=41 onclick="location.href='../main.do'">
 	</div>	    
-	    <h5 style="position: absolute; left: 430px; top: 25px; margin: 0;">회원 가입</h5>
+	    <h5 style="position: absolute; left: 435px; top: 25px; margin: 0;">회원 가입</h5>
 	</div>
 	
     <div class="container">
@@ -109,13 +68,13 @@ function f_checkNickname() {
 		    <hr class="form-divider">
 		    <div class="form-group">
 		        <label for="pw" class="input-label">비밀번호</label>
-		        <input type="password" id="pw" name="pw" placeholder="●●●●●●●●●●" required class="input-field" onkeyup="checkPasswordMatch()" required>
+		        <input type="password" id="pw" name="pw" required class="input-field" onkeyup="checkPasswordMatch()" required>
 		    </div>
 		    <p class="noti-info-text">※ 영문/숫자/특수문자를 2가지 이상 포함하여 6~12자로 작성해주세요. </p>
 		    <hr class="form-divider">
 		    <div class="form-group">
 		        <label for="confirmPassword" class="input-label">비밀번호 확인</label>
-		        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="●●●●●●●●●●" required class="input-field" onkeyup="checkPasswordMatch()" required>
+		        <input type="password" id="confirmPassword" name="confirmPassword" class="input-field" onkeyup="checkPasswordMatch()" required>
 		        <span id="passwordMessage" style="margin-left: 160px; margin-top: 8px; font-size: 10px;"></span>
 		    </div>
 		    <hr class="form-divider">
