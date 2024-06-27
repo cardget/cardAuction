@@ -74,7 +74,10 @@ public class CommunityController {
 	// 게시글 등록
 	@PostMapping("/BoardInsert.do")
 	public String BoardInsert(CommunityDTO board, MultipartHttpServletRequest file, HttpSession session) {
-		board.setUser_id("guny1117"); // 로그인 기능 연동 후 session으로 교체
+		
+		// 세션에서 긁어옴
+		String userId = (String) session.getAttribute("userid");
+		board.setUser_id(userId);
 
 		// 이미지 등록
 		HttpServletRequest request = (HttpServletRequest) file;
@@ -189,6 +192,8 @@ public class CommunityController {
 		replie.setCmt(cmt);
 		replie.setUser_id(userId);
 
+		System.out.println(replie);
+		
 		int result = cService.insertComment(replie);
 		if (result > 0) {
 			return "success";
@@ -196,17 +201,13 @@ public class CommunityController {
 			return "fail";
 		}
 	}
-
-	@GetMapping("/InquirySelect.do")
-	public void InquirySelect() {
-
-	}
-
-	@GetMapping("/InquiryDetail.do")
-	public void InquiryDetail() {
-	}
-
-	@GetMapping("/InquiryInsert.do")
-	public void InquiryInsert() {
+	
+	// 세션으로 닉네임 조회
+	@PostMapping("/selectNicknameById.do")
+	@ResponseBody
+	public String selectNicknameById(@RequestParam String userid) {
+		System.out.println("selectNicknameById.do 요청");
+		System.out.println("닉네임조회  " + cService.selectNicknameById(userid));
+		return cService.selectNicknameById(userid);
 	}
 }

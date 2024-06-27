@@ -27,8 +27,6 @@
                         <label class="form-check-label" for="boardType"> 비밀글 </label>
                     </div>
                     <img class="ImageLogo" src="../Images/picture.png" alt="1">
-                    <img class="ImageLogo" src="../Images/video.png" alt="2">
-                    <img class="ImageLogo" src="../Images/file.png" alt="3">
                 </div>
             </div>
             <div class="mb-3 mt-3">

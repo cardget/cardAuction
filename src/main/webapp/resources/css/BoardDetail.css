@@ -170,12 +170,27 @@ p {
 }
 
 .btn-primary-custom {
-    border: 1px solid #007bff; /* Bootstrap primary blue */
-    background-color: #ffffff; /* White background */
-    color: #007bff; /* Bootstrap primary blue text */
+    border: 1px solid #007bff; 
+    background-color: #ffffff; 
+    color: #007bff;
 }
 
 #uploadedImg {
 	height:400px;
 	width:300px;
+}
+
+.comment-card {
+    position: relative;
+}
+
+.delete-comment {
+    position: absolute;
+    top: 10px; /* 상단으로부터의 거리 */
+    right: 10px; /* 오른쪽으로부터의 거리 */
+    font-size: 12px; /* 폰트 크기 */
+}
+
+#ard p-3 mt-3{
+	margin-top:80px;
 }

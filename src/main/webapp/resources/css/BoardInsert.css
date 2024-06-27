@@ -9,15 +9,19 @@
 	width: 100%;
 }
 
-.custom-container {
-	width: 60%; /* 媛�濡� 鍮꾩쑉�쓣 以꾩엫 */
-	margin: 0 auto; /* 媛��슫�뜲 �젙�젹 */
+.custom-container2 {
+	margin: 0 auto; /* 가운데 정렬 */
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: calc(100vh - 100px); /* 헤더 높이를 고려한 최소 높이 */
 }
 
 .form-inline {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 10px; /* �슂�냼 �궗�씠�쓽 媛꾧꺽 */
+	gap: 10px; /* 요소 사이의 간격 */
 }
 
 .form-inline .col {
@@ -28,6 +32,15 @@
 
 .form-inline .col:nth-child(1) {
 	margin-right: 20px;
+}
+
+#myForm {
+	margin-top:78px;
+	width: 60%;
+	background-color: #fff; /* 배경색 추가 */
+	padding: 20px; /* 내부 패딩 */
+	border-radius: 10px; /* 모서리 둥글게 */
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
 }
 
 .form-inline .form-control {
@@ -65,7 +78,6 @@
 
 .category-select {
 	font-size: 16px; /* 글씨 크기 조정 */
-	padding: 5px; /* 패딩 추가 */
 }
 
 #ImageLogoContainer {

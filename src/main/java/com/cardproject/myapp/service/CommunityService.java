@@ -90,5 +90,10 @@ public class CommunityService {
 	public int insertComment(ReplieDTO replie) {
 		return communityDao.insertComment(replie);
 	}
+	
+	// 세션으로 닉네임 조회
+	public String selectNicknameById(String userid) {
+		return communityDao.selectNicknameById(userid);
+	}
 
 }
