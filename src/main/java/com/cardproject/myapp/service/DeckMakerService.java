@@ -37,18 +37,24 @@ public class DeckMakerService {
         return deckMakerDAO.selectOrFilterPCard(params);
     }
     //덱리스트 메인 정보불러오기
-    public List<Map<String, Object>> getDecks(int cat, int page, int pageSize, String query) {
+    public List<Map<String, Object>> getDecks(int cat, int page, int pageSize, String query, String sort) {
         int startRow = (page - 1) * pageSize + 1;
         int endRow = page * pageSize;
+
+        System.out.println("Start=" +startRow);
+
+        System.out.println("endRow=" +endRow);
+
+        System.out.println("sort=" +sort);
         if (query != null && !query.isEmpty()) {
-            return deckMakerDAO.getThumbnail(cat, query, startRow, endRow);
+            return deckMakerDAO.getThumbnail(cat, query, startRow, endRow, sort);
         } else {
-            return deckMakerDAO.getThumbnail(cat, startRow, endRow);
+            return deckMakerDAO.getThumbnail(cat, startRow, endRow, sort);
         }
     }
-    //페이지네이션
+
     public int getTotalDeckCount(String query) {
-    	if (query != null && !query.isEmpty()) {
+        if (query != null && !query.isEmpty()) {
             return deckMakerDAO.getTotalDeckCountByQuery(query);
         } else {
             return deckMakerDAO.getTotalDeckCount();

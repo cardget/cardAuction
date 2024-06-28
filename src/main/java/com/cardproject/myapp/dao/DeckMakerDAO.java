@@ -28,26 +28,29 @@ public class DeckMakerDAO {
         return sqlSession.selectList(namespace + ".selectOrFilterPCard", params);
     }
     //덱리스트메인 불러오기
-    public List<Map<String, Object>> getThumbnail(int cat, int startRow, int endRow) {
-        Map<String, Integer> params = new HashMap<>();
+    public List<Map<String, Object>> getThumbnail(int cat, int startRow, int endRow, String sort) {
+        Map<String, Object> params = new HashMap<>();
         params.put("cat", cat);
         params.put("startRow", startRow);
         params.put("endRow", endRow);
+        params.put("sort", sort);
         return sqlSession.selectList(namespace + ".getThumbnail", params);
     }
-    //페이지네이션
-    public int getTotalDeckCount() {
-        return sqlSession.selectOne(namespace + ".getTotalDeckCount");
-    }
-    //검색
-    public List<Map<String, Object>> getThumbnail(int cat, String query, int startRow, int endRow) {
+
+    public List<Map<String, Object>> getThumbnail(int cat, String query, int startRow, int endRow, String sort) {
         Map<String, Object> params = new HashMap<>();
         params.put("cat", cat);
         params.put("query", query);
         params.put("startRow", startRow);
         params.put("endRow", endRow);
+        params.put("sort", sort);
         return sqlSession.selectList(namespace + ".getThumbnail", params);
     }
+
+    public int getTotalDeckCount() {
+        return sqlSession.selectOne(namespace + ".getTotalDeckCount");
+    }
+
     public int getTotalDeckCountByQuery(String query) {
         Map<String, Object> params = new HashMap<>();
         params.put("query", query);

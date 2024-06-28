@@ -45,31 +45,27 @@ public class DeckMakerController {
 	}
 
 	@GetMapping("/pokemonDeckListMain.do")
-    public String getDecks(Model model, @RequestParam(defaultValue = "1") int page,
-                           @RequestParam(defaultValue = "3") int pageSize,
-                           @RequestParam(required = false) String query) {
-        System.out.println("pokemonDeckListMain page");
+	public String getDecks(Model model, @RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "3") int pageSize,
+			@RequestParam(value = "sort", required = false, defaultValue = "date") String sort,
+			@RequestParam(required = false) String query) {
 
-        int totalDecks = deckMakerService.getTotalDeckCount(query);
-        System.out.println("totalDeck=" + totalDecks);
-        int totalPages = (int) Math.ceil((double) totalDecks / pageSize);
+		int totalDecks = deckMakerService.getTotalDeckCount(query);
+		int totalPages = (int) Math.ceil((double) totalDecks / pageSize);
 
-        model.addAttribute("totalPages", totalPages);
-        model.addAttribute("currentPage", page);
-        model.addAttribute("pageSize", pageSize);
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("pageSize", pageSize);
 
-        int cat = 1;
-        List<Map<String, Object>> decks;
-        if (query != null && !query.isEmpty()) {
-            decks = deckMakerService.getDecks(cat, page, pageSize, query);
-        } else {
-            decks = deckMakerService.getDecks(cat, page, pageSize, null);
-        }
-        model.addAttribute("decks", decks);
-        model.addAttribute("query", query);
+		int cat = 1;
+		List<Map<String, Object>> decks = deckMakerService.getDecks(cat, page, pageSize, query, sort);
 
-        return "deckMakers/pokemonDeckListMain";
-    }
+		model.addAttribute("decks", decks);
+		model.addAttribute("query", query);
+		model.addAttribute("sort", sort);
+
+		return "deckMakers/pokemonDeckListMain";
+	}
 
 	@Autowired
 	private DeckMakerService deckMakerService;

@@ -135,8 +135,7 @@
 	</insert>
 	<!-- **덱저장** -->
 	<select id="getTotalDeckCount" resultType="int">
-		SELECT COUNT(*) FROM
-		decks WHERE cat = 1
+		SELECT COUNT(*) FROM decks WHERE cat = 1
 	</select>
 
 	<select id="getTotalDeckCountByQuery" parameterType="map"
@@ -144,13 +143,13 @@
 		SELECT COUNT(*)
 		FROM decks
 		WHERE cat = 1
-		AND deck_title LIKE
-		'%' || #{query} || '%'
+		AND deck_title LIKE '%' || #{query} || '%'
 	</select>
 
 	<select id="getThumbnail" parameterType="map" resultType="map">
-		SELECT
-		*
+		SELECT *
+		FROM (
+		SELECT A.*, ROWNUM AS rn
 		FROM (
 		SELECT
 		d.deck_id,
@@ -158,19 +157,18 @@
 		d.create_date,
 		u.user_id,
 		d.recommend,
-		p.card_image,
-		ROWNUM AS rn
+		p.card_image
 		FROM decks d
 		JOIN users u ON d.user_id = u.user_id
 		JOIN deckSources ds ON d.deck_id = ds.deck_id
 		JOIN pokemon p ON ds.p_card = p.card_id
 		WHERE ds.is_thumbnail = 1
-		AND d.cat = #{cat}
-		<if test='query != null and query != ""'>
-			AND d.deck_title LIKE '%' || #{query} || '%'
-		</if>
-		ORDER BY d.create_date DESC
+		AND d.cat = 1
+		ORDER BY #{sort}
+		) A
+		WHERE ROWNUM &lt;= #{endRow}
 		)
-		WHERE rn BETWEEN #{startRow} AND #{endRow}
+		WHERE rn &gt;= #{startRow}
+		ORDER BY #{sort}
 	</select>
 </mapper>
