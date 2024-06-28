@@ -175,7 +175,10 @@
 		FROM
 		REPLIES R
 		JOIN USERS U ON R.USER_ID = U.USER_ID
-		WHERE COMM_ID=#{commid}
+		WHERE
+		COMM_ID = #{commid}
+		ORDER BY
+		R.CREATE_TIME ASC
 	</select>
 
 	<!-- 댓글 수 조회 -->
@@ -191,11 +194,24 @@
 		VALUES(REPLY_SEQ.NEXTVAL,#{cmt},#{comm_id}, SYSDATE, #{user_id})
 	</insert>
 
+	<!-- 댓글 삭제 -->
+	<delete id="deleteReplies" parameterType="int">
+		DELETE FROM
+		REPLIES
+		WHERE REPLY_ID=#{replyid}
+	</delete>
+
 	<!-- 세션으로 닉네임 -->
 	<select id="selectNicknameById" parameterType="String"
 		resultType="String">
 		SELECT NICKNAME
 		FROM USERS
 		WHERE USER_ID=#{userid}
+	</select>
+
+	<!-- 세션으로 닉네임 UserDTO로 받아와줘야 할 때 -->
+	<select id="selectNicknameByUserDTOId" parameterType="String"
+		resultType="uservo">
+		SELECT NICKNAME FROM USERS WHERE USER_ID=#{userid}
 	</select>
 </mapper>

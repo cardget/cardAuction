@@ -19,6 +19,6 @@ public class PaymentDAO{
 
 	// 거래 조회
 	public TradeDTO selectTradeById(int tradeId) {
-        return sqlSession.selectOne(namespace + ".selectUserById", tradeId);
+        return sqlSession.selectOne(namespace + ".selectTradeById", tradeId);
     }
 }

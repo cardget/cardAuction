@@ -3,7 +3,48 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
 <mapper namespace = "com.cardproject.myapp.dao">
-	<select id="selectTradeById" parameterType = "int" resultType="tradevo">
-		SELECT * FROM TRADES WHERE TRADE_ID = #{tradeId}
+	<select id="selectTradeById" parameterType = "Integer" resultType="tradevo">
+		SELECT 
+			t.TRADE_ID,
+			t.USER_ID,
+			t.ITEM_ID,
+			t.PRICE,
+			t.TRADE_TYPE,
+			TO_CHAR(t.CREATE_DATE, 'YYYY-MM-DD') AS CREATE_DATE,
+			t.CONFIRM_DATE,
+			t.IS_RECOMMEND,
+			t.STAGE,
+			i.IMAGE1,
+			i.ITEM_NAME
+		FROM 
+			TRADES t
+		INNER JOIN
+			ITEMS i
+		ON
+			t.ITEM_ID = i.ITEM_ID
+		WHERE t.TRADE_ID = #{tradeId}
 	</select>
+	
+	<insert id="usingPoint" parameterType = "Map">
+		INSERT INTO 
+		POINTS (
+			POINT_ID, 
+			AMOUNT, 
+			CREATE_DATE, 
+			CMT, 
+			USER_ID, 
+			IS_ADD, 
+			CAT) 
+		VALUES (
+			TRADE_SEQ.NEXTVAL, 
+			#{amount}, 
+			SYSDATE, 
+			#{cmt}, 
+			#{userid}, 
+			'-1', 
+			'5'
+		)
+
+			
+	</insert>
 </mapper>

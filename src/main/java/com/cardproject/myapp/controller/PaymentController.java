@@ -1,8 +1,6 @@
 package com.cardproject.myapp.controller;
 
-import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.cardproject.myapp.dto.PointDTO;
 import com.cardproject.myapp.dto.TradeDTO;
+import com.cardproject.myapp.dto.UserDTO;
 import com.cardproject.myapp.service.MyPageService;
 import com.cardproject.myapp.service.PaymentService;
 
@@ -36,16 +31,23 @@ public class PaymentController {
 	
 	@GetMapping("pay.do")
 	public String displayPay(@RequestParam("tradeId") int tradeId, Model model) {
+		
 		String userid = (String) session.getAttribute("userid");
+		
+		UserDTO user = mpService.selectUserById(userid);
 		TradeDTO trade = pService.selectTradeById(tradeId);
 		int point = mpService.selectTotalPointByUser(userid);
+		
+		model.addAttribute("user", user);
+		model.addAttribute("trade", trade);
+		model.addAttribute("point", point);
 		
 		return "payment/payment";
 	}
 	
-	@GetMapping("api/send-pay")
-	public void sendPay(HttpServletRequest req) {
-		System.out.println(req);
+	@PostMapping("result.do")
+	public String payResult(Model model) {
+		return "payment/paymentResult";
 	}
 
 }
