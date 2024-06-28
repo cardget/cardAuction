@@ -27,8 +27,34 @@ public class DeckMakerDAO {
         System.out.println("DAOparams:" + params);
         return sqlSession.selectList(namespace + ".selectOrFilterPCard", params);
     }
-    public List<Map<String, Object>> getThumbnail(int cat) {
-        return sqlSession.selectList(namespace + ".getThumbnail", cat);
+    //덱리스트메인 불러오기
+    public List<Map<String, Object>> getThumbnail(int cat, int startRow, int endRow, String sort) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("cat", cat);
+        params.put("startRow", startRow);
+        params.put("endRow", endRow);
+        params.put("sort", sort);
+        return sqlSession.selectList(namespace + ".getThumbnail", params);
+    }
+
+    public List<Map<String, Object>> getThumbnail(int cat, String query, int startRow, int endRow, String sort) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("cat", cat);
+        params.put("query", query);
+        params.put("startRow", startRow);
+        params.put("endRow", endRow);
+        params.put("sort", sort);
+        return sqlSession.selectList(namespace + ".getThumbnail", params);
+    }
+
+    public int getTotalDeckCount() {
+        return sqlSession.selectOne(namespace + ".getTotalDeckCount");
+    }
+
+    public int getTotalDeckCountByQuery(String query) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("query", query);
+        return sqlSession.selectOne(namespace + ".getTotalDeckCountByQuery", params);
     }
 
     public List<YugiohDTO> selectOrFilterYCard(Map<String, Object> params) {
@@ -65,4 +91,6 @@ public class DeckMakerDAO {
         params.put("kind", kind);
         sqlSession.update(namespace + ".updateThumbnail", params);
     }
+
+    
 }

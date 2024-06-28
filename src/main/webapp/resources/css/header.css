@@ -66,15 +66,20 @@
 
 .container {
 	display: flex;
-	padding: 60px 270px 0;
-	margin-bottom: 80px;
-	flex: 1;
+	width:1320px;
+	margin:auto;
+	margin-top:30px;
+}
+.detail-container{
+	display: flex;
+	width:1320px;
+	margin:auto;
+	margin-bottom:300px;
 }
 
 .main-container {
-	padding: 124px 270px 0;
-	margin-bottom: 80px;
-	flex: 1;
+	width:1380px;
+	margin:190px auto;
 }
 
 .row-content {
@@ -101,7 +106,7 @@ ul {
 }
 
 .header-image {
-	height: 283px;
+	height: 280px;
 	width: 100%;
 }
 
