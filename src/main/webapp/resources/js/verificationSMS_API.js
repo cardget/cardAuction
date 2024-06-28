@@ -2,7 +2,7 @@
 // twilio를 활용한 SMS 본인인증 API 
 
 function sendCode() {
-    const phoneNumber = document.getElementById('phone').value;
+    const phoneNumber = document.getElementById('phone_number').value;
     if (phoneNumber === "") {
         alert("전화번호를 입력하세요");
         return;
@@ -24,7 +24,7 @@ function sendCode() {
 }
 
 function verifyCode() {
-    const phoneNumber = document.getElementById('phone').value;
+    const phoneNumber = document.getElementById('phone_number').value;
     const code = document.getElementById('verificationCode').value;
     if (code === "") {
         alert("인증번호를 입력하세요");

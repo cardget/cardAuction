@@ -16,6 +16,7 @@ public class AuthService {
   @Autowired
   private PasswordEncoder passwordEncoder;
   
+  // login메소드로 실행하도록 변경(암호화 매치)
 //  public UserDTO loginChk(String userid, String password) {
 //    return authDAO.loginChk(userid, password);
 //  }
