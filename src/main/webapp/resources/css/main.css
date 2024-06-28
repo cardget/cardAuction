@@ -28,6 +28,9 @@ button {
 	position: fixed;
 	z-index: 1000;
 }
+.list-top-container{
+    margin-bottom: 245px;
+}
 
 .top-nav {
 	display: flex;
@@ -293,7 +296,10 @@ select {
 }
 
 .sort-container {
-	padding: 10px 270px;
+	width:1380px;
+	margin: auto;
+	margin-top:20px;
+	padding-left:10px;
 	font-size: 14px;
 	font-weight: 300;
 }
@@ -389,8 +395,15 @@ select {
 	grid-template-columns: repeat(3, 1fr);
 }
 .deck-container{
-	gap:110px;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);	
+	gap:120px;
+	margin-top:30px;
+	width:1380px;
 }
+/*.deckType{
+	margin-bottom:50px;
+}*/
 .deck-overlay-container {
 	position: relative;
 	width:380px;
@@ -400,9 +413,12 @@ select {
 }
 
 .deck-overlay-container img {
-	/*display: block;*/
-	position:absolute;
-	clip:rect(0 380px 250px 0);
+	position: absolute;
+    clip-path: inset(80px 60px 380px 80px);
+    border-radius: 15px;
+    margin-left: -70px;
+    margin-top: -80px;
+    filter: brightness(0.5);
 }
 
 .overlay-text {
@@ -412,25 +428,28 @@ select {
 	right: 0;
 	bottom: 10px;
 	color: #fff;
-	font-weight: 600;
+	font-weight: 1000;
 	display: flex;
-	flex-direction: column;
 	justify-content: space-between;
+	flex-direction: column;
 	padding: 10px;
+	cursor:pointer;
+	background
 }
 
 .deck-number {
-	font-size: 14px;
+	font-size: 18px;
 }
 
 .deck-info {
 	display: flex;
 	flex-direction: row;
 	align-items: flex-start;
+	justify-content: space-between;
 }
 
-.deck-info .username, .deck-info .date {
-	font-size: 12px;
+.deck-info .username, .deck-info, .date {
+	font-size: 16px;
 	margin-right: 20px;
 }
 
