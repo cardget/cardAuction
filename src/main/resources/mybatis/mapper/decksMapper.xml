@@ -163,7 +163,10 @@
 		JOIN deckSources ds ON d.deck_id = ds.deck_id
 		JOIN pokemon p ON ds.p_card = p.card_id
 		WHERE ds.is_thumbnail = 1
-		AND d.cat = 1
+		AND d.cat = #{cat}
+		<if test='query != null and query != ""'>
+			AND d.deck_title LIKE '%' || #{query} || '%'
+		</if>
 		ORDER BY #{sort}
 		) A
 		WHERE ROWNUM &lt;= #{endRow}

@@ -50,13 +50,9 @@
 				<ul class="sort-box">
 					<li class="sort-item"><a href="main.html">홈 > </a><a href="#">포켓몬
 							> </a><a href="#">티어덱리스트</a></li>
-					<li class="sort-item">정렬기준 : <select class="sort-select"
-						name="sort"
-						onchange="document.getElementById('conditionForm').submit();">
-							<option value="date"
-								${param.sort == 'create_date DESC' ? 'selected' : ''}>최신순</option>
-							<option value="recommend"
-								${param.sort == 'recommend DESC' ? 'selected' : ''}>추천순</option>
+					<li class="sort-item">정렬기준 : <select class="sort-select">
+							<option>최신순</option>
+							<option>추천순</option>
 					</select>
 					</li>
 				</ul>
