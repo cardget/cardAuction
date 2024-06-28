@@ -1,7 +1,3 @@
-.DetailBoard{
-	font-family: 'Apple SD Gothic Neo', sans-serif;
-}
-
 .right-aligned-button {
     display: flex;
     justify-content: flex-end;
@@ -23,7 +19,13 @@
     width: 60%; /* 가로 비율을 줄임 */
     margin: 0 auto; /* 가운데 정렬 */
 }
-
+.topimage {
+	width: 100%;
+	height: 283px;
+	top: 0;
+	left: 0;
+	background-image: url('../images/default/pokemon_banner.png');
+}
 .form-inline {
     display: flex;
     flex-wrap: wrap;
@@ -100,7 +102,6 @@ p {
 }
 
 .dropdown-toggle {
-    background-color: white;
     border: none;
     font-size: 24px;
     padding: 0;
@@ -189,8 +190,4 @@ p {
     top: 10px; /* 상단으로부터의 거리 */
     right: 10px; /* 오른쪽으로부터의 거리 */
     font-size: 12px; /* 폰트 크기 */
-}
-
-#ard p-3 mt-3{
-	margin-top:80px;
 }

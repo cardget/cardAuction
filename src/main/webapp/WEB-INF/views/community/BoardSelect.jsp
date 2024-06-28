@@ -12,6 +12,8 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
 	rel="stylesheet">
 <link href="../resources/css/BoardSelect.css" rel="stylesheet">
+<link rel="icon" href="${path}/resources/icon/favicon.ico"
+	type="image/x-icon">
 </head>
 <body>
 	<c:set var="path" value="${pageContext.servletContext.contextPath}" />
@@ -24,15 +26,10 @@
 			<%@ include file="/WEB-INF/views/main/loginHeader.jsp"%>
 		</c:otherwise>
 	</c:choose>
-	
-	<div class="search-bar">
-		<select>
-			<option value="전체선택">전체선택</option>
-		</select> <input type="text" id="searchKeyword1" placeholder="검색어를 입력해주세요"
-			value="${keyword}">
-		<button class="searchBtn" onclick="search()">검색</button>
-	</div>
-	<div class="container">
+	<div class="topimage"></div>
+
+	<div class="container2">
+		<br>
 		<div class="nav-links">
 			<a href="#">카드경매</a> <a href="#">티어덱 리스트</a> <a href="#"
 				class="active">커뮤니티</a> <a href="#">문의</a>
@@ -62,7 +59,7 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th>번호</th>
+					<th></th>
 					<th>제목</th>
 					<th>작성자</th>
 					<th>작성일</th>
@@ -93,6 +90,8 @@
 			</c:forEach>
 		</div>
 	</div>
+	<!--footer-->
+	<%@ include file="/WEB-INF/views/main/footer.jsp"%>
 	<script>
 		function search() {
 			var sort = document.getElementById('sortSelect').value;
