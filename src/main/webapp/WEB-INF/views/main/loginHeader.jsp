@@ -23,7 +23,7 @@
 				<li class="category-item"><a href="/myapp/mypage/"> <img
 						src="${path }/resources/icon/user.png" class="icon">${user.nickname}님
 				</a></li>
-				<li class="category-item"><a href="auth/logout.do"> <img
+				<li class="category-item"><a href="/myapp/auth/logout.do"> <img
 						src="${path }/resources/icon/logout.png" class="icon">로그아웃
 				</a></li>
 				<li class="category-item">
@@ -59,7 +59,7 @@
 									</c:forEach>
 								</c:otherwise>
 							</c:choose>
-							<a id="allNoti" class="mainColor" href="mypage/myNoti.do">모든 알림 보기</a>
+							<a id="allNoti" class="mainColor" href="/myapp/mypage/myNoti.do">모든 알림 보기</a>
 						</div>
 					</div>
 				</li>

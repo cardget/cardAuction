@@ -10,13 +10,15 @@
  	
  	<update id="userUpdate" parameterType="uservo">
 		UPDATE USERS
-				SET PW = #{pw},
+				SET PROFILE_IMAGE = #{profile_image},
 					NICKNAME = #{nickname},
 					EMAIL = #{email},
 					ZIP_CODE = #{zip_code},
 					ADDRESS = #{address},
 					ADDRESS_DETAIL = #{address_detail},
-					EMAIL_AGREEMENT = #{email_agreement}
+					EMAIL_AGREEMENT = #{email_agreement},
+					BANK = #{bank},
+					ACCNT = #{accnt}
 				WHERE USER_ID = #{user_id}
 	</update>
 
@@ -116,7 +118,7 @@
 	    WHERE USER_ID = #{userid} 
 	</select>
 	
-	<select id="selectTotalPointByCat" parameterType = "string" resultType="int">
+	<select id="selectTotalPointByCat" parameterType = "map" resultType="int">
 		SELECT SUM(AMOUNT) AS CATTOTAL
 		FROM POINTS
 		WHERE USER_ID = #{userid} AND CAT = #{cat}

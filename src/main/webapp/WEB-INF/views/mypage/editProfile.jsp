@@ -11,41 +11,27 @@
 <script
 	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="${path}/resources/js/signUp.js"></script>
+<script>
 
+</script>
 </head>
 <body>
 	<div class="container">
-        <form class="custom-form" method="post" action="editProfile.do">
+        <form class="custom-form" method="post" action="editProfile.do" enctype="multipart/form-data">
         	<div class="form-group">
-                <label for="profileImage" class="input-label">프로필 이미지 등록</label>
+                <label for="profileImage" class="input-label">프로필 이미지</label>
                 <div class="profile-image-container">
                 	<c:choose>
 						<c:when test="${empty user.profile_image}">
-							<img id="profile-image" src="${path}/resources/images/기본 이미지.png" alt="Profile Image">
+							<img id="profile-image" src="${path}/resources/images/기본 이미지.png" alt="Profile Default">
 						</c:when>
 						<c:otherwise>
 							<img id="profile-image" src="${user.profile_image}" alt="프로필이미지">
 						</c:otherwise>
 					</c:choose>
                 </div>
-                <input type="file" id="profileImage" name="profileImage" onchange="previewImage(this)" accept="image/* class="input-field" value="${user.profile_image}">
-                <button type="button" onclick="restProfileImage()" class="check-button">삭제</button>
-            </div>
-            <hr class="form-divider">
-            <div class="form-group">
-                <label for="username" class="input-label">아이디</label>
-                <input type="text" id="username" name="username" value = "${user.user_id}" required class="input-field" disabled>
-            </div>
-            <hr class="form-divider">
-            <div class="form-group">
-                <label for="password" class="input-label">비밀번호</label>
-                <input type="password" id="password" name="pw" value="${user.pw}" required class="input-field">
-            </div>
-            <p class="noti-info-text">※ 영문/숫자/특수문자를 2가지 이상 포함하여 6~12자로 작성해주세요. </p>
-            <hr class="form-divider">
-            <div class="form-group">
-                <label for="confirmPassword" class="input-label">비밀번호 확인</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" required class="input-field">
+                <input type="file" id="profile_image" name="profile_image_name" value="${user.profile_image}" onchange="previewImage(this)" accept="image/*" class="input-field" style="margin-left:10px;" multiple>
+		    	<button type="button" onclick="restProfileImage()" class="check-button">삭제</button>
             </div>
             <hr class="form-divider">
             <div class="form-group">
@@ -80,6 +66,36 @@
 			        <input type="text" id="sample6_detailAddress" name="detailAddress" value="${user.address_detail}" class="input-field">
 			    </div>
 			</div>
+			<hr class="form-divider">
+			<div class="form-group">
+                <label for="bank" class="input-label">은행</label>
+                <input type="hidden" id="bank" name="bank" value="${user.bank}" class="email-input-field" required>
+                <select class="email-select" name="bank" size="1">
+		            <option value="신한"
+		            	<c:if test="${user.bank eq '신한'}">
+							selected
+						</c:if>
+		            >신한</option>
+		            <option value="국민"
+		            	<c:if test="${user.bank eq '국민'}">
+							selected
+						</c:if>
+		            >국민</option>
+		            <option value="우리"
+		            	<c:if test="${user.bank eq '우리'}">
+							selected
+						</c:if>
+		            >우리</option>
+		            <option value="하나"
+		            	<c:if test="${user.bank eq '하나'}">
+							selected
+						</c:if>
+		            >하나</option>
+		        </select>
+		        &nbsp;
+                <input type="text" id="accnt" name="accnt" required value="${user.accnt}" class="email-input-field"><br>
+                <p class="noti-info-text">※ 물품 판매 대금 정산을 위해선 필수입니다.</p>
+            </div>
 			<hr class="form-divider">
             <div class="form-group">
 		        <label class="input-label">알림 서비스</label>

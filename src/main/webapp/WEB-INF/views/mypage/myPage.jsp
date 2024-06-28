@@ -177,11 +177,16 @@
 					<img src="${path}/resources/icon/location.png" alt="주소아이콘"
 						class="info">
 					<h3 class="info">${user.address} ${user.address_detail}</h3><br /> 
-					<!--  
-					<img src="${path}/resources/icon/account.png" alt="계좌아이콘"
-						height=20 class="info">
-					<h3 class="info">${user.bank} ${user.accnt}</h3>
-					-->
+					<img src="${path}/resources/icon/account.png" alt="계좌아이콘" height=20 class="info">
+					<c:choose>
+						<c:when test="${user.accnt == null}">
+							<p class="noti-info-text">※ 물품 판매 대금 수령을 위해서 계좌 등록이 필요합니다</p>
+						</c:when>
+						<c:otherwise>
+							<h3 class="info">${user.bank} ${user.accnt}</h3>
+						</c:otherwise>
+					</c:choose>
+					<hr class="grayfont">
 					<h3 class="grayfont">알림 서비스 수신 동의</h3>
 					<div id="auctionAlarm">
 					<!--  
