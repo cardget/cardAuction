@@ -30,4 +30,5 @@ public class UserDTO {
 	private int phone_agreement; 
 	private int email_agreement;
 	private String bank;
+	private int is_able; 
 }

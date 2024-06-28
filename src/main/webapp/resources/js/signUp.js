@@ -109,7 +109,7 @@ function checkAllAgreed() {
 
 
 // 프로필 이미지 미리보기
-function previewImage(input) {
+function previewImage(input, path) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function(e) {
@@ -120,17 +120,16 @@ function previewImage(input) {
         document.getElementById('profile-image-hidden').value = ''; // 사진이 선택된 경우 null이 아닌 값을 저장해야 함
     } else {
         // 파일이 선택되지 않은 경우 기본 이미지로 설정하고 DB에 null 값 설정
-        document.getElementById('profile-image').src = '../resources/images/기본 이미지.png';
+        document.getElementById('profile-image').src = path + '/resources/image/profile.png';
         document.getElementById('profile-image-hidden').value = null; // null 값을 설정하여 DB에 저장
     }
 }
 
 // 기본 이미지로 재설정
-function resetProfileImage() {
-    document.getElementById('profile-image').src = '../resources/images/기본 이미지.png';
+function resetProfileImage(path) {
+    document.getElementById('profile-image').src = path + '/resources/image/profile.png';
     document.getElementById('profile-image-hidden').value = null; // null 값을 설정하여 DB에 저장
 }
-
 
 //폼 제출시 호출됨
 function validatePasswords(){
@@ -147,7 +146,23 @@ function validatePasswords(){
         message.textContent = '일치하는 비밀번호입니다.';
         return true;
     }
+    
 }
+
+// 비밀번호 유효성 검사 함수
+function isValidPassword(password) {
+    // 영문, 숫자, 특수문자 각각 포함 여부 확인
+    var hasLetter = /[a-zA-Z]/.test(password);
+    var hasNumber = /[0-9]/.test(password);
+    var hasSpecialChar = /[!@#$%~]/.test(password);
+
+    // 길이와 두 가지 이상의 조건을 만족하는지 확인
+    var isValidLength = password.length >= 6 && password.length <= 30;
+    var isValidContent = (hasLetter + hasNumber + hasSpecialChar) >= 2;
+
+    return isValidLength && isValidContent;
+}
+
 
 // 비밀번호 필드에 키 입력이 있을 때마다 호출
 function checkPasswordMatch() {
@@ -155,7 +170,10 @@ function checkPasswordMatch() {
     var confirmPassword = document.getElementById("confirmPassword").value;
     var message = document.getElementById("passwordMessage");
 
-    if (password !== confirmPassword) {
+	if(!isValidPassword(password)){
+		message.style.color = 'red';
+        message.textContent = '비밀번호는 영문, 숫자, 특수문자 중 두 가지 이상을 포함하여 6~30자로 작성해야 합니다.';
+    }else if (password !== confirmPassword) {
         message.style.color = 'red';
         message.textContent = '비밀번호가 일치하지 않습니다. 다시 입력해주세요.';
     } else {
