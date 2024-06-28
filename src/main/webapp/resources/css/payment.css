@@ -1,0 +1,121 @@
+@charset "UTF-8";
+body {
+	font-family: 'Apple SD Gothic Neo', sans-serif;
+	background-color: #F9FBFC;
+}
+
+.container {
+	border: 1px solid #e1e6ec;
+	background-color: #fff;
+	border: 1px solid #e1e6ec;
+	box-shadow: 4px rgba(0, 0, 0, 0.1);
+	padding: 30px;
+	border-radius: 10px;
+	margin: 5% 35%;
+}
+
+.payment-header {
+	border-bottom: 1px solid #e1e6ec;
+}
+
+/* 리스트 아이템 */
+.item-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: none;
+    padding: 20px!important;
+    margin: 10px 0;
+}
+
+/* 이미지 섹션 */
+.image-section img {
+    height: 100px;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+/* 정보 섹션 */
+.info-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.info-section h3 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-top: 0;
+}
+
+.info-section p {
+    font-size: 12px;
+    color: #888;
+    margin: 2px 0;
+}
+
+.info-section .grayfont {
+    font-size: 12px;
+    color: #888;
+    text-decoration: none;
+    margin-top: 5px;
+}
+
+.trade-section div {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.point-used {
+	border: 1px solid #007FFF;
+	border-radius: 5px;
+	text-align: right;
+	height: 30px;
+	margin: auto;
+	margin-right: 5px;
+	padding-rigth: 5px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+}
+
+.total-payment {
+	background-color: #fff;
+	border: none;
+	color: #000;
+	text-align: right;
+}
+
+.btn-blue {
+	border-radius: 5px;
+	background-color: #FFF;
+	color: #007FFF;
+	border: 1px solid #007FFF;
+}
+
+.btn-blue:hover {
+	color: #FFF;
+	background-color: #007FFF;
+}
+
+.btn-use{
+	height: 40px;
+	margin: auto;
+	margin-left: 5px;
+}
+
+.btn-payment {
+	width: 100%;
+	height: 50px;
+	text-align: center;
+}
+
+hr {
+	color: #e1e6ec;
+}

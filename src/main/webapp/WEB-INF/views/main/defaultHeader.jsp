@@ -25,10 +25,10 @@
 		</div>
 		<div class="top-nav-category">
 			<ul class="category-box">
-				<li class="category-item"><a href="auth/login.do"> <img
+				<li class="category-item"><a href="/myapp/auth/login.do"> <img
 						src="${path}/resources/icon/logout.png" class="icon">로그인
 				</a></li>
-				<li class="category-item"><a href="auth/signUp.do"> <img
+				<li class="category-item"><a href="/myapp/auth/signUp.do"> <img
 						src="${path}/resources/icon/logout.png" class="icon">회원가입
 				</a></li>
 			</ul>
