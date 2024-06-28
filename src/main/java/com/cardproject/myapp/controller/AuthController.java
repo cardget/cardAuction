@@ -37,8 +37,14 @@ public class AuthController {
 	@PostMapping("/insertSignUp.do")
     public String profileUpload(@RequestParam(value= "profile_image_name", required=false) MultipartFile file, Model model, UserDTO user ) {
 		
+		String originalFileName = file.getOriginalFilename();
+		
+		String rawFileName = originalFileName.substring(0,originalFileName.lastIndexOf(".")); // 이름
+		String extension = originalFileName.substring(originalFileName.lastIndexOf(".")+1);
+		
+		
     	if(file!=null&& !file.isEmpty()) {
-    		String fileName="profile/"+file.getOriginalFilename()+System.currentTimeMillis();
+    		String fileName="profile/"+rawFileName+System.currentTimeMillis()+"."+extension;
 	    	try {
 				String url=s3Service.uploadObject(file, fileName);
 				user.setProfile_image(url);	// 이미지 URL을 UserDTO 에 설정
@@ -66,11 +72,17 @@ public class AuthController {
 	public String loginCheck(@RequestParam("userid") String userid, @RequestParam("password") String password,
 			HttpSession session, HttpServletRequest request) {
 
-		UserDTO user = aService.loginChk(userid, password);
+		UserDTO user = aService.login(userid, password);		
+		
 		if (user == null) {
 			session.setAttribute("loginResult", "Login Failure: Invalid Email or Password");
 			return "redirect:login.do";
-		} else {
+		}else if(user.getIs_able()==0) {
+			session.setAttribute("loginResult", "Login Failure: Your account is disabled.");
+			return "redirect:login.do";
+		}
+		
+		else {
 			// login success
 			session.setAttribute("loginResult", "Login Success");
 			session.setAttribute("userid", user.getUser_id());
@@ -86,6 +98,7 @@ public class AuthController {
 //				if (queryString != null)
 //					goPage = goPage + "?" + queryString;
 //			}
+			
 			return "redirect:../main.do";
 		}
 	}
