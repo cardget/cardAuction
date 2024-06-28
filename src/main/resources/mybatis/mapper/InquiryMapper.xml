@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="com.cardproject.myapp.dao">
+
+	<!-- 문의 리스트 조회 -->
+	<select id="selectInquiryList" resultType="questionvo">
+		SELECT
+		Q.QUEST_ID,
+		Q.IS_SECRET,
+		Q.TITLE,
+		Q.CREATE_DATE,
+		U.NICKNAME
+		FROM
+		QUESTIONS Q
+		JOIN USERS U ON Q.USER_ID = U.USER_ID
+	</select>
+</mapper>

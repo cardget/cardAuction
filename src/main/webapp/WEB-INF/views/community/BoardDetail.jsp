@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="path" value="${pageContext.servletContext.contextPath}" />
 <title>BoardDetail</title>
 <meta charset="utf-8">
@@ -220,12 +220,12 @@
 	}
 
 	// 댓글 삭제
-	function deleteComment(commentId) {
+	function deleteComment(replieId) {
 		if (confirm("댓글을 삭제하시겠습니까?")) {
 			$.ajax({
 				url : path + "/community/deleteComment.do",
 				data : {
-					"commentId" : commentId
+					"replieId" : replieId
 				},
 				type : "post",
 				success : function(response) {
@@ -249,9 +249,14 @@
 		var charCount = commentInput.value.length;
 		document.getElementById('charCount').innerText = charCount;
 	}
+
+	// 이미지 로드 오류 시 src 속성 제거
+	function handleImageError(image) {
+		image.style.display = 'none';
+	}
 </script>
 </head>
-<body class="DetailBoard">
+<body>
 	<!--header-->
 	<c:choose>
 		<c:when test="${empty userid}">
@@ -261,6 +266,8 @@
 			<%@ include file="/WEB-INF/views/main/loginHeader.jsp"%>
 		</c:otherwise>
 	</c:choose>
+	<div class="topimage"></div>
+
 	<div class="container2 custom-container mt-3">
 		<div class="right-aligned-button">
 			<input type="submit" class="btn btn-primary" value="목록"
@@ -299,8 +306,8 @@
 				</div>
 				<hr>
 				<div class="mb-3 mt-3">
-					<img src="../resources/images/test/${board.image}" alt="이미지"
-						id="uploadedImg">
+					<img src="${board.image}" alt="이미지" id="uploadedImg"
+						onerror="handleImageError(this)">
 					<p>${board.ctt}</p>
 				</div>
 				<br>
