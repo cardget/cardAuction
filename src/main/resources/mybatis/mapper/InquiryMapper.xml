@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-   
+
 <mapper namespace="com.cardproject.myapp.dao">
 
 	<!-- 문의 리스트 조회 -->
@@ -14,6 +14,16 @@
 		U.NICKNAME
 		FROM
 		QUESTIONS Q
-		JOIN USERS U ON Q.USER_ID = U.USER_ID
+		JOIN USERS
+		U ON Q.USER_ID = U.USER_ID
 	</select>
+
+	<!-- 문의 글 등록 -->
+	<insert id="insertInquiry" parameterType="questionvo">
+		INSERT INTO
+		QUESTIONS(QUEST_ID, TITLE, CTT, CREATE_DATE, USER_ID, IS_SECRET,
+		ANSWER)
+		VALUES (QUEST_SEQ.NEXTVAL, #{title}, #{ctt}, SYSDATE, #{userid},
+		#{is_secret}, null)
+	</insert>
 </mapper>
