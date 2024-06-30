@@ -15,6 +15,7 @@ import com.cardproject.myapp.dto.ItemDTO;
 import com.cardproject.myapp.dto.ItemDetailDTO;
 import com.cardproject.myapp.dto.LikeDTO;
 import com.cardproject.myapp.dto.PokemonDTO;
+import com.cardproject.myapp.dto.TradeDTO;
 
 @Repository
 public class AuctionDAO {
@@ -87,8 +88,46 @@ public class AuctionDAO {
 		logger.info(plist.size() + "건 조회됨.");
 		return plist;
 	}
-
-
+	//sysdate 지난 itemlist select
+	public List<ItemDTO> selectExpiredItem() {
+		List<ItemDTO> itemlist = sqlSession.selectList(namespace + "selectExpiredItem");
+		logger.info(itemlist.size()+" 건 조회.");
+		return itemlist;
+	}
+	//입찰 조회
+	public List<BiddingDTO> selectBid(int item_id){
+		List<BiddingDTO> bidlist = sqlSession.selectList(namespace+"selectBid",item_id);
+		logger.info(bidlist.size()+" 건 조회.");
+		return bidlist;
+	}
+	//낙찰여부 
+	public BiddingDTO bidVerification(int item_id){
+		BiddingDTO bidV = sqlSession.selectOne(namespace+"bidVerification",item_id);
+		
+		return bidV;
+	}
+	//낙찰여부 update
+	public int biddingUpdate(int item_id) {
+		int result = sqlSession.update(namespace+"biddingUpdate",item_id);
+		logger.info(result+"건 update");
+		return result;
+	}
+	//2번째 price 
+	public int secondPrice(int item_id) {
+		int secondPrice = sqlSession.selectOne(namespace+"secondPrice",item_id);
+		logger.info("낙찰금 : "+secondPrice);
+		return secondPrice;
+	}
+	//낙찰내역 insert
+	public int tradeInsert(TradeDTO trade) {
+		int result = sqlSession.insert(namespace+"tradeInsert",trade);
+		logger.info(result+"건 insert");
+		return result;
+	}
+	
+	
+	
+	
 	public void likeInsert(LikeDTO likeVO) {
         sqlSession.insert(namespace+"likeInsert", likeVO);
     }

@@ -223,7 +223,7 @@
 	</select>
 	<!-- 낙찰(시간확인) -->
 	<select id="selectExpiredItem" resultType="itemvo">
-		select * from items where end_date &lt; sysdate
+		select * from items where end_date <![CDATA[<]]> sysdate
 	</select>
 	<!-- 물품에 해당하는 입찰 조회 -->
 	<select id="selectBid" parameterType="int" resultType="biddingvo">
@@ -235,12 +235,30 @@
 	</select>
 	<!-- 입찰중 낙찰된 것 is_win update -->
 	<update id="biddingUpdate" parameterType="int">
-		update biddings set is_win=1 where price= #{price}
+		UPDATE biddings 
+		SET is_win = 1 
+		WHERE item_id = #{item_id} 
+		AND price = (
+		    SELECT MAX(price) 
+		    FROM biddings 
+		    WHERE item_id = #{item_id}
+		)
 	</update>
+	<!-- 2번째 price가져오기 (낙찰금액) -->
+	<select id="secondPrice" parameterType="int" resultType="int">
+		SELECT price
+		FROM (
+		    SELECT price, ROW_NUMBER() OVER (ORDER BY price DESC) AS row_num
+		    FROM biddings
+		    WHERE item_id = #{item_id}
+		)
+		WHERE row_num = 2
+		
+	</select>
 	<!-- 낙찰insert -->
 	<insert id="tradeInsert" parameterType="tradevo">
-		insert into trades(trade_id,user_id,item_id,winning,trade_type,create_date,confirm_date,is_recommend,stage,is_success)
-		values (TRADE_SEQ.NEXTVAL, #{user_id},#{item_id},#{winning},#{trade_type},#{create_date},#{confirm_date},#{is_recommend},#{stage},#{is_success})
+		insert into trades(trade_id,user_id,item_id,price,trade_type,is_recommend,stage,is_success)
+		values (TRADE_SEQ.NEXTVAL, #{user_id},#{item_id},#{price},#{trade_type},#{is_recommend},#{stage},#{is_success})
 	</insert>
 	<!-- 포켓몬카드 불러오기 -->
 	<select id="selectPCard" resultType="pokemonvo">

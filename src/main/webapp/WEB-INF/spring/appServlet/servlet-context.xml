@@ -38,7 +38,8 @@
 	<context:component-scan
 		base-package="com.cardproject" />
 	<task:scheduler id="gsScheduler" pool-size="10"/>
-	<task:annotation-driven scheduler="gsScheduler"/>
+	<task:executor id="gsTaskExecutor" pool-size="10"/>
+	<task:annotation-driven executor="gsTaskExecutor" scheduler="gsScheduler"/>
 	<!-- -->
 
 
