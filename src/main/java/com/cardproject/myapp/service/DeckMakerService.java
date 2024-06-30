@@ -37,7 +37,7 @@ public class DeckMakerService {
         return deckMakerDAO.selectOrFilterPCard(params);
     }
     //덱리스트 메인 정보불러오기
-    public List<Map<String, Object>> getDecks(int cat, int page, int pageSize, String query, String sort) {
+    public List<Map<String, Object>> getPDecks(int cat, int page, int pageSize, String query, String sort) {
         int startRow = (page - 1) * pageSize + 1;
         int endRow = page * pageSize;
 
@@ -45,19 +45,13 @@ public class DeckMakerService {
         System.out.println("endRow=" +endRow);
         System.out.println("sort=" +sort);
         
-        if (query != null && !query.isEmpty()) {
-            return deckMakerDAO.getThumbnailWithQuery(cat, query, startRow, endRow, sort);
-        } else {
-            return deckMakerDAO.getThumbnail(cat, startRow, endRow, sort);
-        }
+            return deckMakerDAO.getPThumbnail(cat, query, startRow, endRow, sort);
     }
-
-    public int getTotalDeckCount(String query) {
-        if (query != null && !query.isEmpty()) {
-            return deckMakerDAO.getTotalDeckCountByQuery(query);
-        } else {
-            return deckMakerDAO.getTotalDeckCount();
-        }
+    public int getTotalDeckCount(int cat, String query) {
+    	Map<String, Object> params = new HashMap<>();
+        params.put("cat", cat);
+        params.put("query", query);
+            return deckMakerDAO.getTotalDeckCount(params);
     }
     
     public List<YugiohDTO> getYCardList(int page, Map<String, String> filters) {

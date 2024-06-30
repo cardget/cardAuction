@@ -45,20 +45,20 @@ public class DeckMakerController {
 	}
 
 	@GetMapping("/pokemonDeckListMain.do")
-	public String getDecks(Model model, @RequestParam(defaultValue = "1") int page,
+	public String getPDecks(Model model, @RequestParam(defaultValue = "1") int page,
 			@RequestParam(defaultValue = "3") int pageSize,
 			@RequestParam(value = "sort", required = false, defaultValue = "create_date") String sort,
 			@RequestParam(required = false) String query) {
 
-		int totalDecks = deckMakerService.getTotalDeckCount(query);
-		int totalPages = (int) Math.ceil((double) totalDecks / pageSize);
+		int cat = 1; //이부분 바뀜
+		int totalDecks = deckMakerService.getTotalDeckCount(cat, query); //공통
+		int totalPages = (int) Math.ceil((double) totalDecks / pageSize);//공통
 
 		model.addAttribute("totalPages", totalPages);
 		model.addAttribute("currentPage", page);
 		model.addAttribute("pageSize", pageSize);
 
-		int cat = 1;
-		List<Map<String, Object>> decks = deckMakerService.getDecks(cat, page, pageSize, query, sort);
+		List<Map<String, Object>> decks = deckMakerService.getPDecks(cat, page, pageSize, query, sort);
 
 		model.addAttribute("decks", decks);
 		model.addAttribute("query", query);
