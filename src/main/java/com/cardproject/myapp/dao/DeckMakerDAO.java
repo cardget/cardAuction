@@ -34,17 +34,19 @@ public class DeckMakerDAO {
         params.put("startRow", startRow);
         params.put("endRow", endRow);
         params.put("sort", sort);
+
         return sqlSession.selectList(namespace + ".getThumbnail", params);
     }
 
-    public List<Map<String, Object>> getThumbnail(int cat, String query, int startRow, int endRow, String sort) {
+    public List<Map<String, Object>> getThumbnailWithQuery(int cat, String query, int startRow, int endRow, String sort) {
         Map<String, Object> params = new HashMap<>();
         params.put("cat", cat);
         params.put("query", query);
         params.put("startRow", startRow);
         params.put("endRow", endRow);
         params.put("sort", sort);
-        return sqlSession.selectList(namespace + ".getThumbnail", params);
+
+        return sqlSession.selectList(namespace + ".getThumbnailWithQuery", params);
     }
 
     public int getTotalDeckCount() {

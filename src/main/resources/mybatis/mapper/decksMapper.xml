@@ -145,6 +145,41 @@
 		WHERE cat = 1
 		AND deck_title LIKE '%' || #{query} || '%'
 	</select>
+	
+	<select id="getThumbnailWithQuery" parameterType="map" resultType="map">
+    SELECT *
+    FROM (
+        SELECT A.*, ROWNUM AS rn
+        FROM (
+            SELECT
+                d.deck_id,
+                d.deck_title,
+                d.create_date,
+                u.user_id,
+                d.recommend,
+                p.card_image
+            FROM decks d
+            JOIN users u ON d.user_id = u.user_id
+            JOIN deckSources ds ON d.deck_id = ds.deck_id
+            JOIN pokemon p ON ds.p_card = p.card_id
+            WHERE ds.is_thumbnail = 1
+            AND d.cat = #{cat}
+            AND d.deck_title LIKE '%' || #{query} || '%'
+            ORDER BY 
+            <choose>
+                <when test="sort == 'recommend'">
+                    d.recommend DESC
+                </when>
+                <otherwise>
+                    d.create_date DESC
+                </otherwise>
+            </choose>
+        ) A
+        WHERE ROWNUM &lt;= #{endRow}
+    )
+    WHERE rn &gt;= #{startRow}
+    ORDER BY rn
+</select>
 
 	<select id="getThumbnail" parameterType="map" resultType="map">
 		SELECT *
@@ -167,11 +202,11 @@
 		<if test='query != null and query != ""'>
 			AND d.deck_title LIKE '%' || #{query} || '%'
 		</if>
-		ORDER BY #{sort}
+		ORDER BY #{sort} DESC
 		) A
 		WHERE ROWNUM &lt;= #{endRow}
 		)
 		WHERE rn &gt;= #{startRow}
-		ORDER BY #{sort}
+		ORDER BY #{sort} DESC
 	</select>
 </mapper>

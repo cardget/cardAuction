@@ -42,12 +42,11 @@ public class DeckMakerService {
         int endRow = page * pageSize;
 
         System.out.println("Start=" +startRow);
-
         System.out.println("endRow=" +endRow);
-
         System.out.println("sort=" +sort);
+        
         if (query != null && !query.isEmpty()) {
-            return deckMakerDAO.getThumbnail(cat, query, startRow, endRow, sort);
+            return deckMakerDAO.getThumbnailWithQuery(cat, query, startRow, endRow, sort);
         } else {
             return deckMakerDAO.getThumbnail(cat, startRow, endRow, sort);
         }
