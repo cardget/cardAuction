@@ -47,7 +47,7 @@ public class DeckMakerController {
 	@GetMapping("/pokemonDeckListMain.do")
 	public String getDecks(Model model, @RequestParam(defaultValue = "1") int page,
 			@RequestParam(defaultValue = "3") int pageSize,
-			@RequestParam(value = "sort", required = false, defaultValue = "date") String sort,
+			@RequestParam(value = "sort", required = false, defaultValue = "create_date") String sort,
 			@RequestParam(required = false) String query) {
 
 		int totalDecks = deckMakerService.getTotalDeckCount(query);

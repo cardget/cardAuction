@@ -52,7 +52,8 @@
 							> </a><a href="#">티어덱리스트</a></li>
 					<li class="sort-item">정렬기준 : <select class="sort-select"
 						onchange="location.href='${path}/deckMakers/pokemonDeckListMain.do?sort=' + this.value">
-							<option value="date" ${sort == 'date' ? 'selected' : ''}>최신순</option>
+							<option value="create_date"
+								${sort == 'create_date' ? 'selected' : ''}>최신순</option>
 							<option value="recommend"
 								${sort == 'recommend' ? 'selected' : ''}>추천순</option>
 					</select>
@@ -100,12 +101,29 @@
 		</div>
 		<!--페이지네이션-->
 		<div class="pagination">
-			<c:forEach var="i" begin="1" end="${totalPages}">
-				<a
-					href="${path}/deckMakers/pokemonDeckListMain.do?page=${i}&pageSize=${pageSize}&query=${query}"
-					class="${i == currentPage ? 'active' : ''}">${i}</a>
-			</c:forEach>
+			<c:if test="${totalPages > 1}">
+				<ul class="pagination">
+					<c:if test="${currentPage > 1}">
+						<li><a
+							href="?page=${currentPage - 1}&pageSize=${pageSize}&sort=${sort}&query=${query}"
+							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+						</a></li>
+					</c:if>
+					<c:forEach begin="1" end="${totalPages}" var="i">
+						<li class="${i == currentPage ? 'active' : ''}"><a
+							href="?page=${i}&pageSize=${pageSize}&sort=${sort}&query=${query}">${i}</a>
+						</li>
+					</c:forEach>
+					<c:if test="${currentPage < totalPages}">
+						<li><a
+							href="?page=${currentPage + 1}&pageSize=${pageSize}&sort=${sort}&query=${query}"
+							aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+						</a></li>
+					</c:if>
+				</ul>
+			</c:if>
 		</div>
+
 	</div>
 	<!--footer-->
 
