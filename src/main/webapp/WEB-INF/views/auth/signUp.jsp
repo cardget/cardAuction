@@ -116,13 +116,13 @@
 		    </div>
 		    <hr class="form-divider">
 		    <div class="form-group">
-		        <label for="profile_image" class="input-label">프로필 이미지 등록</label>
-		        <div class="profile-image-container">
-		            <img id="profile-image" src="${path}/resources/image/profile.png" alt="Profile Image" onclick="document.getElementById('profile_image_input').click()">
-		        </div>
-		        <input type="file" id="profile_image" name="profile_image_name" onchange="previewImage(this)" accept="image/*" class="input-field" style="margin-left:10px;" multiple required>
-		    	<button type="button" onclick="resetProfileImage('${path}')" class="check-button">삭제</button>
-		    </div>
+			    <label for="profile_image" class="input-label">프로필 이미지 등록</label>
+			    <div class="profile-image-container">
+			        <img id="profile-image" src="${path}/resources/image/profile.png" alt="Profile Image" onclick="document.getElementById('profile_image').click()">
+			    </div>
+			    <input type="file" id="profile_image" name="profile_image_name" onchange="previewImage(this, '${path}')" accept="image/*" class="input-field" style="margin-left:10px;" multiple required>
+			    <button type="button" onclick="resetProfileImage('${path}')" class="check-button">삭제</button>
+			</div>
 		    <hr class="form-divider">
 		    <div class="form-group">
 		        <label class="input-label">알림 서비스</label>
