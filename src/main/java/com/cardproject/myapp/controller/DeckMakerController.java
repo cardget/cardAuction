@@ -50,9 +50,9 @@ public class DeckMakerController {
 			@RequestParam(value = "sort", required = false, defaultValue = "create_date") String sort,
 			@RequestParam(required = false) String query) {
 
-		int cat = 1; //이부분 바뀜
-		int totalDecks = deckMakerService.getTotalDeckCount(cat, query); //공통
-		int totalPages = (int) Math.ceil((double) totalDecks / pageSize);//공통
+		int cat = 1; // 이부분 바뀜
+		int totalDecks = deckMakerService.getTotalDeckCount(cat, query); // 공통
+		int totalPages = (int) Math.ceil((double) totalDecks / pageSize);// 공통
 
 		model.addAttribute("totalPages", totalPages);
 		model.addAttribute("currentPage", page);
@@ -278,6 +278,29 @@ public class DeckMakerController {
 
 		deckMakerService.saveDeckSource(deckDTO, imgList, kind);
 		return redirectUrl;
+	}
+
+	// deckDetail
+	public class pDeckDetailController {
+
+		@GetMapping("/pokemonDeckListDetail.do")
+		public String getDeckDetail(@RequestParam("deck_id") int deckId, Model model) {
+			List<Map<String, Object>> cards = deckMakerService.getCardsByDeckId(deckId);
+	        Map<String, Object> deck = deckMakerService.getDeckById(deckId);
+	        model.addAttribute("cards", cards);
+	        model.addAttribute("deck", deck);
+			return "deckMakers/pokemonDeckListDetail.do";
+		}
+		
+		@PostMapping("/recommendDeck.do")
+	    @ResponseBody
+	    public Map<String, Object> recommendDeck(@RequestBody Map<String, Object> payload) {
+	        int deckId = (int) payload.get("deck_id");
+	        boolean success = deckMakerService.recommendDeck(deckId);
+	        Map<String, Object> response = new HashMap<>();
+	        response.put("success", success);
+	        return response;
+	    }
 	}
 
 }

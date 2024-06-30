@@ -135,14 +135,15 @@
 	</insert>
 	<!-- **덱저장** -->
 	<!-- 덱카운트공통 -->
-	<select id="getTotalDeckCount" parameterType="map" resultType="int">
+	<select id="getTotalDeckCount" parameterType="map"
+		resultType="int">
 		SELECT COUNT(*) FROM
 		decks WHERE cat = #{cat}
 		<if test='query != null and query != ""'>
 			AND deck_title LIKE '%' || #{query} || '%'
 		</if>
 	</select>
-	
+
 	<select id="getPThumbnail" parameterType="map" resultType="map">
 		SELECT *
 		FROM (
@@ -158,7 +159,8 @@
 		FROM
 		decks d
 		JOIN users u ON d.user_id = u.user_id
-		JOIN deckSources ds ON d.deck_id = ds.deck_id
+		JOIN deckSources ds ON
+		d.deck_id = ds.deck_id
 		JOIN pokemon p ON ds.p_card = p.card_id
 		WHERE
 		ds.is_thumbnail = 1
@@ -181,4 +183,40 @@
 		WHERE rn &gt;= #{startRow}
 		ORDER BY rn
 	</select>
+
+	<!-- deckDetail -->
+	<select id="getCardsByDeckId" parameterType="int"
+		resultType="map">
+		SELECT p.card_image
+		FROM deckSources ds
+		JOIN pokemon p ON ds.p_card = p.card_id
+		WHERE ds.deck_id = #{deck_id}
+		UNION ALL
+		SELECT y.card_image
+		FROM deckSources ds
+		JOIN yugioh y ON ds.y_card = y.card_id
+		WHERE ds.deck_id = #{deck_id}
+		UNION ALL
+		SELECT d.card_image
+		FROM deckSources ds
+		JOIN digimon d ON ds.d_card = d.card_id
+		WHERE ds.deck_id = #{deck_id}
+		UNION ALL
+		SELECT o.card_image
+		FROM deckSources ds
+		JOIN onepiece o ON ds.o_card = o.card_id
+		WHERE ds.deck_id = #{deck_id}
+	</select>
+
+	<select id="getDeckById" parameterType="int" resultType="map">
+		SELECT deck_id, deck_title, create_date, user_id, recommend, comment
+		FROM decks
+		WHERE deck_id = #{deck_id}
+	</select>
+
+	<update id="recommend" parameterType="int">
+		UPDATE decks
+		SET recommend = recommend + 1
+		WHERE deck_id = #{deck_id}
+	</update>
 </mapper>

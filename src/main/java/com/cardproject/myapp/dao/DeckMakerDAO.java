@@ -77,6 +77,19 @@ public class DeckMakerDAO {
         params.put("kind", kind);
         sqlSession.update(namespace + ".updateThumbnail", params);
     }
+    
+    //deckDetail
+    public List<Map<String, Object>> getCardsByDeckId(int deckId) {
+        return sqlSession.selectList(namespace + ".getCardsByDeckId", deckId);
+    }
+
+    public Map<String, Object> getDeckById(int deckId) {
+        return sqlSession.selectOne(namespace + ".getDeckById", deckId);
+    }
+
+    public int recommend(int deckId) {
+        return sqlSession.update(namespace + ".recommend", deckId);
+    }
 
     
 }

@@ -123,7 +123,19 @@ public class DeckMakerService {
             //deckMakerDAO.updateThumbnail(deckId, kind);
         }
     }
-    //덱리스트메인 페이지네이션
+    //deckDetail
+    public List<Map<String, Object>> getCardsByDeckId(int deckId) {
+        return deckMakerDAO.getCardsByDeckId(deckId);
+    }
+
+    public Map<String, Object> getDeckById(int deckId) {
+        return deckMakerDAO.getDeckById(deckId);
+    }
+
+    public boolean recommendDeck(int deckId) {
+        int result = deckMakerDAO.recommend(deckId);
+        return result > 0;
+    }
     
     
     
