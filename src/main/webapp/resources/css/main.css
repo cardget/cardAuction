@@ -7,6 +7,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
+	position:relative;
 }
 
 button {
@@ -26,6 +27,9 @@ button {
 	box-sizing: border-box;
 	position: fixed;
 	z-index: 1000;
+}
+.list-top-container{
+    margin-bottom: 245px;
 }
 
 .top-nav {
@@ -81,16 +85,13 @@ button {
 
 .container, .deck-container {
 	display: flex;
-	padding: 60px 270px 0;
-	margin-bottom: 80px;
-	flex: 1;
+	width:1380px;
+	margin:auto;
 }
 
 .main-container {
-	padding: 124px 270px 0;
-	margin-bottom: 80px;
-	height:53.2vh;
-	flex: 1;
+	width:1380px;
+	margin:190px auto;
 }
 
 .row-content {
@@ -117,7 +118,7 @@ ul {
 }
 
 .header-image {
-	height: 283px;
+	height: 280px;
 	width: 100%;
 }
 .header-image > img{
@@ -249,10 +250,14 @@ select {
 .info-page {
 	background-color: #002E5B;
 	color: #ffffff;
+	width:100wh;
 	padding: 30px 270px;
 	font-size: 12px;
 	font-family: 'Apaple SD Gothic NeoL', sans-serif;
 	bottom: 0;
+	position:absolute;
+	margin-top
+	
 }
 
 .link-container {
@@ -291,7 +296,10 @@ select {
 }
 
 .sort-container {
-	padding: 10px 270px;
+	width:1380px;
+	margin: auto;
+	margin-top:20px;
+	padding-left:10px;
 	font-size: 14px;
 	font-weight: 300;
 }
@@ -387,20 +395,29 @@ select {
 	grid-template-columns: repeat(3, 1fr);
 }
 .deck-container{
-	gap:110px;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);	
+	gap:120px;
+	margin-top:30px;
+	width:1380px;
 }
+/*.deckType{
+	margin-bottom:50px;
+}*/
 .deck-overlay-container {
 	position: relative;
 	width:380px;
 	height:250px;
 	border-radius:10px;
-	/*display: inline-block;*/
 }
 
 .deck-overlay-container img {
-	/*display: block;*/
-	position:absolute;
-	clip:rect(0 380px 250px 0);
+	position: absolute;
+    clip-path: inset(80px 60px 380px 80px);
+    border-radius: 15px;
+    margin-left: -70px;
+    margin-top: -80px;
+    filter: brightness(0.5);
 }
 
 .overlay-text {
@@ -410,25 +427,28 @@ select {
 	right: 0;
 	bottom: 10px;
 	color: #fff;
-	font-weight: 600;
+	font-weight: 1000;
 	display: flex;
-	flex-direction: column;
 	justify-content: space-between;
+	flex-direction: column;
 	padding: 10px;
+	cursor:pointer;
+	background
 }
 
 .deck-number {
-	font-size: 14px;
+	font-size: 18px;
 }
 
 .deck-info {
 	display: flex;
 	flex-direction: row;
 	align-items: flex-start;
+	justify-content: space-between;
 }
 
-.deck-info .username, .deck-info .date {
-	font-size: 12px;
+.deck-info .username, .deck-info, .date {
+	font-size: 16px;
 	margin-right: 20px;
 }
 
@@ -466,6 +486,7 @@ select {
 	display: flex;
 	justify-content: center;
 	margin-top: 80px;
+	margin-bottom:50px;
 }
 
 /*덱리스트 상세*/
@@ -480,7 +501,6 @@ select {
 	flex: 1;
 	overflow-y: auto;
 	height: 700px;
-	width: 1000px;
 }
 
 .main-content-2 {
@@ -542,7 +562,8 @@ select {
 
 .banner-overlay {
 	position: absolute;
-	left: 300px;
+	margin:auto;
+	width:1250px;
 	padding: 20px;
 	color: #fff;
 	font-weight: 1000;
@@ -644,8 +665,14 @@ select {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin-bottom: 50px;
-	padding: 0 270px;
+	width:1320px;
+	margin:auto;
+	margin-bottom: 350px;
+}
+.detail-comment {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .builder-comment {

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cardproject.myapp.dto.BiddingResultDTO;
@@ -25,6 +26,7 @@ import com.cardproject.myapp.dto.NotificationDTO;
 import com.cardproject.myapp.dto.PointDTO;
 import com.cardproject.myapp.dto.TradeDTO;
 import com.cardproject.myapp.dto.UserDTO;
+import com.cardproject.myapp.service.AWSS3Service;
 import com.cardproject.myapp.service.MyPageService;
 
 @Controller
@@ -34,6 +36,9 @@ public class MyPageController {
 	@Autowired
 	MyPageService mpService;
 
+	@Autowired
+	private AWSS3Service s3Service;
+	
 	@Autowired
 	HttpSession session;
 
@@ -80,22 +85,45 @@ public class MyPageController {
 
 	@PostMapping("/editProfile.do")
 	public String updateProfile(
-			@RequestParam("pw") String pw, @RequestParam("nickname") String nickname,
-			@RequestParam("email") String email, @RequestParam("domain") String domain,
-			@RequestParam("email_agreement") String email_agreement, @RequestParam("address") String address,
-			@RequestParam("detailAddress") String addressDetail, @RequestParam("zipCode") String zipCode,
-			@SessionAttribute("userid") String userid, RedirectAttributes redirectAttributes) {
+			@RequestParam(value= "profile_image_name", required=false) MultipartFile file,
+			@RequestParam("nickname") String nickname, 
+			@RequestParam("email") String email,
+			@RequestParam("domain") String domain, 
+			@RequestParam("email_agreement") String email_agreement, 
+			@RequestParam("address") String address,
+			@RequestParam("detailAddress") String addressDetail, 
+			@RequestParam("zipCode") String zipCode, 
+			@RequestParam("bank") String bank,
+			@RequestParam("accnt") String accnt, 
+			@SessionAttribute("userid") String userid, 
+			Model model, RedirectAttributes redirectAttributes) {
 		UserDTO user = mpService.selectUserById(userid);
 		String fullEmail = email + "@" + domain;
 		int i_email_agreement = Integer.parseInt(email_agreement);
 		
-		user.setPw(pw);
+		if(file!=null&& !file.isEmpty()) {
+    		String fileName="profile/"+file.getOriginalFilename()+System.currentTimeMillis();
+	    	try {
+				String url=s3Service.uploadObject(file, fileName);
+				user.setProfile_image(url);	// 이미지 URL을 UserDTO 에 설정
+			} catch (java.io.IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				model.addAttribute("error","이미지 업로드 중 오류가 발생했습니다.");
+				return "redirect:editProfile.do";
+			}    		
+    	}else {
+    		user.setProfile_image(null);
+    	}
+		
 		user.setNickname(nickname);
 		user.setEmail(fullEmail);
 		user.setEmail_agreement(i_email_agreement);
 		user.setZip_code(zipCode);
 		user.setAddress(address);
 		user.setAddress_detail(addressDetail);
+		user.setBank(bank);
+		user.setAccnt(accnt);
 
 		mpService.userUpdate(user);
 		redirectAttributes.addFlashAttribute("message", "회원정보가 성공적으로 수정되었습니다.");

@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       if (scrollY > offset) {
           sidebar.classList.add('fixed-sidebar');
-          sidebar.style.top = '100px';
+          sidebar.style.top = '150px';
       } else {
           sidebar.classList.remove('fixed-sidebar');
           sidebar.style.top = '';

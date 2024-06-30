@@ -35,7 +35,7 @@
         </div>
         <img src="${path }/resources/images/default/deckDetail-banner.png">
     </div>
-    <div class="container">
+    <div class="detail-container">
         <div class="sidebar">
             <div class="card-info">
                 <img src="${path }/resources/images/default/innercard.png" alt="카드 이미지" class="card-img">
@@ -156,7 +156,7 @@
                 </div>
             </div>
             <p class="builder-comment">제작자 코멘트</p>
-            <div class="comment">
+            <div class="detail-comment">
                 <textarea cols="50" rows="6" placeholder="알아서 재밌게 쓰시면 되는 덱입니다. 질문 받지 않습니다."
                     class="commentBox" disabled></textarea>
             </div>

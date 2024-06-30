@@ -134,18 +134,41 @@
 		#{y_card}, #{is_thumbnail})
 	</insert>
 	<!-- **덱저장** -->
-	
-	<select id="getThumbnail" parameterType="int" resultType="map">
+	<select id="getTotalDeckCount" resultType="int">
+		SELECT COUNT(*) FROM decks WHERE cat = 1
+	</select>
+
+	<select id="getTotalDeckCountByQuery" parameterType="map"
+		resultType="int">
+		SELECT COUNT(*)
+		FROM decks
+		WHERE cat = 1
+		AND deck_title LIKE '%' || #{query} || '%'
+	</select>
+
+	<select id="getThumbnail" parameterType="map" resultType="map">
+		SELECT *
+		FROM (
+		SELECT A.*, ROWNUM AS rn
+		FROM (
 		SELECT
-		d.deck_id, d.deck_title, d.create_date, u.user_id, d.recommend,
+		d.deck_id,
+		d.deck_title,
+		d.create_date,
+		u.user_id,
+		d.recommend,
 		p.card_image
 		FROM decks d
 		JOIN users u ON d.user_id = u.user_id
-		JOIN
-		deckSources ds ON d.deck_id = ds.deck_id
-		JOIN pokemon p ON ds.p_card =
-		p.card_id
-		WHERE ds.is_thumbnail = 1 AND d.cat = 1
+		JOIN deckSources ds ON d.deck_id = ds.deck_id
+		JOIN pokemon p ON ds.p_card = p.card_id
+		WHERE ds.is_thumbnail = 1
+		AND d.cat = 1
+		ORDER BY #{sort}
+		) A
+		WHERE ROWNUM &lt;= #{endRow}
+		)
+		WHERE rn &gt;= #{startRow}
+		ORDER BY #{sort}
 	</select>
-
 </mapper>

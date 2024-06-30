@@ -38,7 +38,8 @@
 					<div class="status-section">
 						<c:choose>
 							<c:when test="${empty trade.confirm_date}">
-								<button class="status-button-winning">낙찰</button>
+								<button class="status-button-winning" onclick="location.href='../payment/pay.do?tradeId='+${trade.trade_id}">낙찰</button>
+
 							</c:when>
 							<c:otherwise>
 								<button class="status-button-done">거래완료</button>

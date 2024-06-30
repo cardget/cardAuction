@@ -10,13 +10,15 @@
  	
  	<update id="userUpdate" parameterType="uservo">
 		UPDATE USERS
-				SET PW = #{pw},
+				SET PROFILE_IMAGE = #{profile_image},
 					NICKNAME = #{nickname},
 					EMAIL = #{email},
 					ZIP_CODE = #{zip_code},
 					ADDRESS = #{address},
 					ADDRESS_DETAIL = #{address_detail},
-					EMAIL_AGREEMENT = #{email_agreement}
+					EMAIL_AGREEMENT = #{email_agreement},
+					BANK = #{bank},
+					ACCNT = #{accnt}
 				WHERE USER_ID = #{user_id}
 	</update>
 
@@ -28,7 +30,7 @@
 
 	
 	<!-- 입찰내역 -->
-	<select id="selectAllBids" resultType="biddingresultvo">
+	<select id="selectAllBids" parameterType = "string" resultType="biddingresultvo">
 		SELECT 
 	        b.bid_id,
 	        b.price,
@@ -54,7 +56,7 @@
 	</delete>
 	
 	<!-- 낙찰내역 -->
-	<select id="selectAllTrades" resultType="tradevo">
+	<select id="selectAllTrades" parameterType = "string" resultType="tradevo">
 		SELECT 
 			t.TRADE_ID,
 			t.USER_ID,
@@ -77,7 +79,7 @@
 	</select>
 	
 	<!-- 판매내역 -->
-	<select id="selectAllSales" resultType="itemvo">
+	<select id="selectAllSales" parameterType = "string" resultType="itemvo">
 		SELECT ITEM_ID,    
 				USER_ID,    
 				ITEM_NAME,  
@@ -105,25 +107,25 @@
 	</select>
 	
 	<!-- 포인트 -->
-	<select id="selectPointByUser" resultType="pointvo">
+	<select id="selectPointByUser" parameterType = "string" resultType="pointvo">
 		SELECT * FROM POINTS WHERE USER_ID = #{userid}
 	</select>
 	
 	<!-- 포인트 합계 -->
-	<select id="selectTotalPointByUser" resultType="int">
+	<select id="selectTotalPointByUser" parameterType = "string" resultType="int">
 		SELECT SUM(AMOUNT * IS_ADD) AS TOTAL
 	    FROM POINTS
 	    WHERE USER_ID = #{userid} 
 	</select>
 	
-	<select id="selectTotalPointByCat" resultType="int">
+	<select id="selectTotalPointByCat" parameterType = "map" resultType="int">
 		SELECT SUM(AMOUNT) AS CATTOTAL
 		FROM POINTS
 		WHERE USER_ID = #{userid} AND CAT = #{cat}
 	</select>
 	
 	<!-- 관심목록 -->
-	<select id="selectAllLikes" resultType="itemvo">
+	<select id="selectAllLikes" parameterType = "string" resultType="itemvo">
 		SELECT ITEM_ID,    
 				USER_ID,    
 				ITEM_NAME,  
@@ -154,7 +156,7 @@
 	</delete>
 	
 	<!-- 배송조회 -->
-	<select id="selectAllDeliveries" resultType="deliveryvo">
+	<select id="selectAllDeliveries" parameterType = "string" resultType="deliveryvo">
 		SELECT 
 	        d.DELIVERY_ID,
 	        d.TRADE_ID,
@@ -177,7 +179,7 @@
 	</select>
 	
 	<!-- 알림조회 -->
-	<select id="selectAllNotifications" resultType="notificationvo">
+	<select id="selectAllNotifications" parameterType = "string" resultType="notificationvo">
 		SELECT 
 			n.NOTIFICATION_ID,
 			n.CMT,
@@ -197,7 +199,7 @@
 	</select>
 	
 	<!-- 알림 상위 5개 조회 -->
-	<select id="selectFiveNotifications" resultType="notificationvo">
+	<select id="selectFiveNotifications" parameterType = "string" resultType="notificationvo">
 		<![CDATA[
 		SELECT *
 		FROM (

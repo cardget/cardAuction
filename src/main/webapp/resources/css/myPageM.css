@@ -37,10 +37,6 @@ a {
     box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.sidebar a:hover {
-	color: #007FFF;
-}
-
 ul {
 	list-style: none;
 }
@@ -137,10 +133,6 @@ li {
     border-bottom: 1px solid #ddd;
     margin: 10px 0;
     background-color: #fff;
-}
-
-.noti-brief:hover {
-	background-color: #E1E6EC;
 }
 
 .noti-image img {
@@ -286,17 +278,12 @@ input:focus + .slider {
 
 .revision {
 	padding: 5px 10px;
-    border: 1px solid #007FFF;
+    border: 1px solid #CCC7C0;
     border-radius: 4px;
     cursor: pointer;
     font-size: 15px;
-    background-color: #FFF;
-    color: #007FFF;
-}
-
-.revision:hover {
-	color: #FFF;
-    background-color: #007FFF;
+    background-color: #fff;
+    color: #CCC7C0;
 }
 
 .button-section {
@@ -318,10 +305,6 @@ input:focus + .slider {
 
 .header a {
 	padding: 0px;
-}
-
-.header a:hover {
-	color: #FE3838;
 }
 
 /* 리스트 아이템 */
@@ -373,10 +356,6 @@ input:focus + .slider {
     margin-top: 5px;
 }
 
-.info-section a:hover {
-	color: #007FFF;
-}
-
 /* 상태 섹션 */
 .status-section {
     display: flex;
@@ -412,13 +391,8 @@ input:focus + .slider {
     border-radius: 4px;
     cursor: pointer;
     font-size: 14px;
-    background-color: #FFF;
+    background-color: #fff;
     color: #F8C501;
-}
-
-.status-button-winning:hover {
-	background-color: #F8C501;
-    color: #FFF;
 }
 
 .status-section .status-button-done {
@@ -621,24 +595,6 @@ tbody tr {
 }
 
 .email-input-field {
-	max-width: 200px;
-	padding: 8px;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	box-sizing: border-box;
-	margin-bottom: 5px;
-}
-
-.bank-select {
-	color: gray;
-	width: 80px; /* 은행 입력 필드의 너비를 80px로 지정 */
-	padding: 8px;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	box-sizing: border-box; /* 패딩과 테두리를 포함하여 너비 계산 */
-}
-
-.bank-input-field {
 	max-width: 200px;
 	padding: 8px;
 	border: 1px solid #ccc;
