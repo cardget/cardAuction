@@ -13,6 +13,52 @@
 <script src="${path}/resources/js/signUp.js"></script>
 <script src="${path}/resources/js/verificationSMS_API.js"></script>
 <script src="${path}/resources/js/mapAPI.js"></script>
+<script>
+    function checkEmail(select) {
+        var domain = document.getElementById("domain");
+        if (select.value === "") {
+            domain.value = "";
+            domain.readOnly = false;
+        } else {
+            domain.value = select.value;
+            domain.readOnly = true;
+        }
+    }
+
+    function sendVerificationEmail() {
+        var emailName = document.getElementById("emailName").value;
+        var domain = document.getElementById("domain").value;
+        var email = emailName + "@" + domain;
+        
+        document.getElementById("email").value = email;
+
+        fetch("http://localhost:9090/myapp/email/send", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "email=" + encodeURIComponent(email)
+        })
+        .then(response => response.text())
+        .then(data => alert(data))
+        .catch(error => console.error("Error:", error));
+    }
+
+    function verifyCodeEmail() {
+        var code = document.getElementById("verificationCodeEmail").value;
+
+        fetch("http://localhost:9090/myapp/email/verify", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "code=" + encodeURIComponent(code)
+        })
+        .then(response => response.text())
+        .then(data => alert(data))
+        .catch(error => console.error("Error:", error));
+    }
+</script>
 
 </head>
 <body>
@@ -98,9 +144,12 @@
 		            <option value="daum.net">daum.net</option>
 		            <option value="nate.com">nate.com</option>
 		        </select>
+		        <button type="button" id="mail-Check-Btn" class="check-button" onclick="sendVerificationEmail()" style="margin-left: 10px;">인증번호 발송</button>
 		    </div>
 		    <!-- 이메일을 결합하여 숨겨진 필드에 저장 -->
-            <input type="hidden" id="email" name="email">
+            <input type="hidden" id="email" name="email">            
+            <input type="text" id="verificationCodeEmail" class="input-field" style="margin-left: 190px;" placeholder="인증번호 입력">
+		    <button type="button" class="check-button" onclick="verifyCodeEmail()">확인</button>   
 		    
 		    <hr class="form-divider"> 
 		    <div class="form-group address-group">
