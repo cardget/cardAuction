@@ -1,69 +1,75 @@
-
 .right-aligned-button {
-    display: flex;
-    justify-content: flex-end;
+	display: flex;
+	justify-content: flex-end;
 }
 
 .comment-textarea {
-    height: calc(50vh - 150px); /* 내용 입력 칸의 세로 길이를 반으로 줄임 */
-    text-align: inherit;
-    padding: 10px;
-    overflow: auto; /* 내용이 길어질 경우 스크롤 표시 */
+	height: calc(50vh - 150px); /* 내용 입력 칸의 세로 길이를 반으로 줄임 */
+	text-align: inherit;
+	padding: 10px;
+	overflow: auto; /* 내용이 길어질 경우 스크롤 표시 */
 }
 
-.custom-container {
-    width: 60%; /* 가로 비율을 줄임 */
-    margin: 0 auto; /* 가운데 정렬 */
+.custom-container2 {
+	width: 60%; /* 가로 비율을 줄임 */
+	margin: 0 auto; /* 가운데 정렬 */
+}
+
+.topimage {
+	width: 100%;
+	height: 283px;
+	top: 0;
+	left: 0;
+	background-image: url('../images/default/pokemon_banner.png');
 }
 
 .form-inline {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px; /* 요소 사이의 간격 */
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px; /* 요소 사이의 간격 */
 }
 
 .form-inline p {
-    flex: 1;
-    min-width: 150px; /* 최소 너비 설정 */
-    border: none;
-    border-bottom: #C7C8C9 1px solid;
-    border-radius: 0;
-    color: #666666; /* 회색으로 설정 */
-    margin-bottom: 0; /* 기본 margin 제거 */
-    padding: 8px 0; /* padding 추가 */
+	flex: 1;
+	min-width: 150px; /* 최소 너비 설정 */
+	border: none;
+	border-bottom: #C7C8C9 1px solid;
+	border-radius: 0;
+	color: #666666; /* 회색으로 설정 */
+	margin-bottom: 0; /* 기본 margin 제거 */
+	padding: 8px 0; /* padding 추가 */
 }
 
 #ImageLogoContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-end;
 }
 
 #ImageLogoContainer img {
-    max-width: 100%;
-    max-height: 200px;
-    margin-top: 10px;
+	max-width: 100%;
+	max-height: 200px;
+	margin-top: 10px;
 }
 
 #title {
-    min-width: 400px; /* 제목 칸의 최소 너비를 200px로 줄임 */
-    color: #666666; /* 회색으로 설정 */
-    flex: 2; /* 유연성 조절, 더 적은 공간 차지 */
+	min-width: 400px; /* 제목 칸의 최소 너비를 200px로 줄임 */
+	color: #666666; /* 회색으로 설정 */
+	flex: 2; /* 유연성 조절, 더 적은 공간 차지 */
 }
 
 #writer, #date {
-    flex: 3; /* 유연성 증가, 더 많은 공간 차지 */
-    width: auto; /* 자동 너비 설정 */
-    min-width: 200px; /* 최소 너비를 늘림 */
+	flex: 3; /* 유연성 증가, 더 많은 공간 차지 */
+	width: auto; /* 자동 너비 설정 */
+	min-width: 200px; /* 최소 너비를 늘림 */
 }
 
-
 .input-group {
-    display: flex;
-    gap: 20px; /* 필드 사이의 간격을 늘림 */
-    align-items: center; /* 수직 정렬 */
+	display: flex;
+	gap: 20px; /* 필드 사이의 간격을 늘림 */
+	align-items: center; /* 수직 정렬 */
 }
 
 #answer {
-    border: none; /* 테두리 없앰 */
+	border: none; /* 테두리 없앰 */
 }

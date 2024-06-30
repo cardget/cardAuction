@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,12 +16,25 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-	<div class="container custom-container mt-3">
-		<div class="right-aligned-button">
-			<input type="submit" class="btn btn-primary" value="문의하기">
-		</div>
-		<hr>
-		<form action="">
+	<c:set var="path" value="${pageContext.servletContext.contextPath}" />
+	<!--header-->
+	<c:choose>
+		<c:when test="${empty userid}">
+			<%@ include file="/WEB-INF/views/main/defaultHeader.jsp"%>
+		</c:when>
+		<c:otherwise>
+			<%@ include file="/WEB-INF/views/main/loginHeader.jsp"%>
+		</c:otherwise>
+	</c:choose>
+
+	<div class="container2 custom-container2 mt-3">
+		<form action="${path}/inquiry/InquiryInsert.do" method="post"
+			id="myForm" enctype="multipart/form-data">
+			<div class="right-aligned-button">
+				<input type="submit" class="btn btn-primary" value="문의하기">
+			</div>
+			<hr>
+
 			<div class="form-inline mb-3 mt-3">
 				<div class="col">
 					<input type="text" class="form-control" id="title" name="title"

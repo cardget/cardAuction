@@ -270,7 +270,7 @@
 
 	<div class="container2 custom-container mt-3">
 		<div class="right-aligned-button">
-			<input type="submit" class="btn btn-primary" value="목록"
+			<input type="submit" class="btn btn-primary" value="게시글 목록"
 				onClick="location.href='${path}/community/BoardSelect.do'">
 		</div>
 		<div class="card p-3 mt-3">

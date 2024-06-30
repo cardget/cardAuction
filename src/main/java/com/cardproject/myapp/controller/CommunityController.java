@@ -78,7 +78,6 @@ public class CommunityController {
 	        session.setAttribute("user", user); // 세션에 user 객체 저장
 	    }
 		
-		// s3 사용해야 이미지 공동으로 볼 수 있움 ..
 		cService.updateViews(commId); // 조회수 기능
 		model.addAttribute("board", cService.selectBoardByCommId(commId));
 		return "community/BoardDetail";
