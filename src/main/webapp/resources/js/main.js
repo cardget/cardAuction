@@ -1,4 +1,4 @@
-async function asyncMarkupData() {
+ function asyncMarkupData() {
   const allElements = document.getElementsByTagName("*");
   Array.prototype.forEach.call(allElements, function (el) {
       const includePath = el.dataset.includePath;
