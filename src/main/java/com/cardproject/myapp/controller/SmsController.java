@@ -14,12 +14,12 @@ import com.cardproject.myapp.service.SmsService;
 
 @RestController
 @RequestMapping("/api")
-public class VerificationController {
+public class SmsController {
 	@Autowired
     private final SmsService smsService;
 	
 	@Autowired
-    public VerificationController(SmsService smsService) {
+    public SmsController(SmsService smsService) {
         this.smsService = smsService;
     }
 

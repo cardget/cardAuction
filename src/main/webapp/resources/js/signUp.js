@@ -104,10 +104,6 @@ function checkAllAgreed() {
     }
 }
 
-
-
-
-
 // 프로필 이미지 미리보기
 function previewImage(input, path) {
     if (input.files && input.files[0]) {
@@ -128,7 +124,8 @@ function previewImage(input, path) {
 // 기본 이미지로 재설정
 function resetProfileImage(path) {
     document.getElementById('profile-image').src = path + '/resources/image/profile.png';
-    document.getElementById('profile-image-hidden').value = null; // null 값을 설정하여 DB에 저장
+    document.getElementById('profile_image').value = ""; // 파일 선택 입력값 초기화
+    document.getElementById('profile_image_hidden').value = null; // hidden input 값 초기화
 }
 
 //폼 제출시 호출됨
