@@ -14,6 +14,8 @@
 <link rel="stylesheet" href="${path }/resources/css/main.css" />
 <link rel="icon" href="${path }/resources/icon/favicon.ico"
 	type="image/x-icon">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -29,12 +31,11 @@
 	<div class="deck-detail-image">
 		<div class="banner-overlay">
 			<!--정보입력 오버레이-->
-			<p>날뛰는우레 & 모래털가죽</p>
+			<p>${deck.DECK_TITLE}</p>
 			<div class="makerInfo">
-				<img src="${path }/resources/icon/profile.png">
-				<div>제작자명</div>
-				<div>제작일자</div>
-				<div>추천수</div>
+				<div>제작자 : ${deck.USER_ID}</div>
+				<div>${deck.CREATE_DATE}</div>
+				<div>추천수 : ${deck.RECOMMEND}</div>
 			</div>
 		</div>
 		<img src="${path }/resources/images/default/deckDetail-banner.png">
@@ -42,13 +43,13 @@
 	<div class="detail-container">
 		<div class="sidebar">
 			<div class="card-info">
-				<img src="${path }/resources/images/default/innercard.png"
-					alt="카드 이미지" class="card-img">
+				<img src=""
+					alt="카드 이미지" class="card-img" id="cardImage">
 				<div class="card-details">
-					<h2>날뛰는 우레 ex</h2>
-					<p>타입 : 기본</p>
-					<p>종류 : 고대</p>
-					<p>특성 : 전기</p>
+					<h2 id="cardName"></h2>
+					<p id="cardType"></p>
+					<p id="cardSort"></p>
+					<p id="cardFeature"></p>
 				</div>
 			</div>
 		</div>
@@ -59,8 +60,8 @@
 					<div class="accordion-content active" id="deckList">
 						<c:forEach items="${cards}" var="card">
 							<div class="card-count">
-								<img src="${card.card_image}" alt="${card.card_id}"
-									class="listCard">
+								<img src="${card.CARD_ID}" alt="${card.CARD_ID}"
+									class="listCard" onclick="showCardDetails('${card.CARD_ID}')">
 							</div>
 						</c:forEach>
 					</div>
@@ -68,10 +69,10 @@
 			</div>
 			<p class="builder-comment">제작자 코멘트</p>
 			<div class="detail-comment">
-				<textarea cols="50" rows="6" class="commentBox" disabled>${deck.comment}</textarea>
+				<textarea cols="50" rows="6" class="commentBox" disabled>${deck.CMT}</textarea>
 			</div>
 			<div class="recommend-button">
-				<button type="button" onclick="recommendDeck(${deck.deck_id})">추천</button>
+				<button type="button" onclick="recommendDeck(${deck.DECK_ID})">추천</button>
 			</div>
 		</div>
 	</div>
@@ -90,7 +91,7 @@
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                alert('추천이 성공적으로 반영되었습니다.');
+                alert('추천되었습니다.');
                 location.reload(); // 페이지 새로고침하여 업데이트된 추천 수 반영
             } else {
                 alert('추천 처리 중 오류가 발생했습니다.');
@@ -101,6 +102,61 @@
             alert('추천 처리 중 오류가 발생했습니다.');
         });
     }	
+	//카드변경
+	function showCardDetails(cardId) {
+	    if (!cardId) {
+	        console.error('cardId is not provided');
+	        return;
+	    }
+
+	    console.log('Fetching details for cardId:', cardId);
+
+	    $.ajax({
+	        url: '${path}/deckMakers/getCardDetails.do',
+	        type: 'GET',
+	        data: { card_id: cardId },
+	        dataType: 'json',
+	        success: function(data) {
+	            console.log('Response data:', data);
+	            document.getElementById('cardImage').src = data.card_image;
+	            document.getElementById('cardName').textContent = data.card_name;
+	            document.getElementById('cardType').textContent = '타입 : ' + data.card_type;
+	            document.getElementById('cardSort').textContent = '종류 : ' + data.card_sort;
+	            document.getElementById('cardFeature').textContent = '특성 : ' + data.feature;
+	        },
+	        error: function(xhr, status, error) {
+	            console.error('Fetch error:', error);
+	        }
+	    });
+	}
+	//첫번째 카드 자동불러오기
+	$(document).ready(function() {
+		var firstCardId = $("#deckList .listCard").first().attr("alt");
+		if (firstCardId) {
+			showCardDetails(firstCardId);
+		}
+	});
+	
+	
+	var container = document.querySelector('.card-img')
+	var overlay = document.querySelector('.overlay')
+	container.addEventListener('mousemove', function (e) {
+	  var x = e.offsetX
+	  var y = e.offsetY
+	  console.log(x, y);
+	  var rotateY = -1 / 5 * x + 20
+	  var rotateX = 4 / 30 * y - 20
+
+	  overlay.style = `background-position : ${x / 5 + y / 5}%; filter : opacity(${x / 200}) brightness(1.2)`
+
+	  container.style = `transform : perspective(350px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`
+	})
+
+	container.addEventListener('mouseout', function () {
+	  overlay.style = 'filter : opacity(0)'
+	  container.style = 'transform : perspective(350px) rotateY(0deg) rotateX(0deg)'
+	})
+	
 	</script>
 </body>
 

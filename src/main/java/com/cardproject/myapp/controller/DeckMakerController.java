@@ -293,5 +293,13 @@ public class DeckMakerController {
 	        response.put("success", success);
 	        return response;
 	    }
+		
+		//카드변경
+		@GetMapping("/getCardDetails.do")
+	    @ResponseBody
+	    public PokemonDTO getCardDetails(@RequestParam("card_id") String cardId) {
+			System.out.println("Received card_id: " + cardId);
+	        return deckMakerService.getCardDetailsById(cardId);
+	    }
 
 }

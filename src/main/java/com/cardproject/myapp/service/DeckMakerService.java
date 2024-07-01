@@ -138,6 +138,10 @@ public class DeckMakerService {
         return result > 0;
     }
     
+    public PokemonDTO getCardDetailsById(String cardId) {
+        return deckMakerDAO.getCardDetailsById(cardId);
+    }
+    
     
     
 }

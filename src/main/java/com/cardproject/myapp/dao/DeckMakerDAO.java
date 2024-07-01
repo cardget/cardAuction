@@ -90,6 +90,10 @@ public class DeckMakerDAO {
     public int recommend(int deckId) {
         return sqlSession.update(namespace + ".recommend", deckId);
     }
+    
+    public PokemonDTO getCardDetailsById(String cardId) {
+        return sqlSession.selectOne(namespace + ".getCardDetailsById", cardId);
+    }
 
     
 }

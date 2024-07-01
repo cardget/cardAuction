@@ -187,36 +187,31 @@
 	<!-- deckDetail -->
 	<select id="getCardsByDeckId" parameterType="int"
 		resultType="map">
-		SELECT card_image
+		SELECT p.card_id, p.card_image
 		FROM deckSources ds
 		JOIN pokemon p ON ds.p_card = p.card_id
-		WHERE ds.deck_id = #{deck_id}
-		UNION ALL
-		SELECT y.card_image
-		FROM deckSources ds
-		JOIN yugioh y ON ds.y_card = y.card_id
-		WHERE ds.deck_id = #{deck_id}
-		UNION ALL
-		SELECT d.card_image
-		FROM deckSources ds
-		JOIN digimon d ON ds.d_card = d.card_id
-		WHERE ds.deck_id = #{deck_id}
-		UNION ALL
-		SELECT o.card_image
-		FROM deckSources ds
-		JOIN onepiece o ON ds.o_card = o.card_id
-		WHERE ds.deck_id = #{deck_id}
+		WHERE ds.deck_id = 32
 	</select>
 
 	<select id="getDeckById" parameterType="int" resultType="map">
-		SELECT deck_id, deck_title, create_date, user_id, recommend, cmt
+		SELECT
+		deck_id, deck_title, create_date, user_id, recommend, cmt
 		FROM decks
 		WHERE deck_id = #{deck_id}
 	</select>
 
 	<update id="recommend" parameterType="int">
 		UPDATE decks
-		SET recommend = recommend + 1
+		SET recommend =
+		recommend + 1
 		WHERE deck_id = #{deck_id}
 	</update>
+
+	<select id="getCardDetailsById" parameterType="String"
+		resultType="pokemonvo">
+		SELECT card_id AS CARD_ID, card_name AS CARD_NAME, card_sort AS CARD_SORT,
+		card_type AS CARD_TYPE, feature AS FEATURE, card_image AS CARD_IMAGE
+		FROM pokemon
+		WHERE card_id = #{card_id}
+	</select>
 </mapper>
