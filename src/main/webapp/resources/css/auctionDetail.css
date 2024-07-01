@@ -351,8 +351,9 @@ select {
 h2{
 	font-size:22px;
 }
-.detail-container{
+.detail-container2{
 	padding-left:10px;
+	margin-bottom:400px;
 	
 }
 .auction-detail-wrapper{
@@ -372,7 +373,7 @@ h2{
 }
 /*상세정보*/
 
-.detail-container > div {
+.detail-container2 > div {
     margin-bottom: 20px;
 }
 .card-detail-cmt{

@@ -2,6 +2,7 @@
 .settings/
 target/
 .metadata
+bin/
 
 # vscode
 .vscode/

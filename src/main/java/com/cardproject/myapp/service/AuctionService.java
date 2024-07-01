@@ -39,8 +39,8 @@ public class AuctionService {
 
 		String endDate = item.getEnd_date().replace("T", " ");
 		item.setEnd_date(endDate);
-
-		item.setUser_id("seoyeon");
+		
+		
 		item.setCat(0);
 		//item.setImage1("test.png");
 

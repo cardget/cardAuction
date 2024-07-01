@@ -201,19 +201,13 @@
 	</div>
 	<!--페이지네이션-->
         <div class="pagination">
-            <a href="#">&laquo;</a>
-            <a href="#">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">4</a>
-            <a href="#">5</a>
-            <a href="#">6</a>
-            <a href="#">7</a>
-            <a href="#">8</a>
-            <a href="#">9</a>
-            <a href="#">10</a>
-            <a href="#">&raquo;</a>
-        </div>
+			<c:forEach var="i" begin="1"
+				end="${(totalCount / pageSize) + (totalCount % pageSize > 0 ? 1 : 0)}">
+				<a
+					href="${path}/community/BoardSelect.do?page=${i}&pageSize=${pageSize}&sort=${selectedSortOption}"
+					class="${i == currentPage ? 'active' : ''}">${i}</a>
+			</c:forEach>
+		</div>
   
 </div>
 
