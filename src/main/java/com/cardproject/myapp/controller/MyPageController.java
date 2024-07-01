@@ -97,12 +97,18 @@ public class MyPageController {
 			@RequestParam("accnt") String accnt, 
 			@SessionAttribute("userid") String userid, 
 			Model model, RedirectAttributes redirectAttributes) {
+		
 		UserDTO user = mpService.selectUserById(userid);
 		String fullEmail = email + "@" + domain;
 		int i_email_agreement = Integer.parseInt(email_agreement);
 		
+		String originalFileName = file.getOriginalFilename();
+		
+		String rawFileName = originalFileName.substring(0,originalFileName.lastIndexOf(".")); // 이름
+		String extension = originalFileName.substring(originalFileName.lastIndexOf(".")+1);
+		
 		if(file!=null&& !file.isEmpty()) {
-    		String fileName="profile/"+file.getOriginalFilename()+System.currentTimeMillis();
+    		String fileName="profile/"+rawFileName+System.currentTimeMillis()+"."+extension;
 	    	try {
 				String url=s3Service.uploadObject(file, fileName);
 				user.setProfile_image(url);	// 이미지 URL을 UserDTO 에 설정
@@ -110,11 +116,11 @@ public class MyPageController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				model.addAttribute("error","이미지 업로드 중 오류가 발생했습니다.");
-				return "redirect:editProfile.do";
+				return "redirect:signUp.do";
 			}    		
     	}else {
     		user.setProfile_image(null);
-    	}
+    	}   
 		
 		user.setNickname(nickname);
 		user.setEmail(fullEmail);
@@ -161,6 +167,9 @@ public class MyPageController {
 		}
 
 		List<TradeDTO> tlist = mpService.selectAllTrades(userid);
+		for(TradeDTO trade: tlist) {
+			System.out.println(trade);
+		}
 		model.addAttribute("tlist", tlist);
 
 		return "mypage/myTrade";

@@ -1,17 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>결제</title>
-<c:set var="path" value="${pageContext.servletContext.contextPath}" />
-<link rel="stylesheet" href="${path}/resources/css/payment.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
-<script>
 /* 포인트 사용 */
 function usingPoint() {
 	// trade.price 값 가져오기
@@ -63,7 +49,9 @@ function pay() {
             buyer_name: `${user.user_name}`
         };
 
-        postRequest('result', postData);
+        postRequest('result.do', postData).then(() => {
+            window.location.href = '/payment/result'; // 결과 페이지로 이동
+        });
         return; // totalPayment가 0인 경우 이후 코드를 실행하지 않도록 return
     }
 
@@ -103,7 +91,9 @@ function pay() {
                 status: rsp.status
             };
 
-            postRequest('/myapp/payment/result', postData);
+            postRequest('/payment/result', postData).then(() => {
+                window.location.href = '/payment/result'; // 결과 페이지로 이동
+            });
         } else {
             // 결제 실패 시 처리할 로직 추가
             alert("결제에 실패하였습니다. 다시 시도해주세요.");
@@ -128,59 +118,22 @@ function postRequest(url, data) {
         console.error('Error:', error);
     });
 }
-</script>
-</head>
-<body>
-	<div class="container">
-		<div class="payment-header">
-			<h3>결제</h3>
-		</div>
-		<div class="item-section">
-			<div class="image-section">
-				<img src="${trade.image1}" alt="Product Image">
-			</div>
-			<div class="info-section">
-				<h3 id="item-name">${trade.item_name}</h3>
-				<p>낙찰일: ${trade.create_date}</p>
-			</div>
-		</div>
-		<div class="trade-section">
-			<div>
-				<p>낙찰금</p>
-				<div>
-					<p id=tradePrice>${trade.price}</p><p> 원</p>
-				</div>
-			</div>
-			<div>
-				<p>전체 포인트</p>
-				<div>
-					<p id=totalPoint>${point}</p><p> P</p>
-				</div>
-			</div>
-			<div>
-				<p>사용 포인트</p>
-				<div>
-					<input type="number" class="point-used" value=0 name="pointUsed">
-					<p>P</p>
-					<button type="button" class="btn-blue btn-use" onclick="usingPoint()">사용</button>
-				</div>
-			</div>
-			<div>
-				<p>잔여 포인트</p>
-				<p id="remainingPoint">${point} P</p>
-			</div>
-			<hr>
-			<div>
-				<p>최종결제금액</p>
-				<div>
-					<input type="number" class="total-payment" value="${trade.price}" disabled>
-					<P>원</P>
-				</div>
-			</div>
-		</div>
-		<div class="button-section">
-			<button type="button" class="btn-payment btn-blue" onclick="pay()">결제하기</button>
-		</div>
-	</div>
-</body>
-</html>
+
+
+/* 결제 결과 */
+function postRequest(url, data) {
+    return fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}

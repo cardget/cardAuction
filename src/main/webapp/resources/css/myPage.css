@@ -189,6 +189,10 @@ li {
     display: block;
 }
 
+.profile-image {
+	border-radius: 50%;
+}
+
 .imageinfo .editprofile {
     position: absolute;
     bottom: 0;
