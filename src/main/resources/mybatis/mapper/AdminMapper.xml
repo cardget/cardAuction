@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "com.cardproject.myapp.dao">
+	<insert id="insertPokemon" parameterType="pokemonvo">
+		
+	
+	</insert>
+	
+	<insert id="insertDigimon" parameterType="digimonvo">
+		
+	
+	</insert>
+	
+	<insert id="insertYugioh" parameterType="yugiohvo">
+		
+	
+	</insert>
+	
+	<insert id="insertOnepiece" parameterType="onepiecevo">
+		
+	
+	</insert>
+
+
+</mapper>
