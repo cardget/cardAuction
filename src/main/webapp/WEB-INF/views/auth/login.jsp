@@ -10,6 +10,7 @@
 <c:set var="path" value="${pageContext.servletContext.contextPath}"/>
 <link rel="stylesheet" href="${path}/resources/css/login.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Apple+SD+Gothic+Neo&display=swap">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="${path}/resources/js/signUp.js"></script>
 
 </head>
@@ -31,7 +32,7 @@
 			    </div>
 				</div>
 				<div class="remember-me">
-					<label> <input type="checkbox" id = "remember" name="remember" class ="remember-me"> 로그인 정보 기억하기</label>
+					<label> <input type="checkbox" id = "remember" name="remember" class ="remember-me"}> 로그인 정보 기억하기</label>
 				</div>
 				<button type="submit" class="login-btn">로그인</button>
 			</form>
