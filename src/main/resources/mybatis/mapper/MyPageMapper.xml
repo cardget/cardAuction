@@ -68,7 +68,8 @@
 			t.IS_RECOMMEND,
 			t.STAGE,
 			i.IMAGE1,
-			i.ITEM_NAME
+			i.ITEM_NAME,
+			t.IS_SUCCESS
 		FROM 
 			TRADES t
 		INNER JOIN
@@ -108,7 +109,7 @@
 	
 	<!-- 포인트 -->
 	<select id="selectPointByUser" parameterType = "string" resultType="pointvo">
-		SELECT * FROM POINTS WHERE USER_ID = #{userid}
+		SELECT * FROM POINTS WHERE USER_ID = #{userid} ORDER BY 1 DESC
 	</select>
 	
 	<!-- 포인트 합계 -->
