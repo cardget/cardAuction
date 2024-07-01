@@ -38,33 +38,50 @@ import kotlin.internal.RequireKotlin;
 @RequestMapping("/deckMakers")
 public class DeckMakerController {
 
-	@GetMapping("/pokemonDeckListDetail.do")
-	public void auctionMain() {
-		System.out.println("pokemonDeckListDetail page");
-
-	}
-
 	@GetMapping("/pokemonDeckListMain.do")
-	public String getDecks(Model model, @RequestParam(defaultValue = "1") int page,
+	public String getPDecks(Model model, @RequestParam(defaultValue = "1") int page,
 			@RequestParam(defaultValue = "3") int pageSize,
-			@RequestParam(value = "sort", required = false, defaultValue = "date") String sort,
+			@RequestParam(value = "sort", required = false, defaultValue = "create_date") String sort,
 			@RequestParam(required = false) String query) {
 
-		int totalDecks = deckMakerService.getTotalDeckCount(query);
-		int totalPages = (int) Math.ceil((double) totalDecks / pageSize);
+		int cat = 1; // 이부분 바뀜
+		int totalDecks = deckMakerService.getTotalDeckCount(cat, query); // 공통
+		int totalPages = (int) Math.ceil((double) totalDecks / pageSize);// 공통
 
 		model.addAttribute("totalPages", totalPages);
 		model.addAttribute("currentPage", page);
 		model.addAttribute("pageSize", pageSize);
 
-		int cat = 1;
-		List<Map<String, Object>> decks = deckMakerService.getDecks(cat, page, pageSize, query, sort);
+		List<Map<String, Object>> decks = deckMakerService.getPDecks(cat, page, pageSize, query, sort);
 
 		model.addAttribute("decks", decks);
 		model.addAttribute("query", query);
 		model.addAttribute("sort", sort);
 
 		return "deckMakers/pokemonDeckListMain";
+	}
+
+	@GetMapping("/yugiohDeckListMain.do")
+	public String getYDecks(Model model, @RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "3") int pageSize,
+			@RequestParam(value = "sort", required = false, defaultValue = "create_date") String sort,
+			@RequestParam(required = false) String query) {
+
+		int cat = 2; // 이부분 바뀜
+		int totalDecks = deckMakerService.getTotalDeckCount(cat, query); // 공통
+		int totalPages = (int) Math.ceil((double) totalDecks / pageSize);// 공통
+
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("pageSize", pageSize);
+
+		List<Map<String, Object>> decks = deckMakerService.getYDecks(cat, page, pageSize, query, sort);
+
+		model.addAttribute("decks", decks);
+		model.addAttribute("query", query);
+		model.addAttribute("sort", sort);
+
+		return "deckMakers/yugiohDeckListMain";
 	}
 
 	@Autowired
@@ -278,6 +295,87 @@ public class DeckMakerController {
 
 		deckMakerService.saveDeckSource(deckDTO, imgList, kind);
 		return redirectUrl;
+	}
+
+	// deckDetail
+	// 포켓몬 덱정보
+	@GetMapping("/pokemonDeckListDetail.do")
+	public String getPDeckDetail(@RequestParam("deck_id") int deckId, Model model) {
+		List<Map<String, Object>> cards = deckMakerService.getPCardsByDeckId(deckId);
+		Map<String, Object> deck = deckMakerService.getDeckById(deckId);
+		model.addAttribute("cards", cards);
+		model.addAttribute("deck", deck);
+		return "deckMakers/pokemonDeckListDetail";
+	}
+
+	// 유희왕
+	@GetMapping("/yugiohDeckListDetail.do")
+	public String getYDeckDetail(@RequestParam("deck_id") int deckId, Model model) {
+		List<Map<String, Object>> cards = deckMakerService.getYCardsByDeckId(deckId);
+		Map<String, Object> deck = deckMakerService.getDeckById(deckId);
+		model.addAttribute("cards", cards);
+		model.addAttribute("deck", deck);
+		return "deckMakers/yugiohDeckListDetail";
+	}
+
+	// 디지몬
+	@GetMapping("/digimonDeckListDetail.do")
+	public String getDDeckDetail(@RequestParam("deck_id") int deckId, Model model) {
+		List<Map<String, Object>> cards = deckMakerService.getDCardsByDeckId(deckId);
+		Map<String, Object> deck = deckMakerService.getDeckById(deckId);
+		model.addAttribute("cards", cards);
+		model.addAttribute("deck", deck);
+		return "deckMakers/digimonDeckListDetail";
+	}
+
+	// 원피스
+	@GetMapping("/onepieceDeckListDetail.do")
+	public String getODeckDetail(@RequestParam("deck_id") int deckId, Model model) {
+		List<Map<String, Object>> cards = deckMakerService.getOCardsByDeckId(deckId);
+		Map<String, Object> deck = deckMakerService.getDeckById(deckId);
+		model.addAttribute("cards", cards);
+		model.addAttribute("deck", deck);
+		return "deckMakers/onepieceDeckListDetail";
+	}
+
+	// 추천(공통)
+	@PostMapping(value = "/recommendDeck.do", produces = "application/json")
+	@ResponseBody
+	public Map<String, Object> recommendDeck(@RequestBody Map<String, Integer> requestData) {
+		int deckId = requestData.get("deck_id");
+		System.out.println("Received deck_id for recommendation: " + deckId);
+		boolean success = deckMakerService.recommendDeck(deckId);
+		Map<String, Object> response = new HashMap<>();
+		response.put("success", success);
+		return response;
+	}
+
+	// 카드변경 포켓몬
+	@GetMapping("/getPCardDetails.do")
+	@ResponseBody
+	public PokemonDTO getPCardDetails(@RequestParam("card_id") String cardId) {
+		return deckMakerService.getPCardDetailsById(cardId);
+	}
+
+	// 유희왕
+	@GetMapping("/getYCardDetails.do")
+	@ResponseBody
+	public YugiohDTO getYCardDetails(@RequestParam("card_id") String cardId) {
+		return deckMakerService.getYCardDetailsById(cardId);
+	}
+
+	//디지몬
+	@GetMapping("/getDCardDetails.do")
+	@ResponseBody
+	public DigimonDTO getDCardDetails(@RequestParam("card_id") String cardId) {
+		return deckMakerService.getDCardDetailsById(cardId);
+	}
+
+	// 원피스
+	@GetMapping("/getOCardDetails.do")
+	@ResponseBody
+	public OnepieceDTO getOCardDetails(@RequestParam("card_id") String cardId) {
+		return deckMakerService.getOCardDetailsById(cardId);
 	}
 
 }

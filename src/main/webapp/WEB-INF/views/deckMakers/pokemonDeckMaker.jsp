@@ -179,7 +179,7 @@
 	    		},
 	    		success: function(response) {
 	    			alert("등록에 성공했습니다!")
-	                window.location.href = "${path}/deckMakers/deckListMain.do";
+	                window.location.href = "${path}/deckMakers/pokemonDeckListMain.do";
 	            },
 	            error: function(xhr, status, error) {
 	                console.error("Error:", error);

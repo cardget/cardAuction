@@ -134,19 +134,18 @@
 		#{y_card}, #{is_thumbnail})
 	</insert>
 	<!-- **덱저장** -->
-	<select id="getTotalDeckCount" resultType="int">
-		SELECT COUNT(*) FROM decks WHERE cat = 1
-	</select>
-
-	<select id="getTotalDeckCountByQuery" parameterType="map"
+	<!-- 덱카운트공통 -->
+	<select id="getTotalDeckCount" parameterType="map"
 		resultType="int">
-		SELECT COUNT(*)
-		FROM decks
-		WHERE cat = 1
-		AND deck_title LIKE '%' || #{query} || '%'
+		SELECT COUNT(*) FROM
+		decks WHERE cat = #{cat}
+		<if test='query != null and query != ""'>
+			AND deck_title LIKE '%' || #{query} || '%'
+		</if>
 	</select>
-
-	<select id="getThumbnail" parameterType="map" resultType="map">
+	
+	<!-- main덱정보 가져오기 -->
+	<select id="getPThumbnail" parameterType="map" resultType="map">
 		SELECT *
 		FROM (
 		SELECT A.*, ROWNUM AS rn
@@ -154,21 +153,225 @@
 		SELECT
 		d.deck_id,
 		d.deck_title,
-		d.create_date,
+		to_char(d.create_date, 'YYYY-MM-DD') as create_date,
 		u.user_id,
 		d.recommend,
 		p.card_image
-		FROM decks d
+		FROM
+		decks d
 		JOIN users u ON d.user_id = u.user_id
-		JOIN deckSources ds ON d.deck_id = ds.deck_id
+		JOIN deckSources ds ON
+		d.deck_id = ds.deck_id
 		JOIN pokemon p ON ds.p_card = p.card_id
-		WHERE ds.is_thumbnail = 1
-		AND d.cat = 1
-		ORDER BY #{sort}
+		WHERE
+		ds.is_thumbnail = 1
+		AND d.cat = #{cat}
+		<if test='query != null and query != ""'>
+			AND d.deck_title LIKE '%' || #{query} || '%'
+		</if>
+		ORDER BY
+		<choose>
+			<when test="sort == 'recommend'">
+				d.recommend DESC
+			</when>
+			<otherwise>
+				d.create_date DESC
+			</otherwise>
+		</choose>
 		) A
 		WHERE ROWNUM &lt;= #{endRow}
 		)
 		WHERE rn &gt;= #{startRow}
-		ORDER BY #{sort}
+		ORDER BY rn
+	</select>
+	<select id="getYThumbnail" parameterType="map" resultType="map">
+		SELECT *
+		FROM (
+		SELECT A.*, ROWNUM AS rn
+		FROM (
+		SELECT
+		d.deck_id,
+		d.deck_title,
+		to_char(d.create_date, 'YYYY-MM-DD') as create_date,
+		u.user_id,
+		d.recommend,
+		y.card_image
+		FROM
+		decks d
+		JOIN users u ON d.user_id = u.user_id
+		JOIN deckSources ds ON
+		d.deck_id = ds.deck_id
+		JOIN yugioh y ON ds.y_card = y.card_id
+		WHERE
+		ds.is_thumbnail = 1
+		AND d.cat = #{cat}
+		<if test='query != null and query != ""'>
+			AND d.deck_title LIKE '%' || #{query} || '%'
+		</if>
+		ORDER BY
+		<choose>
+			<when test="sort == 'recommend'">
+				d.recommend DESC
+			</when>
+			<otherwise>
+				d.create_date DESC
+			</otherwise>
+		</choose>
+		) A
+		WHERE ROWNUM &lt;= #{endRow}
+		)
+		WHERE rn &gt;= #{startRow}
+		ORDER BY rn
+	</select>
+	<select id="getDThumbnail" parameterType="map" resultType="map">
+		SELECT *
+		FROM (
+		SELECT A.*, ROWNUM AS rn
+		FROM (
+		SELECT
+		d.deck_id,
+		d.deck_title,
+		to_char(d.create_date, 'YYYY-MM-DD') as create_date,
+		u.user_id,
+		d.recommend,
+		di.card_image
+		FROM
+		decks d
+		JOIN users u ON d.user_id = u.user_id
+		JOIN deckSources ds ON
+		d.deck_id = ds.deck_id
+		JOIN digimon di ON ds.d_card = di.card_id
+		WHERE
+		ds.is_thumbnail = 1
+		AND d.cat = #{cat}
+		<if test='query != null and query != ""'>
+			AND d.deck_title LIKE '%' || #{query} || '%'
+		</if>
+		ORDER BY
+		<choose>
+			<when test="sort == 'recommend'">
+				d.recommend DESC
+			</when>
+			<otherwise>
+				d.create_date DESC
+			</otherwise>
+		</choose>
+		) A
+		WHERE ROWNUM &lt;= #{endRow}
+		)
+		WHERE rn &gt;= #{startRow}
+		ORDER BY rn
+	</select>
+	<select id="getOThumbnail" parameterType="map" resultType="map">
+		SELECT *
+		FROM (
+		SELECT A.*, ROWNUM AS rn
+		FROM (
+		SELECT
+		d.deck_id,
+		d.deck_title,
+		to_char(d.create_date, 'YYYY-MM-DD') as create_date,
+		u.user_id,
+		d.recommend,
+		o.card_image
+		FROM
+		decks d
+		JOIN users u ON d.user_id = u.user_id
+		JOIN deckSources ds ON
+		d.deck_id = ds.deck_id
+		JOIN onepiece o ON ds.o_card = o.card_id
+		WHERE
+		ds.is_thumbnail = 1
+		AND d.cat = #{cat}
+		<if test='query != null and query != ""'>
+			AND d.deck_title LIKE '%' || #{query} || '%'
+		</if>
+		ORDER BY
+		<choose>
+			<when test="sort == 'recommend'">
+				d.recommend DESC
+			</when>
+			<otherwise>
+				d.create_date DESC
+			</otherwise>
+		</choose>
+		) A
+		WHERE ROWNUM &lt;= #{endRow}
+		)
+		WHERE rn &gt;= #{startRow}
+		ORDER BY rn
+	</select>
+
+	<!-- deckDetail -->
+	<select id="getPCardsByDeckId" parameterType="int"
+		resultType="map">
+		SELECT p.card_id, p.card_image
+		FROM deckSources ds
+		JOIN pokemon p ON ds.p_card = p.card_id
+		WHERE ds.deck_id = #{deck_id}
+	</select>
+	<select id="getYCardsByDeckId" parameterType="int"
+		resultType="map">
+		SELECT y.card_id, y.card_image
+		FROM deckSources ds
+		JOIN yugioh y ON ds.y_card = y.card_id
+		WHERE ds.deck_id = #{deck_id}
+	</select>
+	<select id="getDCardsByDeckId" parameterType="int"
+		resultType="map">
+		SELECT d.card_id, d.card_image
+		FROM deckSources ds
+		JOIN digimon d ON ds.d_card = d.card_id
+		WHERE ds.deck_id = #{deck_id}
+	</select>
+	<select id="getOCardsByDeckId" parameterType="int"
+		resultType="map">
+		SELECT o.card_id, o.card_image
+		FROM deckSources ds
+		JOIN onepiece o ON ds.o_card = o.card_id
+		WHERE ds.deck_id = #{deck_id}
+	</select>
+
+	<select id="getDeckById" parameterType="int" resultType="map">
+		SELECT
+		deck_id, deck_title,  to_char(create_date, 'YYYY-MM-DD') as create_date, user_id, recommend, cmt
+		FROM decks
+		WHERE deck_id = #{deck_id}
+	</select>
+
+	<update id="recommend" parameterType="int">
+		UPDATE decks
+		SET recommend =
+		recommend + 1
+		WHERE deck_id = #{deck_id}
+	</update>
+
+	<select id="getPCardDetailsById" parameterType="String"
+		resultType="pokemonvo">
+		SELECT card_id AS CARD_ID, card_name AS CARD_NAME, card_sort AS CARD_SORT,
+		card_type AS CARD_TYPE, feature AS FEATURE, card_image AS CARD_IMAGE
+		FROM pokemon
+		WHERE card_id = #{card_id}
+	</select>
+	<select id="getYCardDetailsById" parameterType="String"
+		resultType="yugiohvo">
+		SELECT card_id AS CARD_ID, card_name AS CARD_NAME, card_sort AS CARD_SORT,
+		card_type AS CARD_TYPE, card_attr AS CARD_ATTR, card_image AS CARD_IMAGE
+		FROM yugioh
+		WHERE card_id = #{card_id}
+	</select>
+	<select id="getDCardDetailsById" parameterType="String"
+		resultType="digimonvo">
+		SELECT card_id AS CARD_ID, card_name AS CARD_NAME, card_sort AS CARD_SORT,
+		monster_type AS MONSTER_TYPE, card_attr AS CARD_ATTR, card_image AS CARD_IMAGE
+		FROM digimon
+		WHERE card_id = #{card_id}
+	</select>
+	<select id="getOCardDetailsById" parameterType="String"
+		resultType="onepiecevo">
+		SELECT card_id AS CARD_ID, card_name AS CARD_NAME, card_sort AS CARD_SORT,
+		feature AS FEATURE, card_attr AS CARD_ATTR, card_image AS CARD_IMAGE
+		FROM onepiece
+		WHERE card_id = #{card_id}
 	</select>
 </mapper>

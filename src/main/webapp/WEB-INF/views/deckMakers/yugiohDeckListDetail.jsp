@@ -49,7 +49,7 @@
 					<h2 id="cardName"></h2>
 					<p id="cardType"></p>
 					<p id="cardSort"></p>
-					<p id="cardFeature"></p>
+					<p id="cardAttr"></p>
 				</div>
 			</div>
 		</div>
@@ -111,7 +111,7 @@
 	    console.log('Fetching details for cardId:', cardId);
 
 	    $.ajax({
-	        url: '${path}/deckMakers/getPCardDetails.do',
+	        url: '${path}/deckMakers/getYCardDetails.do',
 	        type: 'GET',
 	        data: { card_id: cardId },
 	        dataType: 'json',
@@ -121,7 +121,7 @@
 	            document.getElementById('cardName').textContent = data.card_name;
 	            document.getElementById('cardType').textContent = '타입 : ' + data.card_type;
 	            document.getElementById('cardSort').textContent = '종류 : ' + data.card_sort;
-	            document.getElementById('cardFeature').textContent = '특성 : ' + data.feature;
+	            document.getElementById('cardAttr').textContent = '특성 : ' + data.card_attr;
 	        },
 	        error: function(xhr, status, error) {
 	            console.error('Fetch error:', error);
@@ -135,6 +135,7 @@
 			showCardDetails(firstCardId);
 		}
 	});
+	
 	
 	</script>
 </body>

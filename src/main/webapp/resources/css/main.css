@@ -457,7 +457,7 @@ select {
 	display: flex;
 	justify-content: center;
 	padding: 20px 0;
-	margin: 90px 0;
+	margin:50px 0;
 }
 
 .pagination a {
@@ -559,20 +559,30 @@ select {
 	gap: 7px;
 	padding: 7px;
 }
-
+#banner{
+	width:1320px;
+	border-radius:10px;
+}
 .banner-overlay {
 	position: absolute;
 	margin:auto;
-	width:1250px;
+	width:1280px;
 	padding: 20px;
 	color: #fff;
 	font-weight: 1000;
+	border-radius:10px;
+	background: linear-gradient(
+      to left,
+      rgba(0, 127, 255, 0) 10%,
+      rgba(0, 127, 255, 0.4) 35%,
+      rgba(0, 127, 255, 1) 70%,
+      rgba(0, 127, 255, 1) 100%);
 }
 
 .makerInfo {
 	display: flex;
 	gap: 20px;
-	padding-top: 120px;
+	padding-top: 67px;
 	font-weight: 100;
 	align-items: center;
 }

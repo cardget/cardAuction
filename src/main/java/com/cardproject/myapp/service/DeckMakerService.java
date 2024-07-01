@@ -37,28 +37,56 @@ public class DeckMakerService {
         return deckMakerDAO.selectOrFilterPCard(params);
     }
     //덱리스트 메인 정보불러오기
-    public List<Map<String, Object>> getDecks(int cat, int page, int pageSize, String query, String sort) {
+    //포켓몬
+    public List<Map<String, Object>> getPDecks(int cat, int page, int pageSize, String query, String sort) {
         int startRow = (page - 1) * pageSize + 1;
         int endRow = page * pageSize;
 
         System.out.println("Start=" +startRow);
-
         System.out.println("endRow=" +endRow);
-
         System.out.println("sort=" +sort);
-        if (query != null && !query.isEmpty()) {
-            return deckMakerDAO.getThumbnail(cat, query, startRow, endRow, sort);
-        } else {
-            return deckMakerDAO.getThumbnail(cat, startRow, endRow, sort);
-        }
+        
+            return deckMakerDAO.getPThumbnail(cat, query, startRow, endRow, sort);
     }
+    //유희왕
+    public List<Map<String, Object>> getYDecks(int cat, int page, int pageSize, String query, String sort) {
+        int startRow = (page - 1) * pageSize + 1;
+        int endRow = page * pageSize;
 
-    public int getTotalDeckCount(String query) {
-        if (query != null && !query.isEmpty()) {
-            return deckMakerDAO.getTotalDeckCountByQuery(query);
-        } else {
-            return deckMakerDAO.getTotalDeckCount();
-        }
+        System.out.println("Start=" +startRow);
+        System.out.println("endRow=" +endRow);
+        System.out.println("sort=" +sort);
+        
+            return deckMakerDAO.getYThumbnail(cat, query, startRow, endRow, sort);
+    }
+    //디지몬
+    public List<Map<String, Object>> getDDecks(int cat, int page, int pageSize, String query, String sort) {
+        int startRow = (page - 1) * pageSize + 1;
+        int endRow = page * pageSize;
+
+        System.out.println("Start=" +startRow);
+        System.out.println("endRow=" +endRow);
+        System.out.println("sort=" +sort);
+        
+            return deckMakerDAO.getDThumbnail(cat, query, startRow, endRow, sort);
+    }
+    //원피스
+    public List<Map<String, Object>> getODecks(int cat, int page, int pageSize, String query, String sort) {
+        int startRow = (page - 1) * pageSize + 1;
+        int endRow = page * pageSize;
+
+        System.out.println("Start=" +startRow);
+        System.out.println("endRow=" +endRow);
+        System.out.println("sort=" +sort);
+        
+            return deckMakerDAO.getOThumbnail(cat, query, startRow, endRow, sort);
+    }
+    //공통
+    public int getTotalDeckCount(int cat, String query) {
+    	Map<String, Object> params = new HashMap<>();
+        params.put("cat", cat);
+        params.put("query", query);
+            return deckMakerDAO.getTotalDeckCount(params);
     }
     
     public List<YugiohDTO> getYCardList(int page, Map<String, String> filters) {
@@ -130,7 +158,47 @@ public class DeckMakerService {
             //deckMakerDAO.updateThumbnail(deckId, kind);
         }
     }
-    //덱리스트메인 페이지네이션
+    //deckDetail
+    public List<Map<String, Object>> getPCardsByDeckId(int deckId) {
+        return deckMakerDAO.getPCardsByDeckId(deckId);
+    }
+    public List<Map<String, Object>> getYCardsByDeckId(int deckId) {
+        return deckMakerDAO.getYCardsByDeckId(deckId);
+    }
+    public List<Map<String, Object>> getDCardsByDeckId(int deckId) {
+        return deckMakerDAO.getDCardsByDeckId(deckId);
+    }
+    public List<Map<String, Object>> getOCardsByDeckId(int deckId) {
+        return deckMakerDAO.getOCardsByDeckId(deckId);
+    }
+
+    public Map<String, Object> getDeckById(int deckId) {
+    	System.out.println("deckid=" + deckId);
+        return deckMakerDAO.getDeckById(deckId);
+    }
+
+    public boolean recommendDeck(int deckId) {
+    	try {
+            deckMakerDAO.recommend(deckId);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public PokemonDTO getPCardDetailsById(String cardId) {
+        return deckMakerDAO.getPCardDetailsById(cardId);
+    }
+    public YugiohDTO getYCardDetailsById(String cardId) {
+        return deckMakerDAO.getYCardDetailsById(cardId);
+    }
+    public DigimonDTO getDCardDetailsById(String cardId) {
+        return deckMakerDAO.getDCardDetailsById(cardId);
+    }
+    public OnepieceDTO getOCardDetailsById(String cardId) {
+        return deckMakerDAO.getOCardDetailsById(cardId);
+    }
     
     
     
