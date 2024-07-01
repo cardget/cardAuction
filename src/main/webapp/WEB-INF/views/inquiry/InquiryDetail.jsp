@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
+<c:set var="path" value="${pageContext.servletContext.contextPath}" />
 <html lang="en">
 <head>
 <title>InquiryDetail</title>
@@ -11,25 +13,37 @@
 	rel="stylesheet">
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" type="text/css" href="../resources/css/InquiryDetail.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="../resources/css/InquiryDetail.css">
 </head>
 <body>
-	<div class="container custom-container mt-3">
+	<c:choose>
+		<c:when test="${empty userid}">
+			<%@ include file="/WEB-INF/views/main/defaultHeader.jsp"%>
+		</c:when>
+		<c:otherwise>
+			<%@ include file="/WEB-INF/views/main/loginHeader.jsp"%>
+		</c:otherwise>
+	</c:choose>
+	<div class="topimage"></div>
+
+	<div class="container2 custom-container2 mt-3">
 		<div class="right-aligned-button">
-			<input type="submit" class="btn btn-primary" value="문의 목록">
+			<input type="submit" class="btn btn-primary" value="문의 목록"
+				onClick="location.href='${path}/inquiry/InquirySelect.do'">
 		</div>
 		<hr>
 		<form action="">
 			<div class="form-inline mb-3 mt-3">
 				<div class="input-group col">
-					<p class="form-control" id="title">중개 결제 관련 문의합니다</p>
-					<p class="form-control" id="writer">작성자: 서연잇</p>
-					<p class="form-control" id="date">작성일 : 2024-05-29</p>
+					<p class="form-control" id="title">${inquiry.title}</p>
+					<p class="form-control" id="writer">${inquiry.nickname}</p>
+					<p class="form-control" id="date">작성일 : ${inquiry.create_date}</p>
 				</div>
 			</div>
 			<div class="mb-3 mt-3">
-				<p class="form-control comment-textarea" id="comment">
-					제가 OO 물품을 낙찰 받아서 중개로 상품을 받고 싶습니다. 결제 방식에 대해서 문의드리고 싶습니다.어쩌구저쩌구</p>
+				<p class="form-control comment-textarea" id="comment">${inquiry.ctt}</p>
 				<br>
 				<div class="form-inline mb-3 mt-3">
 					<div class="input-group col" id="answerHead">
@@ -37,9 +51,7 @@
 					</div>
 				</div>
 			</div>
-			<p class="form-control comment-textarea" id="answer">
-				OOO님 안녕하세요. 문의 답변 드립니다어쩌구저쩌구 asdasd a 
-				sdasd</p>
+			<p class="form-control comment-textarea" id="answer">${inquiry.answer}</p>
 		</form>
 	</div>
 </body>
