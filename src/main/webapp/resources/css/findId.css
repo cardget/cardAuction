@@ -1,5 +1,15 @@
 @charset "UTF-8";
 
+body {
+	display: flex;
+	justify-content: center;
+	font-family: 'Apple SD Gothic Neo', sans-serif;
+	align-items: center;
+	height: 100vh;
+	margin: 0;
+	
+}
+
 .find-id-container{
 	background-color: #fff;
 	padding: 20px;

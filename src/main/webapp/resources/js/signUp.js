@@ -1,25 +1,27 @@
 
-$(function(){
-			$("form").on("submit", f);
-			$("#userid").val(localStorage.getItem("userid"));
-			$("#password").val(localStorage.getItem("password"));
-			var checkStatus = localStorage.getItem("checkStatus");
-			if (checkStatus == 1){
-				$("#remember").prop("checked", true);
-			}
-		});
-	function f(){
-		var check = $("#remember").prop("checked");
-		if(check){
-			localStorage.setItem("userid", $("#userid").val());
-			localStorage.setItem("password", $("#password").val());
-			localStorage.setItem("checkStatus", 1);
-		}else {
-			localStorage.removeItem("userid");
-			localStorage.removeItem("password");
-			localStorage.removeItem("checkStatus");
-		}
-}
+// 로그인 정보 기억
+$(function() {
+    // 페이지가 로드될 때 로컬 스토리지에서 아이디와 체크박스 상태를 복원
+    $("#userid").val(localStorage.getItem("userid"));
+    var checkStatus = localStorage.getItem("checkStatus");
+    if (checkStatus == 1) {
+        $("#remember").prop("checked", true);
+    }
+    
+    // 폼 제출 이벤트 핸들러
+    $("form").on("submit", function(event) {
+        var check = $("#remember").prop("checked");
+        if (check) {
+            // 체크박스가 선택된 경우 로컬 스토리지에 아이디 저장
+            localStorage.setItem("userid", $("#userid").val());
+            localStorage.setItem("checkStatus", 1);
+        } else {
+            // 체크박스가 선택되지 않은 경우 로컬 스토리지에서 아이디 삭제
+            localStorage.removeItem("userid");
+            localStorage.removeItem("checkStatus");
+        }
+    });
+});
 
 
 

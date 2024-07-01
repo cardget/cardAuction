@@ -23,15 +23,15 @@
 				<div class="form-group">
 					<div class="input-with-icon">
 			        <img alt="" src="${path}/resources/icon/loginUser.png" class="id-icon">
-			        <input type="text" id="userid" name="userid" placeholder="아이디" required>
+			        <input type="text" id="userid" name="userid" placeholder="아이디" value="${rememberUserId != null ? rememberUserId : ''}" required>
 			    </div>
 			    <div class="input-with-icon">
 			        <img alt="" src="${path}/resources/icon/lock.png" class="pw-icon">
-			        <input type="password" id="password" name="password" placeholder="비밀번호" required>
+			        <input type="password" id="password" name="password" placeholder="비밀번호" value="${rememberUserPW != null ? rememberUserPW : ''}" required>
 			    </div>
 				</div>
 				<div class="remember-me">
-					<label> <input type="checkbox" id = "remember" name="remember" class ="remember-me"> 로그인 정보 기억하기</label>
+					<label> <input type="checkbox" id = "remember" name="remember" class ="remember-me" ${rememberUserId != null ? 'checked' : ''}> 로그인 정보 기억하기</label>
 				</div>
 				<button type="submit" class="login-btn">로그인</button>
 			</form>
