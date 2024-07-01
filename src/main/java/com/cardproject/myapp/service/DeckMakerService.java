@@ -134,8 +134,13 @@ public class DeckMakerService {
     }
 
     public boolean recommendDeck(int deckId) {
-        int result = deckMakerDAO.recommend(deckId);
-        return result > 0;
+    	try {
+            deckMakerDAO.recommend(deckId);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
     
     public PokemonDTO getCardDetailsById(String cardId) {

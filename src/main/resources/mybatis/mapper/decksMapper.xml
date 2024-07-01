@@ -152,7 +152,7 @@
 		SELECT
 		d.deck_id,
 		d.deck_title,
-		d.create_date,
+		to_char(d.create_date, 'YYYY-MM-DD') as create_date,
 		u.user_id,
 		d.recommend,
 		p.card_image
@@ -190,12 +190,12 @@
 		SELECT p.card_id, p.card_image
 		FROM deckSources ds
 		JOIN pokemon p ON ds.p_card = p.card_id
-		WHERE ds.deck_id = 32
+		WHERE ds.deck_id = #{deck_id}
 	</select>
 
 	<select id="getDeckById" parameterType="int" resultType="map">
 		SELECT
-		deck_id, deck_title, create_date, user_id, recommend, cmt
+		deck_id, deck_title,  to_char(create_date, 'YYYY-MM-DD') as create_date, user_id, recommend, cmt
 		FROM decks
 		WHERE deck_id = #{deck_id}
 	</select>

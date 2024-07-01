@@ -275,31 +275,33 @@ public class DeckMakerController {
 	}
 
 	// deckDetail
-		@GetMapping("/pokemonDeckListDetail.do")
-		public String getDeckDetail(@RequestParam("deck_id") int deckId, Model model) {
-			List<Map<String, Object>> cards = deckMakerService.getCardsByDeckId(deckId);
-	        Map<String, Object> deck = deckMakerService.getDeckById(deckId);
-	        model.addAttribute("cards", cards);
-	        model.addAttribute("deck", deck);
-			return "deckMakers/pokemonDeckListDetail";
-		}
-		
-		@PostMapping(value = "/recommendDeck.do", produces = "application/json")
-	    @ResponseBody
-	    public Map<String, Object> recommendDeck(@RequestBody Map<String, Object> payload) {
-	        int deckId = (int) payload.get("deck_id");
-	        boolean success = deckMakerService.recommendDeck(deckId);
-	        Map<String, Object> response = new HashMap<>();
-	        response.put("success", success);
-	        return response;
-	    }
-		
-		//카드변경
-		@GetMapping("/getCardDetails.do")
-	    @ResponseBody
-	    public PokemonDTO getCardDetails(@RequestParam("card_id") String cardId) {
-			System.out.println("Received card_id: " + cardId);
-	        return deckMakerService.getCardDetailsById(cardId);
-	    }
+	// 포켓몬 덱정보
+	@GetMapping("/pokemonDeckListDetail.do")
+	public String getDeckDetail(@RequestParam("deck_id") int deckId, Model model) {
+		List<Map<String, Object>> cards = deckMakerService.getCardsByDeckId(deckId);
+		Map<String, Object> deck = deckMakerService.getDeckById(deckId);
+		model.addAttribute("cards", cards);
+		model.addAttribute("deck", deck);
+		return "deckMakers/pokemonDeckListDetail";
+	}
+
+	// 추천
+	@PostMapping(value = "/recommendDeck.do", produces = "application/json")
+	@ResponseBody
+	public Map<String, Object> recommendDeck(@RequestBody Map<String, Integer> requestData) {
+		int deckId = requestData.get("deck_id");
+		System.out.println("Received deck_id for recommendation: " + deckId);
+		boolean success = deckMakerService.recommendDeck(deckId);
+		Map<String, Object> response = new HashMap<>();
+		response.put("success", success);
+		return response;
+	}
+
+	// 카드변경
+	@GetMapping("/getCardDetails.do")
+	@ResponseBody
+	public PokemonDTO getCardDetails(@RequestParam("card_id") String cardId) {
+		return deckMakerService.getCardDetailsById(cardId);
+	}
 
 }

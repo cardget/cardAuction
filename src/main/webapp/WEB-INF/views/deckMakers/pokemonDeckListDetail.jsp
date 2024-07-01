@@ -31,14 +31,14 @@
 	<div class="deck-detail-image">
 		<div class="banner-overlay">
 			<!--정보입력 오버레이-->
-			<p>${deck.DECK_TITLE}</p>
+			<p class="deckTitle">${deck.DECK_TITLE}</p>
 			<div class="makerInfo">
 				<div>제작자 : ${deck.USER_ID}</div>
 				<div>${deck.CREATE_DATE}</div>
 				<div>추천수 : ${deck.RECOMMEND}</div>
 			</div>
 		</div>
-		<img src="${path }/resources/images/default/deckDetail-banner.png">
+		<img src="${path }/resources/images/default/deckDetail-banner.png" id="banner">
 	</div>
 	<div class="detail-container">
 		<div class="sidebar">
@@ -81,27 +81,26 @@
 	<script type="module" src="${path }/resources/js/main.js"></script>
 	<script>
 	function recommendDeck(deckId) {
-        fetch('${pageContext.request.contextPath}/recommendDeck.do', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ deck_id: deckId })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('추천되었습니다.');
-                location.reload(); // 페이지 새로고침하여 업데이트된 추천 수 반영
-            } else {
-                alert('추천 처리 중 오류가 발생했습니다.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('추천 처리 중 오류가 발생했습니다.');
-        });
-    }	
+	    $.ajax({
+	        url: '${path}/deckMakers/recommendDeck.do',
+	        type: 'POST',
+	        contentType: 'application/json',
+	        data: JSON.stringify({ deck_id: deckId }),
+	        dataType: 'json',
+	        success: function(data) {
+	            if (data.success) {
+	                alert('추천되었습니다.');
+	                location.reload(); // 페이지 새로고침하여 업데이트된 추천 수 반영
+	            } else {
+	                alert('추천 처리 중 오류가 발생했습니다.');
+	            }
+	        },
+	        error: function(xhr, status, error) {
+	            console.error('Fetch error:', error);
+	            alert('추천 처리 중 오류가 발생했습니다.');
+	        }
+	    });
+	}
 	//카드변경
 	function showCardDetails(cardId) {
 	    if (!cardId) {
@@ -118,6 +117,7 @@
 	        dataType: 'json',
 	        success: function(data) {
 	            console.log('Response data:', data);
+	            //document.getElementById('banner').src = data.card_image;
 	            document.getElementById('cardImage').src = data.card_image;
 	            document.getElementById('cardName').textContent = data.card_name;
 	            document.getElementById('cardType').textContent = '타입 : ' + data.card_type;
