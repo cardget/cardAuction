@@ -98,6 +98,24 @@
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property name="maxUploadSize" value="10000000" />
 	</beans:bean>
+	
+	<!-- 회원가입 메일 인증 -->
+    <beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <beans:property name="host" value="${mail.host}" />
+        <beans:property name="port" value="${mail.port}" /><!-- 465 or 25 -->
+        <beans:property name="username" value="${mail.username}" />
+        <beans:property name="password" value="${mail.password}" />
+        <beans:property name="defaultEncoding" value="utf-8" />
+        <beans:property name="javaMailProperties">
+            <beans:props>
+                <beans:prop key="mail.transport.protocol">smtp</beans:prop>
+                <beans:prop key="mail.smtp.auth">${mail.smtp.auth}</beans:prop>
+                <beans:prop key="mail.smtp.starttls.enable">${mail.smtp.starttls.enable}</beans:prop>
+                <beans:prop key="mail.smtp.starttls.required">${mail.smtp.starttls.required}</beans:prop>
+                <beans:prop key="mail.debug">${mail.debug}</beans:prop>
+            </beans:props>
+        </beans:property>
+    </beans:bean>
 
 
 
