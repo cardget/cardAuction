@@ -45,7 +45,12 @@ public class InquiryDAO {
 	}
 
 	// UserDTO에 담아 가져와야할 때
-	public UserDTO selectNicknameByUserVOId(String userid) {
-		return sqlSession.selectOne(namespace + "selectNicknameByUserVOId", userid);
+	public UserDTO selectNicknameByUserVOId(String userId) {
+		return sqlSession.selectOne(namespace + "selectNicknameByUserVOId", userId);
+	}
+	
+	// 비밀 글 본인 확인
+	public String secretBoardCheckById(Integer questId) {
+		return sqlSession.selectOne(namespace + "secretBoardCheckById");
 	}
 }

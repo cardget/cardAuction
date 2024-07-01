@@ -38,4 +38,9 @@ public class InquiryService {
 	public UserDTO selectNicknameByUserVOId(String userid) {
 		return inquiryDao.selectNicknameByUserVOId(userid);
 	}
+	
+	// 비밀 글 본인 확인
+	public String secretBoardCheckById(Integer questId) {
+		return inquiryDao.secretBoardCheckById(questId);
+	}
 }

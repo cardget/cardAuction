@@ -109,10 +109,10 @@ public class CommunityDAO {
 	public int insertComment(ReplieDTO replie) {
 		return sqlSession.insert(namespace + "insertComment", replie);
 	}
-	
+
 	// 댓글 삭제
 	public int deleteReplies(Integer replieId) {
-		return sqlSession.delete(namespace+"deleteReplies",replieId);
+		return sqlSession.delete(namespace + "deleteReplies", replieId);
 	}
 
 	// 세션으로 닉네임 조회
@@ -124,4 +124,5 @@ public class CommunityDAO {
 	public UserDTO selectNicknameByUserDTOId(String userid) {
 		return sqlSession.selectOne(namespace + "selectNicknameByUserDTOId", userid);
 	}
+
 }

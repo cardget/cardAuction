@@ -43,8 +43,7 @@
 				</div>
 			</div>
 			<div class="mb-3 mt-3">
-				<p class="form-control comment-textarea" id="comment">제가 OO 물품을
-					낙찰 받아서 중개로 상품을 받고 싶습니다. 결제 방식에 대해서 문의드리고 싶습니다.어쩌구저쩌구</p>
+				<p class="form-control comment-textarea" id="comment">${inquiry.ctt}</p>
 				<br>
 				<div class="form-inline mb-3 mt-3">
 					<div class="input-group col" id="answerHead">
@@ -52,8 +51,7 @@
 					</div>
 				</div>
 			</div>
-			<p class="form-control comment-textarea" id="answer">OOO님 안녕하세요.
-				문의 답변 드립니다어쩌구저쩌구 asdasd a sdasd</p>
+			<p class="form-control comment-textarea" id="answer">${inquiry.answer}</p>
 		</form>
 	</div>
 </body>

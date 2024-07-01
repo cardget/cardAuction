@@ -19,4 +19,5 @@ public class BoardListDTO {
 	private int recommend;
 	private int views;
 	private String image;
+	private String profile_image;
 }

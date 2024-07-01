@@ -122,6 +122,15 @@ p {
 	margin-right:5px;
 }
 
+#ImageLogo1 {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%; /* 이미지를 원형으로 */
+    object-fit: cover; /* 이미지를 원 안에 꽉 차도록 조절*/
+    margin-right: 5px;
+}
+
+
 .d-inline {
     margin-top: 5px;
     font-size: 0.8rem;

@@ -55,20 +55,30 @@ public class InquiryController {
 	// 문의 글 상세조회
 	@GetMapping("/InquiryDetail.do")
 	public String InquiryDetail(Integer questId, Model model, HttpSession session) {
-		System.out.println("/inquiry/InquiryDetail.do 요청");
+	    System.out.println("/inquiry/InquiryDetail.do 요청");
 
-		// user 닉네임
-		String userid = (String) session.getAttribute("userid");
-		if (userid != null) {
-			UserDTO user = iService.selectNicknameByUserVOId(userid);
-			session.setAttribute("user", user); // 세션에 user 객체 저장
-		}
+	    // user 닉네임
+	    String userid = (String) session.getAttribute("userid");
+	    if (userid != null) {
+	        UserDTO user = iService.selectNicknameByUserVOId(userid);
+	        session.setAttribute("user", user); // 세션에 user 객체 저장
+	    }
 
-		System.out.println(iService.selectByInquiryId(questId));
-		model.addAttribute("inquiry", iService.selectByInquiryId(questId));
-		return "inquiry/InquiryDetail";
+	    QuestionDTO inquiry = iService.selectByInquiryId(questId);
+	    String writer = inquiry.getUser_id();
+	    Integer isSecret = inquiry.getIs_secret(); // 1: 비밀글, 0: 공개글
+	    
+	    if (isSecret == 1) { // 비밀글일 경우
+	        if (userid == null || !userid.equals(writer)) { // 로그인 안했거나 작성자가 아니면
+	            model.addAttribute("errorMessage", "열람할 수 없습니다.");
+	            return "inquiry/InquirySelect";
+	        }
+	    }
 
+	    model.addAttribute("inquiry", inquiry);
+	    return "inquiry/InquiryDetail";
 	}
+
 
 	// 문의 글 등록 페이지 로드
 	@GetMapping("/InquiryInsert.do")
@@ -113,7 +123,7 @@ public class InquiryController {
 			} catch (java.io.IOException e) {
 				e.printStackTrace();
 				// 이미지 업로드 중 오류 발생 시 처리
-				return "redirect:BoardInsertForm.do?error=upload";
+				return "redirect:InquiryInsertForm.do?error=upload";
 			}
 		}
 		System.out.println(question);
