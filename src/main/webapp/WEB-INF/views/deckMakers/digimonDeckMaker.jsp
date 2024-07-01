@@ -169,7 +169,15 @@
     		data:{kind:"D",deckTitle:$("#deckTitle").val(),
     			commentBox:$("#commentBox").val(),
     		    imgList : arr	
-    		}
+    		},
+    		success: function(response) {
+    			alert("등록에 성공했습니다!")
+                window.location.href = "${path}/deckMakers/digimonDeckListMain.do";
+            },
+            error: function(xhr, status, error) {
+                console.error("Error:", error);
+                alert("덱 등록에 실패했습니다. 다시 시도해 주세요.");
+            }
     	});
     }
 		function toggleFilterOptions() {

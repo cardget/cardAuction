@@ -111,12 +111,13 @@
 	    console.log('Fetching details for cardId:', cardId);
 
 	    $.ajax({
-	        url: '${path}/deckMakers/getPCardDetails.do',
+	        url: '${path}/deckMakers/getCardDetails.do',
 	        type: 'GET',
 	        data: { card_id: cardId },
 	        dataType: 'json',
 	        success: function(data) {
 	            console.log('Response data:', data);
+	            //document.getElementById('banner').src = data.card_image;
 	            document.getElementById('cardImage').src = data.card_image;
 	            document.getElementById('cardName').textContent = data.card_name;
 	            document.getElementById('cardType').textContent = '타입 : ' + data.card_type;
@@ -135,6 +136,26 @@
 			showCardDetails(firstCardId);
 		}
 	});
+	
+	
+	var container = document.querySelector('.card-img')
+	var overlay = document.querySelector('.overlay')
+	container.addEventListener('mousemove', function (e) {
+	  var x = e.offsetX
+	  var y = e.offsetY
+	  console.log(x, y);
+	  var rotateY = -1 / 5 * x + 20
+	  var rotateX = 4 / 30 * y - 20
+
+	  overlay.style = `background-position : ${x / 5 + y / 5}%; filter : opacity(${x / 200}) brightness(1.2)`
+
+	  container.style = `transform : perspective(350px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`
+	})
+
+	container.addEventListener('mouseout', function () {
+	  overlay.style = 'filter : opacity(0)'
+	  container.style = 'transform : perspective(350px) rotateY(0deg) rotateX(0deg)'
+	})
 	
 	</script>
 </body>

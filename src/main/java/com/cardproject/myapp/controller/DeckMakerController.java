@@ -61,6 +61,29 @@ public class DeckMakerController {
 		return "deckMakers/pokemonDeckListMain";
 	}
 
+	@GetMapping("/yugiohDeckListMain.do")
+	public String getYDecks(Model model, @RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "3") int pageSize,
+			@RequestParam(value = "sort", required = false, defaultValue = "create_date") String sort,
+			@RequestParam(required = false) String query) {
+
+		int cat = 2; // 이부분 바뀜
+		int totalDecks = deckMakerService.getTotalDeckCount(cat, query); // 공통
+		int totalPages = (int) Math.ceil((double) totalDecks / pageSize);// 공통
+
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("pageSize", pageSize);
+
+		List<Map<String, Object>> decks = deckMakerService.getYDecks(cat, page, pageSize, query, sort);
+
+		model.addAttribute("decks", decks);
+		model.addAttribute("query", query);
+		model.addAttribute("sort", sort);
+
+		return "deckMakers/yugiohDeckListMain";
+	}
+
 	@Autowired
 	private DeckMakerService deckMakerService;
 	@Autowired
@@ -277,12 +300,42 @@ public class DeckMakerController {
 	// deckDetail
 	// 포켓몬 덱정보
 	@GetMapping("/pokemonDeckListDetail.do")
-	public String getDeckDetail(@RequestParam("deck_id") int deckId, Model model) {
-		List<Map<String, Object>> cards = deckMakerService.getCardsByDeckId(deckId);
+	public String getPDeckDetail(@RequestParam("deck_id") int deckId, Model model) {
+		List<Map<String, Object>> cards = deckMakerService.getPCardsByDeckId(deckId);
 		Map<String, Object> deck = deckMakerService.getDeckById(deckId);
 		model.addAttribute("cards", cards);
 		model.addAttribute("deck", deck);
 		return "deckMakers/pokemonDeckListDetail";
+	}
+
+	// 유희왕
+	@GetMapping("/yugiohDeckListDetail.do")
+	public String getYDeckDetail(@RequestParam("deck_id") int deckId, Model model) {
+		List<Map<String, Object>> cards = deckMakerService.getYCardsByDeckId(deckId);
+		Map<String, Object> deck = deckMakerService.getDeckById(deckId);
+		model.addAttribute("cards", cards);
+		model.addAttribute("deck", deck);
+		return "deckMakers/yugiohDeckListDetail";
+	}
+
+	// 디지몬
+	@GetMapping("/digimonDeckListDetail.do")
+	public String getDDeckDetail(@RequestParam("deck_id") int deckId, Model model) {
+		List<Map<String, Object>> cards = deckMakerService.getDCardsByDeckId(deckId);
+		Map<String, Object> deck = deckMakerService.getDeckById(deckId);
+		model.addAttribute("cards", cards);
+		model.addAttribute("deck", deck);
+		return "deckMakers/digimonDeckListDetail";
+	}
+
+	// 원피스
+	@GetMapping("/onepieceDeckListDetail.do")
+	public String getODeckDetail(@RequestParam("deck_id") int deckId, Model model) {
+		List<Map<String, Object>> cards = deckMakerService.getOCardsByDeckId(deckId);
+		Map<String, Object> deck = deckMakerService.getDeckById(deckId);
+		model.addAttribute("cards", cards);
+		model.addAttribute("deck", deck);
+		return "deckMakers/onepieceDeckListDetail";
 	}
 
 	// 추천(공통)
@@ -297,11 +350,32 @@ public class DeckMakerController {
 		return response;
 	}
 
-	// 카드변경
-	@GetMapping("/getCardDetails.do")
+	// 카드변경 포켓몬
+	@GetMapping("/getPCardDetails.do")
 	@ResponseBody
-	public PokemonDTO getCardDetails(@RequestParam("card_id") String cardId) {
-		return deckMakerService.getCardDetailsById(cardId);
+	public PokemonDTO getPCardDetails(@RequestParam("card_id") String cardId) {
+		return deckMakerService.getPCardDetailsById(cardId);
+	}
+
+	// 유희왕
+	@GetMapping("/getYCardDetails.do")
+	@ResponseBody
+	public YugiohDTO getYCardDetails(@RequestParam("card_id") String cardId) {
+		return deckMakerService.getYCardDetailsById(cardId);
+	}
+
+	//디지몬
+	@GetMapping("/getDCardDetails.do")
+	@ResponseBody
+	public DigimonDTO getDCardDetails(@RequestParam("card_id") String cardId) {
+		return deckMakerService.getDCardDetailsById(cardId);
+	}
+
+	// 원피스
+	@GetMapping("/getOCardDetails.do")
+	@ResponseBody
+	public OnepieceDTO getOCardDetails(@RequestParam("card_id") String cardId) {
+		return deckMakerService.getOCardDetailsById(cardId);
 	}
 
 }
