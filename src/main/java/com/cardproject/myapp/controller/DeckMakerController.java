@@ -38,12 +38,6 @@ import kotlin.internal.RequireKotlin;
 @RequestMapping("/deckMakers")
 public class DeckMakerController {
 
-	@GetMapping("/pokemonDeckListDetail.do")
-	public void auctionMain() {
-		System.out.println("pokemonDeckListDetail page");
-
-	}
-
 	@GetMapping("/pokemonDeckListMain.do")
 	public String getPDecks(Model model, @RequestParam(defaultValue = "1") int page,
 			@RequestParam(defaultValue = "3") int pageSize,
@@ -281,18 +275,16 @@ public class DeckMakerController {
 	}
 
 	// deckDetail
-	public class pDeckDetailController {
-
 		@GetMapping("/pokemonDeckListDetail.do")
 		public String getDeckDetail(@RequestParam("deck_id") int deckId, Model model) {
 			List<Map<String, Object>> cards = deckMakerService.getCardsByDeckId(deckId);
 	        Map<String, Object> deck = deckMakerService.getDeckById(deckId);
 	        model.addAttribute("cards", cards);
 	        model.addAttribute("deck", deck);
-			return "deckMakers/pokemonDeckListDetail.do";
+			return "deckMakers/pokemonDeckListDetail";
 		}
 		
-		@PostMapping("/recommendDeck.do")
+		@PostMapping(value = "/recommendDeck.do", produces = "application/json")
 	    @ResponseBody
 	    public Map<String, Object> recommendDeck(@RequestBody Map<String, Object> payload) {
 	        int deckId = (int) payload.get("deck_id");
@@ -301,6 +293,5 @@ public class DeckMakerController {
 	        response.put("success", success);
 	        return response;
 	    }
-	}
 
 }

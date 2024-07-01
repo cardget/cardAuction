@@ -129,6 +129,7 @@ public class DeckMakerService {
     }
 
     public Map<String, Object> getDeckById(int deckId) {
+    	System.out.println("deckid=" + deckId);
         return deckMakerDAO.getDeckById(deckId);
     }
 

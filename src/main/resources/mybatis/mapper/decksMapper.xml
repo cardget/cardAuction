@@ -187,7 +187,7 @@
 	<!-- deckDetail -->
 	<select id="getCardsByDeckId" parameterType="int"
 		resultType="map">
-		SELECT p.card_image
+		SELECT card_image
 		FROM deckSources ds
 		JOIN pokemon p ON ds.p_card = p.card_id
 		WHERE ds.deck_id = #{deck_id}
@@ -209,7 +209,7 @@
 	</select>
 
 	<select id="getDeckById" parameterType="int" resultType="map">
-		SELECT deck_id, deck_title, create_date, user_id, recommend, comment
+		SELECT deck_id, deck_title, create_date, user_id, recommend, cmt
 		FROM decks
 		WHERE deck_id = #{deck_id}
 	</select>
