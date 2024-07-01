@@ -285,7 +285,7 @@ public class DeckMakerController {
 		return "deckMakers/pokemonDeckListDetail";
 	}
 
-	// 추천
+	// 추천(공통)
 	@PostMapping(value = "/recommendDeck.do", produces = "application/json")
 	@ResponseBody
 	public Map<String, Object> recommendDeck(@RequestBody Map<String, Integer> requestData) {
