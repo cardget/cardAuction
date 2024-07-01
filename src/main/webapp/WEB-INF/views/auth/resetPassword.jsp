@@ -9,6 +9,7 @@
 <c:set var="path" value="${pageContext.servletContext.contextPath}"/>
 <link rel="stylesheet" href="${path}/resources/css/resetPassword.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Apple+SD+Gothic+Neo&display=swap">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="${path}/resources/js/signUp.js"></script>
 
 </head>
@@ -39,7 +40,7 @@
 			    </div>
 			    <div class="form-group">
 			    	<label for="password" class="input-label">새 비밀번호</label>
-			    	<input type="password" id="pw" name="pw" required class="input-field" onkeyup="checkPasswordMatch()" required>
+			    	<input type="password" id="pw" name="password" required class="input-field" onkeyup="checkPasswordMatch()" required>
 			    </div>
 			    <div class="form-group">
 			        <label for="confirmPassword" class="input-label">비밀번호 확인</label>
