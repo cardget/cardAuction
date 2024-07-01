@@ -30,8 +30,8 @@
 						</c:otherwise>
 					</c:choose>
                 </div>
-                <input type="file" id="profile_image" name="profile_image_name" value="${user.profile_image}" onchange="previewImage(this)" accept="image/*" class="input-field" style="margin-left:10px;" multiple>
-		    	<button type="button" onclick="restProfileImage()" class="check-button">삭제</button>
+                <input type="file" id="profile_image" name="profile_image_name" onchange="previewImage(this, '${path}')" accept="image/*" class="input-field" style="margin-left:10px;" multiple>
+			    <button type="button" onclick="resetProfileImage('${path}')" class="check-button">삭제</button>
             </div>
             <hr class="form-divider">
             <div class="form-group">

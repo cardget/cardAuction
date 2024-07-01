@@ -1,6 +1,14 @@
 
 // twilio를 활용한 SMS 본인인증 API 
 
+// 전화번호 형식 변경
+function formatPhoneNumber(phoneNumber) {
+    if (phoneNumber.startsWith("0")) {
+        return "+82" + phoneNumber.substring(1);
+    }
+    return phoneNumber;
+}
+
 function sendCode() {
     const phoneNumber = document.getElementById('phone_number').value;
     if (phoneNumber === "") {
@@ -37,8 +45,8 @@ function verifyCode() {
         },
         body: `phoneNumber=${encodeURIComponent(phoneNumber)}&code=${encodeURIComponent(code)}`
     })
-    .then(response => response.text())
-    .then(data => {
-        document.getElementById('result').innerText = data === 'true' ? "인증 성공" : "인증 실패";
+    .then(response=>response.text())
+    .then(data => {   
+        document.getElementById('result').innerText = data == "1" ? "인증 성공" : "인증 실패rrrr";
     });
 }

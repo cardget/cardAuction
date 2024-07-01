@@ -69,8 +69,9 @@ public class AuthController {
 	}
 
 	@PostMapping("/login.do")
-	public String loginCheck(@RequestParam("userid") String userid, @RequestParam("password") String password,
-			HttpSession session, HttpServletRequest request) {
+	public String loginCheck(@RequestParam("userid") String userid,
+							 @RequestParam("password") String password,
+							 HttpSession session) {
 
 		UserDTO user = aService.login(userid, password);		
 		
@@ -80,28 +81,16 @@ public class AuthController {
 		}else if(user.getIs_able()==0) {
 			session.setAttribute("loginResult", "Login Failure: Your account is disabled.");
 			return "redirect:login.do";
-		}
-		
+		}		
 		else {
 			// login success
 			session.setAttribute("loginResult", "Login Success");
 			session.setAttribute("userid", user.getUser_id());
-
-//			String lastRequest = (String) session.getAttribute("lastRequest");
-//			String queryString = (String) session.getAttribute("queryString");
-//			String goPage;
-//			if (lastRequest == null) {
-//				goPage = "../";
-//			} else {
-//				int length = request.getContextPath().length();
-//				goPage = lastRequest.substring(length);
-//				if (queryString != null)
-//					goPage = goPage + "?" + queryString;
-//			}
 			
 			return "redirect:../main.do";
 		}
 	}
+	
 	@GetMapping("/logout.do")
 	public String logout(HttpSession session) {
 		session.invalidate();

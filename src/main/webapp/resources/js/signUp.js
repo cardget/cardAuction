@@ -1,24 +1,31 @@
 
-$(function(){
-			$("form").on("submit", f);
-			$("#userid").val(localStorage.getItem("userid"));
-			$("#password").val(localStorage.getItem("password"));
-			var checkStatus = localStorage.getItem("checkStatus");
-			if (checkStatus == 1){
-				$("#remember").prop("checked", true);
-			}
-		});
-	function f(){
-		var check = $("#remember").prop("checked");
-		if(check){
-			localStorage.setItem("userid", $("#userid").val());
-			localStorage.setItem("password", $("#password").val());
-			localStorage.setItem("checkStatus", 1);
-		}else {
-			localStorage.removeItem("userid");
-			localStorage.removeItem("password");
-			localStorage.removeItem("checkStatus");
-		}
+// 로그인 정보 기억
+$(function() {
+    // 페이지가 로드될 때 로컬 스토리지에서 아이디와 체크박스 상태를 복원
+    $("#userid").val(localStorage.getItem("userid"));
+    $("#password").val(localStorage.getItem("password"));
+    var checkStatus = localStorage.getItem("checkStatus");
+    if (checkStatus === "1") {
+        $("#remember").prop("checked", true);
+    }
+    
+    // 폼 제출 이벤트 핸들러
+    $("form").on("submit", toLocalStorage);
+});
+
+function toLocalStorage(event) {
+    var check = $("#remember").prop("checked");
+    if (check) {
+        // 체크박스가 선택된 경우 로컬 스토리지에 아이디 저장
+        localStorage.setItem("userid", $("#userid").val());
+        localStorage.setItem("password", $("#password").val());
+        localStorage.setItem("checkStatus", "1");
+    } else {
+        // 체크박스가 선택되지 않은 경우 로컬 스토리지에서 아이디 삭제
+        localStorage.removeItem("userid");
+        localStorage.removeItem("password");
+        localStorage.removeItem("checkStatus");
+    }
 }
 
 
@@ -104,10 +111,6 @@ function checkAllAgreed() {
     }
 }
 
-
-
-
-
 // 프로필 이미지 미리보기
 function previewImage(input, path) {
     if (input.files && input.files[0]) {
@@ -128,7 +131,8 @@ function previewImage(input, path) {
 // 기본 이미지로 재설정
 function resetProfileImage(path) {
     document.getElementById('profile-image').src = path + '/resources/image/profile.png';
-    document.getElementById('profile-image-hidden').value = null; // null 값을 설정하여 DB에 저장
+    document.getElementById('profile_image').value = ""; // 파일 선택 입력값 초기화
+    document.getElementById('profile_image_hidden').value = null; // hidden input 값 초기화
 }
 
 //폼 제출시 호출됨

@@ -13,6 +13,7 @@
 <script src="${path}/resources/js/signUp.js"></script>
 <script src="${path}/resources/js/verificationSMS_API.js"></script>
 <script src="${path}/resources/js/mapAPI.js"></script>
+<script src="${path}/resources/js/verificationEmail_API.js"></script>
 
 </head>
 <body>
@@ -98,9 +99,12 @@
 		            <option value="daum.net">daum.net</option>
 		            <option value="nate.com">nate.com</option>
 		        </select>
+		        <button type="button" id="mail-Check-Btn" class="check-button" onclick="sendVerificationEmail()" style="margin-left: 10px;">인증번호 발송</button>
 		    </div>
 		    <!-- 이메일을 결합하여 숨겨진 필드에 저장 -->
-            <input type="hidden" id="email" name="email">
+            <input type="hidden" id="email" name="email">            
+            <input type="text" id="verificationCodeEmail" class="input-field" style="margin-left: 190px;" placeholder="인증번호 입력">
+		    <button type="button" class="check-button" onclick="verifyCodeEmail()">확인</button>   
 		    
 		    <hr class="form-divider"> 
 		    <div class="form-group address-group">
@@ -116,13 +120,13 @@
 		    </div>
 		    <hr class="form-divider">
 		    <div class="form-group">
-		        <label for="profile_image" class="input-label">프로필 이미지 등록</label>
-		        <div class="profile-image-container">
-		            <img id="profile-image" src="${path}/resources/image/profile.png" alt="Profile Image" onclick="document.getElementById('profile_image_input').click()">
-		        </div>
-		        <input type="file" id="profile_image" name="profile_image_name" onchange="previewImage(this)" accept="image/*" class="input-field" style="margin-left:10px;" multiple required>
-		    	<button type="button" onclick="resetProfileImage('${path}')" class="check-button">삭제</button>
-		    </div>
+			    <label for="profile_image" class="input-label">프로필 이미지 등록</label>
+			    <div class="profile-image-container">
+			        <img id="profile-image" src="${path}/resources/image/profile.png" alt="Profile Image" onclick="document.getElementById('profile_image').click()">
+			    </div>
+			    <input type="file" id="profile_image" name="profile_image_name" onchange="previewImage(this, '${path}')" accept="image/*" class="input-field" style="margin-left:10px;" multiple required>
+			    <button type="button" onclick="resetProfileImage('${path}')" class="check-button">삭제</button>
+			</div>
 		    <hr class="form-divider">
 		    <div class="form-group">
 		        <label class="input-label">알림 서비스</label>

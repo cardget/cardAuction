@@ -1,19 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-   
+
 <mapper namespace="com.cardproject.myapp.dao">
 
 	<!-- 문의 리스트 조회 -->
-	<select id="selectInquiryList" resultType="questionvo">
+	<select id="selectInquiryList" parameterType="map"
+		resultType="questionvo">
+		SELECT *
+		FROM (
 		SELECT
 		Q.QUEST_ID,
 		Q.IS_SECRET,
 		Q.TITLE,
 		Q.CREATE_DATE,
-		U.NICKNAME
+		U.NICKNAME,
+		ROW_NUMBER() OVER (
+		ORDER BY Q.CREATE_DATE
+		DESC
+		) AS ROWNUMBER
 		FROM
 		QUESTIONS Q
 		JOIN USERS U ON Q.USER_ID = U.USER_ID
+		) subquery
+		WHERE ROWNUMBER BETWEEN #{offset} + 1 AND #{offset} +
+		#{pageSize}
 	</select>
+
+	<!-- 총 문의 글 수 -->
+	<select id="getTotalInquiryCount" resultType="int">
+		SELECT COUNT(*)
+		FROM
+		QUESTIONS
+	</select>
+
+	<!-- 게시글 상세 조회 -->
+	<select id="selectByQuestionId" parameterType="int"
+		resultType="questionvo">
+		SELECT
+		QUESTIONS.QUEST_ID,
+		QUESTIONS.TITLE,
+		USERS.NICKNAME,
+		QUESTIONS.CREATE_DATE,
+		QUESTIONS.CTT,
+		QUESTIONS.IMAGE,
+		QUESTIONS.IS_SECRET
+		FROM
+		QUESTIONS
+		JOIN
+		USERS ON
+		QUESTIONS.USER_ID = USERS.USER_ID
+		WHERE
+		QUEST_ID=#{questId}
+	</select>
+
+	<!-- 문의 글 등록 -->
+	<insert id="insertInquiry" parameterType="questionvo">
+		INSERT INTO
+		QUESTIONS(QUEST_ID, TITLE, CTT, CREATE_DATE, USER_ID, IS_SECRET,
+		IMAGE, ANSWER)
+		VALUES (QUEST_SEQ.NEXTVAL, #{title}, #{ctt}, SYSDATE,
+		#{user_id},
+		#{is_secret}, #{image}, null)
+	</insert>
+
+	<!-- 세션으로 닉네임 UserDTO로 받아와줘야 할 때 -->
+	<select id="selectNicknameByUserVOId" parameterType="String"
+		resultType="uservo">
+		SELECT NICKNAME FROM USERS WHERE USER_ID=#{userid}
+	</select>
+
+	<!-- 비밀 글 본인 확인 -->
+	<select id="secretBoardCheckById" parameterType="int"
+		resultType="String">
+		SELECT USER_ID
+		FROM
+		QUESTIONS
+		WHERE
+		QUEST_ID=#{questid}
+	</select>
+	
+	
 </mapper>

@@ -18,10 +18,10 @@
 		<c:choose>
 			<c:when test="${empty user.profile_image}">
 				<img src="${path}/resources/images/default/defaultprofile.png"
-					alt="프로필이미지" height="150">
+					alt="프로필이미지" height="150" class="profile-image">
 			</c:when>
 			<c:otherwise>
-				<img src="${user.profile_image}" alt="프로필이미지" height="150">
+				<img src="${user.profile_image}" alt="프로필이미지" height="150"  class="profile-image">
 			</c:otherwise>
 		</c:choose>
 		<h2>${user.nickname}</h2>

@@ -14,12 +14,12 @@ import com.cardproject.myapp.service.SmsService;
 
 @RestController
 @RequestMapping("/api")
-public class VerificationController {
+public class SmsController {
 	@Autowired
     private final SmsService smsService;
 	
 	@Autowired
-    public VerificationController(SmsService smsService) {
+    public SmsController(SmsService smsService) {
         this.smsService = smsService;
     }
 
@@ -39,15 +39,16 @@ public class VerificationController {
     }
 
 	@PostMapping("/verify-code")
-    public ResponseEntity<Boolean> verifyCode(@RequestParam String phoneNumber, @RequestParam String code) {
+    public ResponseEntity<String> verifyCode(@RequestParam String phoneNumber, @RequestParam String code) {
         try {
             // URL 인코딩된 전화번호를 디코딩
             String decodedPhoneNumber = URLDecoder.decode(phoneNumber, StandardCharsets.UTF_8.name());
             String formattedPhoneNumber = formatPhoneNumber(decodedPhoneNumber);
             boolean isValid = smsService.verifyCode(formattedPhoneNumber, code);
-            return ResponseEntity.ok(isValid);
+            return ResponseEntity.ok(isValid?"1":"0");            
+           
         } catch (Exception e) {
-            return ResponseEntity.status(400).body(false);
+            return ResponseEntity.status(400).body("Failed to verifyCodee: " + e.getMessage());        	 
         }
     }
 	
