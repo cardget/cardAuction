@@ -165,7 +165,7 @@
 			</div>
 
 			<hr class="hr1">
-			<div class="detail-container">
+			<div class="detail-container2">
 
 				<div class="card-info">카드 정보 : ${itemDetailOne.card_name}</div>
 				<div class="auction-start-date">경매등록시간 :

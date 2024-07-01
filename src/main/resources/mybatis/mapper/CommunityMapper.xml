@@ -96,6 +96,7 @@
 	<select id="selectByCommId" parameterType="int"
 		resultType="boardlistvo">
 		SELECT
+		USERS.PROFILE_IMAGE,
 		COMMUNITY.COMM_ID,
 		COMMUNITY.CAT,
 		COMMUNITY.TAG,
@@ -214,4 +215,5 @@
 		resultType="uservo">
 		SELECT NICKNAME FROM USERS WHERE USER_ID=#{userid}
 	</select>
+	
 </mapper>

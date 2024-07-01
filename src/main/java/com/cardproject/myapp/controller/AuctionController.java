@@ -88,7 +88,9 @@ public class AuctionController {
 	}
 
 	@PostMapping("/auctionInsert.do")
-	public String insertItem(MultipartHttpServletRequest request, Model model, ItemDTO item) {
+	public String insertItem(MultipartHttpServletRequest request, Model model, ItemDTO item,HttpSession session) {
+		String userId = (String) session.getAttribute("userid");
+		item.setUser_id(userId);
 		List<MultipartFile> files = request.getFiles("images");
 		List<String> uploadedImageUrls = new ArrayList<>();
 		if (files.isEmpty()) {

@@ -43,7 +43,7 @@ public class SmsService {
             Message message = Message.creator(
                     new PhoneNumber(to),
                     new PhoneNumber(fromPhoneNumber),
-                    "인증번호 [" + verificationCode + "]"
+                    "카드득 인증번호 [" + verificationCode + "]"
             ).create();
             logger.info("Message SID: {}", message.getSid());
         } catch (Exception e) {

@@ -25,10 +25,10 @@
 						<c:choose>
 							<c:when test="${empty user.profile_image}">
 								<img src="${path}/resources/images/default/defaultprofile.png"
-									alt="프로필이미지" height="150">
+									alt="프로필이미지" height="150"  class="profile-image">
 							</c:when>
 							<c:otherwise>
-								<img src="${user.profile_image}" alt="프로필이미지" height="150">
+								<img src="${user.profile_image}" alt="프로필이미지" height="150"  class="profile-image">
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -60,61 +60,6 @@
 		</div>
 		<div class="main">
 			<div class="main-header">
-				<!--  
-				<div class="dropdown">
-					<a href="#" class="dropdown-toggle"> 
-						<img src="${path}/resources/icon/uncheckedchat.png" alt="채팅" height=30>
-					</a>
-					<div class="dropdown-content">
-						<div class="noti-brief">
-							<div class="noti-image">
-								<img src="${path}/resources/images/test/pikachucard.png" alt="Product Image">
-							</div>
-							<div class="noti-content">
-								<h3>[포켓몬] 1998 피카츄 일러스트레이터...</h3>
-								<p>네고가능한가요?</p>
-							</div>
-						</div>
-						<div class="noti-brief">
-							<div class="noti-image">
-								<img src="${path}/resources/images/test/pikachucard.png" alt="Product Image">
-							</div>
-							<div class="noti-content">
-								<h3>[포켓몬] 1998 피카츄 일러스트레이터...</h3>
-								<p>이거 경맨데요?</p>
-							</div>
-						</div>
-						<div class="noti-brief">
-							<div class="noti-image">
-								<img src="${path}/resources/images/test/pikachucard.png" alt="Product Image">
-							</div>
-							<div class="noti-content">
-								<h3>[포켓몬] 1998 피카츄 일러스트레이터...</h3>
-								<p>너무 비싸게 낙찰돼서요 ㅠ</p>
-							</div>
-						</div>
-						<div class="noti-brief">
-							<div class="noti-image">
-								<img src="${path}/resources/images/test/pikachucard.png" alt="Product Image">
-							</div>
-							<div class="noti-content">
-								<h3>[포켓몬] 1998 피카츄 일러스트레이터...</h3>
-								<p>차단하고 신고할게요</p>
-							</div>
-						</div>
-						<div class="noti-brief">
-							<div class="noti-image">
-								<img src="${path}/resources/images/test/pikachucard.png" alt="Product Image">
-							</div>
-							<div class="noti-content">
-								<h3>[포켓몬] 1998 피카츄 일러스트레이터...</h3>
-								<p>저도 차단하고 신고할게요</p>
-							</div>
-						</div>
-						<a class="mainColor" href="#">모든 채팅 보기</a>
-					</div>
-				</div>
-				-->
 				<div class="dropdown">
 					<a href="#" class="dropdown-toggle"> 
 						<c:choose>
@@ -158,10 +103,10 @@
 					<c:choose>
 						<c:when test="${empty user.profile_image}">
 							<img src="${path}/resources/images/default/defaultprofile.png"
-								alt="프로필이미지" height="150">
+								alt="프로필이미지" height="150" class="profile-image">
 						</c:when>
 						<c:otherwise>
-							<img src="${user.profile_image}" alt="프로필이미지" height="150">
+							<img src="${user.profile_image}" alt="프로필이미지" height="150" class="profile-image">
 						</c:otherwise>
 					</c:choose>
 					<h2>${user.nickname}</h2>

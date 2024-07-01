@@ -3,7 +3,7 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
 <mapper namespace = "com.cardproject.myapp.dao">
-	<select id="selectTradeById" parameterType = "Integer" resultType="tradevo">
+	<select id="selectTradeById" parameterType="Integer" resultType="tradevo">
 		SELECT 
 			t.TRADE_ID,
 			t.USER_ID,
@@ -25,7 +25,42 @@
 		WHERE t.TRADE_ID = #{tradeId}
 	</select>
 	
-	<insert id="usingPoint" parameterType = "Map">
+	<insert id="insertPayment" parameterType="paymentvo">
+		INSERT 
+		INTO PAYMENTS (
+			IMP_UID,    
+			TRADE_ID,   
+			APPLY_NUM,  
+			BANK_NAME,  
+			CARD_NAME,  
+			CARD_NUMBER,
+			PAID_AMOUNT,
+			PAID_AT,    
+			PAY_METHOD, 
+			PG_PROVIDER,
+			PG_TID,     
+			PG_TYPE,    
+			RECEIPT_URL,
+			STATUS,
+			)
+		VALUES (
+			#{imp_uid},
+			#{trade_id},
+			#{apply_num},
+			#{bank_name},
+			#{card_name},
+			#{paid_amount},
+			TO_DATE('1970-01-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS') + NUMTODSINTERVAL(#{paid_at}, 'SECOND'),
+        	#{pay_method},
+			#{pg_provider},
+			#{pg_tid},
+			#{pg_type},
+			#{receipt_url},
+			#{status}
+		)
+	</insert>
+	
+	<insert id="usingPoint" parameterType="Map">
 		INSERT INTO 
 		POINTS (
 			POINT_ID, 
@@ -36,15 +71,21 @@
 			IS_ADD, 
 			CAT) 
 		VALUES (
-			TRADE_SEQ.NEXTVAL, 
+			POINT_SEQ.NEXTVAL, 
 			#{amount}, 
 			SYSDATE, 
 			#{cmt}, 
 			#{userid}, 
-			'-1', 
-			'5'
+			-1, 
+			5
 		)
-
-			
 	</insert>
+	
+	<update id="updatePaid" parameterType = "int">
+		UPDATE TRADES
+		SET
+			IS_SUCCESS = 1
+		WHERE
+			TRADE_ID = #{tradeId}
+	</update>
 </mapper>

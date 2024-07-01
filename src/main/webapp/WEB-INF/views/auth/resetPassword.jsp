@@ -39,13 +39,13 @@
 			    </div>
 			    <div class="form-group">
 			    	<label for="password" class="input-label">새 비밀번호</label>
-			    	<input type="password" id="pw" name="password" class="input-field" onkeyup="checkPasswordMatch()" required>
+			    	<input type="password" id="pw" name="pw" required class="input-field" onkeyup="checkPasswordMatch()" required>
 			    </div>
 			    <div class="form-group">
 			        <label for="confirmPassword" class="input-label">비밀번호 확인</label>
 			        <input type="password" id="confirmPassword" name="confirmPassword" class="input-field" onkeyup="checkPasswordMatch()" required>
 			        <span id="passwordMessage" style="margin-left: 120px; margin-top: 8px; font-size: 10px;"></span>
-			        <h6>※ 영문, 숫자, 특수문자를 함께 사용하면(8자 이상 16자 이하)보다 안전합니다.</h6>			        
+			        <h6>※ 영문/숫자/특수문자(!,@,#,$,~)를 2가지 이상 포함하여 6~30자로 작성해주세요.</h6>			        
 			    </div>
 			    
 			</div>							

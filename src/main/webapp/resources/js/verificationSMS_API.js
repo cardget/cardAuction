@@ -45,8 +45,8 @@ function verifyCode() {
         },
         body: `phoneNumber=${encodeURIComponent(phoneNumber)}&code=${encodeURIComponent(code)}`
     })
-    .then(response => response.text())
-    .then(data => {
-        document.getElementById('result').innerText = data === 'true' ? "인증 성공" : "인증 실패";
+    .then(response=>response.text())
+    .then(data => {   
+        document.getElementById('result').innerText = data == "1" ? "인증 성공" : "인증 실패rrrr";
     });
 }

@@ -93,7 +93,9 @@
 											if (index < 5) { // 최대 5개만 먼저 보여줌
 												var card = '<div class="card mb-3">'
 														+ '<div class="card-body d-flex">'
-														+ '<img src="../resources/images/default/defaultprofile.png" alt="이미지 설명" class="comment-image me-2">'
+														+ '<img src="'
+														+ board.profile_image
+														+ '"../resources/images/default/defaultprofile.png" alt="이미지" class="comment-image me-2">'
 														+ '<div>'
 														+ '<h5 class="card-title">'
 														+ board.nickname
@@ -132,7 +134,9 @@
 																	if (index >= 5) { // 나머지 댓글들 불러오기
 																		var card = '<div class="card mb-3">'
 																				+ '<div class="card-body d-flex">'
-																				+ '<img src="../resources/images/default/defaultprofile.png" alt="이미지 설명" class="comment-image me-2">'
+																				+ '<img src='
+																				+ board.profile_image
+																				+ 'alt="이미지" class="comment-image me-2">'
 																				+ '<div>'
 																				+ '<h5 class="card-title">'
 																				+ board.nickname
@@ -203,7 +207,7 @@
 				}
 			},
 			error : function(data) {
-				alert("오류가 발생했습니다");
+				alert("로그인 후 이용해주세요");
 			}
 		});
 	}
@@ -270,7 +274,7 @@
 
 	<div class="container2 custom-container mt-3">
 		<div class="right-aligned-button">
-			<input type="submit" class="btn btn-primary" value="목록"
+			<input type="submit" class="btn btn-primary" value="게시글 목록"
 				onClick="location.href='${path}/community/BoardSelect.do'">
 		</div>
 		<div class="card p-3 mt-3">
@@ -282,7 +286,7 @@
 					class="form-inline mb-3 mt-3 d-flex justify-content-between align-items-center">
 					<div class="d-flex align-items-center">
 						<img id="ImageLogo1"
-							src="../resources/images/default/defaultprofile.png" alt="1"
+							src="${board.profile_image}" alt="1"
 							class="me-2">
 						<h2 class="me-2 mb-0" id="writer">${board.nickname}</h2>
 						<a href="" class="d-inline">${board.nickname} 님의 게시글 더보기></a>
@@ -299,7 +303,7 @@
 									href="${path}/community/BoardModify.do?commId=${board.comm_id}">수정하기</a></li>
 								<li><a class="dropdown-item"
 									href="${path}/community/BoardDelete.do?commId=${board.comm_id}">삭제하기</a></li>
-								<li><a class="dropdown-item" onclick="copyCurrentUrl()">공유하기</a></li>
+								<li><a class="dropdown-item" onclick="copyCurrentUrl()">URL 복사</a></li>
 							</ul>
 						</div>
 					</div>

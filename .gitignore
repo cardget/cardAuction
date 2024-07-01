@@ -2,6 +2,7 @@
 .settings/
 target/
 .metadata
+bin/
 
 # vscode
 .vscode/
@@ -22,3 +23,8 @@ target/
 src/front/image/
 src/front/icon/
 src/main/webapp/resources/images/
+
+# mac
+**/.DS_Store
+**/._*
+/bin/
