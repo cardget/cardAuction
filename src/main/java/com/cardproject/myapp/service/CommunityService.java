@@ -106,5 +106,10 @@ public class CommunityService {
 	public UserDTO selectNicknameByUserDTOId(String userid) {
 		return communityDao.selectNicknameByUserDTOId(userid);
 	}
+	
+	// 매니저 여부
+	public int checkManagerByIdInCommunity(String userid) {
+		return communityDao.checkManagerByIdInCommunity(userid);
+	}
 
 }

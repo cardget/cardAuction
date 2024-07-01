@@ -85,15 +85,20 @@ public class CommunityController {
 
 	// 게시글 등록 페이지 로드
 	@GetMapping("/BoardInsert.do")
-	public void BoardInsert(HttpSession session) {
+	public void BoardInsert(HttpSession session, Model model) {
 		System.out.println("/community/BoardInsert.do get 요청");
 		
 		// user 닉네임
-	    String userid = (String) session.getAttribute("userid");
-	    if (userid != null) {
-	        UserDTO user = cService.selectNicknameByUserDTOId(userid);
+	    String userId = (String) session.getAttribute("userid");
+
+		// 매니저 여부 체크
+		int isManager = cService.checkManagerByIdInCommunity(userId);
+		
+	    if (userId != null) {
+	        UserDTO user = cService.selectNicknameByUserDTOId(userId);
 	        session.setAttribute("user", user); // 세션에 user 객체 저장
-	    }
+	    } 
+	    model.addAttribute("isManager",isManager);
 	}
 	
 	// 게시글 등록

@@ -43,4 +43,19 @@ public class InquiryService {
 	public String secretBoardCheckById(Integer questId) {
 		return inquiryDao.secretBoardCheckById(questId);
 	}
+	
+	// 매니저 체크
+	public int checkManagerById(String userId) {
+		return inquiryDao.checkManagerById(userId);
+	}
+	
+	// 답변 조회
+	public String checkAnswerByInquiryId(int questId) {
+		return inquiryDao.checkAnswerByInquiryId(questId);
+	}
+	
+	// 답변
+	public int updateAnswer(int questId, String answer) {
+		return inquiryDao.updateAnswer(questId, answer);
+	}
 }

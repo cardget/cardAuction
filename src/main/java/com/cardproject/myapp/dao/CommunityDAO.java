@@ -116,13 +116,18 @@ public class CommunityDAO {
 	}
 
 	// 세션으로 닉네임 조회
-	public String selectNicknameById(String userid) {
-		return sqlSession.selectOne(namespace + "selectNicknameById", userid);
+	public String selectNicknameById(String userId) {
+		return sqlSession.selectOne(namespace + "selectNicknameById", userId);
 	}
 
 	// UserDTO에 담아 가져와야할 때
-	public UserDTO selectNicknameByUserDTOId(String userid) {
-		return sqlSession.selectOne(namespace + "selectNicknameByUserDTOId", userid);
+	public UserDTO selectNicknameByUserDTOId(String userId) {
+		return sqlSession.selectOne(namespace + "selectNicknameByUserDTOId", userId);
+	}
+	
+	// 매니저 여부
+	public int checkManagerByIdInCommunity(String userId) {
+		return sqlSession.selectOne(namespace + "checkManagerByIdInCommunity", userId);
 	}
 
 }
