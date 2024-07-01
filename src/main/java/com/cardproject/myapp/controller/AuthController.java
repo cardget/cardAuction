@@ -71,7 +71,6 @@ public class AuthController {
 	@PostMapping("/login.do")
 	public String loginCheck(@RequestParam("userid") String userid,
 							 @RequestParam("password") String password,
-							 @RequestParam(value = "remember", required = false) String remember,
 							 HttpSession session) {
 
 		UserDTO user = aService.login(userid, password);		
@@ -87,14 +86,6 @@ public class AuthController {
 			// login success
 			session.setAttribute("loginResult", "Login Success");
 			session.setAttribute("userid", user.getUser_id());
-			
-			if("on".equals(remember)) {
-				session.setAttribute("rememberUserId", userid);
-				session.setAttribute("rememberUserPW", password);
-			}else {
-				session.removeAttribute("rememberUserId");
-				session.removeAttribute("rememberUserPW");
-			}
 			
 			return "redirect:../main.do";
 		}
