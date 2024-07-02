@@ -1,0 +1,8 @@
+@charset "UTF-8";
+
+.input-label {
+	color: gray;
+	width: 150px;
+	margin-right: 20px;
+	margin-left: 20px;
+}
