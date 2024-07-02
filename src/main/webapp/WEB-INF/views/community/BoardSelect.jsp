@@ -32,7 +32,28 @@
         </div>
         <hr>
         <div class="breadcrumbs">
-            <a href="#">홈</a> &gt; <span>포켓몬</span> &gt; <span>커뮤니티</span>
+            <a href="#">홈</a> &gt; 
+            <c:choose>
+                <c:when test="${cat == 1}">
+                    <span>포켓몬</span>
+                </c:when>
+                <c:when test="${cat == 2}">
+                    <span>유희왕</span>
+                </c:when>
+                <c:when test="${cat == 3}">
+                    <span>디지몬</span>
+                </c:when>
+                <c:when test="${cat == 4}">
+                    <span>원피스</span>
+                </c:when>
+                <c:when test="${cat == 5}">
+                    <span>스포츠</span>
+                </c:when>
+                <c:otherwise>
+                    <span>카테고리 없음</span>
+                </c:otherwise>
+            </c:choose>
+            &gt; <span>커뮤니티</span>
         </div>
         <div class="form-inline">
             <input type="submit" class="btn-primary" value="글 작성" onClick="location.href='${path}/community/BoardInsert.do'">
@@ -95,7 +116,7 @@
         </table>
         <div class="pagination">
             <c:forEach var="i" begin="1" end="${(totalCount / pageSize) + (totalCount % pageSize > 0 ? 1 : 0)}">
-                <a href="${path}/community/BoardSelect.do?page=${i}&pageSize=${pageSize}&sort=${sort}&keyword=${keyword}&tag=${tag}"
+                <a href="${path}/community/BoardSelect.do?page=${i}&pageSize=${pageSize}&sort=${sort}&keyword=${keyword}&tag=${tag}&cat=${cat}"
                    class="${i == currentPage ? 'active' : ''}">${i}</a>
             </c:forEach>
         </div>
@@ -108,7 +129,7 @@
             var keyword = document.getElementById('searchKeyword').value;
             var tag = document.getElementById('tagSelect').value;
             var url = "${path}/community/BoardSelect.do?page=1&pageSize=${pageSize}&sort="
-                    + sort + "&keyword=" + encodeURIComponent(keyword) + "&tag=" + encodeURIComponent(tag);
+                    + sort + "&keyword=" + encodeURIComponent(keyword) + "&tag=" + encodeURIComponent(tag) + "&cat=${cat}";
             location.href = url;
         }
     </script>

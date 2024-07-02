@@ -34,53 +34,55 @@ public class CommunityController {
 	private AWSS3Service s3Service;
 
 	// 게시글 리스트 조회 (조건검색 + 페이징)
-	@GetMapping("/BoardSelect.do")
-	public String BoardSelect(@RequestParam(defaultValue = "1") int page,
-	                          @RequestParam(defaultValue = "10") int pageSize,
-	                          @RequestParam(defaultValue = "date") String sort,
-	                          @RequestParam(required = false) String keyword,
-	                          @RequestParam(defaultValue = "all") String tag,
-	                          Model model, HttpSession session) {
-	    System.out.println("/community/BoardSelect.do get 요청");
+		@GetMapping("/BoardSelect.do")
+		public String BoardSelect(@RequestParam(defaultValue = "1") int page,
+		                          @RequestParam(defaultValue = "10") int pageSize,
+		                          @RequestParam(defaultValue = "date") String sort,
+		                          @RequestParam(required = false) String keyword,
+		                          @RequestParam(defaultValue = "all") String tag,
+		                          @RequestParam(required = false) Integer cat,
+		                          Model model, HttpSession session) {
+		    System.out.println("/community/BoardSelect.do get 요청");
 
-	    // user 닉네임
-	    String userid = (String) session.getAttribute("userid");
-	    if (userid != null) {
-	        UserDTO user = cService.selectNicknameByUserDTOId(userid);
-	        session.setAttribute("user", user);
-	    }
-	    
-	    // 페이징
-	    int totalCount = (keyword != null && !keyword.isEmpty()) || (tag != null && !tag.equals("all"))
-	            ? cService.getTotalBoardCount(keyword, tag)
-	            : cService.getTotalBoardCount();
+		    // user 닉네임
+		    String userid = (String) session.getAttribute("userid");
+		    if (userid != null) {
+		        UserDTO user = cService.selectNicknameByUserDTOId(userid);
+		        session.setAttribute("user", user);
+		    }
+		    
+		    // 페이징
+		    int totalCount = (keyword != null && !keyword.isEmpty()) || (tag != null && !tag.equals("all"))
+		            ? cService.getTotalBoardCount(keyword, tag, cat)
+		            : cService.getTotalBoardCount(cat);
 
-	    // 공지글
-	    List<BoardListDTO> notices = cService.selectTopNotices();
-	    
-	    // 일반 게시글 (공지글 제외)
-	    List<BoardListDTO> blist = cService.selectBoardList(page, pageSize, sort, keyword, tag);
-	    blist.removeIf(board -> "공지".equals(board.getTag()));
+		    // 공지글
+		    List<BoardListDTO> notices = cat != null ? cService.selectTopNotices(cat) : cService.selectTopNotices();
 
-	    // 게시글 번호 재정렬
-	    int startNo = (page - 1) * pageSize + 1;
-	    for (int i = 0; i < blist.size(); i++) {
-	        blist.get(i).setComm_id(startNo + i);
-	    }
+		    // 일반 게시글 (공지글 제외)
+		    List<BoardListDTO> blist = cService.selectBoardList(page, pageSize, sort, keyword, tag, cat);
+		    blist.removeIf(board -> "공지".equals(board.getTag()));
 
-	    // 공지글을 일반 게시글 상위에 병합
-	    blist.addAll(0, notices);
+		    // 게시글 번호 재정렬
+		    int startNo = (page - 1) * pageSize + 1;
+		    for (int i = 0; i < blist.size(); i++) {
+		        blist.get(i).setComm_id(startNo + i);
+		    }
 
-	    model.addAttribute("blist", blist);
-	    model.addAttribute("currentPage", page);
-	    model.addAttribute("totalCount", totalCount);
-	    model.addAttribute("pageSize", pageSize);
-	    model.addAttribute("sort", sort);
-	    model.addAttribute("keyword", keyword);
-	    model.addAttribute("tag", tag);
-	    
-	    return "community/BoardSelect";
-	}
+		    // 공지글을 일반 게시글 상위에 병합
+		    blist.addAll(0, notices);
+
+		    model.addAttribute("blist", blist);
+		    model.addAttribute("currentPage", page);
+		    model.addAttribute("totalCount", totalCount);
+		    model.addAttribute("pageSize", pageSize);
+		    model.addAttribute("sort", sort);
+		    model.addAttribute("keyword", keyword);
+		    model.addAttribute("tag", tag);
+		    model.addAttribute("cat", cat);
+		    
+		    return "community/BoardSelect";
+		}
 
 
 
