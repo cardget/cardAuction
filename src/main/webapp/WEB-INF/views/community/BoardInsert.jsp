@@ -48,10 +48,10 @@
                 <div class="col">
                     <select class="form-select categoryType" id="category" name="cat">
                         <option value="none" selected>카테고리 ( 선택 )</option>
-                        <option value="1">유희왕</option>
-                        <option value="2">원피스</option>
-                        <option value="3">포켓몬</option>
-                        <option value="4">디지몬</option>
+                        <option value="1">포켓몬</option>
+                        <option value="2">유희왕</option>
+                        <option value="3">디지몬</option>
+                        <option value="4">원피스</option>
                         <option value="5">스포츠</option>
                     </select>
                 </div>

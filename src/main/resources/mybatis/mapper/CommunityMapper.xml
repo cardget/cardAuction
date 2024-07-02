@@ -224,4 +224,41 @@
 		WHERE USER_ID=#{userid}
 	</select>
 
+	<!-- 공지글 -->
+	<select id="selectTopNotices" resultType="boardlistvo">
+        <![CDATA[
+        SELECT 
+            COMM_ID,
+            TAG,
+            TITLE,
+            NICKNAME,
+            CREATE_DATE,
+            RECOMMEND,
+            VIEWS
+        FROM (
+            SELECT
+                COMMUNITY.COMM_ID,
+                COMMUNITY.TAG,
+                COMMUNITY.TITLE,
+                USERS.NICKNAME,
+                COMMUNITY.CREATE_DATE,
+                COMMUNITY.RECOMMEND,
+                COMMUNITY.VIEWS,
+                ROWNUM AS RN
+            FROM COMMUNITY
+            JOIN USERS ON COMMUNITY.USER_ID = USERS.USER_ID
+            WHERE TAG = '공지'
+            ORDER BY CREATE_DATE DESC
+        ) 
+        WHERE RN < 3
+        ]]>
+    </select>
+    
+    <!-- 작성자 조회 -->
+    <select id="getWriterByCommId" parameterType="int" resultType="String">
+    	SELECT USER_ID
+    	FROM COMMUNITY
+    	WHERE COMM_ID=#{commId}
+    </select>
+
 </mapper>

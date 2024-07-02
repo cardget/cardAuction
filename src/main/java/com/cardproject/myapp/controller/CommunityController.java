@@ -36,52 +36,77 @@ public class CommunityController {
 	// 게시글 리스트 조회 (조건검색 + 페이징)
 	@GetMapping("/BoardSelect.do")
 	public String BoardSelect(@RequestParam(defaultValue = "1") int page,
-			@RequestParam(defaultValue = "10") int pageSize, @RequestParam(defaultValue = "date") String sort,
-			@RequestParam(required = false) String keyword, @RequestParam(defaultValue = "all") String tag,
-			Model model, HttpSession session) {
-		System.out.println("/community/BoardSelect.do get 요청");
+	                          @RequestParam(defaultValue = "10") int pageSize,
+	                          @RequestParam(defaultValue = "date") String sort,
+	                          @RequestParam(required = false) String keyword,
+	                          @RequestParam(defaultValue = "all") String tag,
+	                          Model model, HttpSession session) {
+	    System.out.println("/community/BoardSelect.do get 요청");
 
-		// user 닉네임
+	    // user 닉네임
 	    String userid = (String) session.getAttribute("userid");
 	    if (userid != null) {
 	        UserDTO user = cService.selectNicknameByUserDTOId(userid);
-	        session.setAttribute("user", user); // 세션에 user 객체 저장
+	        session.setAttribute("user", user);
 	    }
-		
+	    
 	    // 페이징
-		int totalCount = (keyword != null && !keyword.isEmpty()) || (tag != null && !tag.equals("all"))
-				? cService.getTotalBoardCount(keyword, tag)
-				: cService.getTotalBoardCount();
+	    int totalCount = (keyword != null && !keyword.isEmpty()) || (tag != null && !tag.equals("all"))
+	            ? cService.getTotalBoardCount(keyword, tag)
+	            : cService.getTotalBoardCount();
 
-		List<BoardListDTO> blist = cService.selectBoardList(page, pageSize, sort, keyword, tag);
-		
-		model.addAttribute("blist", blist);
-		model.addAttribute("currentPage", page);
-		model.addAttribute("totalCount", totalCount);
-		model.addAttribute("pageSize", pageSize);
-		model.addAttribute("sort", sort);
-		model.addAttribute("keyword", keyword);
-		model.addAttribute("tag", tag);
-		
-		return "community/BoardSelect";
+	    // 공지글
+	    List<BoardListDTO> notices = cService.selectTopNotices();
+	    
+	    // 일반 게시글 (공지글 제외)
+	    List<BoardListDTO> blist = cService.selectBoardList(page, pageSize, sort, keyword, tag);
+	    blist.removeIf(board -> "공지".equals(board.getTag()));
+	    
+	    // 공지글을 일반 게시글 상위에 병합
+	    blist.addAll(0, notices);
+	    
+	    model.addAttribute("blist", blist);
+	    model.addAttribute("currentPage", page);
+	    model.addAttribute("totalCount", totalCount);
+	    model.addAttribute("pageSize", pageSize);
+	    model.addAttribute("sort", sort);
+	    model.addAttribute("keyword", keyword);
+	    model.addAttribute("tag", tag);
+	    
+	    return "community/BoardSelect";
 	}
+
 
 	// 게시글 상세 조회
 	@GetMapping("/BoardDetail.do")
 	public String BoardDetail(Integer commId, Model model, HttpSession session) {
-		System.out.println("/community/BoardDetail.do get 요청");
+	    System.out.println("/community/BoardDetail.do get 요청");
 
-		// user 닉네임
-	    String userid = (String) session.getAttribute("userid");
-	    if (userid != null) {
-	        UserDTO user = cService.selectNicknameByUserDTOId(userid);
+	    int isWriter = 0;
+
+	    BoardListDTO board = cService.selectBoardByCommId(commId);
+
+	    // user 닉네임
+	    String userId = (String) session.getAttribute("userid");
+
+	    if (userId != null) {
+	        UserDTO user = cService.selectNicknameByUserDTOId(userId);
 	        session.setAttribute("user", user); // 세션에 user 객체 저장
+
+	        if (userId.equals(cService.getWriterByCommId(commId))){
+	            isWriter = 1;
+	        }
 	    }
-		
-		cService.updateViews(commId); // 조회수 기능
-		model.addAttribute("board", cService.selectBoardByCommId(commId));
-		return "community/BoardDetail";
+
+	    int isManager = cService.checkManagerByIdInCommunity(userId); // 매니저 1
+
+	    cService.updateViews(commId); // 조회수 기능
+	    model.addAttribute("board", board);
+	    model.addAttribute("isManager", isManager); // 1이면 삭제, URL 복사 가능
+	    model.addAttribute("isWriter", isWriter); // 1이면 수정, 삭제, URL 복사 가능
+	    return "community/BoardDetail";
 	}
+
 
 	// 게시글 등록 페이지 로드
 	@GetMapping("/BoardInsert.do")

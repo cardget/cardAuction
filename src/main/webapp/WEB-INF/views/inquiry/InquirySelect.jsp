@@ -62,7 +62,7 @@
                             <td><c:if test="${question.is_secret == 1}">
                                     <img src="${path}/resources/icon/logout.png" alt="" style="width: 20px; height: 20px;">
                                 </c:if></td>
-                            <td>${question.title}</td>
+                            <td class="titleText">${question.title}</td>
                             <td>${question.nickname}</td>
                             <td>${question.answer_exist}</td>
                             <td>${question.create_date}</td>

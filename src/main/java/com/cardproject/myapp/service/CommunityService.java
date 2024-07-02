@@ -111,5 +111,15 @@ public class CommunityService {
 	public int checkManagerByIdInCommunity(String userid) {
 		return communityDao.checkManagerByIdInCommunity(userid);
 	}
+	
+	// 공지글
+	public List<BoardListDTO> selectTopNotices() {
+        return communityDao.selectTopNotices();
+    }
+	
+	// 글쓴이 여부
+	public String getWriterByCommId(int commId) {
+		return communityDao.getWriterByCommId(commId);
+	}
 
 }

@@ -124,10 +124,20 @@ public class CommunityDAO {
 	public UserDTO selectNicknameByUserDTOId(String userId) {
 		return sqlSession.selectOne(namespace + "selectNicknameByUserDTOId", userId);
 	}
-	
+
 	// 매니저 여부
 	public int checkManagerByIdInCommunity(String userId) {
 		return sqlSession.selectOne(namespace + "checkManagerByIdInCommunity", userId);
+	}
+
+	// 공지글
+	public List<BoardListDTO> selectTopNotices() {
+		return sqlSession.selectList(namespace + "selectTopNotices");
+	}
+	
+	// 글쓴이 여부
+	public String getWriterByCommId(int commId) {
+		return sqlSession.selectOne(namespace + "getWriterByCommId", commId);
 	}
 
 }
