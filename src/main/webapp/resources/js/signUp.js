@@ -113,27 +113,25 @@ function checkAllAgreed() {
 
 // 프로필 이미지 미리보기
 function previewImage(input, path) {
+    var imageId = input.id.replace('_image_id', '-image');
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function(e) {
-            document.getElementById('profile-image').src = e.target.result;
+            document.getElementById(imageId).src = e.target.result;
         }
         reader.readAsDataURL(input.files[0]);
-        // DB에 저장할 값 설정
-        document.getElementById('profile-image-hidden').value = ''; // 사진이 선택된 경우 null이 아닌 값을 저장해야 함
     } else {
-        // 파일이 선택되지 않은 경우 기본 이미지로 설정하고 DB에 null 값 설정
-        document.getElementById('profile-image').src = path + '/resources/image/profile.png';
-        document.getElementById('profile-image-hidden').value = null; // null 값을 설정하여 DB에 저장
+        // 파일이 선택되지 않은 경우 기본 이미지로 설정
+        document.getElementById(imageId).src = path + '/resources/image/profile.png';
     }
 }
 
 // 기본 이미지로 재설정
-function resetProfileImage(path) {
-    document.getElementById('profile-image').src = path + '/resources/image/profile.png';
-    document.getElementById('profile_image').value = ""; // 파일 선택 입력값 초기화
-    document.getElementById('profile_image_hidden').value = null; // hidden input 값 초기화
+function resetProfileImage(imageId, path) {
+    document.getElementById(imageId).src = path + '/resources/image/profile.png';
+    document.getElementById(imageId.replace('-image', '_image_id')).value = ""; // 파일 선택 입력값 초기화
 }
+
 
 //폼 제출시 호출됨
 function validatePasswords(){
