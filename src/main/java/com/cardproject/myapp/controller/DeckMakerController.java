@@ -83,6 +83,52 @@ public class DeckMakerController {
 
 		return "deckMakers/yugiohDeckListMain";
 	}
+	
+	@GetMapping("/digimonDeckListMain.do")
+	public String getDDecks(Model model, @RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "3") int pageSize,
+			@RequestParam(value = "sort", required = false, defaultValue = "create_date") String sort,
+			@RequestParam(required = false) String query) {
+
+		int cat = 3; // 이부분 바뀜
+		int totalDecks = deckMakerService.getTotalDeckCount(cat, query); // 공통
+		int totalPages = (int) Math.ceil((double) totalDecks / pageSize);// 공통
+
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("pageSize", pageSize);
+
+		List<Map<String, Object>> decks = deckMakerService.getDDecks(cat, page, pageSize, query, sort);
+
+		model.addAttribute("decks", decks);
+		model.addAttribute("query", query);
+		model.addAttribute("sort", sort);
+
+		return "deckMakers/digimonDeckListMain";
+	}
+	
+	@GetMapping("/onepieceDeckListMain.do")
+	public String getODecks(Model model, @RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "3") int pageSize,
+			@RequestParam(value = "sort", required = false, defaultValue = "create_date") String sort,
+			@RequestParam(required = false) String query) {
+
+		int cat = 4; // 이부분 바뀜
+		int totalDecks = deckMakerService.getTotalDeckCount(cat, query); // 공통
+		int totalPages = (int) Math.ceil((double) totalDecks / pageSize);// 공통
+
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("pageSize", pageSize);
+
+		List<Map<String, Object>> decks = deckMakerService.getODecks(cat, page, pageSize, query, sort);
+
+		model.addAttribute("decks", decks);
+		model.addAttribute("query", query);
+		model.addAttribute("sort", sort);
+
+		return "deckMakers/onepieceDeckListMain";
+	}
 
 	@Autowired
 	private DeckMakerService deckMakerService;

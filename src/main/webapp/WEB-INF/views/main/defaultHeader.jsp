@@ -5,8 +5,8 @@
 <c:set var="path" value="${pageContext.servletContext.contextPath }" />
 <div class="top">
 	<nav class="top-nav">
-		<a href="main.html" class="top-title"> <img
-			src="${path }/resources/image/logo.png" alt="logo"
+		<a href="${path}/main.do" class="top-title"> <img
+			src="${path}/resources/image/logo.png" alt="logo"
 			class="logo">
 		</a>
 		<div class="main-category">

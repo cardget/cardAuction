@@ -69,6 +69,7 @@
 	width:1320px;
 	margin:auto;
 	margin-top:30px;
+	margin-bottom:20px;
 }
 .detail-container{
 	display: flex;
@@ -94,6 +95,7 @@ ul {
 }
 
 .cardType {
+	border-radius:5px;
 	width: 200px;
 	height: 300px;
 	box-shadow: 4px 4px 5px 1px rgba(0, 0, 0, .3);
@@ -106,7 +108,7 @@ ul {
 }
 
 .header-image {
-	height: 280px;
+	height: 278px;
 	width: 100%;
 }
 
