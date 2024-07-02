@@ -55,10 +55,12 @@
             
             
             <div class="search-input-wrapper">
-                <input type="text" class="search-box" placeholder="경매 물품 검색">
+             <form action="${path}/auction/auctionMainSearch.do" method="post" class="searchForm">
+                <input type="text" class="search-box" id="keyword" name="keyword" placeholder="경매 물품 검색">
                 <button type="submit" class="search-btn">
                     <img src="${path}/resources/icon/search.png" alt="search" class="search-icon-A">
                 </button>
+             </form>
             </div>
             <div class="auction-insert-wrapper">
             	<button onclick="redirectToAuctionInsert()" class="insert-btn" >판매 물품 등록</button>
@@ -139,7 +141,7 @@
 			</div>
 			<div class="button-wrapper">
 				
-				<button class="like-btn">관심물품</button>
+				<button class="like-btn" id="likeBtn-${itemd.item_id}" data-user-id="${userId}" data-item-id="${itemd.item_id}">관심물품</button>
 				<button  onclick="location.href='${path}/auction/auctionDetail.do?item_id=${itemd.item_id}'" class="auction-detail-btn">상세보기</button>
 			</div>
 		</div>
@@ -158,7 +160,79 @@
 		</div>
   
 </div>
+<script>
 
+$(document).ready(function() {
+    $('.like-btn').each(function() {
+        var userId = $(this).data('user-id');
+        var itemId = $(this).data('item-id');
+        var button = $(this);
+
+        // 페이지 로드 시 현재 상태 확인
+        checkLikeStatus(userId, itemId, button);
+
+        $(this).click(function() {
+            if ($(this).hasClass('act')) {
+                // 관심물품 삭제
+                $.ajax({
+                    url: '/myapp/auction/removeLike',
+                    type: 'POST',
+                    data: { "userId": userId, "itemId": itemId },
+                    success: function(response) {
+                        if (response) {
+                            button.removeClass('act').text('관심 물품');
+                        } else {
+                            $('#errorMessage').text('관심 물품을 삭제하는데 실패했습니다.');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error removing like:', error);
+                        $('#errorMessage').text('관심 물품을 삭제하는데 실패했습니다.');
+                    }
+                });
+            } else {
+                // 관심물품 등록
+                $.ajax({
+                    url: '/myapp/auction/addLike',
+                    type: 'POST',
+                    data: { "userId": userId, "itemId": itemId },
+                    success: function(response) {
+                        if (response) {
+                            button.addClass('act').text('관심 물품');
+                        } else {
+                            $('#errorMessage').text('관심 물품을 추가하는데 실패했습니다.');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error adding like:', error);
+                        $('#errorMessage').text('관심 물품을 추가하는데 실패했습니다.');
+                    }
+                });
+            }
+        });
+    });
+
+    function checkLikeStatus(userId, itemId, button) {
+        $.ajax({
+            url: '/myapp/auction/isLiked',
+            type: 'POST',
+            data: { "userId": userId, "itemId": itemId },
+            success: function(response) {
+                console.log('isLiked response:', response);
+                if (response === "liked") {
+                    button.addClass('act').text('관심 물품');
+                } else {
+                    button.removeClass('act').text('관심 물품');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error checking like status:', error);
+                $('#errorMessage').text('관심 물품 상태를 확인하는데 실패했습니다.');
+            }
+        });
+    }
+});
+</script>
 
     <!--footer-->
     <%@ include file="/WEB-INF/views/main/footer.jsp" %>

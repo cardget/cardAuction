@@ -26,7 +26,13 @@ public class AuctionDAO {
 	String namespace = "com.cardproject.myapp.dao.";
 
 	Logger logger = LoggerFactory.getLogger(AuctionDAO.class);
+	
+	public List<ItemDetailDTO> selectItemForName(String keyword) {
+		List<ItemDetailDTO> itemDlistForName = sqlSession.selectList(namespace + "selectItemForName",keyword);
+		logger.info(itemDlistForName.size() + "건 조회됨.");
+		return itemDlistForName;
 
+	}
 	// 경매리스트 조회 ( 최신순 )
 	public List<ItemDetailDTO> selectItemRecent() {
 		List<ItemDetailDTO> itemDlist = sqlSession.selectList(namespace + "selectItemRecent");
@@ -130,9 +136,14 @@ public class AuctionDAO {
 		 
 		 return sqlSession.selectList(namespace+"selectExpired");
 	 }
-	
-	
-	
+	//입찰금 수정하기 
+	public int biddingPriceUpdate(Map<String, Object> params) {
+		return sqlSession.update(namespace+"biddingPriceUpdate",params);
+	}
+	//자신의 입찰금 불러오기
+	public int myBidPrice(Map<String, Object> params) {
+		return sqlSession.selectOne(namespace+"myBidPrice",params);
+	}
 	public void likeInsert(LikeDTO likeVO) {
         sqlSession.insert(namespace+"likeInsert", likeVO);
     }
@@ -148,7 +159,11 @@ public class AuctionDAO {
     public int updateIsWin1(List<Integer> bidIdArr) {
     	return sqlSession.update(namespace + "updateIsWin1", bidIdArr);
     }
-    
+    public List<PokemonDTO> selectPRight(String cardKeyword){
+    	List<PokemonDTO> pSelectlist = sqlSession.selectList(namespace + "selectPRight",cardKeyword);
+		logger.info(pSelectlist.size() + "건 조회됨.");
+		return pSelectlist;
+    }
     // 낙찰 처리 후 나머지 입찰 내역
     public List<ItemExpiredDTO> getExpiredIsWin0() {
     	return sqlSession.selectList(namespace + "getExpiredIsWin0");

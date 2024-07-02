@@ -317,7 +317,7 @@ select {
 	border-radius: 5px;
 	background-color: #007FFF;
 	color: white;
-	font-weight: bold;
+	
 	width: 120px;
 	height: 34px;
 }
@@ -329,8 +329,8 @@ select {
 
 .auction-detail-btn{
 	border-radius:5px;
-	border : 1px solid #007FFF;
-	background-color: #007FFF;
+	border : 1px solid #F8C501;
+	background-color: #F8C501;
 	color: #fff;
 	width: 120px;
 	height: 34px;

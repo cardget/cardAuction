@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Apple+SD+Gothic+Neo&display=swap">
 <link rel="stylesheet" href="${path }/resources/css/main.css" />
 <link rel="stylesheet" href="${path }/resources/css/auctionInsert.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <title>카드득</title>
 
 <style>
@@ -54,11 +55,14 @@
 		    <input type="radio" id="status3" name="trade_type" value="3">
 		    <label for="status3">중개</label>
 		    
-		    
-		    <select name="p_card_id" class="select-field-card">
-				<c:forEach items="${plist}" var="plist">
- 	  				<option value="${plist.card_id}" >${plist.card_name}</option>
- 	  			</c:forEach>
+		    <!-- 카드검색 -->
+		    <label for="cardKeyword">카드 검색 </label>
+			<input type="text" id="cardKeyword" class="search-card" name="cardKeyword" >
+			<button id="searchBtn">검색</button>
+		    <select name="p_card_id" class="select-field-card" id="cardSelect">
+				<!--<c:forEach items="${pSelectlist}" var="pSelectlist">
+					<option value="${pSelectlist.card_id}">${pSelectlist.card_name}</option>
+				</c:forEach>-->
 			</select>
 		    
 		</div>
@@ -121,6 +125,37 @@
 </div>
 
 <script>
+$(document).ready(function() {
+    $('#searchBtn').click(function(event) {
+        event.preventDefault(); // 폼 제출 방지
+        var cardKeyword = $('#cardKeyword').val();
+
+        $.ajax({
+            url: '/myapp/auction/searchPokemon',
+            type: 'GET',
+            data: { "cardKeyword": cardKeyword },
+            success: function(response) {
+                console.log('response:', response);
+                $('#cardSelect').empty();
+
+                if (response && response.length > 0) {
+                    $.each(response, function(index, pokemon) {
+                        if (pokemon.card_id && pokemon.card_name) {
+                            $('#cardSelect').append('<option value="' + pokemon.card_id + '">' + pokemon.card_name + '</option>');
+                        } else {
+                            console.error('Missing card_id or card_name:', pokemon);
+                        }
+                    });
+                } else {
+                    $('#cardSelect').append('<option value="">No results found</option>');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+});
 document.getElementById('image-input').addEventListener('change', function(event) {
 	const imagePreview = document.getElementById('image-preview');
 	imagePreview.innerHTML = '';

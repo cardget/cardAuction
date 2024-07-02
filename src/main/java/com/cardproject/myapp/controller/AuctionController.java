@@ -2,6 +2,7 @@ package com.cardproject.myapp.controller;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +30,7 @@ import com.cardproject.myapp.dto.ItemDTO;
 import com.cardproject.myapp.dto.ItemDetailDTO;
 import com.cardproject.myapp.dto.LikeDTO;
 import com.cardproject.myapp.dto.NotificationDTO;
+import com.cardproject.myapp.dto.PokemonDTO;
 import com.cardproject.myapp.dto.UserDTO;
 import com.cardproject.myapp.service.AWSS3Service;
 import com.cardproject.myapp.service.AuctionService;
@@ -50,7 +52,10 @@ public class AuctionController {
 	@RequestMapping("/auctionMain.do")
 	public String auctionMain(@RequestParam(value = "sortOption", required = false) String sortOption, Model model,
 			HttpSession session) {
+		
 		System.out.println("auctionmain page");
+		String userId = (String) session.getAttribute("userid");
+		model.addAttribute("userId", userId);
 		if (sortOption == null) {
 			sortOption = "recent";
 		}
@@ -69,13 +74,21 @@ public class AuctionController {
 		}
 		return "auction/auctionMain";
 	}
-
+//	@PostMapping("/auctionMainSearch.do")
+//	public String auctionMainSearch() {
+//		
+//	}
 	@GetMapping("/auctionDetail.do")
 	public void auctionDetail(Model model, @RequestParam("item_id") Integer item_id, HttpSession session) {
-		System.out.println(session.getAttribute("userId"));
+		String userId = (String) session.getAttribute("userid");
+		boolean isBidHas = aucs.isBidding(userId,item_id);
+		model.addAttribute("isBidHas",isBidHas);
+		int price =aucs.myBidPrice(userId, item_id);
+		model.addAttribute("price",price);
+		System.out.println(session.getAttribute("userid"));
 		System.out.println("auctionDetail page");
 		System.out.println(item_id);
-		model.addAttribute("userId", session.getAttribute("userId"));
+		model.addAttribute("userId", session.getAttribute("userid"));
 
 		model.addAttribute("itemDetailOne", aucs.selectItemOne(item_id));
 
@@ -84,8 +97,16 @@ public class AuctionController {
 	@GetMapping("/auctionInsert.do")
 	public void auctionInsert(Model model) {
 		System.out.println("auctionInsert page");
+		//keyword를 post로 받고 .. 해야하네?
+		//model.addAttribute("pSelectlist",aucs.selectPRight(cardKeyword));
 		model.addAttribute("plist", aucs.selectPCard());
 
+	}
+	@GetMapping("/searchPokemon")
+	@ResponseBody
+	public List<PokemonDTO> searchPokemon(Model model, String cardKeyword){
+		//model.addAttribute("pSelectlist",aucs.selectPRight(cardKeyword));
+		return aucs.selectPRight(cardKeyword);
 	}
 
 	@PostMapping("/auctionInsert.do")
@@ -156,7 +177,7 @@ public class AuctionController {
 		// 동일물품에 입찰하려는 경우
 		if (aucs.isBidding(userId, bid.getItem_id())) {
 			response.put("success", false);
-			response.put("message", "이미 입찰한 물품입니다.");
+			response.put("message", "이미 입찰한 물품입니다. 입찰 금액 수정만 가능합니다.");
 			System.out.println("이미 입찰한 물품");
 			return ResponseEntity.ok(response);
 		}
@@ -167,7 +188,13 @@ public class AuctionController {
 		response.put("message", "입찰에 성공했습니다.");
 		return ResponseEntity.ok(response);
 	}
-
+	@PostMapping("/auctionBidUpdate.do")
+	public String biddingPriceUpdate(int price, String user_id, Integer item_id) {
+		
+		int result = aucs.biddingPriceUpdate(price, user_id, item_id);
+		
+		return "redirect:auctionDetail.do?item_id="+item_id;
+	}
 	@PostMapping("/addLike")
 	@ResponseBody
 	public boolean addLike(@RequestParam String userId, @RequestParam Integer itemId) {
@@ -182,8 +209,15 @@ public class AuctionController {
 
 	@PostMapping("/isLiked")
 	@ResponseBody
-	public boolean isLiked(@RequestParam String userId, @RequestParam Integer itemId) {
-		return aucs.isLiked(userId, itemId);
-	}
+	public ResponseEntity<String> isLiked(@RequestParam String userId, @RequestParam Integer itemId) {
+		 boolean isLiked = aucs.isLiked(userId, itemId);
+		 System.out.println("####################### " + isLiked);
+		    
+		 if(isLiked) {
+		     return ResponseEntity.ok("liked");
+		 } else {
+		     return ResponseEntity.ok("not liked");
+		 }
 
+}
 }

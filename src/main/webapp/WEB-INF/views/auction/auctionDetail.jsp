@@ -45,6 +45,13 @@
 	gap: 10px;
 	font-size: 18px;
 }
+.bidding-wrapper2 {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 18px;
+	width:800px;
+}
 
 .bidding-form {
 	display: grid;
@@ -54,6 +61,36 @@
 
 .hidden-input-itemId, .hidden-input-sellerId {
 	display: none;
+}
+.end-tag{
+	border:1px solid #FE3838;
+	border-radius: 30px;
+	background-color: #FE3838;
+	color:white;
+	width:90px;
+	height:30px;
+	pointer-events: none; 
+    cursor: default;
+}
+.detail-header {
+    display: flex;
+    align-items: center; /* 수직 중앙 정렬 */
+    
+    
+}
+
+.detail-header .end-tag {
+    margin-right: 10px; /* 버튼과 제목 사이의 간격 조정 */
+}
+
+.bidding-update-form {
+	
+    display: none !important; /* 기본 상태에서 숨기기 */
+}
+.my-bid-price{
+	margin-left:10px;
+	display: inline-block;
+	font-size:14px;
 }
 </style>
 
@@ -163,6 +200,7 @@
 		</div>
 		<div class="auction-detail-wrapper">
 			<div class="detail-header">
+				<button class="end-tag">경매종료</button>
 				<h2>${itemDetailOne.item_name}</h2>
 			</div>
 
@@ -185,6 +223,7 @@
 						<c:otherwise>알 수 없음</c:otherwise>
 					</c:choose>
 				</div>
+				<div class="rarity">희귀도 : ${itemDetailOne.rarity}</div>
 				<div class="trans-method">
 					거래방식 :
 					<c:choose>
@@ -218,6 +257,21 @@
 						<button class="like-btn" id="likeBtn" data-user-id="${userId}" data-item-id="${itemDetailOne.item_id}">관심 물품</button>
 				</div>
 				 <div id="errorMessage" class="error"></div> 
+				
+				 <c:if test="${isBidHas == true}">
+					 <div class="bidding-wrapper2" >
+						 <form class="bidding-update-form" action="${path }/auction/auctionBidUpdate.do" method="post" style="display: block !important">
+						 	<input type="number" id="item_id" name="item_id"
+									class="hidden-input-itemId" value="${itemDetailOne.item_id}">
+							<input type="text" id="user_id" name="user_id" 
+									class="hidden-input-sellerId" value="${userId}">
+							<input type="number" id="price" name="price" 
+									class="bidding-price-field" placeholder="수정 할 입찰 가격을 입력하세요." step="1000" min="1000" style="margin-right:4px">
+							<button type="submit" class="bidding-btn">입찰 수정</button>
+							<div class="my-bid-price">현재 입찰 금액 : ${price}</div>
+						 </form>
+					 </div>
+				  </c:if>
 			</div>
 
 		</div>
@@ -228,6 +282,18 @@
 	
 
 	<script>
+	$(document).ready(function() {
+	    var endDate = new Date("${itemDetailOne.end_date}"); // 경매 종료 날짜, Date 객체로 변환하여 비교
+
+	    // 현재 날짜와 경매 종료 날짜 비교
+	    var currentDate = new Date(); // 현재 날짜
+	    if (endDate < currentDate) {
+	        $('.end-tag').show(); // 경매 종료된 경우 버튼 보이기
+	    } else {
+	        $('.end-tag').hide(); // 경매 종료되지 않은 경우 버튼 숨기기
+	    }
+	});
+	//입찰 
 	document.addEventListener("DOMContentLoaded", function() {
 	    const biddingForm = document.querySelector(".bidding-form");
 
@@ -286,6 +352,7 @@
 	        .then(data=> {
 	        	const errorMessageElement = document.getElementById("errorMessage");
 	            errorMessageElement.textContent = data.message;
+	            
 	        });
 	    });
 	});
@@ -374,15 +441,19 @@
 	    function checkLikeStatus(userId, itemId) {
 	        $.ajax({
 	            url: '/myapp/auction/isLiked',
-	            type: 'POST',
-	            data: { "userId": userId,
-        			"itemId": itemId },
+	            type: 'POST',  // 변경된 부분
+	            data: { "userId": userId, "itemId": itemId },
 	            success: function(response) {
-	                if (response) {
+	                console.log('isLiked response:', response);
+	                if (response === "liked") {
 	                    $('#likeBtn').addClass('act').text('관심 물품');
 	                } else {
 	                    $('#likeBtn').removeClass('act').text('관심 물품');
 	                }
+	            },
+	            error: function(xhr, status, error) {
+	                console.error('Error checking like status:', error);
+	                $('#errorMessage').text('관심 물품 상태를 확인하는데 실패했습니다.');
 	            }
 	        });
 	    }
