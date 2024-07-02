@@ -18,8 +18,8 @@ public class CommunityService {
 	CommunityDAO communityDao;
 
 	// 게시글 리스트 조회 (조건검색 + 페이징)
-	public List<BoardListDTO> selectBoardList(int page, int pageSize, String sort, String keyword, String tag) {
-		return communityDao.selectBoardList(page, pageSize, sort, keyword, tag);
+	public List<BoardListDTO> selectBoardList(int page, int pageSize, String sort, String keyword, String tag, Integer cat) {
+		return communityDao.selectBoardList(page, pageSize, sort, keyword, tag, cat);
 	}
 
 	// 총 게시글 수 조회
@@ -35,6 +35,16 @@ public class CommunityService {
 	// 태그 게시글 수 조회
 	public int getTotalBoardCount(String keyword, String tag) {
 		return communityDao.getTotalBoardCount(keyword, tag);
+	}
+
+	// 카테고리 게시글 수 조회
+	public int getTotalBoardCount(Integer cat) {
+		return communityDao.getTotalBoardCount(cat);
+	}
+
+	// 검색 + 태그 + 카테고리 게시글 수 조회
+	public int getTotalBoardCount(String keyword, String tag, Integer cat) {
+		return communityDao.getTotalBoardCount(keyword, tag, cat);
 	}
 
 	// 게시글 상세 조회
@@ -105,6 +115,26 @@ public class CommunityService {
 	// UserDTO에 담아 가져와야할 때
 	public UserDTO selectNicknameByUserDTOId(String userid) {
 		return communityDao.selectNicknameByUserDTOId(userid);
+	}
+	
+	// 매니저 여부
+	public int checkManagerByIdInCommunity(String userid) {
+		return communityDao.checkManagerByIdInCommunity(userid);
+	}
+	
+	// 공지글
+	public List<BoardListDTO> selectTopNotices() {
+        return communityDao.selectTopNotices();
+    }
+	
+	// 공지글 (카테고리별)
+	public List<BoardListDTO> selectTopNotices(Integer cat) {
+        return communityDao.selectTopNotices(cat);
+    }
+	
+	// 글쓴이 여부
+	public String getWriterByCommId(int commId) {
+		return communityDao.getWriterByCommId(commId);
 	}
 
 }

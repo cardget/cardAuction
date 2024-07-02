@@ -17,6 +17,7 @@
 </head>
 <body>
 	<c:set var="path" value="${pageContext.servletContext.contextPath}" />
+	
 	<div class="container custom-container mt-3">
 		<form action="${path}/community/BoardModify.do" method="post"
 			id="myForm" enctype="multipart/form-data">
@@ -36,6 +37,8 @@
 							<c:if test="${board.tag == '자유'}">selected</c:if>>자유</option>
 						<option value="경매"
 							<c:if test="${board.tag == '경매'}">selected</c:if>>경매</option>
+						<option value="공지"
+							<c:if test="${board.tag == '공지'}">selected</c:if>>공지</option>
 					</select>
 				</div>
 				<div class="col">

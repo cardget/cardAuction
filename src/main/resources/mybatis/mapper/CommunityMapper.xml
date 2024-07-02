@@ -5,12 +5,12 @@
 <mapper namespace="com.cardproject.myapp.dao">
 
 	<!-- 게시글 리스트 조회 (조건 검색 + 페이징) -->
-	<select id="selectBoardList" parameterType="map"
-		resultType="boardlistvo">
+	<select id="selectBoardList" parameterType="map" resultType="boardlistvo">
 		SELECT *
 		FROM (
 		SELECT
 		COMMUNITY.COMM_ID,
+		COMMUNITY.CAT,
 		COMMUNITY.TAG,
 		COMMUNITY.TITLE,
 		USERS.NICKNAME,
@@ -34,56 +34,49 @@
 		FROM
 		COMMUNITY
 		JOIN
-		USERS ON COMMUNITY.USER_ID =
-		USERS.USER_ID
+		USERS ON COMMUNITY.USER_ID = USERS.USER_ID
 		<where>
 			<if test="keyword != null">
 				(COMMUNITY.TITLE LIKE #{keyword}
-				OR USERS.NICKNAME LIKE
-				#{keyword})
+				OR USERS.NICKNAME LIKE #{keyword})
 			</if>
 			<if test="tag != null">
 				AND COMMUNITY.TAG = #{tag}
 			</if>
+			<if test="cat != null">
+				AND COMMUNITY.CAT = #{cat}
+			</if>
 		</where>
 		) subquery
-		WHERE ROWNUMBER BETWEEN #{offset} + 1 AND #{offset} +
-		#{pageSize}
+		WHERE ROWNUMBER BETWEEN #{offset} + 1 AND #{offset} + #{pageSize}
 	</select>
 
 	<!-- 총 게시글 수 -->
 	<select id="getTotalBoardCount" resultType="int">
-		SELECT COUNT(*) FROM
-		COMMUNITY
+		SELECT COUNT(*) FROM COMMUNITY
 	</select>
 
 	<!-- 검색 게시글 수 -->
-	<select id="getTotalBoardCountByKeyword" parameterType="map"
-		resultType="int">
+	<select id="getTotalBoardCountByKeyword" parameterType="map" resultType="int">
 		SELECT COUNT(*)
 		FROM COMMUNITY
-		JOIN USERS ON COMMUNITY.USER_ID =
-		USERS.USER_ID
+		JOIN USERS ON COMMUNITY.USER_ID = USERS.USER_ID
 		<if test="keyword != null">
 			WHERE COMMUNITY.TITLE LIKE #{keyword}
-			OR COMMUNITY.TAG LIKE
-			#{keyword}
+			OR COMMUNITY.TAG LIKE #{keyword}
 			OR USERS.NICKNAME LIKE #{keyword}
 		</if>
 	</select>
 
 	<!-- 태그 게시글 수 -->
-	<select id="getTotalBoardCountByKeywordAndTag"
-		parameterType="map" resultType="int">
+	<select id="getTotalBoardCountByKeywordAndTag" parameterType="map" resultType="int">
 		SELECT COUNT(*)
 		FROM COMMUNITY
-		JOIN USERS ON COMMUNITY.USER_ID =
-		USERS.USER_ID
+		JOIN USERS ON COMMUNITY.USER_ID = USERS.USER_ID
 		<where>
 			<if test="keyword != null">
 				(COMMUNITY.TITLE LIKE #{keyword}
-				OR COMMUNITY.TAG LIKE
-				#{keyword}
+				OR COMMUNITY.TAG LIKE #{keyword}
 				OR USERS.NICKNAME LIKE #{keyword})
 			</if>
 			<if test="tag != null">
@@ -92,9 +85,39 @@
 		</where>
 	</select>
 
+	<!-- 카테고리 게시글 수 조회 -->
+	<select id="getTotalBoardCountByCat" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+		FROM COMMUNITY
+		<where>
+			<if test="cat != null">
+				COMMUNITY.CAT = #{cat}
+			</if>
+		</where>
+	</select>
+
+	<!-- 검색 + 태그 + 카테고리 게시글 수 조회 -->
+	<select id="getTotalBoardCountByKeywordTagCat" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+		FROM COMMUNITY
+		JOIN USERS ON COMMUNITY.USER_ID = USERS.USER_ID
+		<where>
+			<if test="keyword != null">
+				(COMMUNITY.TITLE LIKE #{keyword}
+				OR COMMUNITY.TAG LIKE #{keyword}
+				OR USERS.NICKNAME LIKE #{keyword})
+			</if>
+			<if test="tag != null">
+				AND COMMUNITY.TAG = #{tag}
+			</if>
+			<if test="cat != null">
+				AND COMMUNITY.CAT = #{cat}
+			</if>
+		</where>
+	</select>
+
 	<!-- 게시글 상세 조회 -->
-	<select id="selectByCommId" parameterType="int"
-		resultType="boardlistvo">
+	<select id="selectByCommId" parameterType="int" resultType="boardlistvo">
 		SELECT
 		USERS.PROFILE_IMAGE,
 		COMMUNITY.COMM_ID,
@@ -119,19 +142,15 @@
 	<!-- 조회수 증가 -->
 	<update id="updateViews" parameterType="int">
 		UPDATE COMMUNITY
-		SET VIEWS
-		= VIEWS + 1
+		SET VIEWS = VIEWS + 1
 		WHERE COMM_ID = #{commid}
 	</update>
 
 	<!-- 게시글 등록 -->
 	<insert id="insertBoard" parameterType="communityvo">
 		INSERT INTO
-		COMMUNITY(COMM_ID, TITLE, CAT, CTT, CREATE_DATE, USER_ID, RECOMMEND,
-		VIEWS, TAG,IMAGE)
-		VALUES(COMM_SEQ.NEXTVAL, #{title}, #{cat}, #{ctt},
-		SYSDATE, #{user_id}, #{recommend},
-		#{views},#{tag},#{image})
+		COMMUNITY(COMM_ID, TITLE, CAT, CTT, CREATE_DATE, USER_ID, RECOMMEND, VIEWS, TAG, IMAGE)
+		VALUES(COMM_SEQ.NEXTVAL, #{title}, #{cat}, #{ctt}, SYSDATE, #{user_id}, #{recommend}, #{views}, #{tag}, #{image})
 	</insert>
 
 	<!-- 게시글 수정 -->
@@ -142,32 +161,27 @@
 	</update>
 
 	<!-- 게시글 삭제 -->
-	<insert id="deleteBoard" parameterType="int">
-		DELETE FROM COMMUNITY
-		WHERE COMM_ID=#{commid}
-	</insert>
+	<delete id="deleteBoard" parameterType="int">
+		DELETE FROM COMMUNITY WHERE COMM_ID=#{commid}
+	</delete>
 
 	<!-- 게시글에 대한 댓글 cascade 수행 -->
 	<delete id="deleteRepliesByCommId" parameterType="int">
-		DELETE FROM
-		REPLIES WHERE COMM_ID = #{commId}
+		DELETE FROM REPLIES WHERE COMM_ID = #{commId}
 	</delete>
 
 	<!-- 추천 -->
 	<update id="incrementRecommend" parameterType="int">
-		UPDATE COMMUNITY
-		SET RECOMMEND = RECOMMEND + 1 WHERE COMM_ID = #{commid}
+		UPDATE COMMUNITY SET RECOMMEND = RECOMMEND + 1 WHERE COMM_ID = #{commid}
 	</update>
 
 	<!-- 추천 수 조회 -->
-	<select id="getRecommendCount" parameterType="int"
-		resultType="int">
+	<select id="getRecommendCount" parameterType="int" resultType="int">
 		SELECT RECOMMEND FROM COMMUNITY WHERE COMM_ID = #{commid}
 	</select>
 
 	<!-- 댓글 리스트 조회 -->
-	<select id="selectReplie" parameterType="int"
-		resultType="replievo">
+	<select id="selectReplie" parameterType="int" resultType="replievo">
 		SELECT
 		R.CMT,
 		R.CREATE_TIME,
@@ -176,44 +190,110 @@
 		FROM
 		REPLIES R
 		JOIN USERS U ON R.USER_ID = U.USER_ID
-		WHERE
-		COMM_ID = #{commid}
-		ORDER BY
-		R.CREATE_TIME ASC
+		WHERE COMM_ID = #{commid}
+		ORDER BY R.CREATE_TIME ASC
 	</select>
 
 	<!-- 댓글 수 조회 -->
-	<select id="selectReplieNum" parameterType="int"
-		resultType="int">
+	<select id="selectReplieNum" parameterType="int" resultType="int">
 		SELECT COUNT(*) FROM REPLIES WHERE COMM_ID=#{commid}
 	</select>
 
 	<!-- 댓글 작성 -->
 	<insert id="insertComment" parameterType="replievo">
-		INSERT INTO
-		REPLIES(REPLY_ID, CMT, COMM_ID, CREATE_TIME, USER_ID)
-		VALUES(REPLY_SEQ.NEXTVAL,#{cmt},#{comm_id}, SYSDATE, #{user_id})
+		INSERT INTO REPLIES(REPLY_ID, CMT, COMM_ID, CREATE_TIME, USER_ID)
+		VALUES(REPLY_SEQ.NEXTVAL, #{cmt}, #{comm_id}, SYSDATE, #{user_id})
 	</insert>
 
 	<!-- 댓글 삭제 -->
 	<delete id="deleteReplies" parameterType="int">
-		DELETE FROM
-		REPLIES
-		WHERE REPLY_ID=#{replyid}
+		DELETE FROM REPLIES WHERE REPLY_ID=#{replyid}
 	</delete>
 
-	<!-- 세션으로 닉네임 -->
-	<select id="selectNicknameById" parameterType="String"
-		resultType="String">
-		SELECT NICKNAME
-		FROM USERS
-		WHERE USER_ID=#{userid}
+	<!-- 세션으로 닉네임 조회 -->
+	<select id="selectNicknameById" parameterType="String" resultType="String">
+		SELECT NICKNAME FROM USERS WHERE USER_ID=#{userid}
 	</select>
 
 	<!-- 세션으로 닉네임 UserDTO로 받아와줘야 할 때 -->
-	<select id="selectNicknameByUserDTOId" parameterType="String"
-		resultType="uservo">
+	<select id="selectNicknameByUserDTOId" parameterType="String" resultType="uservo">
 		SELECT NICKNAME FROM USERS WHERE USER_ID=#{userid}
 	</select>
-	
+
+	<!-- 매니저 여부 -->
+	<select id="checkManagerByIdInCommunity" parameterType="String" resultType="int">
+		SELECT IS_ADMIN FROM USERS WHERE USER_ID=#{userid}
+	</select>
+
+	<!-- 공지글 -->
+	<select id="selectTopNotices" resultType="boardlistvo">
+        <![CDATA[
+        SELECT 
+            COMM_ID,
+            CAT,
+            TAG,
+            TITLE,
+            NICKNAME,
+            CREATE_DATE,
+            RECOMMEND,
+            VIEWS
+        FROM (
+            SELECT
+                COMMUNITY.COMM_ID,
+                COMMUNITY.CAT,
+                COMMUNITY.TAG,
+                COMMUNITY.TITLE,
+                USERS.NICKNAME,
+                COMMUNITY.CREATE_DATE,
+                COMMUNITY.RECOMMEND,
+                COMMUNITY.VIEWS,
+                ROWNUM AS RN
+            FROM COMMUNITY
+            JOIN USERS ON COMMUNITY.USER_ID = USERS.USER_ID
+            WHERE TAG = '공지'
+            ORDER BY CREATE_DATE DESC
+        ) 
+        WHERE RN < 6
+        ]]>
+    </select>
+
+    <!-- 공지글 (카테고리별) -->
+    <select id="selectTopNoticesByCat" parameterType="map" resultType="boardlistvo">
+        <![CDATA[
+        SELECT 
+            COMM_ID,
+            CAT,
+            TAG,
+            TITLE,
+            NICKNAME,
+            CREATE_DATE,
+            RECOMMEND,
+            VIEWS
+        FROM (
+            SELECT
+                COMMUNITY.COMM_ID,
+                COMMUNITY.CAT,
+                COMMUNITY.TAG,
+                COMMUNITY.TITLE,
+                USERS.NICKNAME,
+                COMMUNITY.CREATE_DATE,
+                COMMUNITY.RECOMMEND,
+                COMMUNITY.VIEWS,
+                ROWNUM AS RN
+            FROM COMMUNITY
+            JOIN USERS ON COMMUNITY.USER_ID = USERS.USER_ID
+            WHERE TAG = '공지'
+            AND COMMUNITY.CAT = #{cat}
+            ORDER BY CREATE_DATE DESC
+        ) 
+        WHERE RN < 6
+        ]]>
+    </select>
+    
+    <!-- 작성자 조회 -->
+    <select id="getWriterByCommId" parameterType="int" resultType="String">
+    	SELECT USER_ID FROM COMMUNITY WHERE COMM_ID=#{commId}
+    </select>
+
 </mapper>
+
