@@ -250,7 +250,7 @@
             WHERE TAG = '공지'
             ORDER BY CREATE_DATE DESC
         ) 
-        WHERE RN < 3
+        WHERE RN < 6
         ]]>
     </select>
     

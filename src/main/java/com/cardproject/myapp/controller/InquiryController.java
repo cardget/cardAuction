@@ -31,26 +31,33 @@ public class InquiryController {
 	// 문의 리스트 조회
 	@GetMapping("/InquirySelect.do")
 	public String InquirySelect(@RequestParam(defaultValue = "1") int page,
-			@RequestParam(defaultValue = "10") int pageSize, Model model, HttpSession session) {
+	                            @RequestParam(defaultValue = "10") int pageSize, Model model, HttpSession session) {
 
-		// 유저 닉네임
-		String userid = (String) session.getAttribute("userid");
-		if (userid != null) {
-			UserDTO user = iService.selectNicknameByUserVOId(userid);
-			session.setAttribute("user", user);
-		}
+	    // 유저 닉네임
+	    String userid = (String) session.getAttribute("userid");
+	    if (userid != null) {
+	        UserDTO user = iService.selectNicknameByUserVOId(userid);
+	        session.setAttribute("user", user);
+	    }
 
-		// 페이징
-		int totalCount = iService.getTotalInquiryCount();
-		List<QuestionDTO> ilist = iService.selectInquiryList(page, pageSize);
+	    // 페이징
+	    int totalCount = iService.getTotalInquiryCount();
+	    List<QuestionDTO> ilist = iService.selectInquiryList(page, pageSize);
 
-		model.addAttribute("ilist", ilist);
-		model.addAttribute("currentPage", page);
-		model.addAttribute("totalCount", totalCount);
-		model.addAttribute("pageSize", pageSize);
+	    // 게시글 번호 재정렬
+	    int startNo = (page - 1) * pageSize + 1;
+	    for (int i = 0; i < ilist.size(); i++) {
+	        ilist.get(i).setQuest_id(startNo + i);
+	    }
 
-		return "inquiry/InquirySelect";
+	    model.addAttribute("ilist", ilist);
+	    model.addAttribute("currentPage", page);
+	    model.addAttribute("totalCount", totalCount);
+	    model.addAttribute("pageSize", pageSize);
+
+	    return "inquiry/InquirySelect";
 	}
+
 
 	// 문의 글 상세조회
 	@GetMapping("/InquiryDetail.do")

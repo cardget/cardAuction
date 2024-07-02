@@ -61,10 +61,16 @@ public class CommunityController {
 	    // 일반 게시글 (공지글 제외)
 	    List<BoardListDTO> blist = cService.selectBoardList(page, pageSize, sort, keyword, tag);
 	    blist.removeIf(board -> "공지".equals(board.getTag()));
-	    
+
+	    // 게시글 번호 재정렬
+	    int startNo = (page - 1) * pageSize + 1;
+	    for (int i = 0; i < blist.size(); i++) {
+	        blist.get(i).setComm_id(startNo + i);
+	    }
+
 	    // 공지글을 일반 게시글 상위에 병합
 	    blist.addAll(0, notices);
-	    
+
 	    model.addAttribute("blist", blist);
 	    model.addAttribute("currentPage", page);
 	    model.addAttribute("totalCount", totalCount);
@@ -75,6 +81,7 @@ public class CommunityController {
 	    
 	    return "community/BoardSelect";
 	}
+
 
 
 	// 게시글 상세 조회
