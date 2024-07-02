@@ -2,6 +2,7 @@ package com.cardproject.myapp.controller;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,13 +30,13 @@ import com.cardproject.myapp.dto.ItemDTO;
 import com.cardproject.myapp.dto.ItemDetailDTO;
 import com.cardproject.myapp.dto.LikeDTO;
 import com.cardproject.myapp.dto.NotificationDTO;
+import com.cardproject.myapp.dto.PokemonDTO;
 import com.cardproject.myapp.dto.UserDTO;
 import com.cardproject.myapp.service.AWSS3Service;
 import com.cardproject.myapp.service.AuctionService;
 import com.cardproject.myapp.service.MyPageService;
 
 import lombok.RequiredArgsConstructor;
-
 
 @Controller
 @RequestMapping("/auction")
@@ -46,12 +47,15 @@ public class AuctionController {
 	@Autowired
 	private AWSS3Service s3Service;
 	@Autowired
-	MyPageService mpService; 
-
+	MyPageService mpService;
 
 	@RequestMapping("/auctionMain.do")
-	public String auctionMain(@RequestParam(value = "sortOption", required = false) String sortOption, Model model,HttpSession session) {
+	public String auctionMain(@RequestParam(value = "sortOption", required = false) String sortOption, Model model,
+			HttpSession session) {
+		
 		System.out.println("auctionmain page");
+		String userId = (String) session.getAttribute("userid");
+		model.addAttribute("userId", userId);
 		if (sortOption == null) {
 			sortOption = "recent";
 		}
@@ -59,22 +63,32 @@ public class AuctionController {
 		List<ItemDetailDTO> itemDlist = aucs.getSortedItemList(sortOption);
 		model.addAttribute("selectedSortOption", sortOption);
 		model.addAttribute("itemDlist", itemDlist);
-		
-//		String userid = (String) session.getAttribute("userid");
-//    	
-//    	if (userid != null) {
-//			UserDTO user = mpService.selectUserById(userid);
-//			List<NotificationDTO> nlist = mpService.selectFiveNotifications(userid);
-//			model.addAttribute("user", user);
-//			model.addAttribute("nlist", nlist);
-//		}
+
+		String userid = (String) session.getAttribute("userid");
+
+		if (userid != null) {
+			UserDTO user = mpService.selectUserById(userid);
+			List<NotificationDTO> nlist = mpService.selectFiveNotifications(userid);
+			model.addAttribute("user", user);
+			model.addAttribute("nlist", nlist);
+		}
 		return "auction/auctionMain";
 	}
-
+//	@PostMapping("/auctionMainSearch.do")
+//	public String auctionMainSearch() {
+//		
+//	}
 	@GetMapping("/auctionDetail.do")
-	public void auctionDetail(Model model,@RequestParam("item_id") Integer item_id, HttpSession session) {
+	public void auctionDetail(Model model, @RequestParam("item_id") Integer item_id, HttpSession session) {
+		String userId = (String) session.getAttribute("userid");
+		boolean isBidHas = aucs.isBidding(userId,item_id);
+		model.addAttribute("isBidHas",isBidHas);
+		int price =aucs.myBidPrice(userId, item_id);
+		model.addAttribute("price",price);
+		System.out.println(session.getAttribute("userid"));
 		System.out.println("auctionDetail page");
 		System.out.println(item_id);
+		model.addAttribute("userId", session.getAttribute("userid"));
 
 		model.addAttribute("itemDetailOne", aucs.selectItemOne(item_id));
 
@@ -83,23 +97,31 @@ public class AuctionController {
 	@GetMapping("/auctionInsert.do")
 	public void auctionInsert(Model model) {
 		System.out.println("auctionInsert page");
+		//keyword를 post로 받고 .. 해야하네?
+		//model.addAttribute("pSelectlist",aucs.selectPRight(cardKeyword));
 		model.addAttribute("plist", aucs.selectPCard());
 
 	}
+	@GetMapping("/searchPokemon")
+	@ResponseBody
+	public List<PokemonDTO> searchPokemon(Model model, String cardKeyword){
+		//model.addAttribute("pSelectlist",aucs.selectPRight(cardKeyword));
+		return aucs.selectPRight(cardKeyword);
+	}
 
 	@PostMapping("/auctionInsert.do")
-	public String insertItem(MultipartHttpServletRequest request, Model model, ItemDTO item,HttpSession session) {
+	public String insertItem(MultipartHttpServletRequest request, Model model, ItemDTO item, HttpSession session) {
 		String userId = (String) session.getAttribute("userid");
 		item.setUser_id(userId);
 		List<MultipartFile> files = request.getFiles("images");
 		List<String> uploadedImageUrls = new ArrayList<>();
 		if (files.isEmpty()) {
-            model.addAttribute("error", "최소한 한 개의 이미지를 업로드해야 합니다.");
-            return "redirect:auctionInsert.do"; // 업로드 폼으로 리디렉션
-        }
+			model.addAttribute("error", "최소한 한 개의 이미지를 업로드해야 합니다.");
+			return "redirect:auctionInsert.do"; // 업로드 폼으로 리디렉션
+		}
 		for (MultipartFile file : files) {
 			try {
-				String fileName = "items/"+file.getOriginalFilename();
+				String fileName = "items/" + file.getOriginalFilename();
 				String url = s3Service.uploadObject(file, fileName);
 				uploadedImageUrls.add(url);
 			} catch (IOException e) {
@@ -129,71 +151,73 @@ public class AuctionController {
 				}
 			}
 		}
-		
+
 		aucs.itemInsert(item);
 		return "redirect:auctionMain.do";
 
 	}
-	
-	@PostMapping(value= "/auctionBidding.do", produces="application/json;charset=UTF-8")
-	@ResponseBody
-	public ResponseEntity<Map<String,Object>> insertBidding(@RequestBody BiddingDTO bid, HttpSession session) {
-	    System.out.println("auction Bidding");
-	    System.out.println(bid);
-	    
-	    Map<String, Object> response = new HashMap<String,Object>();
-	    String userId = (String) session.getAttribute("userid");
-	    bid.setIs_win(0);
-	    
-	    //자신의 물품에 입찰하려는 경우
-	    if (aucs.isSeller(userId,bid.getItem_id())) {
-	    	response.put("success", false);
-	    	response.put("message","본인의 경매 물품에는 입찰할 수 없습니다.");
-	    	return ResponseEntity.ok(response);
-	    }
 
-	    // 동일물품에 입찰하려는 경우
-	    if (aucs.isBidding(userId, bid.getItem_id())) {
-	    	response.put("success", false);
-	    	response.put("message", "이미 입찰한 물품입니다.");
-	        System.out.println("이미 입찰한 물품");
-	        return ResponseEntity.ok(response);
-	    }
-	    
-	    bid.setUser_id(userId);
-	    aucs.biddingInsert(bid);
-	    response.put("success", true);
-    	response.put("message", "입찰에 성공했습니다.");
-	    return ResponseEntity.ok(response);
-	}
-	@PostMapping("/like/toggle")
+	@PostMapping(value = "/auctionBidding.do", produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public ResponseEntity<Map<String, Object>> toggleLike(@RequestBody Map<String, String> request,
-			HttpSession session) {
+	public ResponseEntity<Map<String, Object>> insertBidding(@RequestBody BiddingDTO bid, HttpSession session) {
+		System.out.println("auction Bidding");
+		System.out.println(bid);
+
+		Map<String, Object> response = new HashMap<String, Object>();
 		String userId = (String) session.getAttribute("userid");
-		Integer itemId = Integer.parseInt(request.get("itemId"));
-		Map<String, Object> response = new HashMap<>();
+		bid.setIs_win(0);
 
-		if (aucs.isLiked(userId, itemId)) {
-			response.put("success", aucs.removeLike(userId, itemId));
-			response.put("status", "removed");
-		} else {
-			response.put("success", aucs.addLike(userId, itemId));
-			response.put("status", "added");
+		// 자신의 물품에 입찰하려는 경우
+		if (aucs.isSeller(userId, bid.getItem_id())) {
+			response.put("success", false);
+			response.put("message", "본인의 경매 물품에는 입찰할 수 없습니다.");
+			return ResponseEntity.ok(response);
 		}
 
+		// 동일물품에 입찰하려는 경우
+		if (aucs.isBidding(userId, bid.getItem_id())) {
+			response.put("success", false);
+			response.put("message", "이미 입찰한 물품입니다. 입찰 금액 수정만 가능합니다.");
+			System.out.println("이미 입찰한 물품");
+			return ResponseEntity.ok(response);
+		}
+
+		bid.setUser_id(userId);
+		aucs.biddingInsert(bid);
+		response.put("success", true);
+		response.put("message", "입찰에 성공했습니다.");
 		return ResponseEntity.ok(response);
 	}
-
-	@GetMapping("/like/status")
+	@PostMapping("/auctionBidUpdate.do")
+	public String biddingPriceUpdate(int price, String user_id, Integer item_id) {
+		
+		int result = aucs.biddingPriceUpdate(price, user_id, item_id);
+		
+		return "redirect:auctionDetail.do?item_id="+item_id;
+	}
+	@PostMapping("/addLike")
 	@ResponseBody
-	public ResponseEntity<Map<String, Object>> getLikeStatus(@RequestParam String itemId, HttpSession session) {
-		String userId = (String) session.getAttribute("userid");
-		Integer itemIdInt = Integer.parseInt(itemId);
-		Map<String, Object> response = new HashMap<>();
-		boolean isLiked = aucs.isLiked(userId, itemIdInt);
-		response.put("isLiked", isLiked);
-		return ResponseEntity.ok(response);
+	public boolean addLike(@RequestParam String userId, @RequestParam Integer itemId) {
+		return aucs.addLike(userId, itemId);
 	}
 
+	@PostMapping("/removeLike")
+	@ResponseBody
+	public boolean removeLike(@RequestParam String userId, @RequestParam Integer itemId) {
+		return aucs.removeLike(userId, itemId);
+	}
+
+	@PostMapping("/isLiked")
+	@ResponseBody
+	public ResponseEntity<String> isLiked(@RequestParam String userId, @RequestParam Integer itemId) {
+		 boolean isLiked = aucs.isLiked(userId, itemId);
+		 System.out.println("####################### " + isLiked);
+		    
+		 if(isLiked) {
+		     return ResponseEntity.ok("liked");
+		 } else {
+		     return ResponseEntity.ok("not liked");
+		 }
+
+}
 }
