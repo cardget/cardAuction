@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -46,32 +47,32 @@ public class PaymentController {
 		return "payment/payment";
 	}
 	
-	@PostMapping("result")
-    public String payResult(@RequestParam("trade_id") int tradeId,
-                            @RequestParam("used_point") int usedPoint,
-                            @RequestParam("amount") int amount,
-                            @RequestParam("buyer_name") String buyerName,
-                            @RequestParam("item_name") String itemName,
-                            PaymentDTO payment,
-                            Model model) {
+	@PostMapping("/result")
+    public String payResult(@RequestBody PaymentDTO paymentRequest) {
 		
 		String userid = (String) session.getAttribute("userid");
-		String cmt = "[구매] " + itemName;
 		
-		// 포인트 사용 내역 추가
-		pService.usingPoint(amount, userid, cmt);
-		
-		// 결제 여부 갱신
-		pService.updatePaid(tradeId);
-		
-		// 결제 내용 추가
-		payment.setTrade_id(tradeId);
-		payment.setPoint_used(usedPoint);
-		pService.insertPayment(payment);
-		
-        model.addAttribute("payment", payment);
-        model.addAttribute("itemName", itemName);
-
+		int tradeId = paymentRequest.getTrade_id();
+        int pointUsed = paymentRequest.getPoint_used();
+        int paidAmount = paymentRequest.getPaid_amount();
+        String itemName = paymentRequest.getItem_name();
+        String buyerAddr = paymentRequest.getBuyer_addr();
+        
+        final double POINT_RATE = 0.02;
+        
+        // 로직 처리
+        if (pointUsed > 0) {
+        	pService.usingPoint(pointUsed, userid, "[구매] " + itemName);
+        }
+        pService.updatePaid(tradeId);
+        pService.insertDelivery(tradeId, buyerAddr);
+        pService.getPoint((int) (paidAmount*POINT_RATE), "[구매] " + itemName, userid);
+        
+        return "payment/paymentResult";
+    }
+	
+	@GetMapping("result")
+    public String payResult() {
         return "payment/paymentResult";
     }
 

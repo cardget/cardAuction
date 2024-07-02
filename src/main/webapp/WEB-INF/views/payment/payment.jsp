@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +16,7 @@
 /* 포인트 사용 */
 function usingPoint() {
 	// trade.price 값 가져오기
-	var tradePrice = parseInt(document.getElementById("tradePrice").innerText, 10);
+	var tradePrice = parseInt(${trade.price}, 10);
 	console.log(tradePrice);
 
 	// point-used 클래스의 input 값 가져오기
@@ -23,7 +24,7 @@ function usingPoint() {
 	console.log(pointUsed);
 	
 	// 전체 포인트 값 가져오기
-	var point = parseInt(document.getElementById("totalPoint").innerText, 10);
+	var point = parseInt(${point}, 10);
 	console.log(point);
 	
 	// NaN 체크
@@ -45,7 +46,7 @@ function usingPoint() {
 	}
 
 	// 잔여 포인트 업데이트
-	document.getElementById("remainingPoint").innerText = remainingPoint + " P";
+	document.getElementById("remainingPoint").innerText = remainingPoint.toLocaleString() + " P";
 
 	// total-payment 클래스의 input에 값 설정
 	$('.total-payment').val(totalPayment);
@@ -58,12 +59,14 @@ function pay() {
     if (totalPayment == 0) {
         var postData = {
             trade_id: `${trade.trade_id}`,
-            used_point: parseInt($('.point-used').val(), 10),
+            point_used: parseInt($('.point-used').val(), 10),
             paid_amount: 0,
             buyer_name: `${user.user_name}`
         };
 
-        postRequest('result', postData);
+        postRequest('result', postData).then(() => {
+            window.location.href = '/myapp/payment/result'; // 결과 페이지로 이동
+        });
         return; // totalPayment가 0인 경우 이후 코드를 실행하지 않도록 return
     }
 
@@ -84,7 +87,7 @@ function pay() {
         if (rsp.success) {
             var postData = {
                 trade_id: rsp.merchant_uid,
-                used_point: parseInt($('.point-used').val(), 10),
+                point_used: parseInt($('.point-used').val(), 10),
                 item_name: rsp.name,
                 amount: rsp.paid_amount,
                 buyer_name: rsp.buyer_name,
@@ -101,9 +104,10 @@ function pay() {
                 pg_type: rsp.pg_type,
                 receipt_url: rsp.receipt_url,
                 status: rsp.status
+                buyer_addr: `${user.address} ${user.address_detail}`
             };
 
-            postRequest('/myapp/payment/result', postData);
+            postRequest('/myapp/payment/result', postData)
         } else {
             // 결제 실패 시 처리할 로직 추가
             alert("결제에 실패하였습니다. 다시 시도해주세요.");
@@ -113,19 +117,17 @@ function pay() {
 
 /* 결제 결과 */
 function postRequest(url, data) {
-    return fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
+    $.ajax({
+        url: url,
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function(response) {
+            window.location.href = 'result';
         },
-        body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
-    })
-    .catch((error) => {
-        console.error('Error:', error);
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error('Error:', errorThrown);
+        }
     });
 }
 </script>
@@ -148,13 +150,13 @@ function postRequest(url, data) {
 			<div>
 				<p>낙찰금</p>
 				<div>
-					<p id=tradePrice>${trade.price}</p><p> 원</p>
+					<p id=tradePrice><fmt:formatNumber value="${trade.price}" pattern="#,###"/> 원</p>
 				</div>
 			</div>
 			<div>
 				<p>전체 포인트</p>
 				<div>
-					<p id=totalPoint>${point}</p><p> P</p>
+					<p id=totalPoint><fmt:formatNumber value="${point}" pattern="#,###"/> P</p>
 				</div>
 			</div>
 			<div>
@@ -167,13 +169,18 @@ function postRequest(url, data) {
 			</div>
 			<div>
 				<p>잔여 포인트</p>
-				<p id="remainingPoint">${point} P</p>
+				<p id="remainingPoint"><fmt:formatNumber value="${point}" pattern="#,###"/> P</p>
 			</div>
+			<hr>
+				<div>
+					<p>배송비</p>
+					<p><fmt:formatNumber value=3000 pattern="#,###"/> 원</p>
+				</div>
 			<hr>
 			<div>
 				<p>최종결제금액</p>
 				<div>
-					<input type="number" class="total-payment" value="${trade.price}" disabled>
+					<input type="number" class="total-payment" value="${trade.price} + 3000" disabled>
 					<P>원</P>
 				</div>
 			</div>

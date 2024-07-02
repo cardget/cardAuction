@@ -392,16 +392,31 @@ input:focus + .slider {
 
 .status-section .status-button-sold {
     padding: 10px 20px;
-    border: 1px solid #ff0000;
+    border: 1px solid #FE3838;
     border-radius: 4px;
     cursor: pointer;
     font-size: 14px;
     background-color: #fff;
-    color: #ff0000;
+    color: #FE3838;
 }
 
 .status-section .status-button-proceeding {
     padding: 10px 20px;
+    border: 1px solid #007FFF;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    background-color: #fff;
+    color: #007FFF;
+}
+
+.status-button-proceeding:hover {
+	color: #fff;
+    background-color: #007FFF;
+}
+
+.status-button-ready {
+	padding: 10px 20px;
     border: 1px solid #007FFF;
     border-radius: 4px;
     cursor: pointer;

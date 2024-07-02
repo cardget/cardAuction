@@ -93,7 +93,7 @@ public class MyPageController {
 			@RequestParam("address") String address,
 			@RequestParam("detailAddress") String addressDetail, 
 			@RequestParam("zipCode") String zipCode, 
-			@RequestParam("bank") String bank,
+			@RequestParam("backHidden") String bank,
 			@RequestParam("accnt") String accnt, 
 			@SessionAttribute("userid") String userid, 
 			Model model, RedirectAttributes redirectAttributes) {
@@ -102,12 +102,11 @@ public class MyPageController {
 		String fullEmail = email + "@" + domain;
 		int i_email_agreement = Integer.parseInt(email_agreement);
 		
-		String originalFileName = file.getOriginalFilename();
-		
-		String rawFileName = originalFileName.substring(0,originalFileName.lastIndexOf(".")); // 이름
-		String extension = originalFileName.substring(originalFileName.lastIndexOf(".")+1);
-		
 		if(file!=null&& !file.isEmpty()) {
+			String originalFileName = file.getOriginalFilename();
+			
+			String rawFileName = originalFileName.substring(0,originalFileName.lastIndexOf(".")); // 이름
+			String extension = originalFileName.substring(originalFileName.lastIndexOf(".")+1);
     		String fileName="profile/"+rawFileName+System.currentTimeMillis()+"."+extension;
 	    	try {
 				String url=s3Service.uploadObject(file, fileName);

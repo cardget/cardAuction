@@ -27,4 +27,6 @@ public class PaymentDTO {
 	private String receipt_url;
 	private String status;
 	private int point_used;
+	private String item_name;
+	private String buyer_addr;
 }

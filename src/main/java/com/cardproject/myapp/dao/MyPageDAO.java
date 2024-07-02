@@ -64,7 +64,8 @@ public class MyPageDAO{
 	
 	// 포인트 합계
 	public int selectTotalPointByUser(String userid) {
-		return sqlSession.selectOne(namespace + ".selectTotalPointByUser", userid);
+		Integer points = sqlSession.selectOne(namespace + ".selectTotalPointByUser", userid);
+		return points != null ? points : 0;
 	}
 	
 	// 카테고리별 포인트 합계
@@ -72,7 +73,8 @@ public class MyPageDAO{
 		Map<String, Object> params = new HashMap<>();
 		params.put("userid", userid);
 		params.put("cat", cat);
-		return sqlSession.selectOne(namespace + ".selectTotalPointByCat", params);
+		Integer points = sqlSession.selectOne(namespace + ".selectTotalPointByCat", params);
+		return points != null ? points : 0;
 	}
 	
 	// 관심목록
