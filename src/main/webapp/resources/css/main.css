@@ -2,13 +2,14 @@
 
 body {
 	/*Apple SD 고딕 폰트*/
-	font-family: 'Apple SD Gothic Neo', sans-serif;
+	font-family: 'AppleSDGothicNeo', 'Noto Sans KR', sans-serif;
 	margin: 0;
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
 	position:relative;
 }
+
 
 button {
 	cursor: pointer;
@@ -106,6 +107,7 @@ ul {
 }
 
 .cardType {
+	border-radius:5px;
 	width: 200px;
 	height: 300px;
 	box-shadow: 4px 4px 5px 1px rgba(0, 0, 0, .3);

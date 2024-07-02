@@ -85,7 +85,7 @@
 						<c:forEach items="${pCardList}" var="card">
 							<div class="card-count">
 								<img src="${card.card_id}" alt="${card.card_id}"
-									onclick="call('${card.card_id}')" class="listCard">
+									onclick="call('${card.card_id}','${card.card_id}')" class="listCard">
 							</div>
 						</c:forEach>
 					</div>
@@ -150,7 +150,7 @@
 	                var cardDiv = document.createElement("div");
 	                cardDiv.classList.add("card-count");
 	                cardDiv.innerHTML = `
-	                    <img src="\${card.card_id}" alt="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}')">
+	                    <img src="\${card.card_id}" alt="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}','\${card.card_id}')">
 	                `;
 	                here.appendChild(cardDiv);
 	            });
@@ -199,28 +199,40 @@
 	//더보기
 		let currentPageP = 1;
 		document.getElementById('loadMorePBtn').addEventListener('click', function() {
-
+			var cardAttr = $('#card_attr').val();
+	        var cardSort = $('#card_sort').val();
+	        var cardName = $('#card-search-box').val();
+			
 		    currentPageP++;
 		    console.log(currentPageP);
-		    fetch("/myapp/deckMakers/loadMorePCard.do?page=" + currentPageP)
-		        .then(response =>  
-		        response.json() 
-		        )
-		        .then(data => {
+		    $.ajax({
+		        url: "/myapp/deckMakers/loadMorePCard.do?page=" + currentPageP,
+		        type: "GET",
+		        data: {
+		        	card_attr: cardAttr,
+		        	card_sort: cardSort,
+		        	query: cardName
+		        },
+		        success: function(data) {
 		            console.log(data);
 		            const deckList = document.getElementById('here');
 		            data.forEach(card => {
-		                const cardDiv = document.createElement('div');
-		                cardDiv.classList.add('card-count');
+		                console.log(card);
+		                var cardDiv = document.createElement("div");
+		                cardDiv.classList.add("card-count");
 		                cardDiv.innerHTML += `
-		                    <img src="\${card.card_id}" alt="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}')">
+		                    <img src="\${card.card_id}" alt="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}','\${card.card_id}')">
 		                `;
-		                deckList.appendChild(cardDiv);
+		                here.appendChild(cardDiv);
 		            });
-		        });
+		        },
+		        error: function(xhr, status, error) {
+		            console.error("Error:", error);
+		        }
+		    });
 		});
 		//카드리스트에추가
-		function call(card_id){
+		function call(card_image, card_id){
 			document.querySelector("#deckListContainer").innerHTML += `
                 <li class="addCard"><img src="\${card_id}" alt="\${card_id}" data-card="\${card_id}" onclick="removeCard(this)"></li>
             `;

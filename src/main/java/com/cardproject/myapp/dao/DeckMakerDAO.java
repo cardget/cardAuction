@@ -23,10 +23,7 @@ public class DeckMakerDAO {
     private SqlSession sqlSession;
     String namespace = "com.cardproject.myapp.dao";
 
-    public List<PokemonDTO> selectOrFilterPCard(Map<String, Object> params) {
-        System.out.println("DAOparams:" + params);
-        return sqlSession.selectList(namespace + ".selectOrFilterPCard", params);
-    }
+    
     //덱리스트메인 불러오기
     public List<Map<String, Object>> getPThumbnail(int cat, String query, int startRow, int endRow, String sort) {
         Map<String, Object> params = new HashMap<>();
@@ -71,6 +68,11 @@ public class DeckMakerDAO {
     //공통 덱카운트
     public int getTotalDeckCount(Map<String, Object> params) {
         return sqlSession.selectOne(namespace + ".getTotalDeckCount", params);
+    }
+    
+    public List<PokemonDTO> selectOrFilterPCard(Map<String, Object> params) {
+        System.out.println("DAOparams:" + params);
+        return sqlSession.selectList(namespace + ".selectOrFilterPCard", params);
     }
 
     public List<YugiohDTO> selectOrFilterYCard(Map<String, Object> params) {

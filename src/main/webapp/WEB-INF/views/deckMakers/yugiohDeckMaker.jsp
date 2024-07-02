@@ -63,7 +63,7 @@
 				</select> 
 				속성 : <select class="optionBox" id="card_sort" name="card_sort">
 					<option value="s">전체</option>
-					<option value="함정">마법</option>
+					<option value="마법">마법</option>
 					<option value="아이템">몬스터</option>
 					<option value="함정">함정</option>
 				</select>
@@ -80,7 +80,7 @@
 					<div class="accordion-content active" id="deckList">
 						<c:forEach items="${yCardList}" var="card">
 							<div class="card-count">
-								<img src="${card.card_id}" onclick="call('${card.card_id}')"
+								<img src="${card.card_id}" onclick="call('${card.card_id}','${card.card_id}')"
 									class="listCard">
 							</div>
 						</c:forEach>
@@ -145,7 +145,7 @@
 	                var cardDiv = document.createElement("div");
 	                cardDiv.classList.add("card-count");
 	                cardDiv.innerHTML = `
-	                    <img src="\${card.card_id}" alt="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}')">
+	                    <img src="\${card.card_id}" alt="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}','\${card.card_id}')">
 	                `;
 	                here.appendChild(cardDiv);
 	            });
@@ -193,28 +193,42 @@
 		
 		let currentPageY = 1;
 		document.getElementById('loadMoreYBtn').addEventListener('click', function() {
+			var cardAttr = $('#card_attr').val();
+	        var cardSort = $('#card_sort').val();
+	        var cardName = $('#card-search-box').val();
 
 		    currentPageY++;
 		    console.log(currentPageY);
-		    fetch("/myapp/deckMakers/loadMoreYCard.do?page=" + currentPageY)
-		        .then(response =>  
-		        response.json() 
-		        )
-		        .then(data => {
+		    $.ajax({
+		        url: "/myapp/deckMakers/loadMoreYCard.do?page=" + currentPageY,
+		        type: "GET",
+		        data: {
+		        	card_attr: cardAttr,
+		        	card_sort: cardSort,
+		        	query: cardName
+		        },
+		        success: function(data) {
 		            console.log(data);
 		            const deckList = document.getElementById('here');
 		            data.forEach(card => {
-		                const cardDiv = document.createElement('div');
-		                cardDiv.classList.add('card-count');
+		                console.log(card);
+		                var cardDiv = document.createElement("div");
+		                cardDiv.classList.add("card-count");
 		                cardDiv.innerHTML += `
-		                    <img src="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}')">
+		                    <img src="\${card.card_id}" alt="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}','\${card.card_id}')">
 		                `;
-		                deckList.appendChild(cardDiv);
+		                here.appendChild(cardDiv);
 		            });
-		        });
+		        },
+		        error: function(xhr, status, error) {
+		            console.error("Error:", error);
+		        }
+		    });
 		});
 		
-		function call(card_id){
+		
+		
+		function call(card_id, card_image){
 			document.querySelector("#deckListContainer").innerHTML += `
                 <li class="addCard"><img src="\${card_id}" data-card="\${card_id}" onclick="removeCard(this)"></li>
             `;
