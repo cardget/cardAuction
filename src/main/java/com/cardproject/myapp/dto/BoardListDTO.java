@@ -20,4 +20,5 @@ public class BoardListDTO {
 	private int views;
 	private String image;
 	private String profile_image;
+	private int sort_num;
 }
