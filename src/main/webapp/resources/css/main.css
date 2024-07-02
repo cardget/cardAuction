@@ -118,7 +118,7 @@ ul {
 }
 
 .header-image {
-	height: 280px;
+	height: 278px;
 	width: 100%;
 }
 .header-image > img{
@@ -411,7 +411,31 @@ select {
 	border-radius:10px;
 }
 
-.deck-overlay-container img {
+.deck-overlay-container .pcard {
+	position: absolute;
+    clip-path: inset(80px 70px 380px 80px);
+    border-radius: 15px;
+    margin-left: -70px;
+    margin-top: -80px;
+    filter: brightness(0.5);
+}
+.deck-overlay-container .ycard {
+	position: absolute;
+    clip-path: inset(80px 20px 245px 20px);
+    border-radius: 15px;
+    margin-left: -10px;
+    margin-top: -80px;
+    filter: brightness(0.5);
+}
+.deck-overlay-container .dcard {
+	position: absolute;
+    clip-path: inset(80px 33px 225px 5px);
+    border-radius: 15px;
+    margin-left: 5px;
+    margin-top: -80px;
+    filter: brightness(0.5);
+}
+.deck-overlay-container .ocard {
 	position: absolute;
     clip-path: inset(80px 60px 380px 80px);
     border-radius: 15px;
@@ -567,7 +591,7 @@ select {
 	position: absolute;
 	margin:auto;
 	width:1280px;
-	padding: 20px;
+	padding: 19px;
 	color: #fff;
 	font-weight: 1000;
 	border-radius:10px;

@@ -29,7 +29,7 @@
 		</c:otherwise>
 	</c:choose>
 	<div class="header-image">
-		<img src="${path }/resources/images/default/pokemon_banner.png">
+		<img src="${path }/resources/images/default/onepiece_banner.png">
 	</div>
 	<div class="top-container">
 		<div class="search-area-full">

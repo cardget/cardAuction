@@ -69,6 +69,7 @@
 	width:1320px;
 	margin:auto;
 	margin-top:30px;
+	margin-bottom:20px;
 }
 .detail-container{
 	display: flex;
@@ -106,7 +107,7 @@ ul {
 }
 
 .header-image {
-	height: 280px;
+	height: 278px;
 	width: 100%;
 }
 
