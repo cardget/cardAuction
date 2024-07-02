@@ -88,4 +88,38 @@
 		WHERE
 			TRADE_ID = #{tradeId}
 	</update>
+	
+	<insert id="insertDelivery" parameterType = "Map">
+		INSERT INTO
+		DELIVERIES (
+			DELIVERY_ID,
+			TRADE_ID,
+			ADDRESS
+		)
+		VALUES (
+			DELIVERY_SEQ.NEXTVAL,
+			#{tradeId}
+			#{address}
+		)
+	</insert>
+	
+	<insert id="getPoint" parameterType = "Map">
+		INSERT INTO
+		POINTS (
+			POINT_ID,
+			AMOUNT,
+			CMT,
+			USER_ID,
+			IS_ADD,
+			CAT
+		)
+		VALUES(
+			POINT_SEQ.NEXTVAL,
+			#{amount},
+			#{cmt},
+			#{userid},
+			1,
+			1
+		)
+	</insert>
 </mapper>

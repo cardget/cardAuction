@@ -13,21 +13,10 @@
 </head>
 <body>
 	<div class="container">
-		<div class="trade-section">
-			<div>
-				<p>상품</p>
-				<p>${itemName}</p>
-			</div>
-			<div>
-				<p>사용 포인트</p>
-				<p>${payment.point_used} P</p>
-			</div>
-			<hr>
-			<div>
-				<p>결제금액</p>
-				<p>${payment.paid_amount}원</p>
-			</div>
+		<div class="payment-header">
+			<h3>결제가 완료되었습니다.</h3>
 		</div>
+		<p>배송 진행 상황은 마이페이지 > 배송조회 에서 확인하실 수 있습니다.</p>
 	</div>
 </body>
 </html>

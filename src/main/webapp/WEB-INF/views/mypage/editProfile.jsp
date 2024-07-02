@@ -69,28 +69,12 @@
 			<hr class="form-divider">
 			<div class="form-group">
                 <label for="bank" class="input-label">은행</label>
-                <input type="hidden" id="bank" name="bank" value="${user.bank}" class="email-input-field" required>
+                <input type="hidden" id="bank" name="backHidden" value="${user.bank}" class="email-input-field" required>
                 <select class="email-select" name="bank" size="1">
-		            <option value="신한"
-		            	<c:if test="${user.bank eq '신한'}">
-							selected
-						</c:if>
-		            >신한</option>
-		            <option value="국민"
-		            	<c:if test="${user.bank eq '국민'}">
-							selected
-						</c:if>
-		            >국민</option>
-		            <option value="우리"
-		            	<c:if test="${user.bank eq '우리'}">
-							selected
-						</c:if>
-		            >우리</option>
-		            <option value="하나"
-		            	<c:if test="${user.bank eq '하나'}">
-							selected
-						</c:if>
-		            >하나</option>
+		            <option value="신한" ${user.bank eq '신한' ? 'selected' : ''}>신한</option>
+				    <option value="국민" ${user.bank eq '국민' ? 'selected' : ''}>국민</option>
+				    <option value="우리" ${user.bank eq '우리' ? 'selected' : ''}>우리</option>
+				    <option value="하나" ${user.bank eq '하나' ? 'selected' : ''}>하나</option>
 		        </select>
 		        &nbsp;
                 <input type="text" id="accnt" name="accnt" required value="${user.accnt}" class="email-input-field"><br>

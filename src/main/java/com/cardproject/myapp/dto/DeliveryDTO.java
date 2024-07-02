@@ -9,6 +9,8 @@ import lombok.ToString;
 public class DeliveryDTO {
 	private String delivery_id;
 	private int trade_id;
+	private String address;
+	private String invoice_number;
 	private int item_id;
 	private String create_date;
 	private String user_id;
