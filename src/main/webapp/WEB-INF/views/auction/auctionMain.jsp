@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Apple+SD+Gothic+Neo&display=swap">
 <title>카드득</title>
 <link rel="stylesheet" href="${path }/resources/css/auctionMain.css" />
+<link rel="stylesheet" href="${path }/resources/css/main.css" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
@@ -31,85 +32,32 @@
         
 </script>
 <style>
-	.button-wrapper{
-	display: flex;
-	justify-content: center;
-	position:relative;
-	margin-top:10px;
-	margin-bottom: 12px;
-	font-size:14px;
 
-}
-.like-btn{
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	border-radius:5px;
-	border : 1px solid #007FFF;
-	color: #007FFF;
-	background-color:#fff;
-	width: 120px;
-	height: 34px;
-}
-.like-btn.act {
-	border: 1px solid #007FFF;
-	border-radius: 5px;
-	background-color: #007FFF;
-	color: white;
-	font-weight: bold;
-	width: 120px;
-	height: 34px;
-}
-    .sort-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: 20px 270px;
-    }
-    .sort-item {
-        display: flex;
-        align-items: center;
-    }
-    .sort-right {
-        margin-left: auto;
-        display: flex;
-        align-items: center;
-    }
-    .sort-right span {
-        margin-right: 10px;
-    }
 </style>
 </head>
 <body>
 <c:set var="path" value="${pageContext.servletContext.contextPath}" />
-<!--header
-
+<!--header-->
 	<c:choose>
-    	<c:when test="${empty userid}">
-    		<%@ include file="/WEB-INF/views/main/defaultHeader.jsp"%>
-    	</c:when>
-    	<c:otherwise>
-    		<%@ include file="/WEB-INF/views/main/loginHeader.jsp"%>
-    	</c:otherwise>
-    </c:choose>-->
+		<c:when test="${empty userid}">
+			<%@ include file="/WEB-INF/views/main/defaultHeader.jsp"%>
+		</c:when>
+		<c:otherwise>
+			<%@ include file="/WEB-INF/views/main/loginHeader.jsp"%>
+		</c:otherwise>
+	</c:choose>
+	
 <!-- Body -->
 <div class="topimage"></div>
 <!-- 검색창 -->
-<div class="container">
+<div class="containerM">
 	<div class="search-area">
-            <select class="main-select">
-                <option>전체</option>
-                <option>포켓몬</option>
-                <option>유희왕</option>
-                <option>디지몬</option>
-                <option>원피스</option>
-                <option>스포츠</option>
-            </select>
+            
             
             <div class="search-input-wrapper">
-                <input type="text" class="search-box" placeholder="검색어를 입력하세요.">
+                <input type="text" class="search-box" placeholder="경매 물품 검색">
                 <button type="submit" class="search-btn">
-                    <img src="${path}/resources/icon/search.png" alt="search" class="search-icon">
+                    <img src="${path}/resources/icon/search.png" alt="search" class="search-icon-A">
                 </button>
             </div>
             <div class="auction-insert-wrapper">

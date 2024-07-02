@@ -11,6 +11,7 @@
 	href="https://fonts.googleapis.com/css2?family=Apple+SD+Gothic+Neo&display=swap">
 <link rel="stylesheet" href="${path }/resources/css/auctionDetail.css" />
 <link rel="stylesheet" href="${path }/resources/css/main.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <title>카드득</title>
 <style>
@@ -69,8 +70,9 @@
     		<%@ include file="/WEB-INF/views/main/loginHeader.jsp"%>
     	</c:otherwise>
     </c:choose>
-
-
+	
+	
+	
 	<!-- 상단 이미지 -->
 	<div class="topimage">
 		<!-- <div class="search-area">
@@ -211,14 +213,10 @@
 						<input type="number" id="price" name="price"
 							class="bidding-price-field" placeholder="입찰 가격을 입력하세요." step="1000" min="1000">
 						<button type="submit" class="bidding-btn">경매 참여</button>
-						<button class="like-btn" id="likeBtn">관심 물품</button>
+						
 					</form>
-					
-				</div><!--
-				<c:if test="${not empty sessionScope.errorMessage}">
-						<div class="error">${sessionScope.errorMessage}</div>
-						<c:remove var="errorMessage" scope="session" />
-				</c:if>-->
+						<button class="like-btn" id="likeBtn" data-user-id="${userId}" data-item-id="${itemDetailOne.item_id}">관심 물품</button>
+				</div>
 				 <div id="errorMessage" class="error"></div> 
 			</div>
 
@@ -227,7 +225,7 @@
 	</div>
 
 
-
+	
 
 	<script>
 	document.addEventListener("DOMContentLoaded", function() {
@@ -331,47 +329,64 @@
 	    });
 	});
 	
-	//관심물품토글
-	 document.addEventListener("DOMContentLoaded", () => {
-			const likeBtn = document.getElementById("likeBtn");
-			const userId = '<%=session.getAttribute("userid")%>';
-			const itemId = ${itemDetailOne.item_id};
+	
+	$(document).ready(function() {
+	    var userId = $('#likeBtn').data('user-id');
+	    var itemId = $('#likeBtn').data('item-id');
 
-			//이미 관심물품인지 체크
-			fetch('<%=request.getContextPath()%>/auction/like/status?itemId=' + itemId)
-				.then(response => response.json())
-				.then(data => {
-					if (data.isLiked) {
-						likeBtn.classList.add("act");
-					}
-				});
+	    // 페이지 로드 시 현재 상태 확인
+	    checkLikeStatus(userId, itemId);
 
-			likeBtn.addEventListener("click", () => {
-				fetch('<%=request.getContextPath()%>/auction/like/toggle', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify({ userId: userId, itemId: itemId.toString() })
-				})
-				.then(response => response.json())
-				.then(data => {
-					if (data.success) {
-						likeBtn.classList.toggle("act");
-						if (data.status === "added") {
-							console.log('관심 물품이 추가되었습니다.');
-						} else {
-							console.log('관심 물품이 삭제되었습니다.');
-						}
-					} else {
-						console.log('처리 중 오류가 발생했습니다.');
-					}
-				});
-			});
-		});
-	//function toggleAct(button) {
-    //      button.classList.toggle("act");
-    //}
+	    $('#likeBtn').click(function() {
+	        if ($(this).hasClass('act')) {
+	            // 관심물품 삭제
+	            $.ajax({
+	                url: '/myapp/auction/removeLike',
+	                type: 'POST',
+	                data: { "userId": userId,
+	                		"itemId": itemId },
+	                success: function(response) {
+	                    if (response) {
+	                        $('#likeBtn').removeClass('act').text('관심 물품');
+	                    } else {
+	                        $('#errorMessage').text('관심 물품을 삭제하는데 실패했습니다.');
+	                    }
+	                }
+	            });
+	        } else {
+	            // 관심물품 등록
+	            $.ajax({
+	                url: '/myapp/auction/addLike',
+	                type: 'POST',
+	                data:  { "userId": userId,
+                			"itemId": itemId },
+	                success: function(response) {
+	                    if (response) {
+	                        $('#likeBtn').addClass('act').text('관심 물품');
+	                    } else {
+	                        $('#errorMessage').text('관심 물품을 추가하는데 실패했습니다.');
+	                    }
+	                }
+	            });
+	        }
+	    });
+
+	    function checkLikeStatus(userId, itemId) {
+	        $.ajax({
+	            url: '/myapp/auction/isLiked',
+	            type: 'POST',
+	            data: { "userId": userId,
+        			"itemId": itemId },
+	            success: function(response) {
+	                if (response) {
+	                    $('#likeBtn').addClass('act').text('관심 물품');
+	                } else {
+	                    $('#likeBtn').removeClass('act').text('관심 물품');
+	                }
+	            }
+	        });
+	    }
+	});
 	
 </script>
 
