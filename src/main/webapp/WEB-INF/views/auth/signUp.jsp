@@ -124,8 +124,8 @@
 			    <div class="profile-image-container">
 			        <img id="profile-image" src="${path}/resources/image/profile.png" alt="Profile Image" onclick="document.getElementById('profile_image').click()">
 			    </div>
-			    <input type="file" id="profile_image" name="profile_image_name" onchange="previewImage(this, '${path}')" accept="image/*" class="input-field" style="margin-left:10px;" multiple required>
-			    <button type="button" onclick="resetProfileImage('${path}')" class="check-button">삭제</button>
+			    <input type="file" id="profile_image_id" name="profile_image_name" onchange="previewImage(this, '${path}')" accept="image/*" class="input-field" style="margin-left:10px;" multiple required>
+			    <button type="button" onclick="resetProfileImage('profile-image', '${path}')" class="check-button">삭제</button>
 			</div>
 		    <hr class="form-divider">
 		    <div class="form-group">

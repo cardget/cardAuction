@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "com.cardproject.myapp.dao">
+	<insert id="insertPokemonCard" parameterType="pokemonvo">
+		
+		INSERT INTO POKEMON 
+		(
+		CARD_NAME,
+	 	CARD_SORT, 
+	 	FEATURE, 
+	 	CARD_TYPE, 
+	 	CARD_IMAGE
+	 	)	
+		VALUES 
+		(
+		#{card_name}, 
+		#{card_sort}, 
+		#{feature}, 
+		#{card_type}, 
+		#{card_image}
+		)
+	
+	</insert>
+	
+	<insert id="insertDigimonCard" parameterType="digimonvo">
+		INSERT INTO DIGIMON 
+		(
+		CARD_NAME, 
+		CARD_SORT, 
+		CARD_ATTR, 
+		CARD_IMAGE, 
+		MONSTER_TYPE, 
+		CARD_LEVEL, 
+		CARD_COLOR, 
+		CARD_COST
+		)
+		VALUES 
+		(		
+		#{card_name}, 
+		#{card_sort}, 
+		#{card_attr}, 
+		#{card_image}, 
+		#{monster_type}, 
+		#{card_level}, 
+		#{card_color},
+		#{card_cost}
+		)
+	
+	</insert>
+	
+	<insert id="insertYugiohCard" parameterType="yugiohvo">
+		INSERT INTO YUGIOH 
+		(
+		CARD_NAME, 
+		CARD_SORT, 
+		CARD_ATTR, 
+		CARD_TYPE, 
+		CARD_LEVEL, 
+		CARD_IMAGE
+		)
+		VALUES 
+		(
+		#{card_name}, 
+		#{card_sort},
+		#{card_attr},
+		#{card_type},
+		#{card_level},
+		#{card_image}
+		)
+	
+	</insert>
+	
+	<insert id="insertOnepieceCard" parameterType="onepiecevo">
+		INSERT INTO ONEPIECE 
+		(
+		CARD_NAME,
+		CARD_SORT, 
+		CARD_ATTR, 
+		COLOR, 
+		CARD_COST, 
+		FEATURE, 
+		CARD_IMAGE
+		)
+		VALUES 
+		(		
+		#{card_name}, 
+		#{card_sort}, 
+		#{card_attr}, 
+		#{color}, 
+		#{card_cost}, 
+		#{feature}, 
+		#{card_image}
+		)
+	
+	</insert>
+
+</mapper>
