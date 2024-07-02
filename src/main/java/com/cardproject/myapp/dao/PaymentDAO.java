@@ -1,7 +1,5 @@
 package com.cardproject.myapp.dao;
 
-
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,5 +41,22 @@ public class PaymentDAO{
 	// 결제 여부 갱신
 	public int updatePaid(int tradeId) {
 		return sqlSession.update(namespace + ".updatePaid", tradeId);
+	}
+	
+	// 배송 목록 추가
+	public int insertDelivery(int tradeId, String address) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("tradeId", tradeId);
+		params.put("address", address);
+		return sqlSession.insert(namespace + ".insertDelivery", params);
+	}
+	
+	// 포인트 추가
+	public int getPoint(int amount, String cmt, String userid) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("amount", amount);
+		params.put("cmt", cmt);
+		params.put("userid", userid);
+		return sqlSession.insert(namespace + ".getPoint", params);
 	}
 }

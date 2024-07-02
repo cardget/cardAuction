@@ -32,7 +32,7 @@
 	</c:choose>
 	<!--헤더이미지-->
 	<div class="header-image">
-		<img src="${path }/resources/images/default/pokemon_banner.png">
+		<img src="${path }/resources/images/default/yugioh_banner.png">
 	</div>
 	<div class="list-top-container">
 		<!--서브카테고리-->
@@ -83,7 +83,7 @@
 			<c:forEach var="deck" items="${decks}">
 				<div class="deckType">
 					<div class="deck-overlay-container">
-						<img src="${deck.CARD_IMAGE}">
+						<img src="${deck.CARD_IMAGE}" class="ycard">
 						<div class="overlay-text"
 							onclick="location.href='${pageContext.request.contextPath}/deckMakers/yugiohDeckListDetail.do?deck_id=${deck.DECK_ID}'">
 							<div class="deck-number">${deck.DECK_TITLE}</div>

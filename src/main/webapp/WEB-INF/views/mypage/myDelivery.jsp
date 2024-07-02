@@ -27,60 +27,44 @@
 	<div class="header">
 		<h2>배송조회</h2>
 	</div>
-	<!--  
-	<div class="delivery-section">
-		<h3>배송현황</h3>
-		<img src="" alt="배송진행상황">
-		<div class="status-table">
-			<table>
-				<thead>
-					<tr>
-						<th>날짜</th>
-						<th>시간</th>
-						<th>상품정보</th>
-						<th>배송 진행상황</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>2024-05-29</td>
-						<td>14:24</td>
-						<td>[포켓몬] 피카츄 일러스트레이터 카드 PSA 8 한정판</td>
-						<td>상품이 접수되었습니다.</td>
-					</tr>
-					<tr>
-						<td>2024-05-29</td>
-						<td>15:24</td>
-						<td>[포켓몬] 피카츄 일러스트레이터 카드 PSA 8 한정판</td>
-						<td>상품이 배송중입니다.</td>
-					</tr>
-					<tr>
-						<td>2024-05-29</td>
-						<td>16:24</td>
-						<td>[포켓몬] 피카츄 일러스트레이터 카드 PSA 8 한정판</td>
-						<td>상품이 완료되었습니다.</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-	-->
-	<c:forEach var="delivery" items="${dlist}">
-		<div class="item-section">
-			<div class="image-section">
-				<img src="${delivery.image1}" alt="Product Image">
+	<c:choose>
+		<c:when test="${empty dlist}">
+			<div class="item-section">
+				<div class="info-section">
+					<h3>배송 중인 상품이 없습니다</h3>
+				</div>
 			</div>
-			<div class="info-section">
-				<h3>${delivery.item_name}</h3>
-				<p class="grayfont">${delivery.create_date}거래완료</p>
-				<a href="#" class="grayfont">상세보기 ></a>
-			</div>
-			<div class="status-section">
-				<button class="status-button-proceeding"
-					onclick="openNew('https://tracker.delivery/#/:kr.epost/:${delivery.delivery_id}')">
-					배송조회</button>
-			</div>
-		</div>
-	</c:forEach>
+		</c:when>
+		<c:otherwise>
+			<c:forEach var="delivery" items="${dlist}">
+				<div class="item-section">
+					<div class="image-section">
+						<img src="${delivery.image1}" alt="Product Image">
+					</div>
+					<div class="info-section">
+						<h3>${delivery.item_name}</h3>
+						<p class="grayfont">${delivery.create_date}거래완료</p>
+						<a href="#" class="grayfont">상세보기 ></a>
+					</div>
+					<div class="status-section">
+						<c:choose>
+							<c:when test="${empty delivery.invoice_number}">
+								<button class="status-button-sold">
+									배송 준비
+								</button>
+							</c:when>
+							<c:otherwise>
+								<button class="status-button-proceeding"
+									onclick="openNew('https://tracker.delivery/#/:kr.epost/:${delivery.delivery_id}')">
+									배송 조회
+								</button>
+							</c:otherwise>
+						</c:choose>
+					</div>
+				</div>
+			</c:forEach>
+		</c:otherwise>
+	</c:choose>
+	
 </body>
 </html>

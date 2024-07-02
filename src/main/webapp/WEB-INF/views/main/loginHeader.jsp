@@ -5,7 +5,7 @@
 <c:set var="path" value="${pageContext.servletContext.contextPath }" />
 <div class="top">
 	<nav class="top-nav">
-		<a href="main.html" class="top-title"> <img
+		<a href="${path}/main.do" class="top-title"> <img
 			src="${path }/resources/image/logo.png" alt="logo"
 			class="logo">
 		</a>
@@ -20,11 +20,22 @@
 		</div>
 		<div class="top-nav-category">
 			<ul class="category-box">
-				<li class="category-item"><a href="/myapp/mypage/"> <img
-						src="${path }/resources/icon/user.png" class="icon">${user.nickname}님
-				</a></li>
+				<li class="category-item">
+					<c:choose>
+						<c:when test="${user.is_admin eq 1}">
+							<a href="/myapp/mypage/"> 
+								<img src="${path }/resources/icon/user.png" class="icon">${user.nickname}님
+							</a>
+						</c:when>
+						<c:otherwise>
+							<a href="/myapp/mypage/"> 
+								<img src="${path }/resources/icon/user.png" class="icon">${user.nickname}님
+							</a>
+						</c:otherwise>
+					</c:choose>
+				</li>
 				<li class="category-item"><a href="/myapp/auth/logout.do"> <img
-						src="${path }/resources/icon/logout.png" class="icon">로그아웃
+						src="${path}/resources/icon/logout.png" class="icon">로그아웃
 				</a></li>
 				<li class="category-item">
 					<div class="dropdown">

@@ -29,7 +29,7 @@
 		</c:otherwise>
 	</c:choose>
 	<div class="header-image">
-		<img src="${path }/resources/images/default/pokemon_banner.png">
+		<img src="${path }/resources/images/default/onepiece_banner.png">
 	</div>
 	<div class="top-container">
 		<div class="search-area-full">
@@ -191,25 +191,37 @@
 		
 		let currentPageO = 1;
 		document.getElementById('loadMoreOBtn').addEventListener('click', function() {
+			var cardAttr = $('#card_attr').val();
+	        var cardSort = $('#card_sort').val();
+	        var cardName = $('#card-search-box').val();
 
 		    currentPageO++;
 		    console.log(currentPageO);
-		    fetch("/myapp/deckMakers/loadMoreOCard.do?page=" + currentPageO)
-		        .then(response =>  
-		        response.json() 
-		        )
-		        .then(data => {
+		    $.ajax({
+		        url: "/myapp/deckMakers/loadMoreOCard.do?page=" + currentPageO,
+		        type: "GET",
+		        data: {
+		        	card_attr: cardAttr,
+		        	card_sort: cardSort,
+		        	query: cardName
+		        },
+		        success: function(data) {
 		            console.log(data);
 		            const deckList = document.getElementById('here');
 		            data.forEach(card => {
-		                const cardDiv = document.createElement('div');
-		                cardDiv.classList.add('card-count');
+		                console.log(card);
+		                var cardDiv = document.createElement("div");
+		                cardDiv.classList.add("card-count");
 		                cardDiv.innerHTML += `
-		                    <img src="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}')">
+		                    <img src="\${card.card_id}" alt="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}','\${card.card_id}')">
 		                `;
-		                deckList.appendChild(cardDiv);
+		                here.appendChild(cardDiv);
 		            });
-		        });
+		        },
+		        error: function(xhr, status, error) {
+		            console.error("Error:", error);
+		        }
+		    });
 		});
 		
 		function call(card_id){

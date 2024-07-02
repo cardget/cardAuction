@@ -22,7 +22,10 @@ public class SchedulerService {
 	@Autowired
 	AuctionDAO aucDAO;
 	
-	@Scheduled(cron="0 0/30 * * * *")
+
+
+
+	@Scheduled(cron="0 0 0 * * *")
 	@Transactional
 	public void scheduleRun() {
 		System.out.println("scheduled task running...");

@@ -83,7 +83,7 @@
 			<c:forEach var="deck" items="${decks}">
 				<div class="deckType">
 					<div class="deck-overlay-container">
-						<img src="${deck.CARD_IMAGE}">
+						<img src="${deck.CARD_IMAGE}" class="pcard">
 						<div class="overlay-text"
 							onclick="location.href='${pageContext.request.contextPath}/deckMakers/pokemonDeckListDetail.do?deck_id=${deck.DECK_ID}'">
 							<div class="deck-number">${deck.DECK_TITLE}</div>

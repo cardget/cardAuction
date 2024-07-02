@@ -24,4 +24,5 @@ public class QuestionDTO {
 	private String image; // 이미지
 	private String answer; // 답변
 	private String nickname; // 닉네임 조회 필요
+	private int answer_exist;
 }

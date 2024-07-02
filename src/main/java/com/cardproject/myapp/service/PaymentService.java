@@ -1,5 +1,8 @@
 package com.cardproject.myapp.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,4 +36,14 @@ public class PaymentService {
  	public int updatePaid(int tradeId) {
 		return paymentDAO.updatePaid(tradeId);
 	}
+ 	
+ 	// 배송 목록 추가
+ 	public int insertDelivery(int tradeId, String address) {
+ 		return paymentDAO.insertDelivery(tradeId, address);
+ 	}
+ 	
+ 	// 포인트 추가
+ 	public int getPoint(int amount, String cmt, String userid) {
+ 		return paymentDAO.getPoint(amount, cmt, userid);
+ 	}
 }
