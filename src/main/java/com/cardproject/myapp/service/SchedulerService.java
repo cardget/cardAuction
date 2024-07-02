@@ -22,6 +22,9 @@ public class SchedulerService {
 	@Autowired
 	AuctionDAO aucDAO;
 	
+
+
+
 	@Scheduled(cron="0 0 0 * * *")
 	@Transactional
 	public void scheduleRun() {

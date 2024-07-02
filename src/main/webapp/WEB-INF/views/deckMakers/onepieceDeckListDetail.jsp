@@ -38,7 +38,7 @@
 				<div>추천수 : ${deck.RECOMMEND}</div>
 			</div>
 		</div>
-		<img src="${path }/resources/images/default/pokemon_banner.png" id="banner">
+		<img src="${path }/resources/images/default/onepiece_banner.png" id="banner">
 	</div>
 	<div class="detail-container">
 		<div class="sidebar">
@@ -47,7 +47,7 @@
 					alt="카드 이미지" class="card-img" id="cardImage">
 				<div class="card-details">
 					<h2 id="cardName"></h2>
-					<p id="cardType"></p>
+					<p id="cardAttr"></p>
 					<p id="cardSort"></p>
 					<p id="cardFeature"></p>
 				</div>
@@ -90,7 +90,7 @@
 	        success: function(data) {
 	            if (data.success) {
 	                alert('추천되었습니다.');
-	                location.reload(); // 페이지 새로고침하여 업데이트된 추천 수 반영
+	                location.reload();
 	            } else {
 	                alert('추천 처리 중 오류가 발생했습니다.');
 	            }
@@ -111,7 +111,7 @@
 	    console.log('Fetching details for cardId:', cardId);
 
 	    $.ajax({
-	        url: '${path}/deckMakers/getCardDetails.do',
+	        url: '${path}/deckMakers/getOCardDetails.do',
 	        type: 'GET',
 	        data: { card_id: cardId },
 	        dataType: 'json',
@@ -120,7 +120,7 @@
 	            //document.getElementById('banner').src = data.card_image;
 	            document.getElementById('cardImage').src = data.card_image;
 	            document.getElementById('cardName').textContent = data.card_name;
-	            document.getElementById('cardType').textContent = '타입 : ' + data.card_type;
+	            document.getElementById('cardAttr').textContent = '타입 : ' + data.card_attr;
 	            document.getElementById('cardSort').textContent = '종류 : ' + data.card_sort;
 	            document.getElementById('cardFeature').textContent = '특성 : ' + data.feature;
 	        },

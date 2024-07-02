@@ -38,7 +38,7 @@
 				<div>추천수 : ${deck.RECOMMEND}</div>
 			</div>
 		</div>
-		<img src="${path }/resources/images/default/pokemon_banner.png" id="banner">
+		<img src="${path }/resources/images/default/digimon_banner.png" id="banner">
 	</div>
 	<div class="detail-container">
 		<div class="sidebar">
@@ -47,9 +47,9 @@
 					alt="카드 이미지" class="card-img" id="cardImage">
 				<div class="card-details">
 					<h2 id="cardName"></h2>
-					<p id="cardType"></p>
+					<p id="cardAttr"></p>
 					<p id="cardSort"></p>
-					<p id="cardFeature"></p>
+					<p id="cardMonsterType"></p>
 				</div>
 			</div>
 		</div>
@@ -111,7 +111,7 @@
 	    console.log('Fetching details for cardId:', cardId);
 
 	    $.ajax({
-	        url: '${path}/deckMakers/getCardDetails.do',
+	        url: '${path}/deckMakers/getDCardDetails.do',
 	        type: 'GET',
 	        data: { card_id: cardId },
 	        dataType: 'json',
@@ -120,9 +120,9 @@
 	            //document.getElementById('banner').src = data.card_image;
 	            document.getElementById('cardImage').src = data.card_image;
 	            document.getElementById('cardName').textContent = data.card_name;
-	            document.getElementById('cardType').textContent = '타입 : ' + data.card_type;
+	            document.getElementById('cardAttr').textContent = '타입 : ' + data.card_attr;
 	            document.getElementById('cardSort').textContent = '종류 : ' + data.card_sort;
-	            document.getElementById('cardFeature').textContent = '특성 : ' + data.feature;
+	            document.getElementById('cardMonsterType').textContent = '특성 : ' + data.monster_type;
 	        },
 	        error: function(xhr, status, error) {
 	            console.error('Fetch error:', error);

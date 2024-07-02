@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Apple+SD+Gothic+Neo&display=swap">
 <title>카드득</title>
 <link rel="stylesheet" href="${path }/resources/css/auctionMain.css" />
+<link rel="stylesheet" href="${path }/resources/css/main.css" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
@@ -31,86 +32,35 @@
         
 </script>
 <style>
-	.button-wrapper{
-	display: flex;
-	justify-content: center;
-	position:relative;
-	margin-top:10px;
-	margin-bottom: 12px;
-	font-size:14px;
 
-}
-.like-btn{
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	border-radius:5px;
-	border : 1px solid #007FFF;
-	color: #007FFF;
-	background-color:#fff;
-	width: 120px;
-	height: 34px;
-}
-.like-btn.act {
-	border: 1px solid #007FFF;
-	border-radius: 5px;
-	background-color: #007FFF;
-	color: white;
-	font-weight: bold;
-	width: 120px;
-	height: 34px;
-}
-    .sort-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: 20px 270px;
-    }
-    .sort-item {
-        display: flex;
-        align-items: center;
-    }
-    .sort-right {
-        margin-left: auto;
-        display: flex;
-        align-items: center;
-    }
-    .sort-right span {
-        margin-right: 10px;
-    }
 </style>
 </head>
 <body>
 <c:set var="path" value="${pageContext.servletContext.contextPath}" />
-<!--header
-
+<!--header-->
 	<c:choose>
-    	<c:when test="${empty userid}">
-    		<%@ include file="/WEB-INF/views/main/defaultHeader.jsp"%>
-    	</c:when>
-    	<c:otherwise>
-    		<%@ include file="/WEB-INF/views/main/loginHeader.jsp"%>
-    	</c:otherwise>
-    </c:choose>-->
+		<c:when test="${empty userid}">
+			<%@ include file="/WEB-INF/views/main/defaultHeader.jsp"%>
+		</c:when>
+		<c:otherwise>
+			<%@ include file="/WEB-INF/views/main/loginHeader.jsp"%>
+		</c:otherwise>
+	</c:choose>
+	
 <!-- Body -->
 <div class="topimage"></div>
 <!-- 검색창 -->
-<div class="container">
+<div class="containerM">
 	<div class="search-area">
-            <select class="main-select">
-                <option>전체</option>
-                <option>포켓몬</option>
-                <option>유희왕</option>
-                <option>디지몬</option>
-                <option>원피스</option>
-                <option>스포츠</option>
-            </select>
+            
             
             <div class="search-input-wrapper">
-                <input type="text" class="search-box" placeholder="검색어를 입력하세요.">
+             <form action="${path}/auction/auctionMainSearch.do" method="post" class="searchForm">
+                <input type="text" class="search-box" id="keyword" name="keyword" placeholder="경매 물품 검색">
                 <button type="submit" class="search-btn">
-                    <img src="${path}/resources/icon/search.png" alt="search" class="search-icon">
+                    <img src="${path}/resources/icon/search.png" alt="search" class="search-icon-A">
                 </button>
+             </form>
             </div>
             <div class="auction-insert-wrapper">
             	<button onclick="redirectToAuctionInsert()" class="insert-btn" >판매 물품 등록</button>
@@ -191,7 +141,7 @@
 			</div>
 			<div class="button-wrapper">
 				
-				<button class="like-btn">관심물품</button>
+				<button class="like-btn" id="likeBtn-${itemd.item_id}" data-user-id="${userId}" data-item-id="${itemd.item_id}">관심물품</button>
 				<button  onclick="location.href='${path}/auction/auctionDetail.do?item_id=${itemd.item_id}'" class="auction-detail-btn">상세보기</button>
 			</div>
 		</div>
@@ -210,7 +160,79 @@
 		</div>
   
 </div>
+<script>
 
+$(document).ready(function() {
+    $('.like-btn').each(function() {
+        var userId = $(this).data('user-id');
+        var itemId = $(this).data('item-id');
+        var button = $(this);
+
+        // 페이지 로드 시 현재 상태 확인
+        checkLikeStatus(userId, itemId, button);
+
+        $(this).click(function() {
+            if ($(this).hasClass('act')) {
+                // 관심물품 삭제
+                $.ajax({
+                    url: '/myapp/auction/removeLike',
+                    type: 'POST',
+                    data: { "userId": userId, "itemId": itemId },
+                    success: function(response) {
+                        if (response) {
+                            button.removeClass('act').text('관심 물품');
+                        } else {
+                            $('#errorMessage').text('관심 물품을 삭제하는데 실패했습니다.');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error removing like:', error);
+                        $('#errorMessage').text('관심 물품을 삭제하는데 실패했습니다.');
+                    }
+                });
+            } else {
+                // 관심물품 등록
+                $.ajax({
+                    url: '/myapp/auction/addLike',
+                    type: 'POST',
+                    data: { "userId": userId, "itemId": itemId },
+                    success: function(response) {
+                        if (response) {
+                            button.addClass('act').text('관심 물품');
+                        } else {
+                            $('#errorMessage').text('관심 물품을 추가하는데 실패했습니다.');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error adding like:', error);
+                        $('#errorMessage').text('관심 물품을 추가하는데 실패했습니다.');
+                    }
+                });
+            }
+        });
+    });
+
+    function checkLikeStatus(userId, itemId, button) {
+        $.ajax({
+            url: '/myapp/auction/isLiked',
+            type: 'POST',
+            data: { "userId": userId, "itemId": itemId },
+            success: function(response) {
+                console.log('isLiked response:', response);
+                if (response === "liked") {
+                    button.addClass('act').text('관심 물품');
+                } else {
+                    button.removeClass('act').text('관심 물품');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error checking like status:', error);
+                $('#errorMessage').text('관심 물품 상태를 확인하는데 실패했습니다.');
+            }
+        });
+    }
+});
+</script>
 
     <!--footer-->
     <%@ include file="/WEB-INF/views/main/footer.jsp" %>

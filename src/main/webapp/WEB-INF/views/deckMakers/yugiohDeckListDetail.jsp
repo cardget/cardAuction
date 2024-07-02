@@ -38,7 +38,7 @@
 				<div>추천수 : ${deck.RECOMMEND}</div>
 			</div>
 		</div>
-		<img src="${path }/resources/images/default/pokemon_banner.png" id="banner">
+		<img src="${path }/resources/images/default/yugioh_banner.png" id="banner">
 	</div>
 	<div class="detail-container">
 		<div class="sidebar">

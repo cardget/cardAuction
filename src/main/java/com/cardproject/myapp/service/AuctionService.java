@@ -21,7 +21,9 @@ public class AuctionService {
 
 	@Autowired
 	AuctionDAO aucDAO;
-
+	public List<ItemDetailDTO> selectItemForName(String keyword) {
+		return aucDAO.selectItemForName(keyword);
+	}
 	public ItemDetailDTO selectItemOne(int item_id) {
 		return aucDAO.selectItemOne(item_id);
 	}
@@ -55,7 +57,9 @@ public class AuctionService {
 	public List<PokemonDTO> selectPCard() {
 		return aucDAO.selectPCard();
 	}
-
+	public List<PokemonDTO> selectPRight(String cardKeyword){
+		return aucDAO.selectPRight(cardKeyword);
+	}
 	public List<ItemDetailDTO> getSortedItemList(String sortOption) {
 		if (sortOption == null) {
 			return aucDAO.selectItemRecent();
@@ -97,8 +101,22 @@ public class AuctionService {
             return false;
         }
     }
-
-    public boolean isLiked(String userId, Integer itemId) {
+    public int biddingPriceUpdate(int price, String user_id, Integer item_id) {
+    	Map<String, Object> params = new HashMap<>();
+    	params.put("price", price);
+    	params.put("user_id", user_id);
+    	params.put("item_id", item_id);
+    	return aucDAO.biddingPriceUpdate(params);
+    	
+    	
+    }
+    public int myBidPrice(String user_id, Integer item_id) {
+    	Map<String, Object> params = new HashMap<>();
+    	params.put("user_id", user_id);
+    	params.put("item_id", item_id);
+    	return aucDAO.myBidPrice(params);
+    }
+    public boolean isLiked(String userId, int itemId) {
         Map<String, Object> params = new HashMap<>();
         params.put("user_id", userId);
         params.put("item_id", itemId);

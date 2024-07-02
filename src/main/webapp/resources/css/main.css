@@ -2,13 +2,14 @@
 
 body {
 	/*Apple SD 고딕 폰트*/
-	font-family: 'Apple SD Gothic Neo', sans-serif;
+	font-family: 'AppleSDGothicNeo', 'Noto Sans KR', sans-serif;
 	margin: 0;
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
 	position:relative;
 }
+
 
 button {
 	cursor: pointer;
@@ -106,6 +107,7 @@ ul {
 }
 
 .cardType {
+	border-radius:5px;
 	width: 200px;
 	height: 300px;
 	box-shadow: 4px 4px 5px 1px rgba(0, 0, 0, .3);
@@ -118,7 +120,7 @@ ul {
 }
 
 .header-image {
-	height: 280px;
+	height: 278px;
 	width: 100%;
 }
 .header-image > img{
@@ -411,7 +413,31 @@ select {
 	border-radius:10px;
 }
 
-.deck-overlay-container img {
+.deck-overlay-container .pcard {
+	position: absolute;
+    clip-path: inset(80px 70px 380px 80px);
+    border-radius: 15px;
+    margin-left: -70px;
+    margin-top: -80px;
+    filter: brightness(0.5);
+}
+.deck-overlay-container .ycard {
+	position: absolute;
+    clip-path: inset(80px 20px 245px 20px);
+    border-radius: 15px;
+    margin-left: -10px;
+    margin-top: -80px;
+    filter: brightness(0.5);
+}
+.deck-overlay-container .dcard {
+	position: absolute;
+    clip-path: inset(80px 33px 225px 5px);
+    border-radius: 15px;
+    margin-left: 5px;
+    margin-top: -80px;
+    filter: brightness(0.5);
+}
+.deck-overlay-container .ocard {
 	position: absolute;
     clip-path: inset(80px 60px 380px 80px);
     border-radius: 15px;
@@ -567,7 +593,7 @@ select {
 	position: absolute;
 	margin:auto;
 	width:1280px;
-	padding: 20px;
+	padding: 19px;
 	color: #fff;
 	font-weight: 1000;
 	border-radius:10px;
