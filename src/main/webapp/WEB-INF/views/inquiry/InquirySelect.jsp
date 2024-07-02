@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>InquirySelect</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="../resources/css/BoardSelect.css" type="text/css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/BoardSelect.css" type="text/css" rel="stylesheet">
 <link rel="icon" href="${path}/resources/icon/favicon.ico" type="image/x-icon">
 </head>
 <body>
@@ -34,7 +34,7 @@
             <div class="nav-links">
                 <a href="#">카드경매</a>
                 <a href="#">티어덱 리스트</a>
-                <a href="#" class="active">커뮤니티</a>
+                <a href="${path}/community/BoardSelect.do" class="active">커뮤니티</a>
                 <a id="inquiryBtn" href="#">문의</a>
             </div>
             <hr>

@@ -1,5 +1,5 @@
 body {
-	font-family: Arial, sans-serif;
+	font-family: 'Apple SD Gothic Neo', sans-serif;
 	margin: 0;
 	padding: 0;
 }
@@ -109,6 +109,12 @@ tbody tr:hover {
 	border-radius: 5px;
 	border: none;
 	display: inline-block;
+	color: black; /* 기본 글씨색을 검은색으로 */
+}
+
+.pagination a.active {
+	background-color: #007BFF;
+	color: white; /* 활성화된 페이지는 흰색 글씨로 */
 }
 
 .pagination {
@@ -238,4 +244,4 @@ button:not(:disabled) {
         text-align: center;
         font-weight: bold;
         font-size: 12px;
-    }
+}
