@@ -7,190 +7,130 @@
 	<!-- test : 모든 경매물품 조회 <select id="selectAllItems" resultType="itemvo"> 
 		select * from items </select> -->
 	<!-- 포켓몬 물품 검색 -->
-	<select id="selectItemForName" parameterType="String" resultType="itemdetailvo">
-		 SELECT
-		i.item_id,
-		i.user_id,
-		i.item_name,
-		i.cmt, 
-		i.status, 
-		i.min_price,
-		i.rarity,
-		TO_CHAR(i.create_date, 'yyyy-mm-dd hh24:mi:ss') create_date,
-		TO_CHAR(i.end_date, 'yyyy-mm-dd hh24:mi:ss') end_date,
-		i.trade_type, 
-		i.cat,
-		i.image1,
-		i.image2,
-		i.image3,
-		i.image4,
-		i.image5,
-		u.nickname,
-		u.user_tier, 
-		p.card_id,
-		p.card_name,
-		p.card_image,
-		COALESCE(b.bid_count,0) AS bid_count
-		FROM items i 
-		JOIN users u ON u.user_id = i.user_id
-		LEFT JOIN (
-		SELECT item_id,
-		COUNT(*) AS bid_count
-		FROM biddings
-		GROUP BY item_id) b ON i.item_id = b.item_id
-		LEFT JOIN pokemon p ON i.p_card_id = p.card_id
-		WHERE i.end_date > SYSDATE AND  i.item_name LIKE '%' || #{keyword} || '%'
-		ORDER BY i.create_date DESC
+	<select id="selectItemForName" parameterType="Map" resultType="itemdetailvo">
+		SELECT *
+	    FROM (
+	        SELECT
+	            i.item_id,
+	            i.user_id,
+	            i.item_name,
+	            i.cmt,
+	            i.status,
+	            i.min_price,
+	            i.rarity,
+	            TO_CHAR(i.create_date, 'yyyy-mm-dd hh24:mi:ss') create_date,
+	            TO_CHAR(i.end_date, 'yyyy-mm-dd hh24:mi:ss') end_date,
+	            i.trade_type,
+	            i.cat,
+	            i.image1,
+	            i.image2,
+	            i.image3,
+	            i.image4,
+	            i.image5,
+	            u.nickname,
+	            u.user_tier,
+	            p.card_id,
+	            p.card_name,
+	            p.card_image,
+	            COALESCE(b.bid_count, 0) AS bid_count,
+	            ROW_NUMBER() OVER (
+	                ORDER BY
+	                <choose>
+						<when test="sortOption == 'recent'">
+							i.create_date DESC
+						</when>
+						<when test="sortOption == 'ending'">
+							i.end_date
+						</when>
+						<when test="sortOption == 'mostpeople'">
+							b.bid_count DESC
+						</when>
+						<when test="sortOption == 'leastpeople'">
+							b.bid_count
+						</when>
+						<otherwise>i.create_date DESC</otherwise>
+					</choose>
+	            ) AS ROWNUMBER
+	        FROM
+	            items i
+	        JOIN
+	            users u ON u.user_id = i.user_id
+	        LEFT JOIN (
+	            SELECT item_id, COUNT(*) AS bid_count
+	            FROM biddings
+	            GROUP BY item_id
+	        ) b ON i.item_id = b.item_id
+	        LEFT JOIN pokemon p ON i.p_card_id = p.card_id
+	        WHERE i.end_date > SYSDATE AND  i.item_name LIKE '%' || #{keyword} || '%'
+	    ) subquery
+	    WHERE ROWNUMBER BETWEEN #{offset} + 1 AND #{offset} + #{pageSize}
 	</select>
-	<!-- P경매물품 최신순 조회 -->
+	<!-- P경매물품 조회 -->
 	<select id="selectItemRecent" parameterType="map" resultType="itemdetailvo">
-		SELECT
-		i.item_id,
-		i.user_id,
-		i.item_name,
-		i.cmt, 
-		i.status, 
-		i.min_price,
-		i.rarity,
-		TO_CHAR(i.create_date, 'yyyy-mm-dd hh24:mi:ss') create_date,
-		TO_CHAR(i.end_date, 'yyyy-mm-dd hh24:mi:ss') end_date,
-		i.trade_type, 
-		i.cat,
-		i.image1,
-		i.image2,
-		i.image3,
-		i.image4,
-		i.image5,
-		u.nickname,
-		u.user_tier, 
-		p.card_id,
-		p.card_name,
-		p.card_image,
-		COALESCE(b.bid_count,0) AS bid_count
-		FROM items i 
-		JOIN users u ON u.user_id = i.user_id
-		LEFT JOIN (
-		SELECT item_id,
-		COUNT(*) AS bid_count
-		FROM biddings
-		GROUP BY item_id) b ON i.item_id = b.item_id
-		LEFT JOIN pokemon p ON i.p_card_id = p.card_id
-		WHERE i.end_date > SYSDATE
-		ORDER BY i.create_date DESC
+		SELECT *
+	    FROM (
+	        SELECT
+	            i.item_id,
+	            i.user_id,
+	            i.item_name,
+	            i.cmt,
+	            i.status,
+	            i.min_price,
+	            i.rarity,
+	            TO_CHAR(i.create_date, 'yyyy-mm-dd hh24:mi:ss') create_date,
+	            TO_CHAR(i.end_date, 'yyyy-mm-dd hh24:mi:ss') end_date,
+	            i.trade_type,
+	            i.cat,
+	            i.image1,
+	            i.image2,
+	            i.image3,
+	            i.image4,
+	            i.image5,
+	            u.nickname,
+	            u.user_tier,
+	            p.card_id,
+	            p.card_name,
+	            p.card_image,
+	            COALESCE(b.bid_count, 0) AS bid_count,
+	            ROW_NUMBER() OVER (
+	                ORDER BY
+	                <choose>
+						<when test="sortOption == 'recent'">
+							i.create_date DESC
+						</when>
+						<when test="sortOption == 'ending'">
+							i.end_date
+						</when>
+						<when test="sortOption == 'mostpeople'">
+							b.bid_count DESC
+						</when>
+						<when test="sortOption == 'leastpeople'">
+							b.bid_count
+						</when>
+						<otherwise>i.create_date DESC</otherwise>
+					</choose>
+	            ) AS ROWNUMBER
+	        FROM
+	            items i
+	        JOIN
+	            users u ON u.user_id = i.user_id
+	        LEFT JOIN (
+	            SELECT item_id, COUNT(*) AS bid_count
+	            FROM biddings
+	            GROUP BY item_id
+	        ) b ON i.item_id = b.item_id
+	        LEFT JOIN pokemon p ON i.p_card_id = p.card_id
+	        WHERE i.end_date > SYSDATE
+	    ) subquery
+	    WHERE ROWNUMBER BETWEEN #{offset} + 1 AND #{offset} + #{pageSize}
 	</select>
-	<!-- P경매물품 종료임박순 조회 -->
-	<select id="selectItemEnding" resultType="itemdetailvo">
-		SELECT
-		i.item_id,
-		i.user_id,
-		i.item_name,
-		i.cmt, 
-		i.status, 
-		i.min_price,
-		i.rarity,
-		TO_CHAR(i.create_date, 'yyyy-mm-dd hh24:mi:ss') create_date,
-		TO_CHAR(i.end_date, 'yyyy-mm-dd hh24:mi:ss') end_date,
-		i.trade_type, 
-		i.cat,
-		i.image1,
-		i.image2,
-		i.image3,
-		i.image4,
-		i.image5,
-		u.nickname,
-		u.user_tier, 
-		p.card_id,
-		p.card_name,
-		p.card_image,
-		COALESCE(b.bid_count,0) AS bid_count
-		FROM items i 
-		JOIN users u ON u.user_id = i.user_id
-		LEFT
-		JOIN (
-		SELECT item_id,
-		COUNT(*) AS bid_count
-		FROM biddings
-		GROUP BY item_id) b ON i.item_id = b.item_id
-		LEFT JOIN pokemon p ON
-		i.p_card_id = p.card_id
-		WHERE i.end_date > SYSDATE
-		ORDER BY i.end_date
+	<!-- 총 게시글 수 -->
+	<select id="getTotalItemCount" resultType="int">
+		SELECT COUNT(*) FROM items WHERE end_date > SYSDATE
 	</select>
-	<!-- P경매물품 참여자많은순 조회 -->
-	<select id="selectItemMost" resultType="itemdetailvo">
-		SELECT
-		i.item_id,
-		i.user_id,
-		i.item_name,
-		i.cmt, 
-		i.status, 
-		i.min_price,
-		i.rarity,
-		TO_CHAR(i.create_date, 'yyyy-mm-dd hh24:mi:ss') create_date,
-		TO_CHAR(i.end_date, 'yyyy-mm-dd hh24:mi:ss') end_date,
-		i.trade_type, 
-		i.cat,
-		i.image1,
-		i.image2,
-		i.image3,
-		i.image4,
-		i.image5,
-		u.nickname,
-		u.user_tier, 
-		p.card_id,
-		p.card_name,
-		p.card_image,
-		COALESCE(b.bid_count,0) AS bid_count
-		FROM items i 
-		JOIN users u ON u.user_id = i.user_id
-		LEFT
-		JOIN (
-		SELECT item_id,
-		COUNT(*) AS bid_count
-		FROM biddings
-		GROUP BY item_id) b ON i.item_id = b.item_id
-		LEFT JOIN pokemon p ON
-		i.p_card_id = p.card_id
-		WHERE i.end_date > SYSDATE
-		ORDER BY b.bid_count DESC
-	</select>
-	<!-- P경매물품 참여자적은순 조회 -->
-	<select id="selectItemLeast" resultType="itemdetailvo">
-		SELECT
-		i.item_id,
-		i.user_id,
-		i.item_name,
-		i.cmt, 
-		i.status, 
-		i.min_price,
-		i.rarity,
-		TO_CHAR(i.create_date, 'yyyy-mm-dd hh24:mi:ss') create_date,
-		TO_CHAR(i.end_date, 'yyyy-mm-dd hh24:mi:ss') end_date,
-		i.trade_type, 
-		i.cat,
-		i.image1,
-		i.image2,
-		i.image3,
-		i.image4,
-		i.image5,
-		u.nickname,
-		u.user_tier, 
-		p.card_id,
-		p.card_name,
-		p.card_image,
-		COALESCE(b.bid_count,0) AS bid_count
-		FROM items i 
-		JOIN users u ON u.user_id = i.user_id
-		LEFT
-		JOIN (
-		SELECT item_id,
-		COUNT(*) AS bid_count
-		FROM biddings
-		GROUP BY item_id) b ON i.item_id = b.item_id
-		LEFT JOIN pokemon p ON
-		i.p_card_id = p.card_id
-		WHERE i.end_date > SYSDATE
-		ORDER BY b.bid_count 
+	<!-- 검색했을 때 게시글 수 -->
+	<select id="getTotalItemCountByKeyword" parameterType="map" resultType="int">
+		SELECT COUNT(*) FROM items WHERE item_name LIKE '%' || #{keyword} || '%' AND end_date > SYSDATE AND cat=0
 	</select>
 	<!-- 경매물품 하나 detail 조회 -->
 	<select id="selectItemOne" parameterType="int"
