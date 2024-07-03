@@ -21,7 +21,7 @@
             <%@ include file="/WEB-INF/views/main/loginHeader.jsp" %>
         </c:otherwise>
     </c:choose>
-    <div class="topimage"></div>
+    <div class="defaultBanner"></div>
 
     <div class="container2">
         <c:if test="${not empty errorMessage}">
@@ -58,7 +58,7 @@
                 <tbody>
                     <c:forEach var="question" items="${ilist}">
                         <tr onClick="location.href='${path}/inquiry/InquiryDetail.do?questId=${question.quest_id}'">
-                            <td>${question.quest_id}</td>
+                            <td>${question.sort_num}</td>
                             <td><c:if test="${question.is_secret == 1}">
                                     <img src="${path}/resources/icon/logout.png" alt="" style="width: 20px; height: 20px;">
                                 </c:if></td>

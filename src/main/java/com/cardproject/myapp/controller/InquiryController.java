@@ -31,33 +31,32 @@ public class InquiryController {
 	// 문의 리스트 조회
 	@GetMapping("/InquirySelect.do")
 	public String InquirySelect(@RequestParam(defaultValue = "1") int page,
-	                            @RequestParam(defaultValue = "10") int pageSize, Model model, HttpSession session) {
+			@RequestParam(defaultValue = "10") int pageSize, Model model, HttpSession session) {
 
-	    // 유저 닉네임
-	    String userid = (String) session.getAttribute("userid");
-	    if (userid != null) {
-	        UserDTO user = iService.selectNicknameByUserVOId(userid);
-	        session.setAttribute("user", user);
-	    }
+		// 유저 닉네임
+		String userid = (String) session.getAttribute("userid");
+		if (userid != null) {
+			UserDTO user = iService.selectNicknameByUserVOId(userid);
+			session.setAttribute("user", user);
+		}
 
-	    // 페이징
-	    int totalCount = iService.getTotalInquiryCount();
-	    List<QuestionDTO> ilist = iService.selectInquiryList(page, pageSize);
+		// 페이징
+		int totalCount = iService.getTotalInquiryCount();
+		List<QuestionDTO> ilist = iService.selectInquiryList(page, pageSize);
 
-	    // 게시글 번호 재정렬
-	    int startNo = (page - 1) * pageSize + 1;
-	    for (int i = 0; i < ilist.size(); i++) {
-	        ilist.get(i).setQuest_id(startNo + i);
-	    }
+		// sort_num으로 번호 재설정
+		int sortNum = 1;
+		for (QuestionDTO inquiry : ilist) {
+			inquiry.setSort_num(sortNum++);
+		}
 
-	    model.addAttribute("ilist", ilist);
-	    model.addAttribute("currentPage", page);
-	    model.addAttribute("totalCount", totalCount);
-	    model.addAttribute("pageSize", pageSize);
+		model.addAttribute("ilist", ilist);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("pageSize", pageSize);
 
-	    return "inquiry/InquirySelect";
+		return "inquiry/InquirySelect";
 	}
-
 
 	// 문의 글 상세조회
 	@GetMapping("/InquiryDetail.do")
@@ -110,7 +109,6 @@ public class InquiryController {
 		}
 	}
 
-	// 문의 글 등록
 	@PostMapping("/InquiryInsert.do")
 	public String InquiryInsert(QuestionDTO question, MultipartHttpServletRequest file, HttpSession session) {
 
@@ -118,11 +116,9 @@ public class InquiryController {
 		String userId = (String) session.getAttribute("userid");
 		question.setUser_id(userId);
 
-		// checkbox 예외처리
+		// 체크박스 예외처리
 		if (question.getIs_secret() == null) {
 			question.setIs_secret(0);
-		} else if ("on".equals(question.getIs_secret().toString())) {
-			question.setIs_secret(1);
 		}
 
 		// S3에 이미지 등록
@@ -148,4 +144,5 @@ public class InquiryController {
 		iService.insertInquiry(question);
 		return "redirect:InquirySelect.do";
 	}
+
 }
