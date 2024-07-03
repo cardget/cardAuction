@@ -22,7 +22,7 @@
 		<h5>비밀번호 재설정</h5>
 		</div>		
 		<hr style="width:440px;">
-		<h6 style="margin-top:0px;"><img src="${path}/resources/icon/blue_error.png">&nbsp;비밀번호를 변경해주세요</h6>
+		<h6 style="margin-top:0px;"><img src="${path}/resources/icon/blue_error.png">&nbsp;영문/숫자/특수문자(!,@,#,$,~)를 2가지 이상 포함하여 6~30자로 작성해주세요.</h6>
 		
 		<form action="${path}/auth/updatePassword.do" method="post" class="custom-form" onsubmit="return validatePasswords()">
 			<div >
@@ -45,8 +45,7 @@
 			    <div class="form-group">
 			        <label for="confirmPassword" class="input-label">비밀번호 확인</label>
 			        <input type="password" id="confirmPassword" name="confirmPassword" class="input-field" onkeyup="checkPasswordMatch()" required>
-			        <span id="passwordMessage" style="margin-left: 120px; margin-top: 8px; font-size: 10px;"></span>
-			        <h6>※ 영문/숫자/특수문자(!,@,#,$,~)를 2가지 이상 포함하여 6~30자로 작성해주세요.</h6>			        
+			        <span id="passwordMessage" style="margin-left: 120px; margin-top: 8px; font-size: 10px;"></span>			        
 			    </div>
 			    
 			</div>							
