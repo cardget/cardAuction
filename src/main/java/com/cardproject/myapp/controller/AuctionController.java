@@ -108,8 +108,13 @@ public class AuctionController {
 		String userId = (String) session.getAttribute("userid");
 		boolean isBidHas = aucs.isBidding(userId,item_id);
 		model.addAttribute("isBidHas",isBidHas);
-		int price =aucs.myBidPrice(userId, item_id);
-		model.addAttribute("price",price);
+
+		Integer price = aucs.myBidPrice(userId, item_id);
+		if(price != null) {
+			model.addAttribute("price",price);
+		}else {
+			model.addAttribute("price", null);
+		}
 		System.out.println(session.getAttribute("userid"));
 		System.out.println("auctionDetail page");
 		System.out.println(item_id);

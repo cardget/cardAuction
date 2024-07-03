@@ -54,32 +54,5 @@
 			</c:forEach>
 		</c:otherwise>
 	</c:choose>
-	<c:forEach var="bids" items="${bids}">
-		<div class="item-section">
-			<div class="image-section">
-				<img src="${bids.image1}" alt="Product Image">
-			</div>
-			<div class="info-section">
-				<h3>${bids.item_name}</h3>
-				<p>입찰시간: ${bids.bid_time}</p>
-				<p class="enddate">종료일자: ${bids.end_date}</p>
-				<a href="../auction/auctionDetail.do?item_id=${bids.item_id}" class="grayfont">상세보기 ></a>
-			</div>
-			<div class="status-section">
-				<c:set var="endDate" value="${bids.end_date}" />
-				<c:choose>
-					<c:when test="${now gt endDate && bids.is_win == 1}">
-						<button class="status-button-winning">낙찰!</button>
-					</c:when>
-					<c:when test="${now gt endDate && bids.is_win == 0}">
-						<button class="status-button-sold">종료됨</button>
-					</c:when>
-					<c:otherwise>
-						<button class="status-button-proceeding">진행중</button>
-					</c:otherwise>
-				</c:choose>
-			</div>
-		</div>
-	</c:forEach>
 </body>
 </html>

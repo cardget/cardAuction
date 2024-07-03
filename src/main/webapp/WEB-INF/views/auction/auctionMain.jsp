@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -50,7 +50,9 @@
 	</c:choose>
 	
 <!-- Body -->
-<div class="topimage"></div>
+<div class="header-image">
+		<img src="${path }/resources/images/default/pokemon_banner.png">
+	</div>
 <!-- 검색창 -->
 <div class="containerM">
 	<div class="search-area">
@@ -72,16 +74,13 @@
 	 <div class="sub-category">
             <ul class="sub-category-box">
                 <li class="sub-category-item">
-                    <a href="#">카드경매</a>
+                    <a href="${path}/auction/auctionMain.do">카드경매</a>
                 </li>
                 <li class="main-category-item">
-                    <a href="deckListMain.html">티어덱리스트</a>
+                    <a href="${path}/deckMakers/pokemonDeckListMain.do">티어덱리스트</a>
                 </li>
                 <li class="main-category-item">
-                    <a href="#">커뮤니티</a>
-                </li>
-                <li class="main-category-item">
-                    <a href="#">문의</a>
+                    <a href="${path}/community/BoardSelect.do?cat=1">커뮤니티</a>
                 </li>
             </ul>
     </div>

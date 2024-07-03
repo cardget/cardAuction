@@ -313,7 +313,7 @@
 		WHERE user_id=#{user_id} AND item_id=#{item_id}
 	</update>
 	<!-- 현재 자신의 입찰가 불러오기 -->
-	<select id="myBidPrice" parameterType="map" resultType="int">
+	<select id="myBidPrice" parameterType="map" resultType="Integer">
 		select price from biddings where user_id=#{user_id} AND item_id=#{item_id}
 	</select>
 	<!-- 포켓몬카드 불러오기 -->
