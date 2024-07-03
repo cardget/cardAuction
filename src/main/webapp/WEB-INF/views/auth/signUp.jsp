@@ -14,6 +14,101 @@
 <script src="${path}/resources/js/verificationSMS_API.js"></script>
 <script src="${path}/resources/js/mapAPI.js"></script>
 <script src="${path}/resources/js/verificationEmail_API.js"></script>
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        let currentFormCheckboxId = '';
+
+        function openClausePopup(clauseType, checkboxId) {
+            currentFormCheckboxId = checkboxId;
+            var url = '${path}/resources/txt/' + clauseType;
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('clauseText').innerText = data;
+                    document.getElementById('clauseModal').style.display = "block";
+                })
+                .catch(error => {
+                    alert('파일을 불러오는 중 오류가 발생했습니다: ' + error.message);
+                });
+        }
+
+        function closeModal() {
+            document.getElementById('clauseModal').style.display = "none";
+        }
+
+        function syncCheckbox(modalCheckbox) {
+            const formCheckbox = document.getElementById(currentFormCheckboxId);
+            formCheckbox.checked = modalCheckbox.checked;
+        }
+
+        window.onclick = function(event) {
+            var modal = document.getElementById('clauseModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Expose functions to global scope
+        window.openClausePopup = openClausePopup;
+        window.closeModal = closeModal;
+        window.syncCheckbox = syncCheckbox;
+    });
+    </script>
+<style>
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 700px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-text {
+    white-space: pre-wrap;
+    max-height: 465px;
+    overflow-y: auto;
+    margin-top: 20px;
+    margin-bottom:23px;
+}
+</style>
 
 </head>
 <body>
@@ -23,6 +118,18 @@
 	</div>	    
 	    <h5 style="position: absolute; left: 435px; top: 25px; margin: 0;">회원 가입</h5>
 	</div>
+	<div id="clauseModal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeModal()">&times;</span>
+                <h2>약관</h2>
+                <div id="clauseText" class="modal-text"></div>
+                <hr>
+                <div>
+                    <input type="checkbox" id="modalCheckbox" onclick="syncCheckbox(this)" style="margin-top: 10px;"> 동의
+                </div>
+            </div>
+        </div>
+    </div>
 	
     <div class="container">
         <h4>약관 동의</h4>
@@ -33,15 +140,22 @@
 		    </label>
 		    <hr>
 		    <label style="display: block; margin-top:20px; margin-bottom: 13px;">
-		        <input type="checkbox" name="termsAgree" id="agree1" class="agree"> <span style="color: blue;">[필수]</span> 이용약관  <a href="#" style="text-align: right;">보기</a>
+		        <input type="checkbox" name="termsAgree" id="agree1" class="agree"> 
+		        <span style="color: blue;">[필수]</span> <span id="termsText">이용약관</span>  
+		        <a href="javascript:void(0)" onclick="openClausePopup('terms','agree1')">보기</a>
 		    </label>
 		    <label style="display: block; margin-bottom: 13px;">
-		        <input type="checkbox" name="privacyAgree" id="agree2" class="agree"> <span style="color: blue;">[필수]</span> 개인정보 수집 및 이용안내  <a href="#">보기</a>
+		        <input type="checkbox" name="privacyAgree" id="agree2" class="agree"> 
+		        <span style="color: blue;">[필수]</span> 개인정보 수집 및 이용안내  
+		        <a href="javascript:void(0)" onclick="openClausePopup('privacy','agree2')">보기</a>
 		    </label>
 		    <label style="display: block; margin-bottom: 13px;">
-		        <input type="checkbox" name="usageAgree" id="agree3" class="agree"> <span style="color: blue;">[필수]</span> 개인정보 활용 동의  <a href="#">보기</a>
+		        <input type="checkbox" name="usageAgree" id="agree3" class="agree"> 
+		        <span style="color: blue;">[필수]</span> 개인정보 활용 동의  
+		        <a href="javascript:void(0)" onclick="openClausePopup('usage','agree3')">보기</a>
 		    </label>
 		</div>
+		
 
         <h4>회원정보 입력</h4>
         <hr style="border: 1px solid blue; margin-bottom: 25px;">
