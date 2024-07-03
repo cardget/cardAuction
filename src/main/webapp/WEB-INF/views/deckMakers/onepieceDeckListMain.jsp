@@ -38,18 +38,19 @@
 		<!--서브카테고리-->
 		<div class="sub-category">
 			<ul class="sub-category-box">
-				<li class="sub-category-item"><a href="#">카드경매</a></li>
-				<li class="main-category-item"><a href="${path}/deckMakers/onepieceDeckListMain.html">티어덱리스트</a>
-				</li>
-				<li class="main-category-item"><a href="#">커뮤니티</a></li>
-				<li class="main-category-item"><a href="#">문의</a></li>
+				<li class="sub-category-item"><a
+					href="${path}/auction/auctionMain.do">카드경매</a></li>
+				<li class="main-category-item"><a
+					href="${path}/deckMakers/pokemonDeckListMain.do">티어덱리스트</a></li>
+				<li class="main-category-item"><a
+					href="${path}/community/BoardSelect.do?cat=1">커뮤니티</a></li>
 			</ul>
 		</div>
 		<div class="sort-container">
 			<div class="sort-nav">
 				<ul class="sort-box">
-					<li class="sort-item"><a href="${path}/main.do">홈 > </a><a href="#">원피스
-							> </a><a href="#">티어덱리스트</a></li>
+					<li class="sort-item"><a href="${path}/main.do">홈 > </a><a
+						href="#">원피스 > </a><a href="#">티어덱리스트</a></li>
 					<li class="sort-item">정렬기준 : <select class="sort-select"
 						onchange="location.href='${path}/deckMakers/onepieceDeckListMain.do?sort=' + this.value">
 							<option value="create_date"
