@@ -3,7 +3,10 @@
 body {
 	/* display: flex; */
 	justify-content: center;
-	font-family: 'Apple SD Gothic Neo', sans-serif;
+	font-family: "Pretendard Variable", Pretendard, -apple-system,
+		BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
+		"Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic",
+		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 	align-items: center;
 	height: 100vh;
 	margin: 0;	
@@ -65,7 +68,7 @@ body {
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-    max-width: 700px;
+    max-width: 550px;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     position: relative;

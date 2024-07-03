@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function openClausePopup(clauseType, checkboxId, textId) {
         currentFormCheckboxId = checkboxId;
-        var url = '${path}/resources/txt/' + clauseType;
+        var url = '../resources/txt/' + clauseType;
         var titleText = document.getElementById(textId).innerText;
 
         fetch(url)
