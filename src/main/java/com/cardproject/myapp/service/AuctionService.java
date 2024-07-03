@@ -123,7 +123,7 @@ public class AuctionService {
     	
     	
     }
-    public int myBidPrice(String user_id, Integer item_id) {
+    public Integer myBidPrice(String user_id, Integer item_id) {
     	Map<String, Object> params = new HashMap<>();
     	params.put("user_id", user_id);
     	params.put("item_id", item_id);

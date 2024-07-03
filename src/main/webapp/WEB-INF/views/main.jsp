@@ -49,7 +49,7 @@
 			<!--메인선택-->
 			<div class="row-content">
 				<div class="cardType">
-					<a href="auction/auctionPMain.do"> <img
+					<a href="auction/auctionMain.do"> <img
 						src="${path}/resources/image/pokemon.png">
 					</a>
 				</div>

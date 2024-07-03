@@ -86,6 +86,7 @@ public class AuthController {
 			// login success
 			session.setAttribute("loginResult", "Login Success");
 			session.setAttribute("userid", user.getUser_id());
+			session.setAttribute("nickname", user.getNickname());
 			
 			return "redirect:../main.do";
 		}
