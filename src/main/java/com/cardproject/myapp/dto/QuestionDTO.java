@@ -25,4 +25,5 @@ public class QuestionDTO {
 	private String answer; // 답변
 	private String nickname; // 닉네임 조회 필요
 	private int answer_exist;
+	private int sort_num;
 }

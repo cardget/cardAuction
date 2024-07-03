@@ -29,7 +29,7 @@
 
 	<div class="container2 custom-container2 mt-3">
 		<form action="${path}/inquiry/InquiryInsert.do" method="post"
-			id="myForm" enctype="multipart/form-data">
+			id="myForm" enctype="multipart/form-data" onsubmit="setCheckboxValue()">
 			<div class="right-aligned-button">
 				<input type="submit" class="btn btn-primary" value="문의하기">
 			</div>
@@ -43,11 +43,12 @@
 				<div class="col" id="ImageLogoContainer">
 					<div class="form-check">
 						<input class="form-check-input custom-checkbox" type="checkbox"
-							id="boardType" name="boardType"> <label
-							class="form-check-label" for="boardType"> 비밀글 </label>
+							id="boardType" name="boardType"> 
+						<label class="form-check-label" for="boardType"> 비밀글 </label>
 					</div>
 					<input type="file" name="imageFile" id="imageFile"
-						style="display: none;"> <img class="ImageLogo"
+						style="display: none;"> 
+					<img class="ImageLogo"
 						src="../resources/icon/image.png" alt="image" id="imageLogo">
 				</div>
 			</div>
@@ -55,7 +56,19 @@
 				<div class="form-control comment-div" id="comment"
 					contenteditable="true"></div>
 			</div>
+			<input type="hidden" id="isSecret" name="is_secret" value="0"> <!-- 기본값 0 -->
 		</form>
 	</div>
+	<script>
+		function setCheckboxValue() {
+			var checkbox = document.getElementById("boardType");
+			var isSecretInput = document.getElementById("isSecret");
+			if (checkbox.checked) {
+				isSecretInput.value = "1";
+			} else {
+				isSecretInput.value = "0";
+			}
+		}
+	</script>
 </body>
 </html>
