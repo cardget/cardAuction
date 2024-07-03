@@ -27,6 +27,7 @@
     <div class="container">
         <h4>약관 동의</h4>
         <div class="agree-container">
+        	
 		    <label>
 		        <input type="checkbox" id="agreeAll" name="allAgree" onclick="toggleAll()"> <strong>필수 약관 전체 동의</strong>
 		    </label>
