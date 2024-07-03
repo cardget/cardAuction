@@ -23,9 +23,11 @@
         }
         function sortItems() {
             const sortOption = document.querySelector('.sort-select').value;
+            const keyword = document.getElementById('keyword').value;
             const path = '<%= request.getContextPath() %>';
             console.log("Selected sort option: " + sortOption);
-            window.location.href = `${path}/auction/auctionMain.do?sortOption=${sortOption}`;
+            console.log("Selected keyword : " + keyword);
+            window.location.href = `${path}/auction/auctionMain.do?sortOption=${sortOption}&keyword=${keyword}`;
         }
         
         
@@ -91,11 +93,12 @@
         <div class="sort-right">
             <span>정렬기준:</span>
             <form action="${path}/auction/auctionMain.do" method="get" id="sortForm">
-                <select class="sort-select" name="sortOption" onchange="document.getElementById('sortForm').submit()">
-                    <option value="recent" <c:if test="${selectedSortOption == 'recent'}">selected</c:if>>최신순</option>
-                    <option value="ending" <c:if test="${selectedSortOption == 'ending'}">selected</c:if>>종료임박순</option>
-                    <option value="mostpeople" <c:if test="${selectedSortOption == 'mostpeople'}">selected</c:if>>참여자많은순</option>
-                    <option value="leastpeople" <c:if test="${selectedSortOption == 'leastpeople'}">selected</c:if>>참여자적은순</option>
+            	<input type="hidden" name="keyword" value="${keyword}">
+                <select class="sort-select" name="sortOption" onchange="document.getElementById('sortForm').submit()"> 
+                    <option value="recent" <c:if test="${sortOption == 'recent'}">selected</c:if>>최신순</option>
+                    <option value="ending" <c:if test="${sortOption == 'ending'}">selected</c:if>>종료임박순</option>
+                    <option value="mostpeople" <c:if test="${sortOption == 'mostpeople'}">selected</c:if>>참여자많은순</option>
+                    <option value="leastpeople" <c:if test="${sortOption == 'leastpeople'}">selected</c:if>>참여자적은순</option>
                 </select>
             </form>
         </div>
@@ -152,13 +155,11 @@
 	</div>
 	<!--페이지네이션-->
         <div class="pagination">
-			<c:forEach var="i" begin="1"
-				end="${(totalCount / pageSize) + (totalCount % pageSize > 0 ? 1 : 0)}">
-				<a
-					href="${path}/community/BoardSelect.do?page=${i}&pageSize=${pageSize}&sort=${selectedSortOption}"
-					class="${i == currentPage ? 'active' : ''}">${i}</a>
-			</c:forEach>
-		</div>
+            <c:forEach var="i" begin="1" end="${(totalCount / pageSize) + (totalCount % pageSize > 0 ? 1 : 0)}">
+                <a href="${path}/auction/auctionMain.do?page=${i}&pageSize=${pageSize}&sortOption=${sortOption}&keyword=${keyword}"
+                   class="${i == currentPage ? 'active' : ''}">${i}</a>
+            </c:forEach>
+        </div>
   
 </div>
 <script>

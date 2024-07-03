@@ -50,28 +50,48 @@ public class AuctionController {
 	MyPageService mpService;
 
 	@RequestMapping("/auctionMain.do")
-	public String auctionMain(@RequestParam(value = "sortOption", required = false) String sortOption,String keyword, Model model,
-			HttpSession session) {
+	public String auctionMain(@RequestParam(defaultValue = "1") int page,
+            				  @RequestParam(defaultValue = "10") int pageSize,
+            				  @RequestParam(value = "sortOption", required = false) String sortOption,
+            				  @RequestParam(required = false) String keyword,
+            				  Model model,HttpSession session) {
 		
 		System.out.println("auctionmain page");
+		//user_id
 		String userId = (String) session.getAttribute("userid");
 		model.addAttribute("userId", userId);
-		//System.out.println("############keyword: " + keyword);
-		//System.out.println("........................."+model.getAttribute("itemSearchlist"));
-		if(keyword!=null) {
-			List<ItemDetailDTO> itemSearchlist = aucs.selectItemForName(keyword);
+		System.out.println("###########################keyword:"+keyword);
+		System.out.println("###########################sortOption:"+sortOption);
+		
+		if(keyword!=null && !keyword.isEmpty() ) { //검색했을 때
+			int totalCount = aucs.getTotalItemCountByKeyword(keyword);
+			System.out.println("###########################keywordFortotalCount:"+totalCount);
+			
+			List<ItemDetailDTO> itemSearchlist = aucs.selectItemForName(page,pageSize,keyword,sortOption);
 			model.addAttribute("itemDlist", itemSearchlist);
+			model.addAttribute("keyword",keyword);
+			model.addAttribute("sortOption",sortOption);
+			model.addAttribute("currentPage", page);
+		    model.addAttribute("totalCount", totalCount);
+		    model.addAttribute("pageSize", pageSize);
 		}
 		
-		else {
+		else {//기본
+			int totalCount = aucs.getTotalItemCount();
+			System.out.println("###########################totalCount:"+totalCount);
+			
 			if (sortOption == null) {
 				sortOption = "recent";
 			}
-			System.out.println("auctionmain page with sortOption: " + sortOption);
-			List<ItemDetailDTO> itemDlist = aucs.getSortedItemList(sortOption);
-			model.addAttribute("selectedSortOption", sortOption);
+			
+			List<ItemDetailDTO> itemDlist = aucs.getSortedItemList(page, pageSize,sortOption);
+			model.addAttribute("sortOption", sortOption);
 			model.addAttribute("itemDlist", itemDlist);
+			model.addAttribute("currentPage", page);
+		    model.addAttribute("totalCount", totalCount);
+		    model.addAttribute("pageSize", pageSize);
 		}
+		//head user
 		String userid = (String) session.getAttribute("userid");
 
 		if (userid != null) {
@@ -224,5 +244,23 @@ public class AuctionController {
 		     return ResponseEntity.ok("not liked");
 		 }
 
-}
+	}
+	//연결만
+	@RequestMapping("/auctionDMain.do")
+	public String auctionDMain() {
+		return "/auction/auctionDMain";
+	}
+	@RequestMapping("/auctionYMain.do")
+	public String auctionYMain() {
+		return "/auction/auctionYMain";
+	}
+	@RequestMapping("/auctionSMain.do")
+	public String auctionSMain() {
+		return "/auction/auctionSMain";
+	}
+	@RequestMapping("/auctionOMain.do")
+	public String auctionOMain() {
+		return "/auction/auctionOMain";
+	}
+	
 }
