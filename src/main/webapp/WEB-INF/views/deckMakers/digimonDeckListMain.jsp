@@ -38,11 +38,12 @@
 		<!--서브카테고리-->
 		<div class="sub-category">
 			<ul class="sub-category-box">
-				<li class="sub-category-item"><a href="#">카드경매</a></li>
-				<li class="main-category-item"><a href="${path}/deckMakers/digimonDeckListMain.do">티어덱리스트</a>
-				</li>
-				<li class="main-category-item"><a href="#">커뮤니티</a></li>
-				<li class="main-category-item"><a href="#">문의</a></li>
+				<li class="sub-category-item"><a
+					href="${path}/auction/auctionMain.do">카드경매</a></li>
+				<li class="main-category-item"><a
+					href="${path}/deckMakers/pokemonDeckListMain.do">티어덱리스트</a></li>
+				<li class="main-category-item"><a
+					href="${path}/community/BoardSelect.do?cat=1">커뮤니티</a></li>
 			</ul>
 		</div>
 		<div class="sort-container">

@@ -170,7 +170,7 @@ public class AuctionDAO {
 		return sqlSession.update(namespace+"biddingPriceUpdate",params);
 	}
 	//자신의 입찰금 불러오기
-	public int myBidPrice(Map<String, Object> params) {
+	public Integer myBidPrice(Map<String, Object> params) {
 		return sqlSession.selectOne(namespace+"myBidPrice",params);
 	}
 	public void likeInsert(LikeDTO likeVO) {

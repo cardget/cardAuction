@@ -52,8 +52,8 @@
 	<div class="container2">
 		<br>
 		<div class="nav-links">
-			<a href="#">카드경매</a> <a href="#">티어덱 리스트</a> <a href="#"
-				class="active">커뮤니티</a> <a href="${path}/inquiry/InquirySelect.do">문의</a>
+			<a href="${path}/inquiry/InquirySelect.do">카드경매</a> <a href="#">티어덱 리스트</a> <a href="#"
+				class="active">커뮤니티</a>
 		</div>
 		<hr>
 		<div class="breadcrumbs">

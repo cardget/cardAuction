@@ -11,11 +11,12 @@
 		</a>
 		<div class="main-category">
 			<ul class="main-category-box">
-				<li class="main-category-item"><a href="auction/auctionPMain.do">포켓몬</a></li>
-				<li class="main-category-item"><a href="auction/auctionYMain.do">유희왕</a></li>
-				<li class="main-category-item"><a href="auction/auctionDMain.do">디지몬</a></li>
-				<li class="main-category-item"><a href="auction/auctionOMain.do">원피스</a></li>
-				<li class="main-category-item"><a href="auction/auctionSMain.do">스포츠</a></li>
+				<li class="main-category-item"><a href="${path}/auction/auctionMain.do">포켓몬</a></li>
+				<li class="main-category-item"><a href="${path}/auction/auctionYMain.do">유희왕</a></li>
+				<li class="main-category-item"><a href="${path}/auction/auctionDMain.do">디지몬</a></li>
+				<li class="main-category-item"><a href="${path}/auction/auctionOMain.do">원피스</a></li>
+				<li class="main-category-item"><a href="${path}/auction/auctionSMain.do">스포츠</a></li>
+				<li class="main-category-item"><a href="${path}/inquiry/InquirySelect.do">문의</a></li>
 			</ul>
 		</div>
 		<div class="top-nav-category">
@@ -24,12 +25,12 @@
 					<c:choose>
 						<c:when test="${user.is_admin eq 1}">
 							<a href="/myapp/admin/adminMain.do"> 
-								<img src="${path }/resources/icon/user.png" class="icon">${user.nickname}님
+								<img src="${path }/resources/icon/user.png" class="icon">${nickname}님
 							</a>
 						</c:when>
 						<c:otherwise>
 							<a href="/myapp/mypage/"> 
-								<img src="${path }/resources/icon/user.png" class="icon">${user.nickname}님
+								<img src="${path }/resources/icon/user.png" class="icon">${nickname}님
 							</a>
 						</c:otherwise>
 					</c:choose>
