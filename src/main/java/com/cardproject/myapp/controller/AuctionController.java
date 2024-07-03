@@ -50,20 +50,28 @@ public class AuctionController {
 	MyPageService mpService;
 
 	@RequestMapping("/auctionMain.do")
-	public String auctionMain(@RequestParam(value = "sortOption", required = false) String sortOption, Model model,
+	public String auctionMain(@RequestParam(value = "sortOption", required = false) String sortOption,String keyword, Model model,
 			HttpSession session) {
 		
 		System.out.println("auctionmain page");
 		String userId = (String) session.getAttribute("userid");
 		model.addAttribute("userId", userId);
-		if (sortOption == null) {
-			sortOption = "recent";
+		//System.out.println("############keyword: " + keyword);
+		//System.out.println("........................."+model.getAttribute("itemSearchlist"));
+		if(keyword!=null) {
+			List<ItemDetailDTO> itemSearchlist = aucs.selectItemForName(keyword);
+			model.addAttribute("itemDlist", itemSearchlist);
 		}
-		System.out.println("auctionmain page with sortOption: " + sortOption);
-		List<ItemDetailDTO> itemDlist = aucs.getSortedItemList(sortOption);
-		model.addAttribute("selectedSortOption", sortOption);
-		model.addAttribute("itemDlist", itemDlist);
-
+		
+		else {
+			if (sortOption == null) {
+				sortOption = "recent";
+			}
+			System.out.println("auctionmain page with sortOption: " + sortOption);
+			List<ItemDetailDTO> itemDlist = aucs.getSortedItemList(sortOption);
+			model.addAttribute("selectedSortOption", sortOption);
+			model.addAttribute("itemDlist", itemDlist);
+		}
 		String userid = (String) session.getAttribute("userid");
 
 		if (userid != null) {
@@ -74,10 +82,7 @@ public class AuctionController {
 		}
 		return "auction/auctionMain";
 	}
-//	@PostMapping("/auctionMainSearch.do")
-//	public String auctionMainSearch() {
-//		
-//	}
+	
 	@GetMapping("/auctionDetail.do")
 	public void auctionDetail(Model model, @RequestParam("item_id") Integer item_id, HttpSession session) {
 		String userId = (String) session.getAttribute("userid");

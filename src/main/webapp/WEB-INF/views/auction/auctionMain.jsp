@@ -55,7 +55,7 @@
             
             
             <div class="search-input-wrapper">
-             <form action="${path}/auction/auctionMainSearch.do" method="post" class="searchForm">
+             <form action="${path}/auction/auctionMain.do" method="post" class="searchForm">
                 <input type="text" class="search-box" id="keyword" name="keyword" placeholder="경매 물품 검색">
                 <button type="submit" class="search-btn">
                     <img src="${path}/resources/icon/search.png" alt="search" class="search-icon-A">
@@ -101,8 +101,9 @@
         </div>
     </div>
         
-	
+	${itemNull}
 	<div class="auction-list-wrapper">
+
 	<c:forEach var="itemd" items="${itemDlist}">
 		<div class="auction-item">
 			<c:choose>
