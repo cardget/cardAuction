@@ -31,15 +31,8 @@
         </c:if>
         <c:if test="${empty errorMessage}">
             <br>
-            <div class="nav-links">
-                <a href="#">카드경매</a>
-                <a href="#">티어덱 리스트</a>
-                <a href="${path}/community/BoardSelect.do" class="active">커뮤니티</a>
-                <a id="inquiryBtn" href="#">문의</a>
-            </div>
-            <hr>
             <div class="breadcrumbs">
-                <a href="#">홈</a> &gt; <span>문의</span>
+                <a href="${path}/main.do">홈</a> &gt; <span>문의</span>
             </div>
             <div class="form-inline">
                 <input type="submit" class="btn-primary" value="문의하기" onClick="location.href='${path}/inquiry/InquiryInsert.do'">

@@ -58,4 +58,8 @@ public class InquiryService {
 	public int updateAnswer(int questId, String answer) {
 		return inquiryDao.updateAnswer(questId, answer);
 	}
+	
+	public String getWriterByQuestId(int questId) {
+		return inquiryDao.getWriterByQuestId(questId);
+	}
 }

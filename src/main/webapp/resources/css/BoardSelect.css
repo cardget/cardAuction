@@ -95,11 +95,11 @@ th, td {
 
 tbody tr {
 	cursor: pointer;
-	background-color: #f1f1f1;
+	background-color: white;
 }
 
 tbody tr:hover {
-	background-color: lightyellow;
+	background-color: #f1f1f1;
 }
 
 .pagination a {

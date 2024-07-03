@@ -52,14 +52,39 @@
 	<div class="container2">
 		<br>
 		<div class="nav-links">
-			<a href="${path}/inquiry/InquirySelect.do">카드경매</a> <a href="#">티어덱 리스트</a> <a href="#"
-				class="active">커뮤니티</a>
+			<c:choose>
+				<c:when test="${cat == 1}">
+					<a href="${path}/auction/auctionMain.do">카드경매</a>
+					<a href="${path}/deckMakers/pokemonDeckListMain.do">티어덱 리스트</a>
+				</c:when>
+				<c:when test="${cat == 2}">
+					<a href="${path}/auction/auctionYMain.do">카드경매</a>
+					<a href="${path}/deckMakers/yugiohDeckListMain.do">티어덱 리스트</a>
+				</c:when>
+				<c:when test="${cat == 3}">
+					<a href="${path}/auction/auctionDMain.do">카드경매</a>
+					<a href="${path}/deckMakers/digimonDeckListMain.do">티어덱 리스트</a>
+				</c:when>
+				<c:when test="${cat == 4}">
+					<a href="${path}/auction/auctionOMain.do">카드경매</a>
+					<a href="${path}/deckMakers/onepieceDeckListMain.do">티어덱 리스트</a>
+				</c:when>
+				<c:when test="${cat == 5}">
+					<a href="${path}/auction/auctionSMain.do">카드경매</a>
+					<a href="${path}/deckMakers/">티어덱 리스트</a>
+				</c:when>
+				<c:otherwise>
+					<a href="${path}/auction/auctionMain.do">카드경매</a>
+					<a href="${path}/deckMakers/">티어덱 리스트</a>
+				</c:otherwise>
+			</c:choose>
+			<a href="#" class="active">커뮤니티</a>
 		</div>
 		<hr>
 		<div class="breadcrumbs">
 			<a href="../main.do">홈</a> &gt;
 			<select id="catSelect" name="cat" onchange="changeCategory()">
-				<option value="null" ${cat == null ? 'selected' : ''}>전체 카테고리</option>
+				<option value="null" ${cat == null ? 'selected' : ''}></option>
 				<option value="1" ${cat == 1 ? 'selected' : ''}>포켓몬</option>
 				<option value="2" ${cat == 2 ? 'selected' : ''}>유희왕</option>
 				<option value="3" ${cat == 3 ? 'selected' : ''}>디지몬</option>
@@ -115,7 +140,7 @@
                                     ${board.title}
                                 </c:when>
 								<c:otherwise>
-                                    [${board.tag}]${board.title}
+                                    [${board.tag}] ${board.title}
                                 </c:otherwise>
 							</c:choose></td>
 						<td>${board.nickname}</td>
