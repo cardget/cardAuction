@@ -3,97 +3,212 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace = "com.cardproject.myapp.dao">
-	<insert id="insertPokemonCard" parameterType="pokemonvo">
-		
-		INSERT INTO POKEMON 
-		(
-		CARD_NAME,
-	 	CARD_SORT, 
-	 	FEATURE, 
-	 	CARD_TYPE, 
-	 	CARD_IMAGE
-	 	)	
-		VALUES 
-		(
-		#{card_name}, 
-		#{card_sort}, 
-		#{feature}, 
-		#{card_type}, 
-		#{card_image}
-		)
+	<!-- 회원 수 -->
+	<select id="countAllUser" resultType="int">
+		SELECT 
+			COUNT(*) 
+		FROM 
+			USERS 
+		WHERE 
+			IS_ABLE = 1
+	</select>
 	
+	<!-- 이번 달 가입자 -->
+	<select id="countSigningUpByMonth" resultType="int">
+	    <![CDATA[
+		    SELECT 
+		        COUNT(*) 
+		    FROM 
+		        USERS 
+		    WHERE 
+		        IS_ABLE = 1
+		    AND 
+		        CREATE_DATE >= TRUNC(SYSDATE, 'MM')
+		    AND 
+		        CREATE_DATE < ADD_MONTHS(TRUNC(SYSDATE, 'MM'), 1)
+	    ]]>
+	</select>
+	
+	<!-- 이번 달 탈퇴자 -->
+	<select id="countDisabledByMonth" resultType="int">
+		<![CDATA[
+			SELECT 
+				COUNT(*) 
+			FROM 
+				USERS 
+			WHERE 
+				IS_ABLE = 0
+			AND 
+				CREATE_DATE >= TRUNC(SYSDATE, 'MM')
+			AND 
+				CREATE_DATE < ADD_MONTHS(TRUNC(SYSDATE, 'MM'), 1)
+		]]>
+	</select>
+	
+	<!-- 이번 달 물품 등록 추이 -->
+	<select id="countItemsByMonth" resultType="int">
+		<![CDATA[
+			SELECT 
+				COUNT(*) 
+			FROM 
+				ITEMS 
+			WHERE 
+				CREATE_DATE >= TRUNC(SYSDATE, 'MM')
+			AND 
+				CREATE_DATE < ADD_MONTHS(TRUNC(SYSDATE, 'MM'), 1)
+		]]>
+	</select>
+	
+	<!-- 이번 달 낙찰 추이 -->
+	<select id="countWinningByMonth" resultType="int">
+		<![CDATA[
+			SELECT 
+				COUNT(*) 
+			FROM 
+				TRADES 
+			WHERE 
+				CREATE_DATE >= TRUNC(SYSDATE, 'MM')
+			AND 
+				CREATE_DATE < ADD_MONTHS(TRUNC(SYSDATE, 'MM'), 1)
+		]]>
+	</select>
+	
+	<!-- 이번 달 유찰 추이 -->
+	
+	
+	<!-- 카드 추가 -->
+	<insert id="insertPokemonCard" parameterType="pokemonvo">
+		INSERT INTO POKEMON (
+			CARD_NAME,
+		 	CARD_SORT, 
+		 	FEATURE, 
+		 	CARD_TYPE, 
+		 	CARD_IMAGE
+	 	)	
+		VALUES (
+			#{card_name}, 
+			#{card_sort}, 
+			#{feature}, 
+			#{card_type}, 
+			#{card_image}
+		)
 	</insert>
 	
 	<insert id="insertDigimonCard" parameterType="digimonvo">
-		INSERT INTO DIGIMON 
-		(
-		CARD_NAME, 
-		CARD_SORT, 
-		CARD_ATTR, 
-		CARD_IMAGE, 
-		MONSTER_TYPE, 
-		CARD_LEVEL, 
-		CARD_COLOR, 
-		CARD_COST
+		INSERT INTO DIGIMON (
+			CARD_NAME, 
+			CARD_SORT, 
+			CARD_ATTR, 
+			CARD_IMAGE, 
+			MONSTER_TYPE, 
+			CARD_LEVEL, 
+			CARD_COLOR, 
+			CARD_COST
 		)
-		VALUES 
-		(		
-		#{card_name}, 
-		#{card_sort}, 
-		#{card_attr}, 
-		#{card_image}, 
-		#{monster_type}, 
-		#{card_level}, 
-		#{card_color},
-		#{card_cost}
+		VALUES (		
+			#{card_name}, 
+			#{card_sort}, 
+			#{card_attr}, 
+			#{card_image}, 
+			#{monster_type}, 
+			#{card_level}, 
+			#{card_color},
+			#{card_cost}
 		)
-	
 	</insert>
 	
 	<insert id="insertYugiohCard" parameterType="yugiohvo">
-		INSERT INTO YUGIOH 
-		(
-		CARD_NAME, 
-		CARD_SORT, 
-		CARD_ATTR, 
-		CARD_TYPE, 
-		CARD_LEVEL, 
-		CARD_IMAGE
+		INSERT INTO YUGIOH (
+			CARD_NAME, 
+			CARD_SORT, 
+			CARD_ATTR, 
+			CARD_TYPE, 
+			CARD_LEVEL, 
+			CARD_IMAGE
 		)
-		VALUES 
-		(
-		#{card_name}, 
-		#{card_sort},
-		#{card_attr},
-		#{card_type},
-		#{card_level},
-		#{card_image}
+		VALUES (
+			#{card_name}, 
+			#{card_sort},
+			#{card_attr},
+			#{card_type},
+			#{card_level},
+			#{card_image}
 		)
-	
 	</insert>
 	
 	<insert id="insertOnepieceCard" parameterType="onepiecevo">
-		INSERT INTO ONEPIECE 
-		(
-		CARD_NAME,
-		CARD_SORT, 
-		CARD_ATTR, 
-		COLOR, 
-		CARD_COST, 
-		FEATURE, 
-		CARD_IMAGE
+		INSERT INTO ONEPIECE (
+			CARD_NAME,
+			CARD_SORT, 
+			CARD_ATTR, 
+			COLOR, 
+			CARD_COST, 
+			FEATURE, 
+			CARD_IMAGE
 		)
-		VALUES 
-		(		
-		#{card_name}, 
-		#{card_sort}, 
-		#{card_attr}, 
-		#{color}, 
-		#{card_cost}, 
-		#{feature}, 
-		#{card_image}
+		VALUES (		
+			#{card_name}, 
+			#{card_sort}, 
+			#{card_attr}, 
+			#{color}, 
+			#{card_cost}, 
+			#{feature}, 
+			#{card_image}
 		)
-	
 	</insert>
 
+	<!-- 배송 전부 조회 -->
+	<select id="selectAllDelivery" resultType="deliveryvo">
+		SELECT 
+	        d.DELIVERY_ID,
+	        d.TRADE_ID,
+	        t.ITEM_ID,
+	        TO_CHAR(t.CREATE_DATE, 'YYYY-MM-DD') AS CREATE_DATE,
+	        t.USER_ID,
+	        i.IMAGE1,
+	        i.ITEM_NAME
+	    FROM 
+	        DELIVERIES d
+	    INNER JOIN 
+	        TRADES t
+	    ON 
+	        d.TRADE_ID = t.TRADE_ID
+	    INNER JOIN
+	    	ITEMS i
+	    ON
+	    	t.ITEM_ID = i.ITEM_ID
+	</select>
+	
+	<!-- 배송 단건 조회 -->
+	<select id="selectDeliveryById" parameterType="int" resultType="deliveryvo">
+		SELECT 
+	        d.DELIVERY_ID,
+	        d.TRADE_ID,
+	        t.ITEM_ID,
+	        TO_CHAR(t.CREATE_DATE, 'YYYY-MM-DD') AS CREATE_DATE,
+	        t.USER_ID,
+	        i.IMAGE1,
+	        i.ITEM_NAME
+	    FROM 
+	        DELIVERIES d
+	    INNER JOIN 
+	        TRADES t
+	    ON 
+	        d.TRADE_ID = t.TRADE_ID
+	    INNER JOIN
+	    	ITEMS i
+	    ON
+	    	t.ITEM_ID = i.ITEM_ID
+	    WHERE d.DELIVERY_ID = #{deliveryId}
+	</select>
+	
+	<!-- 송장 번호 등록 -->
+	<update id="updateInvoice" parameterType="Map">
+		UPDATE 
+			DELIVERIES
+		SET 
+			INVOICE_NUMBER = #{invoiceNumber}
+		WHERE 
+			DELIVERY_ID = #{deliveryId}
+	</update>
 </mapper>

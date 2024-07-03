@@ -23,7 +23,7 @@
 				<li class="category-item">
 					<c:choose>
 						<c:when test="${user.is_admin eq 1}">
-							<a href="/myapp/mypage/"> 
+							<a href="/myapp/admin/adminMain.do"> 
 								<img src="${path }/resources/icon/user.png" class="icon">${user.nickname}님
 							</a>
 						</c:when>

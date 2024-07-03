@@ -256,7 +256,9 @@
 	<!-- 회원 탈퇴 -->
 	<update id="updateUserDisabled" parameterType="map">
 		UPDATE USERS 
-		SET IS_ABLE = 0
+		SET 
+			IS_ABLE = 0,
+			CREATE_DATE = SYSDATE
 		WHERE USER_ID = #{userid} AND PW = #{password}
 	</update>
 </mapper>
