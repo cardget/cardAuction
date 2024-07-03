@@ -51,7 +51,7 @@ public class AuctionController {
 
 	@RequestMapping("/auctionMain.do")
 	public String auctionMain(@RequestParam(defaultValue = "1") int page,
-            				  @RequestParam(defaultValue = "10") int pageSize,
+            				  @RequestParam(defaultValue = "9") int pageSize,
             				  @RequestParam(value = "sortOption", required = false) String sortOption,
             				  @RequestParam(required = false) String keyword,
             				  Model model,HttpSession session) {
