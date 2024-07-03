@@ -248,19 +248,19 @@ public class AuctionController {
 	//연결만
 	@RequestMapping("/auctionDMain.do")
 	public String auctionDMain() {
-		return "/auction/auctionDMain";
+		return "auction/auctionDMain";
 	}
 	@RequestMapping("/auctionYMain.do")
 	public String auctionYMain() {
-		return "/auction/auctionYMain";
+		return "auction/auctionYMain";
 	}
 	@RequestMapping("/auctionSMain.do")
 	public String auctionSMain() {
-		return "/auction/auctionSMain";
+		return "auction/auctionSMain";
 	}
 	@RequestMapping("/auctionOMain.do")
 	public String auctionOMain() {
-		return "/auction/auctionOMain";
+		return "auction/auctionOMain";
 	}
 	
 }
