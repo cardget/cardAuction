@@ -92,6 +92,31 @@
 	display: inline-block;
 	font-size:14px;
 }
+.cmtArea{
+	resize: none;
+	width:680px;
+	height: 100px;
+	padding:10px;
+	border-radius: 5px;
+	pointer-events: none;
+}
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* 검정색, 80% 투명도 */
+    display: none; /* 기본적으로 숨김 */
+    z-index: 1; /* 오버레이가 이미지 위에 표시되도록 함 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
 </style>
 
 </head>
@@ -127,7 +152,7 @@
 	</div>
 
 	<div class="back-wrap">
-		<button onclick="location.href='${path}/auction/auctionMain.do'"
+		<button onclick="location.href='${path}/auction/auctionMain'"
 			class="back-btn">목록으로 돌아가기</button>
 	</div>
 	<div class="container">
@@ -143,26 +168,31 @@
 								<c:if test="${itemDetailOne.image1 != null}">
 									<div class="slider" role="group" aria-label="1/5">
 										<img src="${itemDetailOne.image1}" alt="이미지1">
+										 <div class="overlay">종료된 경매입니다.</div>
 									</div>
 								</c:if>
 								<c:if test="${itemDetailOne.image2 != null}">
 									<div class="slider" role="group" aria-label="2/5">
 										<img src="${itemDetailOne.image2}" alt="이미지2">
+										 <div class="overlay">종료된 경매입니다.</div>
 									</div>
 								</c:if>
 								<c:if test="${itemDetailOne.image3 != null}">
 									<div class="slider" role="group" aria-label="3/5">
 										<img src="${itemDetailOne.image3}" alt="이미지3">
+										 <div class="overlay">종료된 경매입니다.</div>
 									</div>
 								</c:if>
 								<c:if test="${itemDetailOne.image4 != null}">
 									<div class="slider" role="group" aria-label="4/5">
 										<img src="${itemDetailOne.image4}" alt="이미지4">
+										 <div class="overlay">종료된 경매입니다.</div>
 									</div>
 								</c:if>
 								<c:if test="${itemDetailOne.image5 != null}">
 									<div class="slider" role="group" aria-label="5/5">
 										<img src="${itemDetailOne.image5}" alt="이미지5">
+										 <div class="overlay">종료된 경매입니다.</div>
 									</div>
 								</c:if>
 							</div>
@@ -207,7 +237,9 @@
 			<hr class="hr1">
 			<div class="detail-container2">
 
-				<div class="card-info">카드 정보 : ${itemDetailOne.card_name}</div>
+				<div class="card-info">카드 정보 : ${itemDetailOne.card_name}
+					<c:choose><c:when test="${itemDetailOne.card_name == null}">알수없음</c:when></c:choose>
+				</div>
 				<div class="auction-start-date">경매등록시간 :
 					${itemDetailOne.formattedCreateDate}</div>
 				<div class="auction-end-date">경매종료시간 :
@@ -224,7 +256,7 @@
 					</c:choose>
 				</div>
 				<div class="rarity">희귀도 : ${itemDetailOne.rarity}</div>
-				<div class="trans-method">
+				<!-- <div class="trans-method">
 					거래방식 :
 					<c:choose>
 						<c:when test="${itemDetailOne.trade_type == 1}">상관없음</c:when>
@@ -232,11 +264,13 @@
 						<c:when test="${itemDetailOne.trade_type == 3}">중개</c:when>
 						<c:otherwise>알 수 없음</c:otherwise>
 					</c:choose>
-				</div>
+				</div> -->
 
 				<div class="card-detail-cmt-wrapper">
 					<div class="detail-cmt-title">정보</div>
-					<div class="card-detail-cmt">${itemDetailOne.cmt}</div>
+					<div class="card-detail-cmt">
+					<textarea class="cmtArea" cols="50" rows="8" readonly><c:out value="${itemDetailOne.cmt}" /></textarea>
+					</div>
 				</div>
 				<hr class="hr1">
 				<div class="seller-nick">판매자닉네임 : ${itemDetailOne.nickname}</div>
@@ -289,6 +323,7 @@
 	    var currentDate = new Date(); // 현재 날짜
 	    if (endDate < currentDate) {
 	        $('.end-tag').show(); // 경매 종료된 경우 버튼 보이기
+	        $('.overlay').show(); // 경매 종료된 경우 오버레이 보이기
 	    } else {
 	        $('.end-tag').hide(); // 경매 종료되지 않은 경우 버튼 숨기기
 	    }

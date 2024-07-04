@@ -15,6 +15,14 @@
 
 <style>
 
+#imgNum{
+	color:#F8C501;
+}
+.input-cardKey{
+	display:flex;
+	justify-content: center;
+	gap: 10px;
+}
 
 </style>
 </head>
@@ -44,8 +52,8 @@
 		
 		
 		<div class="input-container">
-			<input type="text" id="title" class="input-field" placeholder="제목을 입력하세요" name="item_name">
-			<label for="trade_type" class="radio-title">선호 거래 방식</label>
+			  <input type="text" id="title" class="input-field" placeholder="제목을 입력하세요" name="item_name">
+			<!--<label for="trade_type" class="radio-title">선호 거래 방식</label>
 		    <input type="radio" id="status1" name="trade_type" value="1">
 		    <label for="status1">상관없음</label>
 		    
@@ -53,18 +61,18 @@
 		    <label for="status2">직거래</label>
 		    
 		    <input type="radio" id="status3" name="trade_type" value="3">
-		    <label for="status3">중개</label>
+		    <label for="status3">중개</label>-->
 		    
 		    <!-- 카드검색 -->
-		    <label for="cardKeyword">카드 검색 </label>
-			<input type="text" id="cardKeyword" class="search-card" name="cardKeyword" >
-			<button id="searchBtn">검색</button>
-		    <select name="p_card_id" class="select-field-card" id="cardSelect">
-				<!--<c:forEach items="${pSelectlist}" var="pSelectlist">
-					<option value="${pSelectlist.card_id}">${pSelectlist.card_name}</option>
-				</c:forEach>-->
-			</select>
-		    
+		    <div class="input-cardKey">
+			    <label for="cardKeyword">썸네일 카드 </label>
+				<input type="text" id="cardKeyword" class="search-card" name="cardKeyword" >
+				<button id="searchBtn" onclick="call()">검색하기</button>
+			    <select name="p_card_id" class="select-field-card" id="cardSelect">
+				
+				</select>
+				<span id="searchResult"></span>
+		    </div>
 		</div>
 
 		<div class="image-format">
@@ -80,7 +88,8 @@
 		<div class="image-preview-wrapper">
 			<div class="default-image">
 					<img src="${path}/resources/icon/camera.png" class="icon-camera">
-					<b>0/5</b>
+					<div class="num-wrapper">
+					<b id="imgNum">0</b>/5</div>
 				</div>
 			<div class="image-preview" id="image-preview"></div>
 		</div>
@@ -111,7 +120,7 @@
 		</div>
 		<div class="input-container2">
 			<label for="cmt">물품 상세 설명</label><br>
-			<textarea id="cmt" class="input-field-cmt" placeholder="물품에 대한 상세 정보를 입력하세요" name="cmt"></textarea>
+			<textarea id="cmt" class="input-field-cmt" placeholder="물품에 대한 상세 정보를 입력하세요" name="cmt" cols="50" rows="8"></textarea>
 		</div>
 		
 	</form>
@@ -125,57 +134,70 @@
 </div>
 
 <script>
-$(document).ready(function() {
-    $('#searchBtn').click(function(event) {
-        event.preventDefault(); // 폼 제출 방지
-        var cardKeyword = $('#cardKeyword').val();
-
-        $.ajax({
-            url: '/myapp/auction/searchPokemon',
-            type: 'GET',
-            data: { "cardKeyword": cardKeyword },
-            success: function(response) {
-                console.log('response:', response);
-                $('#cardSelect').empty();
-
-                if (response && response.length > 0) {
-                    $.each(response, function(index, pokemon) {
-                        if (pokemon.card_id && pokemon.card_name) {
-                            $('#cardSelect').append('<option value="' + pokemon.card_id + '">' + pokemon.card_name + '</option>');
-                        } else {
-                            console.error('Missing card_id or card_name:', pokemon);
-                        }
-                    });
-                } else {
-                    $('#cardSelect').append('<option value="">No results found</option>');
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('Error:', error);
-            }
-        });
-    });
-});
 document.getElementById('image-input').addEventListener('change', function(event) {
-	const imagePreview = document.getElementById('image-preview');
-	imagePreview.innerHTML = '';
-	const files = event.target.files;
-	if (files.length > 5) {
-		alert('최대 5개의 이미지만 업로드할 수 있습니다.');
-		event.target.value = '';
-		return;
-	}
-	for (let i = 0; i < files.length; i++) {
-		const file = files[i];
-		const reader = new FileReader();
-		reader.onload = function(e) {
-			const img = document.createElement('img');
-			img.src = e.target.result;
-			imagePreview.appendChild(img);
-		}
-		reader.readAsDataURL(file);
-	}
+    const imagePreview = document.getElementById('image-preview');
+    const imgNum = document.getElementById('imgNum');
+    imagePreview.innerHTML = '';
+    const files = event.target.files;
+
+ 
+    console.log("선택된 파일:", files); 
+
+    if (files.length > 5) {
+        alert('최대 5개의 이미지만 업로드할 수 있습니다.');
+        event.target.value = '';
+        return;
+    }
+
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            imagePreview.appendChild(img);
+
+            
+            
+           
+        }
+        imgNum.innerHTML = i+1;
+        reader.readAsDataURL(file);
+    }
 });
+
+function call() {
+    var cardKeyword = $('#cardKeyword').val();
+    $.ajax({
+        url: '/myapp/auction/searchPokemon',  
+        type: 'GET',
+        data: { "cardKeyword": cardKeyword },
+        
+        success: function(response) {
+            console.log("응답 데이터:", response); 
+            console.log("응답 데이터:", response.length); 
+
+            if(response.length < 1){
+            	document.querySelector("#searchResult").innerHTML ="검색결과X";
+            }else{
+            	document.querySelector("#searchResult").innerHTML ="";
+            
+            var $cardSelect = $('#cardSelect');
+            $cardSelect.empty();  // 기존 옵션 제거
+			
+            response.forEach(function(card) {
+            	var option = $('<option></option>').attr('value', card.card_id).text(card.card_name);
+                $cardSelect.append(option);
+            });
+        
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("AJAX error:", status, error); // AJAX 에러 콘솔에 출력
+            alert('카드 검색에 실패했습니다.');
+        }
+    });
+}
 </script>
 
 </body>
