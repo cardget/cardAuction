@@ -104,9 +104,23 @@
 	<!-- 답변 -->
 	<update id="updateAnswer" parameterType="map">
 		UPDATE QUESTIONS
-		SET ANSWER = #{answer},
-		answer_exist = answer_exist + 1
+		SET
+		ANSWER = #{answer},
+		answer_exist = 1
 		WHERE QUEST_ID = #{questid}
 	</update>
+
+	<!-- 작성자 조회 -->
+	<select id="getWriterByQuestId" parameterType="int"
+		resultType="String">
+		SELECT USER_ID
+		FROM QUESTIONS
+		WHERE QUEST_ID=#{questId}
+	</select>
+	
+	<!-- 문의글 삭제 -->
+	<delete id="deleteInquiry" parameterType="int">
+		DELETE FROM QUESTIONS WHERE QUEST_ID=#{questId}
+	</delete>
 
 </mapper>

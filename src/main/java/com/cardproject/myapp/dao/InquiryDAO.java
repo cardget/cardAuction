@@ -70,5 +70,14 @@ public class InquiryDAO {
 		params.put("answer", answer);
 		return sqlSession.update(namespace + "updateAnswer", params);
 	}
-	
+
+	// 작성자 조회
+	public String getWriterByQuestId(int questId) {
+		return sqlSession.selectOne(namespace + "getWriterByQuestId", questId);
+	}
+
+	// 문의 글 삭제
+	public int deleteInquiry(int questId) {
+		return sqlSession.delete(namespace + "deleteInquiry",questId);
+	}
 }

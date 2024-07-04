@@ -1,17 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <c:set var="path" value="${pageContext.servletContext.contextPath}" />
 <html lang="en">
 <head>
-<title>InquiryDetail</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" type="text/css" href="../resources/css/InquiryDetail.css">
+    <title>InquiryDetail</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../resources/css/InquiryDetail.css">
 </head>
 <body>
     <c:choose>
@@ -26,10 +25,11 @@
 
     <div class="container2 custom-container2 mt-3">
         <div class="right-aligned-button">
-            <input type="submit" class="btn btn-primary" value="문의 목록" onClick="location.href='${path}/inquiry/InquirySelect.do'">
+            <input type="submit" class="btn btn-primary" value="문의 목록" onClick="location.href='${path}/inquiry/InquirySelect'">
+            <button class="btn btn-danger" onclick="deleteInquiry(${inquiry.quest_id})">삭제</button>
         </div>
         <hr>
-        <form action="${path}/inquiry/submitAnswer.do" method="post">
+        <form action="${path}/inquiry/submitAnswer" method="post">
             <div class="form-inline mb-3 mt-3">
                 <div class="input-group col">
                     <p class="form-control" id="title">${inquiry.title}</p>
@@ -60,5 +60,22 @@
             </c:choose>
         </form>
     </div>
+    <script>
+        $(document).ready(function() {
+            <c:if test="${not empty errorMessage}">
+                alert("${errorMessage}");
+                <%-- 세션에서 에러 메시지를 제거합니다 --%>
+                <%
+                    session.removeAttribute("errorMessage");
+                %>
+            </c:if>
+        });
+
+        function deleteInquiry(questId) {
+            if (confirm("이 문의를 삭제하시겠습니까?")) {
+                location.href = '${path}/inquiry/InquiryDelete?questId=' + questId;
+            }
+        }
+    </script>
 </body>
 </html>

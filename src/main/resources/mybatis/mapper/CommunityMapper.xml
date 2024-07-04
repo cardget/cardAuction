@@ -186,7 +186,8 @@
 		R.CMT,
 		R.CREATE_TIME,
 		U.NICKNAME,
-		U.PROFILE_IMAGE
+		U.PROFILE_IMAGE,
+		U.USER_ID
 		FROM
 		REPLIES R
 		JOIN USERS U ON R.USER_ID = U.USER_ID
@@ -204,11 +205,6 @@
 		INSERT INTO REPLIES(REPLY_ID, CMT, COMM_ID, CREATE_TIME, USER_ID)
 		VALUES(REPLY_SEQ.NEXTVAL, #{cmt}, #{comm_id}, SYSDATE, #{user_id})
 	</insert>
-
-	<!-- 댓글 삭제 -->
-	<delete id="deleteReplies" parameterType="int">
-		DELETE FROM REPLIES WHERE REPLY_ID=#{replyid}
-	</delete>
 
 	<!-- 세션으로 닉네임 조회 -->
 	<select id="selectNicknameById" parameterType="String" resultType="String">

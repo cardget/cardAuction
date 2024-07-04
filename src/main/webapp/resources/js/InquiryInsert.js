@@ -7,9 +7,9 @@ window.onload = function() {
     // 폼 제출 시 숨겨진 입력 필드 추가
     document.getElementById('myForm').addEventListener('submit', function(event) {
         var commentContent = document.getElementById('comment').innerHTML;
-        
-        // <div> 태그를 <br> 태그로 변경하여 내용 저장
-        var formattedContent = commentContent.replace(/<div>/g, '<br>').replace(/<\/div>/g, '').replace(/&nbsp;/g, ' ');
+
+        // 줄바꿈을 <br>로 변경하여 저장
+        var formattedContent = commentContent.replace(/\n/g, '<br>').replace(/<div>/g, '<br>').replace(/<\/div>/g, '').replace(/&nbsp;/g, ' ');
 
         // 내용을 저장할 입력 필드 생성
         var hiddenInput = document.createElement('input');
@@ -52,3 +52,13 @@ window.onload = function() {
     // 초기 높이 설정
     document.getElementById('comment').style.height = document.getElementById('comment').scrollHeight + 'px';
 };
+
+function setCheckboxValue() {
+    var checkbox = document.getElementById("boardType");
+    var isSecretInput = document.getElementById("isSecret");
+    if (checkbox.checked) {
+        isSecretInput.value = "1";
+    } else {
+        isSecretInput.value = "0";
+    }
+}
