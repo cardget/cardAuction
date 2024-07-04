@@ -26,44 +26,73 @@ public class AuctionDAO {
 	String namespace = "com.cardproject.myapp.dao.";
 
 	Logger logger = LoggerFactory.getLogger(AuctionDAO.class);
-	
-	public List<ItemDetailDTO> selectItemForName(String keyword) {
-		List<ItemDetailDTO> itemDlistForName = sqlSession.selectList(namespace + "selectItemForName",keyword);
+	//경매리스트 검색해서 조회
+	public List<ItemDetailDTO> selectItemForName(int page, int pageSize,String keyword,String sortOption) {
+		int offset = (page - 1) * pageSize;
+		Map<String, Object> params = new HashMap<>();
+		params.put("offset", offset);
+		params.put("pageSize", pageSize);
+		params.put("keyword", keyword);
+		params.put("sortOption", sortOption);
+		List<ItemDetailDTO> itemDlistForName = sqlSession.selectList(namespace + "selectItemForName",params);
 		logger.info(itemDlistForName.size() + "건 조회됨.");
 		return itemDlistForName;
 
 	}
+	// 경매리스트 조회 ( 조건에 따라 조회 )
+	public List<ItemDetailDTO> selectItemRecent(int page, int pageSize,String sortOption) {
+		int offset = (page - 1) * pageSize;
+		Map<String, Object> params = new HashMap<>();
+		params.put("offset", offset);
+		params.put("pageSize", pageSize);
+		params.put("sortOption", sortOption);
+		List<ItemDetailDTO> itemDlist = sqlSession.selectList(namespace + "selectItemRecent",params);
+		logger.info(itemDlist.size() + "건 조회됨.");
+		return itemDlist;
+
+	}
+	//전체 item 수 
+	public int getTotalItemCount() {
+		return sqlSession.selectOne(namespace + "getTotalItemCount");
+	}
+	//검색 item 수 
+	public int getTotalItemCountByKeyword(String keyword) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("keyword", keyword);
+		return sqlSession.selectOne(namespace + "getTotalItemCountByKeyword", params);
+		
+	}
 	// 경매리스트 조회 ( 최신순 )
-	public List<ItemDetailDTO> selectItemRecent() {
-		List<ItemDetailDTO> itemDlist = sqlSession.selectList(namespace + "selectItemRecent");
-		logger.info(itemDlist.size() + "건 조회됨.");
-		return itemDlist;
-
-	}
-
-	// 경매리스트 조회 ( 종료임박순 )
-	public List<ItemDetailDTO> selectItemEnding() {
-		List<ItemDetailDTO> itemDlist = sqlSession.selectList(namespace + "selectItemEnding");
-		logger.info(itemDlist.size() + "건 조회됨.");
-		return itemDlist;
-
-	}
-
-	// 경매리스트 조회 ( 참여자많은순 )
-	public List<ItemDetailDTO> selectItemMost() {
-		List<ItemDetailDTO> itemDlist = sqlSession.selectList(namespace + "selectItemMost");
-		logger.info(itemDlist.size() + "건 조회됨.");
-		return itemDlist;
-
-	}
-
-	// 경매리스트 조회 ( 참여자적은순 )
-	public List<ItemDetailDTO> selectItemLeast() {
-		List<ItemDetailDTO> itemDlist = sqlSession.selectList(namespace + "selectItemLeast");
-		logger.info(itemDlist.size() + "건 조회됨.");
-		return itemDlist;
-
-	}
+//	public List<ItemDetailDTO> selectItemRecent() {
+//		List<ItemDetailDTO> itemDlist = sqlSession.selectList(namespace + "selectItemRecent");
+//		logger.info(itemDlist.size() + "건 조회됨.");
+//		return itemDlist;
+//
+//	}
+	
+//	// 경매리스트 조회 ( 종료임박순 )
+//	public List<ItemDetailDTO> selectItemEnding() {
+//		List<ItemDetailDTO> itemDlist = sqlSession.selectList(namespace + "selectItemEnding");
+//		logger.info(itemDlist.size() + "건 조회됨.");
+//		return itemDlist;
+//
+//	}
+//
+//	// 경매리스트 조회 ( 참여자많은순 )
+//	public List<ItemDetailDTO> selectItemMost() {
+//		List<ItemDetailDTO> itemDlist = sqlSession.selectList(namespace + "selectItemMost");
+//		logger.info(itemDlist.size() + "건 조회됨.");
+//		return itemDlist;
+//
+//	}
+//
+//	// 경매리스트 조회 ( 참여자적은순 )
+//	public List<ItemDetailDTO> selectItemLeast() {
+//		List<ItemDetailDTO> itemDlist = sqlSession.selectList(namespace + "selectItemLeast");
+//		logger.info(itemDlist.size() + "건 조회됨.");
+//		return itemDlist;
+//
+//	}
 	//경매물품 하나 Detail조회
 	public ItemDetailDTO selectItemOne(int item_id) {
 		ItemDetailDTO itemDetail = sqlSession.selectOne(namespace+"selectItemOne", item_id);
@@ -141,7 +170,7 @@ public class AuctionDAO {
 		return sqlSession.update(namespace+"biddingPriceUpdate",params);
 	}
 	//자신의 입찰금 불러오기
-	public int myBidPrice(Map<String, Object> params) {
+	public Integer myBidPrice(Map<String, Object> params) {
 		return sqlSession.selectOne(namespace+"myBidPrice",params);
 	}
 	public void likeInsert(LikeDTO likeVO) {

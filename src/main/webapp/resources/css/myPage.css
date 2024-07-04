@@ -1,11 +1,14 @@
 @charset "UTF-8";
 body, html {
+	font-family: "Pretendard Variable", Pretendard, -apple-system,
+		BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
+		"Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic",
+		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
     margin: 0;
     padding: 0;
     height: 100%;
-    font-family: 'Apple SD Gothic Neo', sans-serif;
-    color: #000;
     background-color: #f9fbfc;
+    color: #2C2C2C;
 }
 
 .content > div:not(.header) {
@@ -19,6 +22,12 @@ body, html {
 a {
 	color: inherit;
 	text-decoration: none;
+}
+
+hr {
+	background:#e1e6ec;
+    height:1px;
+    border:0
 }
 
 .container {

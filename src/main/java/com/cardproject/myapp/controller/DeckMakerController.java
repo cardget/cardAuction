@@ -38,9 +38,9 @@ import kotlin.internal.RequireKotlin;
 @RequestMapping("/deckMakers")
 public class DeckMakerController {
 
-	@GetMapping("/pokemonDeckListMain.do")
+	@GetMapping("/pokemonDeckListMain")
 	public String getPDecks(Model model, @RequestParam(defaultValue = "1") int page,
-			@RequestParam(defaultValue = "3") int pageSize,
+			@RequestParam(defaultValue = "9") int pageSize,
 			@RequestParam(value = "sort", required = false, defaultValue = "create_date") String sort,
 			@RequestParam(required = false) String query) {
 
@@ -61,9 +61,9 @@ public class DeckMakerController {
 		return "deckMakers/pokemonDeckListMain";
 	}
 
-	@GetMapping("/yugiohDeckListMain.do")
+	@GetMapping("/yugiohDeckListMain")
 	public String getYDecks(Model model, @RequestParam(defaultValue = "1") int page,
-			@RequestParam(defaultValue = "3") int pageSize,
+			@RequestParam(defaultValue = "9") int pageSize,
 			@RequestParam(value = "sort", required = false, defaultValue = "create_date") String sort,
 			@RequestParam(required = false) String query) {
 
@@ -83,10 +83,10 @@ public class DeckMakerController {
 
 		return "deckMakers/yugiohDeckListMain";
 	}
-	
-	@GetMapping("/digimonDeckListMain.do")
+
+	@GetMapping("/digimonDeckListMain")
 	public String getDDecks(Model model, @RequestParam(defaultValue = "1") int page,
-			@RequestParam(defaultValue = "3") int pageSize,
+			@RequestParam(defaultValue = "9") int pageSize,
 			@RequestParam(value = "sort", required = false, defaultValue = "create_date") String sort,
 			@RequestParam(required = false) String query) {
 
@@ -106,10 +106,10 @@ public class DeckMakerController {
 
 		return "deckMakers/digimonDeckListMain";
 	}
-	
-	@GetMapping("/onepieceDeckListMain.do")
+
+	@GetMapping("/onepieceDeckListMain")
 	public String getODecks(Model model, @RequestParam(defaultValue = "1") int page,
-			@RequestParam(defaultValue = "3") int pageSize,
+			@RequestParam(defaultValue = "9") int pageSize,
 			@RequestParam(value = "sort", required = false, defaultValue = "create_date") String sort,
 			@RequestParam(required = false) String query) {
 
@@ -138,7 +138,7 @@ public class DeckMakerController {
 	MyPageService mpService;
 
 	// 포켓몬카드 -------------------------------------------------------------------
-	@RequestMapping("/pokemonDeckMaker.do")
+	@RequestMapping("/pokemonDeckMaker")
 	public void pokemonDeckMaker(Model model, @RequestParam(defaultValue = "1") int page,
 			@RequestParam(value = "card_type", required = false, defaultValue = "t") String cardType,
 			@RequestParam(value = "card_sort", required = false, defaultValue = "s") String cardSort,
@@ -163,7 +163,7 @@ public class DeckMakerController {
 
 	}
 
-	@GetMapping(value = "/loadMorePCard.do", produces = "application/json")
+	@GetMapping(value = "/loadMorePCard", produces = "application/json")
 	public @ResponseBody List<PokemonDTO> loadMorePCard(Model model, @RequestParam(defaultValue = "1") int page,
 			@RequestParam(value = "card_type", required = false, defaultValue = "t") String cardType,
 			@RequestParam(value = "card_sort", required = false, defaultValue = "s") String cardSort,
@@ -179,7 +179,7 @@ public class DeckMakerController {
 	}
 
 	// 유희왕카드 -------------------------------------------------------------------
-	@RequestMapping("/yugiohDeckMaker.do")
+	@RequestMapping("/yugiohDeckMaker")
 	public void yugiohDeckMaker(Model model, @RequestParam(defaultValue = "1") int page,
 			@RequestParam(value = "card_attr", required = false, defaultValue = "a") String cardAttr,
 			@RequestParam(value = "card_sort", required = false, defaultValue = "s") String cardSort,
@@ -203,7 +203,7 @@ public class DeckMakerController {
 		}
 	}
 
-	@GetMapping(value = "/loadMoreYCard.do", produces = "application/json")
+	@GetMapping(value = "/loadMoreYCard", produces = "application/json")
 	public @ResponseBody List<YugiohDTO> loadMoreYCard(Model model, @RequestParam(defaultValue = "1") int page,
 			@RequestParam(value = "card_attr", required = false, defaultValue = "a") String cardAttr,
 			@RequestParam(value = "card_sort", required = false, defaultValue = "s") String cardSort,
@@ -219,7 +219,7 @@ public class DeckMakerController {
 	}
 
 	// 디지몬카드 -------------------------------------------------------------------
-	@RequestMapping("/digimonDeckMaker.do")
+	@RequestMapping("/digimonDeckMaker")
 	public void digimonDeckMaker(Model model, @RequestParam(defaultValue = "1") int page,
 			@RequestParam(value = "card_attr", required = false, defaultValue = "a") String cardAttr,
 			@RequestParam(value = "card_sort", required = false, defaultValue = "s") String cardSort,
@@ -243,7 +243,7 @@ public class DeckMakerController {
 		}
 	}
 
-	@GetMapping(value = "/loadMoreDCard.do", produces = "application/json")
+	@GetMapping(value = "/loadMoreDCard", produces = "application/json")
 	public @ResponseBody List<DigimonDTO> loadMoreDCard(Model model, @RequestParam(defaultValue = "1") int page,
 			@RequestParam(value = "card_attr", required = false, defaultValue = "a") String cardAttr,
 			@RequestParam(value = "card_sort", required = false, defaultValue = "s") String cardSort,
@@ -259,7 +259,7 @@ public class DeckMakerController {
 	}
 
 	// 원피스카드 -------------------------------------------------------------------
-	@RequestMapping("/onepieceDeckMaker.do")
+	@RequestMapping("/onepieceDeckMaker")
 	public void onepieceDeckMaker(Model model, @RequestParam(defaultValue = "1") int page,
 			@RequestParam(value = "card_attr", required = false, defaultValue = "a") String cardAttr,
 			@RequestParam(value = "card_sort", required = false, defaultValue = "s") String cardSort,
@@ -283,7 +283,7 @@ public class DeckMakerController {
 		}
 	}
 
-	@GetMapping(value = "/loadMoreOCard.do", produces = "application/json")
+	@GetMapping(value = "/loadMoreOCard", produces = "application/json")
 	public @ResponseBody List<OnepieceDTO> loadMoreOCard(Model model, @RequestParam(defaultValue = "1") int page,
 			@RequestParam(value = "card_attr", required = false, defaultValue = "a") String cardAttr,
 			@RequestParam(value = "card_sort", required = false, defaultValue = "s") String cardSort,
@@ -299,7 +299,7 @@ public class DeckMakerController {
 	}
 
 	// insert
-	@PostMapping("/insertDeck.do")
+	@PostMapping("/insertDeck")
 	public String addDeck(@RequestParam String kind, @RequestParam String deckTitle, @RequestParam String commentBox,
 			@RequestParam("imgList[]") String[] imgList, HttpSession session, Model model) {
 
@@ -321,19 +321,19 @@ public class DeckMakerController {
 		switch (kind) {
 		case "P":
 			deckDTO.setCat(1);
-			redirectUrl += "pokemonDeckListMain.do";
+			redirectUrl += "pokemonDeckListMain";
 			break;
 		case "Y":
 			deckDTO.setCat(2);
-			redirectUrl += "yugiohDeckListMain.do";
+			redirectUrl += "yugiohDeckListMain";
 			break;
 		case "D":
 			deckDTO.setCat(3);
-			redirectUrl += "digimonDeckListMain.do";
+			redirectUrl += "digimonDeckListMain";
 			break;
 		case "O":
 			deckDTO.setCat(4);
-			redirectUrl += "onepieceDeckListMain.do";
+			redirectUrl += "onepieceDeckListMain";
 			break;
 		default:
 			throw new IllegalArgumentException("Invalid kind: " + kind);
@@ -345,80 +345,138 @@ public class DeckMakerController {
 
 	// deckDetail
 	// 포켓몬 덱정보
-	@GetMapping("/pokemonDeckListDetail.do")
+	@GetMapping("/pokemonDeckListDetail")
 	public String getPDeckDetail(@RequestParam("deck_id") int deckId, Model model) {
 		List<Map<String, Object>> cards = deckMakerService.getPCardsByDeckId(deckId);
 		Map<String, Object> deck = deckMakerService.getDeckById(deckId);
+		String userid = (String) session.getAttribute("userid");
 		model.addAttribute("cards", cards);
 		model.addAttribute("deck", deck);
+		if (userid != null) {
+
+			UserDTO user = mpService.selectUserById(userid);
+			List<NotificationDTO> nlist = mpService.selectFiveNotifications(userid);
+			model.addAttribute("user", user);
+			model.addAttribute("nlist", nlist);
+		}
 		return "deckMakers/pokemonDeckListDetail";
 	}
 
 	// 유희왕
-	@GetMapping("/yugiohDeckListDetail.do")
+	@GetMapping("/yugiohDeckListDetail")
 	public String getYDeckDetail(@RequestParam("deck_id") int deckId, Model model) {
 		List<Map<String, Object>> cards = deckMakerService.getYCardsByDeckId(deckId);
 		Map<String, Object> deck = deckMakerService.getDeckById(deckId);
+		String userid = (String) session.getAttribute("userid");
 		model.addAttribute("cards", cards);
 		model.addAttribute("deck", deck);
+		if (userid != null) {
+
+			UserDTO user = mpService.selectUserById(userid);
+			List<NotificationDTO> nlist = mpService.selectFiveNotifications(userid);
+			model.addAttribute("user", user);
+			model.addAttribute("nlist", nlist);
+		}
 		return "deckMakers/yugiohDeckListDetail";
 	}
 
 	// 디지몬
-	@GetMapping("/digimonDeckListDetail.do")
+	@GetMapping("/digimonDeckListDetail")
 	public String getDDeckDetail(@RequestParam("deck_id") int deckId, Model model) {
 		List<Map<String, Object>> cards = deckMakerService.getDCardsByDeckId(deckId);
 		Map<String, Object> deck = deckMakerService.getDeckById(deckId);
+		String userid = (String) session.getAttribute("userid");
 		model.addAttribute("cards", cards);
 		model.addAttribute("deck", deck);
+		if (userid != null) {
+
+			UserDTO user = mpService.selectUserById(userid);
+			List<NotificationDTO> nlist = mpService.selectFiveNotifications(userid);
+			model.addAttribute("user", user);
+			model.addAttribute("nlist", nlist);
+		}
 		return "deckMakers/digimonDeckListDetail";
 	}
 
 	// 원피스
-	@GetMapping("/onepieceDeckListDetail.do")
+	@GetMapping("/onepieceDeckListDetail")
 	public String getODeckDetail(@RequestParam("deck_id") int deckId, Model model) {
 		List<Map<String, Object>> cards = deckMakerService.getOCardsByDeckId(deckId);
 		Map<String, Object> deck = deckMakerService.getDeckById(deckId);
+		String userid = (String) session.getAttribute("userid");
 		model.addAttribute("cards", cards);
 		model.addAttribute("deck", deck);
+		if (userid != null) {
+
+			UserDTO user = mpService.selectUserById(userid);
+			List<NotificationDTO> nlist = mpService.selectFiveNotifications(userid);
+			model.addAttribute("user", user);
+			model.addAttribute("nlist", nlist);
+		}
 		return "deckMakers/onepieceDeckListDetail";
 	}
 
 	// 추천(공통)
-	@PostMapping(value = "/recommendDeck.do", produces = "application/json")
+	@PostMapping(value = "/recommendDeck", produces = "application/json")
 	@ResponseBody
 	public Map<String, Object> recommendDeck(@RequestBody Map<String, Integer> requestData) {
-		int deckId = requestData.get("deck_id");
-		System.out.println("Received deck_id for recommendation: " + deckId);
-		boolean success = deckMakerService.recommendDeck(deckId);
+		
 		Map<String, Object> response = new HashMap<>();
-		response.put("success", success);
+		
+		String userid = (String) session.getAttribute("userid");
+	    if (userid == null) {
+	        response.put("success", false);
+	        response.put("message", "로그인 후 이용해주세요.");
+	        return response;
+	    }
+
+	    int deckId = requestData.get("deck_id");
+	    System.out.println("Received deck_id for recommendation: " + deckId);
+	    boolean success = deckMakerService.recommendDeck(deckId);
+	    response.put("success", success);
+	    if (!success) {
+	        response.put("message", "추천 처리 중 오류가 발생했습니다.");
+	    }
+	    return response;
+	}
+
+	// 삭제(공통)
+	@PostMapping(value = "/deleteDeck", produces = "application/json")
+	@ResponseBody
+	public Map<String, Object> deleteDeck(@RequestBody Map<String, Integer> requestData) {
+		int deckId = requestData.get("deck_id");
+		System.out.println("삭제할 deck_id: " + deckId);
+		boolean sSuccess = deckMakerService.deleteSource(deckId);
+		boolean dSuccess = deckMakerService.deleteDeck(deckId);
+		Map<String, Object> response = new HashMap<>();
+		response.put("sourceSuccess", sSuccess);
+		response.put("dSuccess", dSuccess);
 		return response;
 	}
 
 	// 카드변경 포켓몬
-	@GetMapping("/getPCardDetails.do")
+	@GetMapping("/getPCardDetails")
 	@ResponseBody
 	public PokemonDTO getPCardDetails(@RequestParam("card_id") String cardId) {
 		return deckMakerService.getPCardDetailsById(cardId);
 	}
 
 	// 유희왕
-	@GetMapping("/getYCardDetails.do")
+	@GetMapping("/getYCardDetails")
 	@ResponseBody
 	public YugiohDTO getYCardDetails(@RequestParam("card_id") String cardId) {
 		return deckMakerService.getYCardDetailsById(cardId);
 	}
 
-	//디지몬
-	@GetMapping("/getDCardDetails.do")
+	// 디지몬
+	@GetMapping("/getDCardDetails")
 	@ResponseBody
 	public DigimonDTO getDCardDetails(@RequestParam("card_id") String cardId) {
 		return deckMakerService.getDCardDetailsById(cardId);
 	}
 
 	// 원피스
-	@GetMapping("/getOCardDetails.do")
+	@GetMapping("/getOCardDetails")
 	@ResponseBody
 	public OnepieceDTO getOCardDetails(@RequestParam("card_id") String cardId) {
 		return deckMakerService.getOCardDetailsById(cardId);

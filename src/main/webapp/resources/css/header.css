@@ -40,7 +40,7 @@
 	gap: 100px;
 	margin: 0;
 	padding: 0;
-	font-weight: 1000;
+	font-weight: 500;
 	font-size: 18px;
 }
 
@@ -50,7 +50,7 @@
 	margin: 0;
 	padding: 0;
 	font-weight: 500;
-	font-size: 16px;
+	font-size: 18px;
 }
 
 .category-item, .main-category-item, .sub-category-item, .sort-item {
@@ -108,7 +108,7 @@ ul {
 }
 
 .header-image {
-	height: 278px;
+	height: 274px;
 	width: 100%;
 }
 

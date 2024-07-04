@@ -58,4 +58,14 @@ public class InquiryService {
 	public int updateAnswer(int questId, String answer) {
 		return inquiryDao.updateAnswer(questId, answer);
 	}
+	
+	// 작성자 조회 
+	public String getWriterByQuestId(int questId) {
+		return inquiryDao.getWriterByQuestId(questId);
+	}
+	
+	// 문의글 삭제
+	public int deleteInquiry(int questId) {
+		return inquiryDao.deleteInquiry(questId);
+	}
 }

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -23,16 +23,37 @@
         }
         function sortItems() {
             const sortOption = document.querySelector('.sort-select').value;
+            const keyword = document.getElementById('keyword').value;
             const path = '<%= request.getContextPath() %>';
             console.log("Selected sort option: " + sortOption);
-            window.location.href = `${path}/auction/auctionMain.do?sortOption=${sortOption}`;
+            console.log("Selected keyword : " + keyword);
+            window.location.href = `${path}/auction/auctionMain?sortOption=${sortOption}&keyword=${keyword}`;
         }
         
         
         
 </script>
 <style>
-
+.null-Info{
+	margin:0 auto;
+	
+	font-size:40px;
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center; 
+    
+}
+.error-icon-null{
+	width: 34px;
+    height: 34px;
+    margin-right: 8px;
+}
+.null-Info span {
+    display: inline-block;
+    vertical-align: middle; 
+    color:#CCC7C0;
+}
 </style>
 </head>
 <body>
@@ -48,14 +69,16 @@
 	</c:choose>
 	
 <!-- Body -->
-<div class="topimage"></div>
+<div class="header-image">
+		<img src="${path }/resources/images/default/pokemon_banner.png">
+	</div>
 <!-- 검색창 -->
 <div class="containerM">
 	<div class="search-area">
             
             
             <div class="search-input-wrapper">
-             <form action="${path}/auction/auctionMainSearch.do" method="post" class="searchForm">
+             <form action="${path}/auction/auctionMain" method="post" class="searchForm">
                 <input type="text" class="search-box" id="keyword" name="keyword" placeholder="경매 물품 검색">
                 <button type="submit" class="search-btn">
                     <img src="${path}/resources/icon/search.png" alt="search" class="search-icon-A">
@@ -70,16 +93,13 @@
 	 <div class="sub-category">
             <ul class="sub-category-box">
                 <li class="sub-category-item">
-                    <a href="#">카드경매</a>
+                    <a href="${path}/auction/auctionMain">카드경매</a>
                 </li>
                 <li class="main-category-item">
-                    <a href="deckListMain.html">티어덱리스트</a>
+                    <a href="${path}/deckMakers/pokemonDeckListMain">티어덱리스트</a>
                 </li>
                 <li class="main-category-item">
-                    <a href="#">커뮤니티</a>
-                </li>
-                <li class="main-category-item">
-                    <a href="#">문의</a>
+                    <a href="${path}/community/BoardSelect?cat=1">커뮤니티</a>
                 </li>
             </ul>
     </div>
@@ -90,12 +110,13 @@
         </div>
         <div class="sort-right">
             <span>정렬기준:</span>
-            <form action="${path}/auction/auctionMain.do" method="get" id="sortForm">
-                <select class="sort-select" name="sortOption" onchange="document.getElementById('sortForm').submit()">
-                    <option value="recent" <c:if test="${selectedSortOption == 'recent'}">selected</c:if>>최신순</option>
-                    <option value="ending" <c:if test="${selectedSortOption == 'ending'}">selected</c:if>>종료임박순</option>
-                    <option value="mostpeople" <c:if test="${selectedSortOption == 'mostpeople'}">selected</c:if>>참여자많은순</option>
-                    <option value="leastpeople" <c:if test="${selectedSortOption == 'leastpeople'}">selected</c:if>>참여자적은순</option>
+            <form action="${path}/auction/auctionMain" method="get" id="sortForm">
+            	<input type="hidden" name="keyword" value="${keyword}">
+                <select class="sort-select" name="sortOption" onchange="document.getElementById('sortForm').submit()"> 
+                    <option value="recent" <c:if test="${sortOption == 'recent'}">selected</c:if>>최신순</option>
+                    <option value="ending" <c:if test="${sortOption == 'ending'}">selected</c:if>>종료임박순</option>
+                    <option value="mostpeople" <c:if test="${sortOption == 'mostpeople'}">selected</c:if>>참여자많은순</option>
+                    <option value="leastpeople" <c:if test="${sortOption == 'leastpeople'}">selected</c:if>>참여자적은순</option>
                 </select>
             </form>
         </div>
@@ -103,14 +124,15 @@
         
 	
 	<div class="auction-list-wrapper">
+	
 	<c:forEach var="itemd" items="${itemDlist}">
-		<div class="auction-item">
+		<div class="auction-item" >
 			<c:choose>
                     <c:when test="${itemd.card_image != null}">
-                        <img src="${itemd.card_image}" alt="card image" class="card-image">
+                        <img src="${itemd.card_image}" alt="card image" class="card-image" onclick="location.href='${path}/auction/auctionDetail.do?item_id=${itemd.item_id}'">
                     </c:when>
                     <c:otherwise>
-                        <img src="${path}/resources/image/defaultPCard.png" alt="card image" class="card-image">
+                        <img src="${path}/resources/image/defaultPCard.png" alt="card image" class="card-image" onclick="location.href='${path}/auction/auctionDetail.do?item_id=${itemd.item_id}'">
                     </c:otherwise>
             </c:choose>
 			<div class="title-wrapper">
@@ -122,7 +144,7 @@
 			</div>
 			<div class="info-wrapper">		
 				<span class="people">참여자 ${itemd.bid_count}명</span>
-				<span class="tmethod">선호 거래 방식 : 
+			<!-- 	<span class="tmethod">선호 거래 방식 : 
 					    <c:choose>
 					        <c:when test="${itemd.trade_type == 1}">
 					            상관없음
@@ -137,7 +159,7 @@
 					            ${itemd.trade_type}
 					        </c:otherwise>
 					    </c:choose>
-				</span>
+				</span> -->
 			</div>
 			<div class="button-wrapper">
 				
@@ -151,18 +173,25 @@
 	</div>
 	<!--페이지네이션-->
         <div class="pagination">
-			<c:forEach var="i" begin="1"
-				end="${(totalCount / pageSize) + (totalCount % pageSize > 0 ? 1 : 0)}">
-				<a
-					href="${path}/community/BoardSelect.do?page=${i}&pageSize=${pageSize}&sort=${selectedSortOption}"
-					class="${i == currentPage ? 'active' : ''}">${i}</a>
-			</c:forEach>
+            <c:forEach var="i" begin="1" end="${(totalCount / pageSize) + (totalCount % pageSize > 0 ? 1 : 0)}">
+                <a href="${path}/auction/auctionMain?page=${i}&pageSize=${pageSize}&sortOption=${sortOption}&keyword=${keyword}"
+                   class="${i == currentPage ? 'active' : ''}">${i}</a>
+            </c:forEach>
+        </div>
+  		<div class="null-Info" <c:if test="${itemNull == 'Not'}">style="margin-bottom: 200px"</c:if>>
+		<c:choose>
+			<c:when test="${itemNull == 'Not'}">
+			<img src="${path}/resources/icon/icon_error_gray.png" class="error-icon-null" > 
+				<span>해당하는 물품이 없습니다</span>
+			</c:when>
+		</c:choose>
 		</div>
-  
 </div>
 <script>
 
 $(document).ready(function() {
+	
+	
     $('.like-btn').each(function() {
         var userId = $(this).data('user-id');
         var itemId = $(this).data('item-id');

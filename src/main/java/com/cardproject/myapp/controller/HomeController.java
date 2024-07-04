@@ -22,7 +22,7 @@ public class HomeController {
 	@Autowired
 	HttpSession session;
 	
-    @GetMapping("/main.do")
+    @GetMapping("/main")
     public String home(Model model) {
     	String userid = (String) session.getAttribute("userid");
     	

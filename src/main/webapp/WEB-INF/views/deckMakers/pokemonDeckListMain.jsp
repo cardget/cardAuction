@@ -8,9 +8,8 @@
 <c:set var="path" value="${pageContext.servletContext.contextPath }" />
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!--Apple SD 고딕 폰트-->
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css2?family=Apple+SD+Gothic+Neo&display=swap">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <title>카드득</title>
 <link rel="stylesheet" href="${path }/resources/css/main.css" />
 <link rel="icon" href="${path }/resources/icon/favicon.ico"
@@ -38,11 +37,12 @@
 		<!--서브카테고리-->
 		<div class="sub-category">
 			<ul class="sub-category-box">
-				<li class="sub-category-item"><a href="#">카드경매</a></li>
-				<li class="main-category-item"><a href="deckListMain.html">티어덱리스트</a>
-				</li>
-				<li class="main-category-item"><a href="#">커뮤니티</a></li>
-				<li class="main-category-item"><a href="#">문의</a></li>
+				<li class="sub-category-item"><a
+					href="${path}/auction/auctionMain">카드경매</a></li>
+				<li class="main-category-item"><a
+					href="${path}/deckMakers/pokemonDeckListMain">티어덱리스트</a></li>
+				<li class="main-category-item"><a
+					href="${path}/community/BoardSelect?cat=1">커뮤니티</a></li>
 			</ul>
 		</div>
 		<div class="sort-container">
@@ -51,7 +51,7 @@
 					<li class="sort-item"><a href="main.html">홈 > </a><a href="#">포켓몬
 							> </a><a href="#">티어덱리스트</a></li>
 					<li class="sort-item">정렬기준 : <select class="sort-select"
-						onchange="location.href='${path}/deckMakers/pokemonDeckListMain.do?sort=' + this.value">
+						onchange="location.href='${path}/deckMakers/pokemonDeckListMain?sort=' + this.value">
 							<option value="create_date"
 								${sort == 'create_date' ? 'selected' : ''}>최신순</option>
 							<option value="recommend"
@@ -65,7 +65,7 @@
 			<ul class="option-box">
 				<li class="option-item">
 					<form id="conditionForm"
-						action="${path}/deckMakers/pokemonDeckListMain.do" method="get">
+						action="${path}/deckMakers/pokemonDeckListMain" method="get">
 						<input type="text" class="option-search" id="option-search"
 							name="query" placeholder="덱이름 검색">
 						<button type="submit" class="search-btn-default">검색</button>
@@ -73,7 +73,7 @@
 				</li>
 				<li class="option-item">
 					<button type="button" class="create-deck"
-						onclick="location.href='${path}/deckMakers/pokemonDeckMaker.do'">덱
+						onclick="location.href='${path}/deckMakers/pokemonDeckMaker'">덱
 						생성</button>
 				</li>
 			</ul>
@@ -85,7 +85,7 @@
 					<div class="deck-overlay-container">
 						<img src="${deck.CARD_IMAGE}" class="pcard">
 						<div class="overlay-text"
-							onclick="location.href='${pageContext.request.contextPath}/deckMakers/pokemonDeckListDetail.do?deck_id=${deck.DECK_ID}'">
+							onclick="location.href='${pageContext.request.contextPath}/deckMakers/pokemonDeckListDetail?deck_id=${deck.DECK_ID}'">
 							<div class="deck-number">${deck.DECK_TITLE}</div>
 							<div>
 								<div class="username">${deck.USER_ID}</div>

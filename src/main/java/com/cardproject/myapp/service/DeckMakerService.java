@@ -187,6 +187,26 @@ public class DeckMakerService {
         }
     }
     
+    public boolean deleteSource(int deckId) {
+    	try {
+            deckMakerDAO.deleteSource(deckId);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean deleteDeck(int deckId) {
+    	try {
+            deckMakerDAO.deleteDeck(deckId);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    
     public PokemonDTO getPCardDetailsById(String cardId) {
         return deckMakerDAO.getPCardDetailsById(cardId);
     }

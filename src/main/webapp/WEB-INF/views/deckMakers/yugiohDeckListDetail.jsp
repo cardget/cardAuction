@@ -8,8 +8,6 @@
 <c:set var="path" value="${pageContext.servletContext.contextPath }" />
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css2?family=Apple+SD+Gothic+Neo&display=swap">
 <title>카드득</title>
 <link rel="stylesheet" href="${path }/resources/css/main.css" />
 <link rel="icon" href="${path }/resources/icon/favicon.ico"
@@ -71,8 +69,13 @@
 			<div class="detail-comment">
 				<textarea cols="50" rows="6" class="commentBox" disabled>${deck.CMT}</textarea>
 			</div>
-			<div class="recommend-button">
-				<button type="button" onclick="recommendDeck(${deck.DECK_ID})">추천</button>
+			<div class="btnContainer">
+				<div class="recommend-button">
+					<button type="button" onclick="recommendDeck(${deck.DECK_ID})">추천</button>
+				</div>
+				<div class="delete-button">
+					<button type="button" onclick="deleteDeck(${deck.DECK_ID})">삭제</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -82,7 +85,7 @@
 	<script>
 	function recommendDeck(deckId) {
 	    $.ajax({
-	        url: '${path}/deckMakers/recommendDeck.do',
+	        url: '${path}/deckMakers/recommendDeck',
 	        type: 'POST',
 	        contentType: 'application/json',
 	        data: JSON.stringify({ deck_id: deckId }),
@@ -92,12 +95,37 @@
 	                alert('추천되었습니다.');
 	                location.reload(); // 페이지 새로고침하여 업데이트된 추천 수 반영
 	            } else {
-	                alert('추천 처리 중 오류가 발생했습니다.');
+	                if (data.message) {
+	                    alert(data.message); // 서버에서 반환된 메시지 표시
+	                } else {
+	                    alert('추천 처리 중 오류가 발생했습니다.');
+	                }
 	            }
 	        },
 	        error: function(xhr, status, error) {
 	            console.error('Fetch error:', error);
 	            alert('추천 처리 중 오류가 발생했습니다.');
+	        }
+	    });
+	}
+	function deleteDeck(deckId) {
+	    $.ajax({
+	        url: '${path}/deckMakers/deleteDeck',
+	        type: 'POST',
+	        contentType: 'application/json',
+	        data: JSON.stringify({ deck_id: deckId }),
+	        dataType: 'json',
+	        success: function(data) {
+	            if (data.dSuccess) {
+	                alert('삭제되었습니다.');
+	                location.href='${path}/deckMakers/yugiohDeckListMain';
+	            } else {
+	                alert('삭제 중 오류가 발생했습니다.');
+	            }
+	        },
+	        error: function(xhr, status, error) {
+	            console.error('Fetch error:', error);
+	            alert('삭제 중 오류가 발생했습니다.');
 	        }
 	    });
 	}
@@ -111,7 +139,7 @@
 	    console.log('Fetching details for cardId:', cardId);
 
 	    $.ajax({
-	        url: '${path}/deckMakers/getYCardDetails.do',
+	        url: '${path}/deckMakers/getYCardDetails',
 	        type: 'GET',
 	        data: { card_id: cardId },
 	        dataType: 'json',

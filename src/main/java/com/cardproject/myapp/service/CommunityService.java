@@ -102,10 +102,6 @@ public class CommunityService {
 		return communityDao.insertComment(replie);
 	}
 
-	// 댓글 삭제
-	public int deleteReplies(Integer replieId) {
-		return communityDao.deleteReplies(replieId);
-	}
 
 	// 세션으로 닉네임 조회
 	public String selectNicknameById(String userid) {

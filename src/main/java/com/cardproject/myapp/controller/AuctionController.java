@@ -49,21 +49,56 @@ public class AuctionController {
 	@Autowired
 	MyPageService mpService;
 
-	@RequestMapping("/auctionMain.do")
-	public String auctionMain(@RequestParam(value = "sortOption", required = false) String sortOption, Model model,
-			HttpSession session) {
+	@RequestMapping("/auctionMain")
+	public String auctionMain(@RequestParam(defaultValue = "1") int page,
+            				  @RequestParam(defaultValue = "9") int pageSize,
+            				  @RequestParam(value = "sortOption", required = false) String sortOption,
+            				  @RequestParam(required = false) String keyword,
+            				  Model model,HttpSession session) {
 		
 		System.out.println("auctionmain page");
+		//user_id
 		String userId = (String) session.getAttribute("userid");
 		model.addAttribute("userId", userId);
-		if (sortOption == null) {
-			sortOption = "recent";
+		System.out.println("###########################keyword:"+keyword);
+		System.out.println("###########################sortOption:"+sortOption);
+		
+		if(keyword!=null && !keyword.isEmpty() ) { //검색했을 때
+			int totalCount = aucs.getTotalItemCountByKeyword(keyword);
+			System.out.println("###########################keywordFortotalCount:"+totalCount);
+			
+			
+			List<ItemDetailDTO> itemSearchlist = aucs.selectItemForName(page,pageSize,keyword,sortOption);
+			System.out.println("###########################itemSearchlist:"+itemSearchlist.size());
+			if(itemSearchlist.size() == 0) {
+				System.out.println("###############타나?");
+				String itemNull = "Not";
+				model.addAttribute("itemNull",itemNull);
+			}
+			model.addAttribute("itemDlist", itemSearchlist);
+			model.addAttribute("keyword",keyword);
+			model.addAttribute("sortOption",sortOption);
+			model.addAttribute("currentPage", page);
+		    model.addAttribute("totalCount", totalCount);
+		    model.addAttribute("pageSize", pageSize);
 		}
-		System.out.println("auctionmain page with sortOption: " + sortOption);
-		List<ItemDetailDTO> itemDlist = aucs.getSortedItemList(sortOption);
-		model.addAttribute("selectedSortOption", sortOption);
-		model.addAttribute("itemDlist", itemDlist);
-
+		
+		else {//기본
+			int totalCount = aucs.getTotalItemCount();
+			System.out.println("###########################totalCount:"+totalCount);
+			
+			if (sortOption == null) {
+				sortOption = "recent";
+			}
+			
+			List<ItemDetailDTO> itemDlist = aucs.getSortedItemList(page, pageSize,sortOption);
+			model.addAttribute("sortOption", sortOption);
+			model.addAttribute("itemDlist", itemDlist);
+			model.addAttribute("currentPage", page);
+		    model.addAttribute("totalCount", totalCount);
+		    model.addAttribute("pageSize", pageSize);
+		}
+		//head user
 		String userid = (String) session.getAttribute("userid");
 
 		if (userid != null) {
@@ -74,17 +109,19 @@ public class AuctionController {
 		}
 		return "auction/auctionMain";
 	}
-//	@PostMapping("/auctionMainSearch.do")
-//	public String auctionMainSearch() {
-//		
-//	}
+	
 	@GetMapping("/auctionDetail.do")
 	public void auctionDetail(Model model, @RequestParam("item_id") Integer item_id, HttpSession session) {
 		String userId = (String) session.getAttribute("userid");
 		boolean isBidHas = aucs.isBidding(userId,item_id);
 		model.addAttribute("isBidHas",isBidHas);
-		int price =aucs.myBidPrice(userId, item_id);
-		model.addAttribute("price",price);
+
+		Integer price = aucs.myBidPrice(userId, item_id);
+		if(price != null) {
+			model.addAttribute("price",price);
+		}else {
+			model.addAttribute("price", null);
+		}
 		System.out.println(session.getAttribute("userid"));
 		System.out.println("auctionDetail page");
 		System.out.println(item_id);
@@ -97,15 +134,16 @@ public class AuctionController {
 	@GetMapping("/auctionInsert.do")
 	public void auctionInsert(Model model) {
 		System.out.println("auctionInsert page");
-		//keyword를 post로 받고 .. 해야하네?
-		//model.addAttribute("pSelectlist",aucs.selectPRight(cardKeyword));
-		model.addAttribute("plist", aucs.selectPCard());
+		
 
 	}
-	@GetMapping("/searchPokemon")
+	@RequestMapping(value = "/searchPokemon", produces="application/json")
 	@ResponseBody
 	public List<PokemonDTO> searchPokemon(Model model, String cardKeyword){
 		//model.addAttribute("pSelectlist",aucs.selectPRight(cardKeyword));
+		System.out.println(aucs.selectPRight(cardKeyword));
+		List<PokemonDTO> plist = aucs.selectPRight(cardKeyword);
+		System.out.println(plist);
 		return aucs.selectPRight(cardKeyword);
 	}
 
@@ -219,5 +257,23 @@ public class AuctionController {
 		     return ResponseEntity.ok("not liked");
 		 }
 
-}
+	}
+	//연결만
+	@RequestMapping("/auctionDMain.do")
+	public String auctionDMain() {
+		return "auction/auctionDMain";
+	}
+	@RequestMapping("/auctionYMain.do")
+	public String auctionYMain() {
+		return "auction/auctionYMain";
+	}
+	@RequestMapping("/auctionSMain.do")
+	public String auctionSMain() {
+		return "auction/auctionSMain";
+	}
+	@RequestMapping("/auctionOMain.do")
+	public String auctionOMain() {
+		return "auction/auctionOMain";
+	}
+	
 }

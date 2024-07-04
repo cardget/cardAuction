@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>카드득 신규 가입 페이지</title>
 <c:set var="path" value="${pageContext.servletContext.contextPath}"/>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Apple+SD+Gothic+Neo&display=swap">
+
 <link rel="stylesheet" href="${path}/resources/css/signUp.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -24,27 +24,49 @@
 	    <h5 style="position: absolute; left: 435px; top: 25px; margin: 0;">회원 가입</h5>
 	</div>
 	
+	<!-- 약관 모달창 -->	
+	<div id="clauseModal" class="modal">
+	    <div class="modal-content">
+	        <span class="close-btn" onclick="closeModal()">&times;</span>
+	        <h2 id="modalTitle">약관</h2>
+	        <hr style="border: 1px solid blue; margin-bottom: 25px;">
+	        <div id="clauseText" class="modal-text"></div>
+	        <hr style="border: 1px solid blue; margin-bottom: 25px;">
+	        <div>
+	            <input type="checkbox" id="modalCheckbox" onclick="syncCheckbox(this)"> 동의
+	        </div>
+	    </div>
+	</div>
+	
     <div class="container">
         <h4>약관 동의</h4>
         <div class="agree-container">
+        	
 		    <label>
 		        <input type="checkbox" id="agreeAll" name="allAgree" onclick="toggleAll()"> <strong>필수 약관 전체 동의</strong>
 		    </label>
 		    <hr>
 		    <label style="display: block; margin-top:20px; margin-bottom: 13px;">
-		        <input type="checkbox" name="termsAgree" id="agree1" class="agree"> <span style="color: blue;">[필수]</span> 이용약관  <a href="#" style="text-align: right;">보기</a>
+		        <input type="checkbox" name="termsAgree" id="agree1" class="agree"> 
+		        <span style="color: blue;">[필수]</span> <span id="termsText">이용약관</span>  
+		        <a href="javascript:void(0)" onclick="openClausePopup('terms', 'agree1', 'termsText')">보기</a>
 		    </label>
 		    <label style="display: block; margin-bottom: 13px;">
-		        <input type="checkbox" name="privacyAgree" id="agree2" class="agree"> <span style="color: blue;">[필수]</span> 개인정보 수집 및 이용안내  <a href="#">보기</a>
+		        <input type="checkbox" name="privacyAgree" id="agree2" class="agree"> 
+		        <span style="color: blue;">[필수]</span> <span id="privacyText">개인정보 수집 및 이용안내</span>  
+		        <a href="javascript:void(0)" onclick="openClausePopup('privacy', 'agree2', 'privacyText')">보기</a>
 		    </label>
 		    <label style="display: block; margin-bottom: 13px;">
-		        <input type="checkbox" name="usageAgree" id="agree3" class="agree"> <span style="color: blue;">[필수]</span> 개인정보 활용 동의  <a href="#">보기</a>
+		        <input type="checkbox" name="usageAgree" id="agree3" class="agree"> 
+		        <span style="color: blue;">[필수]</span> <span id="usageText">개인정보 활용 동의</span>  
+		        <a href="javascript:void(0)" onclick="openClausePopup('usage', 'agree3', 'usageText')">보기</a>
 		    </label>
 		</div>
+		
 
         <h4>회원정보 입력</h4>
         <hr style="border: 1px solid blue; margin-bottom: 25px;">
-        <form action="${path}/auth/insertSignUp.do" class="custom-form" onsubmit="return validatePasswords()" method="post" enctype="multipart/form-data">
+        <form action="${path}/auth/insertSignUp.do" class="custom-form" onsubmit="return checkPasswordMatch()" method="post" enctype="multipart/form-data">
 		    <div class="form-group">
 		        <label for="user_name" class="input-label">이름</label>
 		        <input type="text" id="user_name" name="user_name" required class="input-field" required>
@@ -57,7 +79,7 @@
 		            <button type="button" class="check-button" onclick="sendCode()">인증번호 발송</button>
 		            <input type="text" id="verificationCode" class="input-field" style="margin-left: 190px;" placeholder="인증번호 입력">
 		            <button type="button" class="check-button" onclick="verifyCode()">확인</button>  
-		            <p id="result"></p>            
+		            <p id="P_result"></p>            
 		        </div>                
 		    </div>          
 		    <hr class="form-divider">      
@@ -100,11 +122,13 @@
 		            <option value="nate.com">nate.com</option>
 		        </select>
 		        <button type="button" id="mail-Check-Btn" class="check-button" onclick="sendVerificationEmail()" style="margin-left: 10px;">인증번호 발송</button>
+			    <input type="text" id="verificationCodeEmail" class="input-field" style="margin-left: 190px;" placeholder="인증번호 입력">
+			    <button type="button" class="check-button" onclick="verifyCodeEmail()">확인</button>   
+			    <p id="E_result"></p>	    
 		    </div>
 		    <!-- 이메일을 결합하여 숨겨진 필드에 저장 -->
-            <input type="hidden" id="email" name="email">            
-            <input type="text" id="verificationCodeEmail" class="input-field" style="margin-left: 190px;" placeholder="인증번호 입력">
-		    <button type="button" class="check-button" onclick="verifyCodeEmail()">확인</button>   
+            <input type="hidden" id="email" name="email" required>            
+            
 		    
 		    <hr class="form-divider"> 
 		    <div class="form-group address-group">
@@ -124,7 +148,7 @@
 			    <div class="profile-image-container">
 			        <img id="profile-image" src="${path}/resources/image/profile.png" alt="Profile Image" onclick="document.getElementById('profile_image').click()">
 			    </div>
-			    <input type="file" id="profile_image_id" name="profile_image_name" onchange="previewImage(this, '${path}')" accept="image/*" class="input-field" style="margin-left:10px;" multiple required>
+			    <input type="file" id="profile_image_id" name="profile_image_name" onchange="previewImage(this, '${path}')" accept="image/*" class="input-field" style="margin-left:10px;" multiple>
 			    <button type="button" onclick="resetProfileImage('profile-image', '${path}')" class="check-button">삭제</button>
 			</div>
 		    <hr class="form-divider">

@@ -8,8 +8,6 @@
 <c:set var="path" value="${pageContext.servletContext.contextPath }" />
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css2?family=Apple+SD+Gothic+Neo&display=swap">
 <title>카드득</title>
 <link rel="stylesheet" href="${path }/resources/css/main.css" />
 <link rel="icon" href="${path }/resources/icon/favicon.ico"
@@ -125,7 +123,7 @@
         var cardName = $('#card-search-box').val();
 	
 	    $.ajax({
-	        url: "/myapp/deckMakers/loadMoreYCard.do",
+	        url: "/myapp/deckMakers/loadMoreYCard",
 	        type: "GET",
 	        data: {
 	        	card_attr: cardAttr,
@@ -165,7 +163,7 @@
     	});
     	console.log(arr);
     	$.ajax({
-    		url:"${path}/deckMakers/insertDeck.do",
+    		url:"${path}/deckMakers/insertDeck",
     		type:"post",
     		data:{kind:"Y",deckTitle:$("#deckTitle").val(),
     			commentBox:$("#commentBox").val(),
@@ -173,7 +171,7 @@
     		},
     		success: function(response) {
     			alert("등록에 성공했습니다!")
-                window.location.href = "${path}/deckMakers/yugiohDeckListMain.do";
+                window.location.href = "${path}/deckMakers/yugiohDeckListMain";
             },
             error: function(xhr, status, error) {
                 console.error("Error:", error);
@@ -200,7 +198,7 @@
 		    currentPageY++;
 		    console.log(currentPageY);
 		    $.ajax({
-		        url: "/myapp/deckMakers/loadMoreYCard.do?page=" + currentPageY,
+		        url: "/myapp/deckMakers/loadMoreYCard?page=" + currentPageY,
 		        type: "GET",
 		        data: {
 		        	card_attr: cardAttr,
