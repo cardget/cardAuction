@@ -38,7 +38,7 @@ import kotlin.internal.RequireKotlin;
 @RequestMapping("/deckMakers")
 public class DeckMakerController {
 
-	@GetMapping("/pokemonDeckListMain.do")
+	@GetMapping("/pokemonDeckListMain")
 	public String getPDecks(Model model, @RequestParam(defaultValue = "1") int page,
 			@RequestParam(defaultValue = "9") int pageSize,
 			@RequestParam(value = "sort", required = false, defaultValue = "create_date") String sort,
@@ -61,7 +61,7 @@ public class DeckMakerController {
 		return "deckMakers/pokemonDeckListMain";
 	}
 
-	@GetMapping("/yugiohDeckListMain.do")
+	@GetMapping("/yugiohDeckListMain")
 	public String getYDecks(Model model, @RequestParam(defaultValue = "1") int page,
 			@RequestParam(defaultValue = "9") int pageSize,
 			@RequestParam(value = "sort", required = false, defaultValue = "create_date") String sort,
@@ -84,7 +84,7 @@ public class DeckMakerController {
 		return "deckMakers/yugiohDeckListMain";
 	}
 
-	@GetMapping("/digimonDeckListMain.do")
+	@GetMapping("/digimonDeckListMain")
 	public String getDDecks(Model model, @RequestParam(defaultValue = "1") int page,
 			@RequestParam(defaultValue = "9") int pageSize,
 			@RequestParam(value = "sort", required = false, defaultValue = "create_date") String sort,
@@ -107,7 +107,7 @@ public class DeckMakerController {
 		return "deckMakers/digimonDeckListMain";
 	}
 
-	@GetMapping("/onepieceDeckListMain.do")
+	@GetMapping("/onepieceDeckListMain")
 	public String getODecks(Model model, @RequestParam(defaultValue = "1") int page,
 			@RequestParam(defaultValue = "9") int pageSize,
 			@RequestParam(value = "sort", required = false, defaultValue = "create_date") String sort,
@@ -138,7 +138,7 @@ public class DeckMakerController {
 	MyPageService mpService;
 
 	// 포켓몬카드 -------------------------------------------------------------------
-	@RequestMapping("/pokemonDeckMaker.do")
+	@RequestMapping("/pokemonDeckMaker")
 	public void pokemonDeckMaker(Model model, @RequestParam(defaultValue = "1") int page,
 			@RequestParam(value = "card_type", required = false, defaultValue = "t") String cardType,
 			@RequestParam(value = "card_sort", required = false, defaultValue = "s") String cardSort,
@@ -179,7 +179,7 @@ public class DeckMakerController {
 	}
 
 	// 유희왕카드 -------------------------------------------------------------------
-	@RequestMapping("/yugiohDeckMaker.do")
+	@RequestMapping("/yugiohDeckMaker")
 	public void yugiohDeckMaker(Model model, @RequestParam(defaultValue = "1") int page,
 			@RequestParam(value = "card_attr", required = false, defaultValue = "a") String cardAttr,
 			@RequestParam(value = "card_sort", required = false, defaultValue = "s") String cardSort,
@@ -219,7 +219,7 @@ public class DeckMakerController {
 	}
 
 	// 디지몬카드 -------------------------------------------------------------------
-	@RequestMapping("/digimonDeckMaker.do")
+	@RequestMapping("/digimonDeckMaker")
 	public void digimonDeckMaker(Model model, @RequestParam(defaultValue = "1") int page,
 			@RequestParam(value = "card_attr", required = false, defaultValue = "a") String cardAttr,
 			@RequestParam(value = "card_sort", required = false, defaultValue = "s") String cardSort,
@@ -259,7 +259,7 @@ public class DeckMakerController {
 	}
 
 	// 원피스카드 -------------------------------------------------------------------
-	@RequestMapping("/onepieceDeckMaker.do")
+	@RequestMapping("/onepieceDeckMaker")
 	public void onepieceDeckMaker(Model model, @RequestParam(defaultValue = "1") int page,
 			@RequestParam(value = "card_attr", required = false, defaultValue = "a") String cardAttr,
 			@RequestParam(value = "card_sort", required = false, defaultValue = "s") String cardSort,
