@@ -19,20 +19,20 @@
 	<div class="container">
         <form class="custom-form" method="post" action="editProfile.do" enctype="multipart/form-data">
         	<div class="form-group">
-                <label for="profileImage" class="input-label">프로필 이미지</label>
-                <div class="profile-image-container">
-                	<c:choose>
+			    <label for="profile_image" class="input-label">프로필 이미지</label>
+			    <div class="profile-image-container">
+			    	<c:choose>
 						<c:when test="${empty user.profile_image}">
-							<img id="profile-image" src="${path}/resources/images/기본 이미지.png" alt="Profile Default">
+							<img id="profile-image" src="${path}/resources/image/profile.png" alt="Profile Image" onclick="document.getElementById('profile_image').click()">
 						</c:when>
 						<c:otherwise>
-							<img id="profile-image" src="${user.profile_image}" alt="프로필이미지">
+							<img id="profile-image" src="${user.profile_image}" alt="프로필이미지" onclick="document.getElementById('profile_image').click()">
 						</c:otherwise>
 					</c:choose>
-                </div>
-                <input type="file" id="profile_image" name="profile_image_name" onchange="previewImage(this, '${path}')" accept="image/*" class="input-field" style="margin-left:10px;" multiple>
-			    <button type="button" onclick="resetProfileImage('${path}')" class="check-button">삭제</button>
-            </div>
+			    </div>
+			    <input type="file" id="profile_image_id" name="profile_image_name" onchange="previewImage(this, '${path}')" accept="image/*" class="input-field" style="margin-left:10px;" multiple>
+			    <button type="button" onclick="resetProfileImage('profile-image', '${path}')" class="check-button">삭제</button>
+			</div>
             <hr class="form-divider">
             <div class="form-group">
 		        <label for="nickname" class="input-label">닉네임</label>
@@ -68,7 +68,7 @@
 			</div>
 			<hr class="form-divider">
 			<div class="form-group">
-                <label for="bank" class="input-label">은행</label>
+                <label for="bank" class="input-label">계좌</label>
                 <input type="hidden" id="bank" name="backHidden" value="${user.bank}" class="email-input-field" required>
                 <select class="email-select" name="bank" size="1">
 		            <option value="신한" ${user.bank eq '신한' ? 'selected' : ''}>신한</option>

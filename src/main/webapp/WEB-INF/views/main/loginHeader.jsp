@@ -23,13 +23,13 @@
 			<ul class="category-box">
 				<li class="category-item">
 					<c:choose>
-						<c:when test="${user.is_admin eq 1}">
+						<c:when test="${is_admin eq 1}">
 							<a href="/myapp/admin/adminMain.do"> 
 								<img src="${path }/resources/icon/user.png" class="icon">${nickname}님
 							</a>
 						</c:when>
 						<c:otherwise>
-							<a href="/myapp/mypage/"> 
+							<a href="/myapp/mypage/myInfo.do"> 
 								<img src="${path }/resources/icon/user.png" class="icon">${nickname}님
 							</a>
 						</c:otherwise>

@@ -47,6 +47,11 @@ public class MyPageDAO{
 		return sqlSession.selectList(namespace + ".selectAllBids", userid);
 	}
 	
+	// 입찰내역 삭제
+	public int deleteAllBids(String userid) {
+		return sqlSession.delete(namespace + ".deleteAllBids", userid);
+	}
+	
 	// 낙찰내역
 	public List<TradeDTO> selectAllTrades(String userid) {
 		return sqlSession.selectList(namespace + ".selectAllTrades", userid);

@@ -42,6 +42,11 @@ public class MyPageService {
  		return myPageDAO.selectAllBids(userid);
  	}
  	
+ // 입찰내역 삭제
+ 	public int deleteAllBids(String userid) {
+ 		return myPageDAO.deleteAllBids(userid);
+ 	}
+ 	
  	// 판매내역
  	public List<ItemDTO> selectAllSales(String userid) {
  		return myPageDAO.selectAllSales(userid);

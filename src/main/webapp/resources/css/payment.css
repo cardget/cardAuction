@@ -1,7 +1,11 @@
 @charset "UTF-8";
 body {
-	font-family: 'Apple SD Gothic Neo', sans-serif;
 	background-color: #F9FBFC;
+	font-family: "Pretendard Variable", Pretendard, -apple-system,
+		BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
+		"Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic",
+		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+	color: #2C2C2C;
 }
 
 .container {
@@ -12,6 +16,12 @@ body {
 	padding: 30px;
 	border-radius: 10px;
 	margin: 5% 35%;
+}
+
+hr {
+	background:#e1e6ec;
+    height:1px;
+    border:0
 }
 
 .payment-header {

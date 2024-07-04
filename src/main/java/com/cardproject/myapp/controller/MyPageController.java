@@ -43,8 +43,8 @@ public class MyPageController {
 	HttpSession session;
 
 	// 내 정보 조회
-	@GetMapping("/")
-	public String myPage(Model model) {
+	@GetMapping("/myInfo.do")
+	public String myInfo(Model model) {
 		String userid = (String) session.getAttribute("userid");
 		if (userid == null) {
 			return "redirect:../auth/login.do";
@@ -55,17 +55,6 @@ public class MyPageController {
 
 		model.addAttribute("user", user);
 		model.addAttribute("nlist", nlist);
-
-		return "mypage/myPage";
-	}
-
-	// 내 정보 조회
-	@GetMapping("/myInfo.do")
-	public String myInfo(Model model) {
-		String userid = (String) session.getAttribute("userid");
-
-		UserDTO user = mpService.selectUserById(userid);
-		model.addAttribute("user", user);
 		return "mypage/myInfo";
 	}
 
@@ -93,7 +82,7 @@ public class MyPageController {
 			@RequestParam("address") String address,
 			@RequestParam("detailAddress") String addressDetail, 
 			@RequestParam("zipCode") String zipCode, 
-			@RequestParam("backHidden") String bank,
+			@RequestParam("bank") String bank,
 			@RequestParam("accnt") String accnt, 
 			@SessionAttribute("userid") String userid, 
 			Model model, RedirectAttributes redirectAttributes) {
@@ -102,7 +91,7 @@ public class MyPageController {
 		String fullEmail = email + "@" + domain;
 		int i_email_agreement = Integer.parseInt(email_agreement);
 		
-		if(file!=null&& !file.isEmpty()) {
+		if(file!=null && !file.isEmpty()) {
 			String originalFileName = file.getOriginalFilename();
 			
 			String rawFileName = originalFileName.substring(0,originalFileName.lastIndexOf(".")); // 이름
@@ -115,11 +104,9 @@ public class MyPageController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				model.addAttribute("error","이미지 업로드 중 오류가 발생했습니다.");
-				return "redirect:signUp.do";
+				return "redirect:editProfile.do";
 			}    		
-    	}else {
-    		user.setProfile_image(null);
-    	}   
+    	}  
 		
 		user.setNickname(nickname);
 		user.setEmail(fullEmail);
@@ -133,7 +120,7 @@ public class MyPageController {
 		mpService.userUpdate(user);
 		redirectAttributes.addFlashAttribute("message", "회원정보가 성공적으로 수정되었습니다.");
 
-		return "redirect:/mypage/";
+		return "redirect:myInfo.do";
 	}
 
 	// 입찰내역 조회
@@ -145,7 +132,10 @@ public class MyPageController {
 		}
 
 		UserDTO user = mpService.selectUserById(userid);
+		List<NotificationDTO> nlist = mpService.selectFiveNotifications(userid);
+
 		model.addAttribute("user", user);
+		model.addAttribute("nlist", nlist);
 
 		List<BiddingResultDTO> bids = mpService.selectAllBids(userid);
 		model.addAttribute("bids", bids);
@@ -156,6 +146,18 @@ public class MyPageController {
 
 		return "mypage/myBid";
 	}
+	
+	@GetMapping("/deleteBids.do")
+	public String deleteBid(Model model) {
+		String userid = (String) session.getAttribute("userid");
+		if (userid == null) {
+			return "redirect:../auth/login.do";
+		}
+
+		mpService.deleteAllBids(userid);
+		
+		return "redirect:myBid.do";
+	}
 
 	// 낙찰내역 조회
 	@GetMapping("/myTrade.do")
@@ -165,6 +167,12 @@ public class MyPageController {
 			return "redirect:../auth/login.do";
 		}
 
+		UserDTO user = mpService.selectUserById(userid);
+		List<NotificationDTO> nlist = mpService.selectFiveNotifications(userid);
+
+		model.addAttribute("user", user);
+		model.addAttribute("nlist", nlist);
+		
 		List<TradeDTO> tlist = mpService.selectAllTrades(userid);
 		for(TradeDTO trade: tlist) {
 			System.out.println(trade);
@@ -185,6 +193,9 @@ public class MyPageController {
 		UserDTO user = mpService.selectUserById(userid);
 		model.addAttribute("user", user);
 
+		List<NotificationDTO> nlist = mpService.selectFiveNotifications(userid);
+		model.addAttribute("nlist", nlist);
+		
 		List<ItemDTO> sales = mpService.selectAllSales(userid);
 		model.addAttribute("sales", sales);
 
@@ -204,6 +215,9 @@ public class MyPageController {
 
 		UserDTO user = mpService.selectUserById(userid);
 		model.addAttribute("user", user);
+		
+		List<NotificationDTO> nlist = mpService.selectFiveNotifications(userid);
+		model.addAttribute("nlist", nlist);
 
 		List<ItemDTO> interests = mpService.selectAllLikes(userid);
 		model.addAttribute("interests", interests);
@@ -240,6 +254,9 @@ public class MyPageController {
 
 		UserDTO user = mpService.selectUserById(userid);
 		model.addAttribute("user", user);
+		
+		List<NotificationDTO> nlist = mpService.selectFiveNotifications(userid);
+		model.addAttribute("nlist", nlist);
 
 		List<PointDTO> points = mpService.selectPointByUser(userid);
 		int total = mpService.selectTotalPointByUser(userid);
@@ -270,6 +287,10 @@ public class MyPageController {
 		List<DeliveryDTO> dlist = mpService.selectAllDeliveries(userid);
 		model.addAttribute("user", user);
 		model.addAttribute("dlist", dlist);
+		
+		List<NotificationDTO> nlist = mpService.selectFiveNotifications(userid);
+		model.addAttribute("nlist", nlist);
+		
 		return "mypage/myDelivery";
 	}
 
