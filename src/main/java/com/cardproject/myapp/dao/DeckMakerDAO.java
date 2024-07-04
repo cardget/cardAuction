@@ -132,6 +132,13 @@ public class DeckMakerDAO {
         return sqlSession.update(namespace + ".recommend", deckId);
     }
     
+    public int deleteSource(int deckId) {
+        return sqlSession.delete(namespace + ".deleteSource", deckId);
+    }
+    public int deleteDeck(int deckId) {
+        return sqlSession.delete(namespace + ".deleteDeck", deckId);
+    }
+    
     public PokemonDTO getPCardDetailsById(String cardId) {
         return sqlSession.selectOne(namespace + ".getPCardDetailsById", cardId);
     }

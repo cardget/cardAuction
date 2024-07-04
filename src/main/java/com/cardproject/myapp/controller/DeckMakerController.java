@@ -395,6 +395,19 @@ public class DeckMakerController {
 		response.put("success", success);
 		return response;
 	}
+	// 삭제(공통)
+		@PostMapping(value = "/deleteDeck.do", produces = "application/json")
+		@ResponseBody
+		public Map<String, Object> deleteDeck(@RequestBody Map<String, Integer> requestData) {
+			int deckId = requestData.get("deck_id");
+			System.out.println("삭제할 deck_id: " + deckId);
+			boolean sSuccess = deckMakerService.deleteSource(deckId);
+		    boolean dSuccess = deckMakerService.deleteDeck(deckId);
+		    Map<String, Object> response = new HashMap<>();
+		    response.put("sourceSuccess", sSuccess);
+		    response.put("dSuccess", dSuccess);
+		    return response;
+		}
 
 	// 카드변경 포켓몬
 	@GetMapping("/getPCardDetails.do")
