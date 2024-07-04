@@ -47,7 +47,7 @@
                 </div>
                 <div class="col">
                     <select class="form-select categoryType" id="category" name="cat">
-                        <option value="none" selected>카테고리 ( 선택 )</option>
+                        <option value="none" selected>카테고리 ( 필수 )</option>
                         <option value="1">포켓몬</option>
                         <option value="2">유희왕</option>
                         <option value="3">디지몬</option>
@@ -61,7 +61,7 @@
                 </div>
             </div>
             <div class="mb-3 mt-3">
-                <div class="form-control comment-div" id="comment" contenteditable="true"></div>
+                <div class="form-control comment-div" id="comment" contenteditable="true" style="overflow-y: hidden;"></div>
             </div>
         </form>
     </div>

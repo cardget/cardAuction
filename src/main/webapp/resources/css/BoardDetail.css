@@ -1,28 +1,29 @@
-.body{
+.body {
 	font-family: 'Apple SD Gothic Neo', sans-serif;
 }
 
 .right-aligned-button {
-    display: flex;
-    justify-content: flex-end;
+	display: flex;
+	justify-content: flex-end;
 }
 
 .comment-textarea {
-    height: calc(100vh - 300px); /* 화면의 높이에서 다른 요소의 높이를 뺀 값 */
+	height: calc(100vh - 300px); /* 화면의 높이에서 다른 요소의 높이를 뺀 값 */
 }
 
 .comment-image {
-    width: 50px; /* 이미지 너비 설정 */
-    height: 50px; /* 이미지 높이 설정 */
-    object-fit: cover; /* 이미지가 박스에 맞게 잘림 */
-    border-radius: 50%; /* 원형으로 만들기 */
-    margin-right: 10px; /* 이미지와 텍스트 사이 여백 */
+	width: 50px; /* 이미지 너비 설정 */
+	height: 50px; /* 이미지 높이 설정 */
+	object-fit: cover; /* 이미지가 박스에 맞게 잘림 */
+	border-radius: 50%; /* 원형으로 만들기 */
+	margin-right: 10px; /* 이미지와 텍스트 사이 여백 */
 }
 
 .custom-container {
-    width: 60%; /* 가로 비율을 줄임 */
-    margin: 0 auto; /* 가운데 정렬 */
+	width: 60%; /* 가로 비율을 줄임 */
+	margin: 0 auto; /* 가운데 정렬 */
 }
+
 .topimage {
 	width: 100%;
 	height: 283px;
@@ -30,177 +31,201 @@
 	left: 0;
 	background-image: url('../images/default/pokemon_banner.png');
 }
+
 .form-inline {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px; /* 요소 사이의 간격 */
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px; /* 요소 사이의 간격 */
 }
 
 .form-inline .form-control {
-    flex: 1;
-    min-width: 150px; /* 최소 너비 설정 */
-    border: none;
-    border-bottom: #C7C8C9 1px solid;
-    border-radius: 0;
-    color: #666666; /* 회색으로 설정 */
+	flex: 1;
+	min-width: 150px; /* 최소 너비 설정 */
+	border: none;
+	border-bottom: #C7C8C9 1px solid;
+	border-radius: 0;
+	color: #666666; /* 회색으로 설정 */
 }
 
 .boardType {
-    border: none;
-    border-bottom: #C7C8C9 1px solid;
-    border-radius: 0;
-    max-width: 150px; /* 선택 박스의 최대 너비를 설정 */
-    color: #666666; /* 회색으로 설정 */
+	border: none;
+	border-bottom: #C7C8C9 1px solid;
+	border-radius: 0;
+	max-width: 150px; /* 선택 박스의 최대 너비를 설정 */
+	color: #666666; /* 회색으로 설정 */
 }
 
 #ImageLogoContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-end;
 }
 
 #ImageLogoContainer img {
-    max-width: 100%;
-    max-height: 200px;
-    margin-top: 10px;
+	max-width: 100%;
+	max-height: 200px;
+	margin-top: 10px;
 }
 
-
 h1 {
-    font-size: 1.5rem; /* 제목 글씨 크기를 조정 */
+	font-size: 1.5rem; /* 제목 글씨 크기를 조정 */
 }
 
 h2 {
-    font-size: 1.2rem; /* 작성자 글씨 크기를 조정 */
+	font-size: 1.2rem; /* 작성자 글씨 크기를 조정 */
 }
 
 p {
-    font-size: 0.9rem; /* 일반 텍스트 글씨 크기를 조정 */
+	font-size: 0.9rem; /* 일반 텍스트 글씨 크기를 조정 */
 }
 
 .d-line {
-    font-size: 0.6rem;
+	font-size: 0.6rem;
 }
 
 .card-title {
-    margin: 0; /* 댓글 작성자 글씨 margin 제거 */
-    font-size: 1rem; /* 댓글 작성자 글씨 크기를 조정 */
+	margin: 0; /* 댓글 작성자 글씨 margin 제거 */
+	font-size: 1rem; /* 댓글 작성자 글씨 크기를 조정 */
 }
 
 .card-text {
-    margin: 0; /* 댓글 텍스트 margin 제거 */
-    font-size: 0.9rem; /* 댓글 텍스트 글씨 크기를 조정 */
+	margin: 0; /* 댓글 텍스트 margin 제거 */
+	font-size: 0.9rem; /* 댓글 텍스트 글씨 크기를 조정 */
 }
 
 .text-muted {
-    margin: 0; /* 작성일 margin 제거 */
-    font-size: 0.8rem; /* 작성일 글씨 크기를 조정 */
-}
-
-.metadata {
-    font-size: 0.8rem; /* 작성일과 조회수 글씨 크기를 조정 */
+	margin: 0; /* 작성일 margin 제거 */
+	font-size: 0.8rem; /* 작성일 글씨 크기를 조정 */
 }
 
 .dropdown-toggle::after {
-    content: none;
+	content: none;
 }
 
 .dropdown-toggle {
-    border: none;
-    font-size: 24px;
-    padding: 0;
-    margin: 0;
+	border: none;
+	font-size: 24px;
+	padding: 0;
+	margin: 0;
 }
 
 .dropdown-menu {
-    min-width: auto;
+	min-width: auto;
 }
 
 #RecommendUp {
-    height: 30px;
-    width: 30px; 
+	height: 30px;
+	width: 30px;
 }
-.ImageLogo{
-	margin-top:7px;
+
+.ImageLogo {
+	margin-top: 7px;
 	height: 20px;
-	margin-right:5px;
+	margin-right: 5px;
 }
 
 #ImageLogo1 {
-    height: 40px;
-    width: 40px;
-    border-radius: 50%; /* 이미지를 원형으로 */
-    object-fit: cover; /* 이미지를 원 안에 꽉 차도록 조절*/
-    margin-right: 5px;
+	height: 40px;
+	width: 40px;
+	border-radius: 50%; /* 이미지를 원형으로 */
+	object-fit: cover; /* 이미지를 원 안에 꽉 차도록 조절*/
+	margin-right: 5px;
 }
 
-
 .d-inline {
-    margin-top: 5px;
-    font-size: 0.8rem;
+	margin-top: 5px;
+	font-size: 0.8rem;
 }
 
 .mb-0 {
-    margin-top: 6px;
+	margin-top: 6px;
 }
 
 .card-body {
-    padding: 10px;
+	padding: 10px;
+	border: none;
 }
 
-.form-control{
-	border:none;
+.form-control {
+	border: none;
 }
 
 .comment-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-left: 20px;
-    margin-top: 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-left: 20px;
+	margin-top: 20px;
 }
 
-#comment-box{
-	border:none;
-	border-radius:0;
+#comment-box {
+	border: none;
+	border-radius: 0;
 }
 
-.comment-type{
-	margin-top:0px;
-	margin-right:5px;
+.comment-type {
+	margin-top: 0px;
+	margin-right: 5px;
 }
 
-.mt-2{
-	margin-right:5px;
-	margin-bottom:5px;
+.mt-2 {
+	margin-right: 5px;
+	margin-bottom: 5px;
 }
 
-#writer{
-	margin-top:3px;
+#writer {
+	margin-top: 3px;
 }
-#comment-writer{
-	margin-top:10px;
-	margin-left:-5px;
+
+#comment-writer {
+	margin-top: 10px;
+	margin-left: -5px;
 }
 
 .btn-primary-custom {
-    border: 1px solid #007bff; 
-    background-color: #ffffff; 
-    color: #007bff;
+	border: 1px solid #007bff;
+	background-color: #ffffff;
+	color: #007bff;
 }
 
 #uploadedImg {
-	height:400px;
-	width:300px;
+	height: 400px;
+	width: 300px;
+}
+
+.detailContent {
+	min-height: 400px;
 }
 
 .comment-card {
-    position: relative;
+	position: relative;
 }
 
 .delete-comment {
-    position: absolute;
-    top: 10px; /* 상단으로부터의 거리 */
-    right: 10px; /* 오른쪽으로부터의 거리 */
-    font-size: 12px; /* 폰트 크기 */
+	position: absolute;
+	top: 10px; /* 상단으로부터의 거리 */
+	right: 10px; /* 오른쪽으로부터의 거리 */
+	font-size: 12px; /* 폰트 크기 */
+}
+
+.card-body d-flex {
+	border: none;
+	border-bottom: solid 1px;
+}
+
+.metadata {
+	font-size: 1.1rem;
+}
+
+#commentCount {
+	font-size: 1.1rem;
+}
+
+#recommendCount {
+	font-size: 1.1rem;
+	margin-left: 5px;
+}
+
+.commentCardBorder {
+	border-bottom: solid 1px #dddddd;
 }
