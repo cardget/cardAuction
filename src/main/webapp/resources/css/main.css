@@ -1,15 +1,17 @@
 @charset "utf-8";
 
 body {
-	/*Apple SD 고딕 폰트*/
-	font-family: 'AppleSDGothicNeo', 'Noto Sans KR', sans-serif;
+	/*pretendard 폰트*/
+	font-family: "Pretendard Variable", Pretendard, -apple-system,
+		BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
+		"Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic",
+		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 	margin: 0;
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
-	position:relative;
+	position: relative;
 }
-
 
 button {
 	cursor: pointer;
@@ -29,8 +31,9 @@ button {
 	position: fixed;
 	z-index: 1000;
 }
-.list-top-container{
-    margin-bottom: 245px;
+
+.list-top-container {
+	margin-bottom: 245px;
 }
 
 .top-nav {
@@ -60,7 +63,7 @@ button {
 	gap: 100px;
 	margin: 0;
 	padding: 0;
-	font-weight: 1000;
+	font-weight: 500;
 	font-size: 18px;
 }
 
@@ -86,13 +89,13 @@ button {
 
 .container, .deck-container {
 	display: flex;
-	width:1380px;
-	margin:auto;
+	width: 1380px;
+	margin: auto;
 }
 
 .main-container {
-	width:1380px;
-	margin:190px auto;
+	width: 1380px;
+	margin: 190px auto;
 }
 
 .row-content {
@@ -107,7 +110,7 @@ ul {
 }
 
 .cardType {
-	border-radius:5px;
+	border-radius: 5px;
 	width: 200px;
 	height: 300px;
 	box-shadow: 4px 4px 5px 1px rgba(0, 0, 0, .3);
@@ -123,8 +126,9 @@ ul {
 	height: 274px;
 	width: 100%;
 }
-.header-image > img{
-	width:100%
+
+.header-image>img {
+	width: 100%
 }
 
 /*상단 검색창*/
@@ -252,14 +256,13 @@ select {
 .info-page {
 	background-color: #002E5B;
 	color: #ffffff;
-	width:100wh;
+	width: 100wh;
 	padding: 30px 270px;
 	font-size: 12px;
 	font-family: 'Apaple SD Gothic NeoL', sans-serif;
 	bottom: 0;
-	position:absolute;
+	position: absolute;
 	margin-top
-	
 }
 
 .link-container {
@@ -298,10 +301,10 @@ select {
 }
 
 .sort-container {
-	width:1380px;
+	width: 1380px;
 	margin: auto;
-	margin-top:20px;
-	padding-left:10px;
+	margin-top: 20px;
+	padding-left: 10px;
 	font-size: 14px;
 	font-weight: 300;
 }
@@ -325,7 +328,7 @@ select {
 	justify-content: space-between;
 	margin: 0;
 	padding: 0;
-	font-weight: 500;
+	font-weight: 300;
 }
 
 .sort-select {
@@ -396,54 +399,58 @@ select {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 }
-.deck-container{
+
+.deck-container {
 	display: grid;
-	grid-template-columns: repeat(3, 1fr);	
-	gap:120px;
-	margin-top:30px;
-	width:1380px;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 120px;
+	margin-top: 30px;
+	width: 1380px;
 }
 /*.deckType{
 	margin-bottom:50px;
 }*/
 .deck-overlay-container {
 	position: relative;
-	width:380px;
-	height:250px;
-	border-radius:10px;
+	width: 380px;
+	height: 250px;
+	border-radius: 10px;
 }
 
 .deck-overlay-container .pcard {
 	position: absolute;
-    clip-path: inset(80px 70px 380px 80px);
-    border-radius: 15px;
-    margin-left: -70px;
-    margin-top: -80px;
-    filter: brightness(0.5);
+	clip-path: inset(80px 70px 380px 80px);
+	border-radius: 15px;
+	margin-left: -70px;
+	margin-top: -80px;
+	filter: brightness(0.5);
 }
+
 .deck-overlay-container .ycard {
 	position: absolute;
-    clip-path: inset(80px 20px 245px 20px);
-    border-radius: 15px;
-    margin-left: -10px;
-    margin-top: -80px;
-    filter: brightness(0.5);
+	clip-path: inset(80px 20px 245px 20px);
+	border-radius: 15px;
+	margin-left: -10px;
+	margin-top: -80px;
+	filter: brightness(0.5);
 }
+
 .deck-overlay-container .dcard {
 	position: absolute;
-    clip-path: inset(80px 33px 225px 5px);
-    border-radius: 15px;
-    margin-left: 5px;
-    margin-top: -80px;
-    filter: brightness(0.5);
+	clip-path: inset(80px 33px 225px 5px);
+	border-radius: 15px;
+	margin-left: 5px;
+	margin-top: -80px;
+	filter: brightness(0.5);
 }
+
 .deck-overlay-container .ocard {
 	position: absolute;
-    clip-path: inset(80px 60px 380px 80px);
-    border-radius: 15px;
-    margin-left: -70px;
-    margin-top: -80px;
-    filter: brightness(0.5);
+	clip-path: inset(80px 60px 380px 80px);
+	border-radius: 15px;
+	margin-left: -70px;
+	margin-top: -80px;
+	filter: brightness(0.5);
 }
 
 .overlay-text {
@@ -453,12 +460,12 @@ select {
 	right: 0;
 	bottom: 10px;
 	color: #fff;
-	font-weight: 1000;
+	font-weight: 500;
 	display: flex;
 	justify-content: space-between;
 	flex-direction: column;
 	padding: 10px;
-	cursor:pointer;
+	cursor: pointer;
 	background
 }
 
@@ -483,7 +490,7 @@ select {
 	display: flex;
 	justify-content: center;
 	padding: 20px 0;
-	margin:50px 0;
+	margin: 50px 0;
 }
 
 .pagination a {
@@ -512,7 +519,7 @@ select {
 	display: flex;
 	justify-content: center;
 	margin-top: 80px;
-	margin-bottom:50px;
+	margin-bottom: 50px;
 }
 
 /*덱리스트 상세*/
@@ -585,24 +592,23 @@ select {
 	gap: 7px;
 	padding: 7px;
 }
-#banner{
-	width:1320px;
-	border-radius:10px;
+
+#banner {
+	width: 1320px;
+	border-radius: 10px;
 }
+
 .banner-overlay {
 	position: absolute;
-	margin:auto;
-	width:1280px;
+	margin: auto;
+	width: 1280px;
 	padding: 19px;
 	color: #fff;
-	font-weight: 1000;
-	border-radius:10px;
-	background: linear-gradient(
-      to left,
-      rgba(0, 127, 255, 0) 10%,
-      rgba(0, 127, 255, 0.4) 35%,
-      rgba(0, 127, 255, 1) 70%,
-      rgba(0, 127, 255, 1) 100%);
+	font-weight: 500;
+	border-radius: 10px;
+	background: linear-gradient(to left, rgba(0, 127, 255, 0) 10%,
+		rgba(0, 127, 255, 0.4) 35%, rgba(0, 127, 255, 1) 70%,
+		rgba(0, 127, 255, 1) 100%);
 }
 
 .makerInfo {
@@ -635,8 +641,7 @@ select {
 	background-size: contain;
 	overflow: hidden;
 	padding: 10px;
-	box-sizing: border-box; 
-	::-webkit-scrollbar {
+	box-sizing: border-box; :: -webkit-scrollbar {
 	/*덱리스트 스크롤바 디자인*/ border-radius : 10px;
 	background-color: #949494;
 	width: 13px;
@@ -668,32 +673,41 @@ select {
 	height: 40px;
 	margin-right: 10px;
 }
-.cardList{
+
+.cardList {
 	width: 282px;
-    height: 40px;
+	height: 40px;
 }
 
 .listCard, .card-count {
 	cursor: pointer;
-	:hover{
-	transform: scale(1.1);
-	}
+	:
+	hover
+	{
+	transform
+	:
+	scale(
+	1.1
+	);
 }
 
+}
 .listCard {
 	width: 121px;
 	height: 174px;
 }
-.addCard{
+
+.addCard {
 	max-width: 280px;
 	max-height: 50px;
-	cursor:pointer;
-	margin-bottom:2px;
+	cursor: pointer;
+	margin-bottom: 2px;
 }
-.addCard img{	
+
+.addCard img {
 	max-width: 300px;
-	max-height:initial;	
-	margin-left:-10px;
+	max-height: initial;
+	margin-left: -10px;
 }
 
 /*코멘트박스*/
@@ -701,10 +715,11 @@ select {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	width:1320px;
-	margin:auto;
+	width: 1320px;
+	margin: auto;
 	margin-bottom: 350px;
 }
+
 .detail-comment {
 	display: flex;
 	flex-direction: column;
@@ -713,7 +728,7 @@ select {
 
 .builder-comment {
 	margin-left: 20px;
-	font-weight: 1000;
+	font-weight: 300;
 }
 
 .commentBox {
@@ -725,6 +740,7 @@ select {
 }
 
 .deckTitle {
+	font-size:18px;
 	width: 97%;
 	text-align: start;
 	margin-bottom: 10px;
@@ -772,42 +788,46 @@ textarea {
 	display: none;
 	align-items: center;
 	padding: 20px 270px;
-	gap:80px;
-	justify-content:space-between;
+	gap: 80px;
+	justify-content: space-between;
 }
-.optionBox{
-	width:110px;
-	height:30px;
-	padding-left:10px
+
+.optionBox {
+	width: 110px;
+	height: 30px;
+	padding-left: 10px
 }
-.conditionSearch{
-	width:100px;
-	height:30px;
-	background:#fff;
-	border:1px solid #007FFF;
+
+.conditionSearch {
+	width: 100px;
+	height: 30px;
+	background: #fff;
+	border: 1px solid #007FFF;
 }
+
 .moreBtn {
 	display: flex;
 	justify-content: center;
 	margin-top: 20px;
 }
+
 .moreBtn button {
-    width: 150px;
-    height: 50px;
-    background-color: #007FFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+	width: 150px;
+	height: 50px;
+	background-color: #007FFF;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	font-size: 16px;
+	font-weight: bold;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .moreBtn button:hover {
-    background-color: #005BB5; /* 버튼 호버 시 색상 변경 */
+	background-color: #005BB5; /* 버튼 호버 시 색상 변경 */
 }
 
 /*카드움직이기 참고만 -->css겹칠 수 있음 조심!

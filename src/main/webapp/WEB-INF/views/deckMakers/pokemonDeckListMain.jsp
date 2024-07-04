@@ -8,9 +8,8 @@
 <c:set var="path" value="${pageContext.servletContext.contextPath }" />
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!--Apple SD 고딕 폰트-->
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css2?family=Apple+SD+Gothic+Neo&display=swap">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <title>카드득</title>
 <link rel="stylesheet" href="${path }/resources/css/main.css" />
 <link rel="icon" href="${path }/resources/icon/favicon.ico"

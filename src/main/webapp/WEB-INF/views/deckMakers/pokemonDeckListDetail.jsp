@@ -9,7 +9,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>카드득</title>
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-applesdgothicneo@1.0/all.min.css">
 <link rel="stylesheet" href="${path }/resources/css/main.css" />
 <link rel="icon" href="${path }/resources/icon/favicon.ico"
 	type="image/x-icon">
@@ -37,13 +36,13 @@
 				<div>추천수 : ${deck.RECOMMEND}</div>
 			</div>
 		</div>
-		<img src="${path }/resources/images/default/pokemon_banner.png" id="banner">
+		<img src="${path }/resources/images/default/pokemon_banner.png"
+			id="banner">
 	</div>
 	<div class="detail-container">
 		<div class="sidebar">
 			<div class="card-info">
-				<img src=""
-					alt="카드 이미지" class="card-img" id="cardImage">
+				<img src="" alt="카드 이미지" class="card-img" id="cardImage">
 				<div class="card-details">
 					<h2 id="cardName"></h2>
 					<p id="cardType"></p>
