@@ -45,6 +45,14 @@
 		]]>
 	</select>
 	
+	<!-- 전체 물품 등록 추이 -->
+	<select id="countAllItems" resultType="int">
+		SELECT 
+			COUNT(*) 
+		FROM 
+			ITEMS 
+	</select>
+	
 	<!-- 이번 달 물품 등록 추이 -->
 	<select id="countItemsByMonth" resultType="int">
 		<![CDATA[
@@ -73,8 +81,19 @@
 		]]>
 	</select>
 	
-	<!-- 이번 달 유찰 추이 -->
-	
+	<!-- 당월 거래액 -->
+	<select id="sumAllTurnoverByMonth" resultType="int">
+		<![CDATA[
+			SELECT 
+				SUM(PRICE) 
+			FROM 
+				TRADES 
+			WHERE 
+				CREATE_DATE >= TRUNC(SYSDATE, 'MM')
+			AND 
+				CREATE_DATE < ADD_MONTHS(TRUNC(SYSDATE, 'MM'), 1)
+		]]>
+	</select>
 	
 	<!-- 카드 추가 -->
 	<insert id="insertPokemonCard" parameterType="pokemonvo">
@@ -162,6 +181,7 @@
 		SELECT 
 	        d.DELIVERY_ID,
 	        d.TRADE_ID,
+	        d.INVOICE_NUMBER,
 	        t.ITEM_ID,
 	        TO_CHAR(t.CREATE_DATE, 'YYYY-MM-DD') AS CREATE_DATE,
 	        t.USER_ID,
@@ -184,6 +204,7 @@
 		SELECT 
 	        d.DELIVERY_ID,
 	        d.TRADE_ID,
+	        d.INVOICE_NUMBER,
 	        t.ITEM_ID,
 	        TO_CHAR(t.CREATE_DATE, 'YYYY-MM-DD') AS CREATE_DATE,
 	        t.USER_ID,
@@ -200,6 +221,36 @@
 	    ON
 	    	t.ITEM_ID = i.ITEM_ID
 	    WHERE d.DELIVERY_ID = #{deliveryId}
+	</select>
+	
+	<!-- 유저별 배송 조회 -->
+	<select id="selectDeliveryByUser" parameterType="Map" resultType="deliveryvo">
+		SELECT 
+	        d.DELIVERY_ID,
+	        d.TRADE_ID,
+	        d.INVOICE_NUMBER,
+	        t.ITEM_ID,
+	        TO_CHAR(t.CREATE_DATE, 'YYYY-MM-DD') AS CREATE_DATE,
+	        t.USER_ID,
+	        i.IMAGE1,
+	        i.ITEM_NAME
+	    FROM 
+	        DELIVERIES d
+	    INNER JOIN 
+	        TRADES t
+	    ON 
+	        d.TRADE_ID = t.TRADE_ID
+	    INNER JOIN
+	    	ITEMS i
+	    ON
+	    	t.ITEM_ID = i.ITEM_ID
+	    WHERE 1 = 1
+	    <if test="userid != null and userid != ''">
+	    	AND t.USER_ID = #{userid}
+	    </if>
+	    <if test="noInvoice == 1">
+	    	AND d.INVOICE_NUMBER IS NULL
+	    </if>
 	</select>
 	
 	<!-- 송장 번호 등록 -->

@@ -41,12 +41,33 @@
 	       <param-name>forceEncoding</param-name> 
 	       <param-value>true</param-value> 
 	    </init-param> 
-	 </filter> 
-	 <filter-mapping> 
-	    <filter-name>encodingFilter</filter-name> 
-	    <url-pattern>/*</url-pattern> 
-	 </filter-mapping> 
-	 
+		 </filter> 
+		 <filter-mapping> 
+		    <filter-name>encodingFilter</filter-name> 
+		    <url-pattern>/*</url-pattern> 
+		 </filter-mapping> 
+		 
+	<!-- login filter -->
+	<filter>
+        <filter-name>loginFilter</filter-name>
+        <filter-class>com.cardproject.myapp.filter.LoginFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>loginFilter</filter-name>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
+    
+	<!-- admin page filter -->
+	<filter>
+	    <filter-name>adminFilter</filter-name>
+		    <filter-class>com.cardproject.myapp.filter.AdminFilter</filter-class>
+		</filter>
+		<filter-mapping>
+		    <filter-name>adminFilter</filter-name>
+		    <url-pattern>/admin/*</url-pattern>
+		</filter-mapping>
+	  
 	 <!-- error page -->
 	 <error-page>    
 	 	<exception-type>java.lang.Throwable</exception-type>    

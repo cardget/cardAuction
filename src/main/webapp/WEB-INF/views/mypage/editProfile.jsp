@@ -69,7 +69,7 @@
 			<hr class="form-divider">
 			<div class="form-group">
                 <label for="bank" class="input-label">계좌</label>
-                <input type="hidden" id="bank" name="backHidden" value="${user.bank}" class="email-input-field" required>
+                <input type="hidden" id="bank" name="backHidden" value="${user.bank}" class="email-input-field">
                 <select class="email-select" name="bank" size="1">
 		            <option value="신한" ${user.bank eq '신한' ? 'selected' : ''}>신한</option>
 				    <option value="국민" ${user.bank eq '국민' ? 'selected' : ''}>국민</option>

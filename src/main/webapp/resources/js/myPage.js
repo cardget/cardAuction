@@ -34,13 +34,6 @@ $(function() {
 			});
 		});
 		
-		$(".withdrawl").click(function(event){
-			event.preventDefault();
-			
-			var url = $(this).attr("href");
-			window.open(url, 'popupWindow', 'width=600,height=300,scrollbars=yes');
-		})
-		
 		$(".noti-control a").click(function(event) {
 			event.preventDefault();
 			

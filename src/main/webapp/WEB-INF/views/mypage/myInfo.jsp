@@ -141,7 +141,7 @@
 								<h3 class="info">이메일</h3>
 							</div>
 							<div class="slider-button">
-								<label class="switch"> <input class="alarm" type="checkbox"
+								<label class="switch"> <input class="alarm" type="checkbox" name="emailAgreement"
 									<c:if test="${user.email_agreement == 1}">
 				                                        checked="checked"
 				                                    </c:if> disabled>

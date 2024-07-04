@@ -38,7 +38,7 @@ public class MyPageController {
 
 	@Autowired
 	private AWSS3Service s3Service;
-	
+
 	@Autowired
 	HttpSession session;
 
@@ -73,49 +73,49 @@ public class MyPageController {
 	}
 
 	@PostMapping("/editProfile.do")
-	public String updateProfile(
-			@RequestParam(value= "profile_image_name", required=false) MultipartFile file,
-			@RequestParam("nickname") String nickname, 
-			@RequestParam("email") String email,
-			@RequestParam("domain") String domain, 
-			@RequestParam("email_agreement") String email_agreement, 
-			@RequestParam("address") String address,
-			@RequestParam("detailAddress") String addressDetail, 
-			@RequestParam("zipCode") String zipCode, 
-			@RequestParam("bank") String bank,
-			@RequestParam("accnt") String accnt, 
-			@SessionAttribute("userid") String userid, 
-			Model model, RedirectAttributes redirectAttributes) {
-		
+	public String updateProfile(@RequestParam(value = "profile_image_name", required = false) MultipartFile file,
+			@RequestParam("nickname") String nickname, @RequestParam("email") String email,
+			@RequestParam("domain") String domain, @RequestParam("email_agreement") String email_agreement,
+			@RequestParam("address") String address, @RequestParam("detailAddress") String addressDetail,
+			@RequestParam("zipCode") String zipCode, @RequestParam("bank") String bank,
+			@RequestParam("accnt") String accnt, @SessionAttribute("userid") String userid, Model model,
+			RedirectAttributes redirectAttributes) {
+
 		UserDTO user = mpService.selectUserById(userid);
 		String fullEmail = email + "@" + domain;
 		int i_email_agreement = Integer.parseInt(email_agreement);
-		
-		if(file!=null && !file.isEmpty()) {
+
+		if (file != null && !file.isEmpty()) {
 			String originalFileName = file.getOriginalFilename();
-			
-			String rawFileName = originalFileName.substring(0,originalFileName.lastIndexOf(".")); // 이름
-			String extension = originalFileName.substring(originalFileName.lastIndexOf(".")+1);
-    		String fileName="profile/"+rawFileName+System.currentTimeMillis()+"."+extension;
-	    	try {
-				String url=s3Service.uploadObject(file, fileName);
-				user.setProfile_image(url);	// 이미지 URL을 UserDTO 에 설정
+
+			String rawFileName = originalFileName.substring(0, originalFileName.lastIndexOf(".")); // 이름
+			String extension = originalFileName.substring(originalFileName.lastIndexOf(".") + 1);
+			String fileName = "profile/" + rawFileName + System.currentTimeMillis() + "." + extension;
+			try {
+				String url = s3Service.uploadObject(file, fileName);
+				user.setProfile_image(url); // 이미지 URL을 UserDTO 에 설정
 			} catch (java.io.IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				model.addAttribute("error","이미지 업로드 중 오류가 발생했습니다.");
+				model.addAttribute("error", "이미지 업로드 중 오류가 발생했습니다.");
 				return "redirect:editProfile.do";
-			}    		
-    	}  
-		
+			}
+		}
+
 		user.setNickname(nickname);
 		user.setEmail(fullEmail);
 		user.setEmail_agreement(i_email_agreement);
 		user.setZip_code(zipCode);
 		user.setAddress(address);
 		user.setAddress_detail(addressDetail);
-		user.setBank(bank);
-		user.setAccnt(accnt);
+		
+		if (accnt != null && !accnt.isEmpty()) {
+			user.setBank(bank);
+			user.setAccnt(accnt);
+		}else {
+			user.setBank(null);
+			user.setAccnt(null);
+		}
 
 		mpService.userUpdate(user);
 		redirectAttributes.addFlashAttribute("message", "회원정보가 성공적으로 수정되었습니다.");
@@ -146,7 +146,7 @@ public class MyPageController {
 
 		return "mypage/myBid";
 	}
-	
+
 	@GetMapping("/deleteBids.do")
 	public String deleteBid(Model model) {
 		String userid = (String) session.getAttribute("userid");
@@ -155,7 +155,7 @@ public class MyPageController {
 		}
 
 		mpService.deleteAllBids(userid);
-		
+
 		return "redirect:myBid.do";
 	}
 
@@ -172,9 +172,9 @@ public class MyPageController {
 
 		model.addAttribute("user", user);
 		model.addAttribute("nlist", nlist);
-		
+
 		List<TradeDTO> tlist = mpService.selectAllTrades(userid);
-		for(TradeDTO trade: tlist) {
+		for (TradeDTO trade : tlist) {
 			System.out.println(trade);
 		}
 		model.addAttribute("tlist", tlist);
@@ -195,7 +195,7 @@ public class MyPageController {
 
 		List<NotificationDTO> nlist = mpService.selectFiveNotifications(userid);
 		model.addAttribute("nlist", nlist);
-		
+
 		List<ItemDTO> sales = mpService.selectAllSales(userid);
 		model.addAttribute("sales", sales);
 
@@ -215,7 +215,7 @@ public class MyPageController {
 
 		UserDTO user = mpService.selectUserById(userid);
 		model.addAttribute("user", user);
-		
+
 		List<NotificationDTO> nlist = mpService.selectFiveNotifications(userid);
 		model.addAttribute("nlist", nlist);
 
@@ -254,7 +254,7 @@ public class MyPageController {
 
 		UserDTO user = mpService.selectUserById(userid);
 		model.addAttribute("user", user);
-		
+
 		List<NotificationDTO> nlist = mpService.selectFiveNotifications(userid);
 		model.addAttribute("nlist", nlist);
 
@@ -287,10 +287,10 @@ public class MyPageController {
 		List<DeliveryDTO> dlist = mpService.selectAllDeliveries(userid);
 		model.addAttribute("user", user);
 		model.addAttribute("dlist", dlist);
-		
+
 		List<NotificationDTO> nlist = mpService.selectFiveNotifications(userid);
 		model.addAttribute("nlist", nlist);
-		
+
 		return "mypage/myDelivery";
 	}
 
@@ -356,12 +356,14 @@ public class MyPageController {
 	}
 
 	@PostMapping("/updateUserDisabled.do")
-	@ResponseBody
-	public Map<String, Object> updateUserDisabled(@RequestParam("password") String password, HttpSession session) {
+	public String updateUserDisabled(@RequestParam("password") String password) {
 		String userid = (String) session.getAttribute("userid");
+		System.out.println("UserID: " + userid + ", Password: " + password); // 로그 추가
 		int result = mpService.updateUserDisabled(userid, password);
-		Map<String, Object> response = new HashMap<>();
-		response.put("success", result > 0);
-		return response;
+		if (result > 0) {
+			return "redirect:../auth/logout.do";
+		}else {
+			return "updateUserDisabled.do";
+		}
 	}
 }
