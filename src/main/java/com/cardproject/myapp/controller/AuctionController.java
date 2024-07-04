@@ -49,7 +49,7 @@ public class AuctionController {
 	@Autowired
 	MyPageService mpService;
 
-	@RequestMapping("/auctionMain.do")
+	@RequestMapping("/auctionMain")
 	public String auctionMain(@RequestParam(defaultValue = "1") int page,
             				  @RequestParam(defaultValue = "9") int pageSize,
             				  @RequestParam(value = "sortOption", required = false) String sortOption,
@@ -67,7 +67,14 @@ public class AuctionController {
 			int totalCount = aucs.getTotalItemCountByKeyword(keyword);
 			System.out.println("###########################keywordFortotalCount:"+totalCount);
 			
+			
 			List<ItemDetailDTO> itemSearchlist = aucs.selectItemForName(page,pageSize,keyword,sortOption);
+			System.out.println("###########################itemSearchlist:"+itemSearchlist.size());
+			if(itemSearchlist.size() == 0) {
+				System.out.println("###############타나?");
+				String itemNull = "Not";
+				model.addAttribute("itemNull",itemNull);
+			}
 			model.addAttribute("itemDlist", itemSearchlist);
 			model.addAttribute("keyword",keyword);
 			model.addAttribute("sortOption",sortOption);
@@ -127,15 +134,16 @@ public class AuctionController {
 	@GetMapping("/auctionInsert.do")
 	public void auctionInsert(Model model) {
 		System.out.println("auctionInsert page");
-		//keyword를 post로 받고 .. 해야하네?
-		//model.addAttribute("pSelectlist",aucs.selectPRight(cardKeyword));
-		model.addAttribute("plist", aucs.selectPCard());
+		
 
 	}
-	@GetMapping("/searchPokemon")
+	@RequestMapping(value = "/searchPokemon", produces="application/json")
 	@ResponseBody
 	public List<PokemonDTO> searchPokemon(Model model, String cardKeyword){
 		//model.addAttribute("pSelectlist",aucs.selectPRight(cardKeyword));
+		System.out.println(aucs.selectPRight(cardKeyword));
+		List<PokemonDTO> plist = aucs.selectPRight(cardKeyword);
+		System.out.println(plist);
 		return aucs.selectPRight(cardKeyword);
 	}
 

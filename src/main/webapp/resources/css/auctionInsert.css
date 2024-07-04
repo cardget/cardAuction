@@ -212,7 +212,9 @@ form {
 }
 
 .select-field-status{
+	border-radius:5px;
 	margin-left: 20px;
+	padding:4px;
 	width:100px;
 	height:25px;
 	
@@ -228,7 +230,7 @@ input[type="radio"] {
     height: 20px;
 }
 .select-field-card{
-	margin-left: 20px;
+	border-radius:5px;
 	width:140px;
 	height:26px;
 	font-size:16px;
