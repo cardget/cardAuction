@@ -49,11 +49,11 @@ public class InquiryController {
 		for (QuestionDTO inquiry : ilist) {
 			inquiry.setSort_num(sortNum++);
 		}
-		
+
 		for (QuestionDTO list : ilist) {
 			System.out.println(list);
 		}
-		
+
 		model.addAttribute("ilist", ilist);
 		model.addAttribute("currentPage", page);
 		model.addAttribute("totalCount", totalCount);
@@ -65,36 +65,34 @@ public class InquiryController {
 	// 문의 글 상세조회
 	@GetMapping("/InquiryDetail.do")
 	public String InquiryDetail(Integer questId, Model model, HttpSession session) {
-	    System.out.println("/inquiry/InquiryDetail.do 요청");
+		System.out.println("/inquiry/InquiryDetail.do 요청");
 
-	    // user 닉네임
-	    String userid = (String) session.getAttribute("userid");
-	    if (userid != null) {
-	        UserDTO user = iService.selectNicknameByUserVOId(userid);
-	        session.setAttribute("user", user); // 세션에 user 객체 저장
-	    }
+		// user 닉네임
+		String userid = (String) session.getAttribute("userid");
+		if (userid != null) {
+			UserDTO user = iService.selectNicknameByUserVOId(userid);
+			session.setAttribute("user", user); // 세션에 user 객체 저장
+		}
 
-	    QuestionDTO inquiry = iService.selectByInquiryId(questId); // 문의 글 정보
-	    Integer isSecret = inquiry.getIs_secret(); // 비밀글 여부
-	    String writer = iService.getWriterByQuestId(questId); // 글 작성자
-	    System.out.println("문의글 작성자:" +writer);
-	    int isManager = iService.checkManagerById(userid); // 매니저 여부
-	    String answer = iService.checkAnswerByInquiryId(questId); // 답변 여부
+		QuestionDTO inquiry = iService.selectByInquiryId(questId); // 문의 글 정보
+		Integer isSecret = inquiry.getIs_secret(); // 비밀글 여부
+		String writer = iService.getWriterByQuestId(questId); // 글 작성자
+		System.out.println("문의글 작성자:" + writer);
+		int isManager = iService.checkManagerById(userid); // 매니저 여부
+		String answer = iService.checkAnswerByInquiryId(questId); // 답변 여부
 
-	    if (isSecret == 1) { // 비밀글일 경우 작성자, 관리자만 접근 가능
-	        if (!userid.equals(writer) && isManager == 0) { 
-	            model.addAttribute("errorMessage", "열람할 수 없습니다.");
-	            return "inquiry/InquirySelect";
-	        }
-	    }
+		if (isSecret == 1) { // 비밀글일 경우 작성자, 관리자만 접근 가능
+			if (!userid.equals(writer) && isManager == 0) {
+				model.addAttribute("errorMessage", "열람할 수 없습니다.");
+				return "inquiry/InquirySelect";
+			}
+		}
 
-	    model.addAttribute("inquiry", inquiry);
-	    model.addAttribute("answer", answer);
-	    model.addAttribute("isManager", isManager);
-	    return "inquiry/InquiryDetail";
+		model.addAttribute("inquiry", inquiry);
+		model.addAttribute("answer", answer);
+		model.addAttribute("isManager", isManager);
+		return "inquiry/InquiryDetail";
 	}
-
-
 
 	// 답변
 	@PostMapping("/submitAnswer.do")
@@ -149,6 +147,23 @@ public class InquiryController {
 		System.out.println(question);
 
 		iService.insertInquiry(question);
+		return "redirect:InquirySelect.do";
+	}
+
+	// 문의 글 삭제
+	@GetMapping("/InquiryDelete.do")
+	public String inquiryDelete(Integer questId, HttpSession session) {
+		String userId = (String) session.getAttribute("userid");
+		int isManager = iService.checkManagerById(userId);
+		String writer = iService.getWriterByQuestId(questId);
+
+		if (writer.equals(userId) || isManager == 1) {
+			iService.deleteInquiry(questId);
+			return "redirect:InquirySelect.do";
+		} else {
+			session.setAttribute("errorMessage", "작성자와 관리자만 삭제할 수 있습니다.");
+		}
+
 		return "redirect:InquirySelect.do";
 	}
 

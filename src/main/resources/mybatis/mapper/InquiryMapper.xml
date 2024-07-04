@@ -117,5 +117,10 @@
 		FROM QUESTIONS
 		WHERE QUEST_ID=#{questId}
 	</select>
+	
+	<!-- 문의글 삭제 -->
+	<delete id="deleteInquiry" parameterType="int">
+		DELETE FROM QUESTIONS WHERE QUEST_ID=#{questId}
+	</delete>
 
 </mapper>
