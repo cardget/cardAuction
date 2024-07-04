@@ -85,7 +85,7 @@
 	<script>
 	function recommendDeck(deckId) {
 	    $.ajax({
-	        url: '${path}/deckMakers/recommendDeck.do',
+	        url: '${path}/deckMakers/recommendDeck',
 	        type: 'POST',
 	        contentType: 'application/json',
 	        data: JSON.stringify({ deck_id: deckId }),
@@ -110,7 +110,7 @@
 	}
 	function deleteDeck(deckId) {
 	    $.ajax({
-	        url: '${path}/deckMakers/deleteDeck.do',
+	        url: '${path}/deckMakers/deleteDeck',
 	        type: 'POST',
 	        contentType: 'application/json',
 	        data: JSON.stringify({ deck_id: deckId }),
@@ -118,7 +118,7 @@
 	        success: function(data) {
 	            if (data.dSuccess) {
 	                alert('삭제되었습니다.');
-	                location.href='${path}/deckMakers/yugiohDeckListMain.do';
+	                location.href='${path}/deckMakers/yugiohDeckListMain';
 	            } else {
 	                alert('삭제 중 오류가 발생했습니다.');
 	            }
@@ -139,7 +139,7 @@
 	    console.log('Fetching details for cardId:', cardId);
 
 	    $.ajax({
-	        url: '${path}/deckMakers/getYCardDetails.do',
+	        url: '${path}/deckMakers/getYCardDetails',
 	        type: 'GET',
 	        data: { card_id: cardId },
 	        dataType: 'json',

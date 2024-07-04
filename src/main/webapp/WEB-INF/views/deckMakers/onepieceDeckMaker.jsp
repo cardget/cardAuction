@@ -121,7 +121,7 @@
         var cardName = $('#card-search-box').val();
 	
 	    $.ajax({
-	        url: "/myapp/deckMakers/loadMoreOCard.do",
+	        url: "/myapp/deckMakers/loadMoreOCard",
 	        type: "GET",
 	        data: {
 	        	card_attr: cardAttr,
@@ -161,7 +161,7 @@
     	});
     	console.log(arr);
     	$.ajax({
-    		url:"${path}/deckMakers/insertDeck.do",
+    		url:"${path}/deckMakers/insertDeck",
     		type:"post",
     		data:{kind:"O",deckTitle:$("#deckTitle").val(),
     			commentBox:$("#commentBox").val(),
@@ -169,7 +169,7 @@
     		},
     		success: function(response) {
     			alert("등록에 성공했습니다!")
-                window.location.href = "${path}/deckMakers/onepieceDeckListMain.do";
+                window.location.href = "${path}/deckMakers/onepieceDeckListMain";
             },
             error: function(xhr, status, error) {
                 console.error("Error:", error);
@@ -196,7 +196,7 @@
 		    currentPageO++;
 		    console.log(currentPageO);
 		    $.ajax({
-		        url: "/myapp/deckMakers/loadMoreOCard.do?page=" + currentPageO,
+		        url: "/myapp/deckMakers/loadMoreOCard?page=" + currentPageO,
 		        type: "GET",
 		        data: {
 		        	card_attr: cardAttr,
