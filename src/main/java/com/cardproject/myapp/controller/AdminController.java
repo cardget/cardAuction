@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.cardproject.myapp.dto.AdminInfoDTO;
 import com.cardproject.myapp.dto.DeliveryDTO;
 import com.cardproject.myapp.dto.DigimonDTO;
 import com.cardproject.myapp.dto.OnepieceDTO;
@@ -31,8 +32,18 @@ public class AdminController {
 	AdminService admService;
 	
 	@GetMapping("/adminMain.do")
-	public void adminMain() {
-		System.out.println("adminMain page");
+	public void adminMain(Model model) {
+		AdminInfoDTO info = new AdminInfoDTO();
+		
+		info.setUserCnt(admService.countAllUser());
+		info.setSignupCnt(admService.countSigningUpByMonth());
+		info.setDisableCnt(admService.countDisabledByMonth());
+		info.setItemCnt(admService.countAllItems());
+		info.setRegisterCnt(admService.countItemsByMonth());
+		info.setWinningCnt(admService.countWinningByMonth());
+		info.setTurnover(admService.sumAllTurnoverByMonth());
+		
+		model.addAttribute("info", info);
 	}
 	
 	@GetMapping("/insertPCard.do")
@@ -180,5 +191,17 @@ public class AdminController {
 		model.addAttribute("message", message);
 		
 		return "redirect:manageDelivery.do";
+	}
+	
+	@PostMapping("/searchDelivery.do")
+	public void searchDelivery(
+			@RequestParam("buyer") String userid,
+			@RequestParam("noInvoice") String noInvoiceS,
+			Model model) {
+		int noInvoice = noInvoiceS.equals("true")?1:0;
+		
+		List<DeliveryDTO> dlist = admService.selectDeliveryByUser(userid, noInvoice);
+		
+		model.addAttribute("dlist", dlist);
 	}
 }

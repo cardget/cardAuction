@@ -11,25 +11,25 @@
 		<div class="main-category">
 			<ul class="main-category-box">
 				<li class="main-category-item"><a
-					href="${path}/auction/auctionMain.do">포켓몬</a></li>
+					href="${path}/auction/auctionMain">포켓몬</a></li>
 				<li class="main-category-item"><a
-					href="${path}/auction/auctionYMain.do">유희왕</a></li>
+					href="${path}/auction/auctionYMain">유희왕</a></li>
 				<li class="main-category-item"><a
-					href="${path}/auction/auctionDMain.do">디지몬</a></li>
+					href="${path}/auction/auctionDMain">디지몬</a></li>
 				<li class="main-category-item"><a
-					href="${path}/auction/auctionOMain.do">원피스</a></li>
+					href="${path}/auction/auctionOMain">원피스</a></li>
 				<li class="main-category-item"><a
-					href="${path}/auction/auctionSMain.do">스포츠</a></li>
+					href="${path}/auction/auctionSMain">스포츠</a></li>
 				<li class="main-category-item"><a
-					href="${path}/inquiry/InquirySelect.do">문의</a></li>
+					href="${path}/inquiry/InquirySelect">문의</a></li>
 			</ul>
 		</div>
 		<div class="top-nav-category">
 			<ul class="category-box">
-				<li class="category-item"><a href="/myapp/auth/login.do"> <img
+				<li class="category-item"><a href="/myapp/auth/login"> <img
 						src="${path}/resources/icon/logout.png" class="icon">로그인
 				</a></li>
-				<li class="category-item"><a href="/myapp/auth/signUp.do">
+				<li class="category-item"><a href="/myapp/auth/signUp">
 						<img src="${path}/resources/icon/logout.png" class="icon">회원가입
 				</a></li>
 			</ul>

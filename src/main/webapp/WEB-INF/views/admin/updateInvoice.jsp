@@ -9,6 +9,8 @@
 <title>결제</title>
 <c:set var="path" value="${pageContext.servletContext.contextPath}" />
 <link rel="stylesheet" href="${path}/resources/css/payment.css">
+<link rel="stylesheet" as="style" crossorigin
+	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>

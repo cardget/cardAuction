@@ -8,6 +8,8 @@
 <title>카드 등록 페이지</title>
 <c:set var="path" value="${pageContext.servletContext.contextPath}" />
 <link rel="stylesheet" href="${path}/resources/css/adminMain.css">
+<link rel="stylesheet" as="style" crossorigin
+	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="${path}/resources/js/signUp.js"></script>
 
@@ -22,7 +24,7 @@
 			
 			<div class="sidemenu">
 				<ul>
-					<li><a href="manageUser.do">회원관리</a></li>
+					<li><a href="adminMain.do">회원관리</a></li>
 					<li><a href="insertPCard.do">포켓몬DB추가</a></li>
 					<li><a href="insertYCard.do">유희왕DB추가</a></li>
 					<li><a href="insertDCard.do" class="selected">디지몬DB추가</a></li>

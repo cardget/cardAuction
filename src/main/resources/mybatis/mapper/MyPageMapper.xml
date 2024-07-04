@@ -51,8 +51,9 @@
 		ORDER BY b.BID_ID DESC
 	</select>
 	
+	<!-- 입찰내역 삭제 -->
 	<delete id="deleteAllBids" parameterType="string">
-		DELETE FROM BIDS WHERE USER_ID = #{userid}
+		DELETE FROM BIDDINGS WHERE USER_ID = #{userid}
 	</delete>
 	
 	<!-- 낙찰내역 -->
