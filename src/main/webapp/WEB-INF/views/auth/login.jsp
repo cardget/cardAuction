@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="javax.servlet.http.HttpSession" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +22,7 @@
 			<img src="${path}/resources/image/logo.png" alt="로고이미지" height=41 onclick="location.href='../main.do'">			
 		</div>
 		<div class="container">
-			<form action="login.do" method="POST">
+			<form id ="loginForm" action="login.do" method="POST">
 				<div class="form-group">
 					<div class="input-with-icon">
 			        <img alt="" src="${path}/resources/icon/loginUser.png" class="id-icon">

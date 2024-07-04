@@ -29,7 +29,6 @@ function toLocalStorage(event) {
 }
 
 
-
 //signUp.jsp 아이디 중복 체크
 function f_checkUserId() {
     var userId = $("#user_id").val();
@@ -81,39 +80,91 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// 약관 전체 동의 체크박스를 클릭했을 때 호출되는 함수
-function toggleAll() {    
-    var agreeAll = document.getElementById('agreeAll').checked;   
-    var checkboxes = document.querySelectorAll('.agree');    
-    checkboxes.forEach(function (checkbox) {
-        checkbox.checked = agreeAll;
-    });
-    
-    checkAllAgreed();
-}
+document.addEventListener("DOMContentLoaded", function() {
+    let currentFormCheckboxId = '';
 
-// 모든 체크박스가 체크되었는지 확인하고 버튼 활성화 여부를 결정하는 함수
-function checkAllAgreed() {
-    var checkboxes = document.querySelectorAll('.agree');
-    var allChecked = true;
-    checkboxes.forEach(function (checkbox) {
-        if (!checkbox.checked) {
-            allChecked = false;
-        }
-    });
-    var submitButton = document.getElementById('submitButton');
-    if (allChecked) {
-        submitButton.disabled = false;
-        submitButton.classList.remove('disabled-button');
-    } else {
-        submitButton.disabled = true;
-        submitButton.classList.add('disabled-button');
+    function openClausePopup(clauseType, checkboxId, textId) {
+        currentFormCheckboxId = checkboxId;
+        var url = '../resources/txt/' + clauseType;
+        var titleText = document.getElementById(textId).innerText;
+
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('modalTitle').innerText = titleText;
+                document.getElementById('clauseText').innerText = data;
+                document.getElementById('clauseModal').style.display = "block";
+                document.getElementById('modalCheckbox').checked = document.getElementById(currentFormCheckboxId).checked;
+            })
+            .catch(error => {
+                alert('파일을 불러오는 중 오류가 발생했습니다: ' + error.message);
+            });
     }
-}
+
+    function closeModal() {
+        document.getElementById('clauseModal').style.display = "none";
+    }
+
+    function syncCheckbox(modalCheckbox) {
+        const formCheckbox = document.getElementById(currentFormCheckboxId);
+        formCheckbox.checked = modalCheckbox.checked;
+        checkAllAgreed(); // 동기화 후 체크 상태 확인
+    }
+
+    window.onclick = function(event) {
+        var modal = document.getElementById('clauseModal');
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    // 약관 전체 동의 체크박스를 클릭했을 때 호출되는 함수
+    function toggleAll() {    
+        var agreeAll = document.getElementById('agreeAll').checked;   
+        var checkboxes = document.querySelectorAll('.agree');    
+        checkboxes.forEach(function (checkbox) {
+            checkbox.checked = agreeAll;
+        });
+        
+        checkAllAgreed();
+    }
+
+    // 모든 체크박스가 체크되었는지 확인하고 버튼 활성화 여부를 결정하는 함수
+    function checkAllAgreed() {
+        var checkboxes = document.querySelectorAll('.agree');
+        var allChecked = true;
+        checkboxes.forEach(function (checkbox) {
+            if (!checkbox.checked) {
+                allChecked = false;
+            }
+        });
+        var submitButton = document.getElementById('submitButton');
+        if (allChecked) {
+            submitButton.disabled = false;
+            submitButton.classList.remove('disabled-button');
+        } else {
+            submitButton.disabled = true;
+            submitButton.classList.add('disabled-button');
+        }
+    }
+
+    // 함수들을 전역 스코프에 노출
+    window.openClausePopup = openClausePopup;
+    window.closeModal = closeModal;
+    window.syncCheckbox = syncCheckbox;
+    window.toggleAll = toggleAll;
+    window.checkAllAgreed = checkAllAgreed;
+});
+
 
 // 프로필 이미지 미리보기
 function previewImage(input, path) {
-    var imageId = input.id.replace('_image_id', '-image');
+    var imageId = input.id.replace('_image_id', '-image'); // input 요소의 ID에서 '_image_id'를 '-image'로 변경
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function(e) {
@@ -133,23 +184,6 @@ function resetProfileImage(imageId, path) {
 }
 
 
-//폼 제출시 호출됨
-function validatePasswords(){
-	var password = document.getElementById("pw").value;
-    var confirmPassword = document.getElementById("confirmPassword").value;
-    var message = document.getElementById("passwordMessage");
-    
-    if (password !== confirmPassword) {
-        message.style.color = 'red';
-        message.textContent = '비밀번호가 일치하지 않습니다. 다시 입력해주세요.';
-        return false;
-    } else {
-        message.style.color = 'green';
-        message.textContent = '일치하는 비밀번호입니다.';
-        return true;
-    }
-    
-}
 
 // 비밀번호 유효성 검사 함수
 function isValidPassword(password) {
@@ -181,6 +215,7 @@ function checkPasswordMatch() {
     } else {
         message.style.color = 'green';
         message.textContent = '일치하는 비밀번호입니다.';
+        return true;
     }
 }
 
@@ -201,3 +236,18 @@ document.addEventListener("DOMContentLoaded", function() {
         combineEmail();
     });
 });
+
+
+// 찾은 아이디값을 비밀번호 재설정 페이지로 가져감
+function goToResetPassword() {
+    var userId = document.getElementById("id").value;
+    location.href = "${path}/auth/resetPassword.do?userId=" + userId;
+}
+
+// 찾은 아이디값을 로그인 페이지로 가져감
+function goToLogin() {
+    var userId = document.getElementById("id").value;
+    location.href = "${path}/auth/login.do?userId=" + userId;
+}
+
+

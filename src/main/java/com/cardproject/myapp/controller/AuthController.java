@@ -1,6 +1,8 @@
 package com.cardproject.myapp.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +19,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.cardproject.myapp.dto.UserDTO;
 import com.cardproject.myapp.service.AWSS3Service;
 import com.cardproject.myapp.service.AuthService;
-
-import io.jsonwebtoken.io.IOException;
 
 @Controller
 @RequestMapping("/auth")
@@ -76,10 +76,10 @@ public class AuthController {
 		UserDTO user = aService.login(userid, password);		
 		
 		if (user == null) {
-			session.setAttribute("loginResult", "Login Failure: Invalid Email or Password");
+			session.setAttribute("loginResult", "로그인 실패 : 유효하지 않은 아이디 또는 패스워드");
 			return "redirect:login.do";
 		}else if(user.getIs_able()==0) {
-			session.setAttribute("loginResult", "Login Failure: Your account is disabled.");
+			session.setAttribute("loginResult", "로그인 실패 : 해당 아이디로 된 정보를 찾을 수 없습니다.");
 			return "redirect:login.do";
 		}		
 		else {
@@ -87,7 +87,7 @@ public class AuthController {
 			session.setAttribute("loginResult", "Login Success");
 			session.setAttribute("userid", user.getUser_id());
 			session.setAttribute("nickname", user.getNickname());
-			
+			session.setAttribute("isAdmin", user.getIs_admin());
 			return "redirect:../main.do";
 		}
 	}
@@ -107,13 +107,23 @@ public class AuthController {
 	public void findIdResult() {
 		System.out.println("findIdResult page");
 	}
+	
 	@PostMapping("/findIdResult.do")
-    public String findIdResult(@RequestParam("userName") String userName, @RequestParam("phoneNumber") String phoneNumber, Model model) {
-        System.out.println("POST 요청을 받았습니다."); // 디버깅 로그
-        String userId = aService.findUserId(userName, phoneNumber);
-        model.addAttribute("userId", userId);
-        return "auth/findIdResult";
-    }
+	@ResponseBody
+	public Map<String, String> findIdResult(@RequestParam("userName") String userName, @RequestParam("phone_number") String phoneNumber) {
+	    String userId = aService.findUserId(userName, phoneNumber);
+	    Map<String, String> response = new HashMap<>();
+
+	    if (userId != null && !userId.isEmpty()) {
+	        response.put("status", "success");
+	        response.put("userId", userId);
+	    } else {
+	        response.put("status", "error");
+	        response.put("message", "해당 정보로 등록된 아이디가 없습니다.");
+	    }
+
+	    return response;
+	}
 
 //	@GetMapping("/findPassword.do")
 //	public void findPassword() {
