@@ -289,12 +289,13 @@ select {
 
 /*서브카테고리*/
 .sub-category {
+	width: 1380px;
+	margin: auto;
 	margin-top: 50px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	font-size: 16px;
-	padding: 0 270px;
 	gap: 80px;
 	padding-bottom: 10px;
 	border-bottom: 1px solid #E1E6EC;
@@ -552,6 +553,7 @@ select {
 .card-img {
 	width: 100%;
 	height: auto;
+	background-size:cover;
 }
 
 .accordion {
@@ -641,13 +643,12 @@ select {
 	background-size: contain;
 	overflow: hidden;
 	padding: 10px;
-	box-sizing: border-box; :: -webkit-scrollbar {
-	/*덱리스트 스크롤바 디자인*/ border-radius : 10px;
+	box-sizing: border-box; :: -webkit-scrollbar { border-radius : 10px;
 	background-color: #949494;
 	width: 13px;
 }
 
-::-webkit-scrollbar-thumb {
+:: -webkit-scrollbar-thumb {
 	background-color: #F8C501;
 	border-radius: 6px;
 	border: 3px solid #949494;
@@ -681,14 +682,9 @@ select {
 
 .listCard, .card-count {
 	cursor: pointer;
-	:
-	hover
-	{
-	transform
-	:
-	scale(
-	1.1
-	);
+	:hover{
+	transform:
+	scale(1.1);
 }
 
 }
@@ -709,11 +705,12 @@ select {
 	max-height: initial;
 	margin-left: -10px;
 }
-.btnContainer{
-	display:flex;
-	justify-content:space-between;
-	width:210px;
-	float:right;
+
+.btnContainer {
+	display: flex;
+	justify-content: space-between;
+	width: 210px;
+	float: right;
 }
 /*코멘트박스*/
 .comment {
@@ -745,7 +742,7 @@ select {
 }
 
 .deckTitle {
-	font-size:18px;
+	font-size: 18px;
 	width: 97%;
 	text-align: start;
 	margin-bottom: 10px;
@@ -786,7 +783,8 @@ textarea {
 	cursor: pointer;
 	border-radius: 5px;
 }
-.delete-button button{
+
+.delete-button button {
 	background-color: #FE3838;
 	border: none;
 	color: white;
@@ -857,6 +855,7 @@ textarea {
   }
 
   .overlay {
+  	position:absolute;
     width: 220px;
     height: 310px;
     background: linear-gradient(105deg,

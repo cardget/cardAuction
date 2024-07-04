@@ -83,7 +83,7 @@
 					<div class="deck-overlay-container">
 						<img src="${deck.CARD_IMAGE}" class="dcard">
 						<div class="overlay-text"
-							onclick="location.href='${pageContext.request.contextPath}/deckMakers/digimonDeckListDetail.do?deck_id=${deck.DECK_ID}'">
+							onclick="location.href='${path}/deckMakers/digimonDeckListDetail?deck_id=${deck.DECK_ID}'">
 							<div class="deck-number">${deck.DECK_TITLE}</div>
 							<div>
 								<div class="username">${deck.USER_ID}</div>

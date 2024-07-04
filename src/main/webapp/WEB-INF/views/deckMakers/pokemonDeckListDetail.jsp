@@ -95,7 +95,11 @@
 	                alert('추천되었습니다.');
 	                location.reload(); // 페이지 새로고침하여 업데이트된 추천 수 반영
 	            } else {
-	                alert('추천 처리 중 오류가 발생했습니다.');
+	                if (data.message) {
+	                    alert(data.message); // 서버에서 반환된 메시지 표시
+	                } else {
+	                    alert('추천 처리 중 오류가 발생했습니다.');
+	                }
 	            }
 	        },
 	        error: function(xhr, status, error) {
