@@ -66,7 +66,7 @@
 
         <h4>회원정보 입력</h4>
         <hr style="border: 1px solid blue; margin-bottom: 25px;">
-        <form action="${path}/auth/insertSignUp.do" class="custom-form" onsubmit="return validatePasswords()" method="post" enctype="multipart/form-data">
+        <form action="${path}/auth/insertSignUp.do" class="custom-form" onsubmit="return checkPasswordMatch()" method="post" enctype="multipart/form-data">
 		    <div class="form-group">
 		        <label for="user_name" class="input-label">이름</label>
 		        <input type="text" id="user_name" name="user_name" required class="input-field" required>
@@ -79,7 +79,7 @@
 		            <button type="button" class="check-button" onclick="sendCode()">인증번호 발송</button>
 		            <input type="text" id="verificationCode" class="input-field" style="margin-left: 190px;" placeholder="인증번호 입력">
 		            <button type="button" class="check-button" onclick="verifyCode()">확인</button>  
-		            <p id="result"></p>            
+		            <p id="P_result"></p>            
 		        </div>                
 		    </div>          
 		    <hr class="form-divider">      
@@ -122,11 +122,13 @@
 		            <option value="nate.com">nate.com</option>
 		        </select>
 		        <button type="button" id="mail-Check-Btn" class="check-button" onclick="sendVerificationEmail()" style="margin-left: 10px;">인증번호 발송</button>
+			    <input type="text" id="verificationCodeEmail" class="input-field" style="margin-left: 190px;" placeholder="인증번호 입력">
+			    <button type="button" class="check-button" onclick="verifyCodeEmail()">확인</button>   
+			    <p id="E_result"></p>	    
 		    </div>
 		    <!-- 이메일을 결합하여 숨겨진 필드에 저장 -->
-            <input type="hidden" id="email" name="email">            
-            <input type="text" id="verificationCodeEmail" class="input-field" style="margin-left: 190px;" placeholder="인증번호 입력">
-		    <button type="button" class="check-button" onclick="verifyCodeEmail()">확인</button>   
+            <input type="hidden" id="email" name="email" required>            
+            
 		    
 		    <hr class="form-divider"> 
 		    <div class="form-group address-group">

@@ -37,9 +37,7 @@ public class AuthService {
   public String findUserId(String userName, String phoneNumber) {
 	  return authDAO.findUserId(userName, phoneNumber);
   }
-  public String findPassword(String userId) {
-	  return authDAO.findPassword(userId);
-  }
+
   public int updatePassword(String userId, String password) {
 	  // 비밀번호 암호화
       String encodedPassword = passwordEncoder.encode(password);

@@ -164,7 +164,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // 프로필 이미지 미리보기
 function previewImage(input, path) {
-    var imageId = input.id.replace('_image_id', '-image');
+    var imageId = input.id.replace('_image_id', '-image'); // input 요소의 ID에서 '_image_id'를 '-image'로 변경
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function(e) {
@@ -184,23 +184,6 @@ function resetProfileImage(imageId, path) {
 }
 
 
-//폼 제출시 호출됨
-function validatePasswords(){
-	var password = document.getElementById("pw").value;
-    var confirmPassword = document.getElementById("confirmPassword").value;
-    var message = document.getElementById("passwordMessage");
-    
-    if (password !== confirmPassword) {
-        message.style.color = 'red';
-        message.textContent = '비밀번호가 일치하지 않습니다. 다시 입력해주세요.';
-        return false;
-    } else {
-        message.style.color = 'green';
-        message.textContent = '일치하는 비밀번호입니다.';
-        return true;
-    }
-    
-}
 
 // 비밀번호 유효성 검사 함수
 function isValidPassword(password) {
@@ -232,6 +215,7 @@ function checkPasswordMatch() {
     } else {
         message.style.color = 'green';
         message.textContent = '일치하는 비밀번호입니다.';
+        return true;
     }
 }
 
@@ -252,3 +236,18 @@ document.addEventListener("DOMContentLoaded", function() {
         combineEmail();
     });
 });
+
+
+// 찾은 아이디값을 비밀번호 재설정 페이지로 가져감
+function goToResetPassword() {
+    var userId = document.getElementById("id").value;
+    location.href = "${path}/auth/resetPassword.do?userId=" + userId;
+}
+
+// 찾은 아이디값을 로그인 페이지로 가져감
+function goToLogin() {
+    var userId = document.getElementById("id").value;
+    location.href = "${path}/auth/login.do?userId=" + userId;
+}
+
+

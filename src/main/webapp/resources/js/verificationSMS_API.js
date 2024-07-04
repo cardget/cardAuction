@@ -47,6 +47,6 @@ function verifyCode() {
     })
     .then(response=>response.text())
     .then(data => {   
-        document.getElementById('result').innerText = data == "1" ? "인증 성공" : "인증 실패rrrr";
+        document.getElementById('P_result').innerText = data == "1" ? "인증 성공" : "인증 실패";
     });
 }
