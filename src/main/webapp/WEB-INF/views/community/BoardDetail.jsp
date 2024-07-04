@@ -33,7 +33,7 @@
 	// 세션으로 닉네임 조회
 	function fselectNicknameById() {
 		$.ajax({
-			url : path + "/community/selectNicknameById.do",
+			url : path + "/community/selectNicknameById",
 			data : {
 				"userid" : userid
 			},
@@ -55,7 +55,7 @@
 	function fRecommendUp(event) {
 		event.preventDefault();
 		$.ajax({
-			url : path + "/community/recommendUp.do",
+			url : path + "/community/recommendUp",
 			data : {
 				"commId" : commId
 			},
@@ -76,7 +76,7 @@
 	// 댓글 조회
 	function loadComments() {
     $.ajax({
-        url : path + "/community/getReplieList.do",
+        url : path + "/community/getReplieList",
         data : {
             "commId" : commId
         },
@@ -142,7 +142,7 @@
 	// 댓글 수 조회
 	function loadCommentsCount() {
 		$.ajax({
-			url : path + "/community/getReplieCount.do",
+			url : path + "/community/getReplieCount",
 			data : {
 				"commId" : commId
 			},
@@ -166,7 +166,7 @@
 		event.preventDefault();
 		var cmt = $("#commentInput").val();
 		$.ajax({
-			url : path + "/community/insertReplie.do",
+			url : path + "/community/insertReplie",
 			data : {
 				"commId" : commId,
 				"cmt" : cmt,
@@ -203,7 +203,7 @@
 	function deleteComment(replieId) {
 		if (confirm("댓글을 삭제하시겠습니까?")) {
 			$.ajax({
-				url : path + "/community/deleteComment.do",
+				url : path + "/community/deleteComment",
 				data : {
 					"replieId" : replieId
 				},
@@ -251,7 +251,7 @@
 	<div class="container2 custom-container mt-3">
 		<div class="right-aligned-button">
 			<input type="submit" class="btn btn-primary" value="게시글 목록"
-				onClick="location.href='${path}/community/BoardSelect.do?cat=${cat}'">
+				onClick="location.href='${path}/community/BoardSelect?cat=${cat}'">
 		</div>
 		<div class="card p-3 mt-3">
 			<form id="myForm">
@@ -274,21 +274,21 @@
 								<c:choose>
 									<c:when test="${isManager == 1 && isWriter == 1}">
 										<li><a class="dropdown-item"
-											href="${path}/community/BoardModify.do?commId=${board.comm_id}">수정하기</a></li>
+											href="${path}/community/BoardModify?commId=${board.comm_id}">수정하기</a></li>
 										<li><a class="dropdown-item"
-											href="${path}/community/BoardDelete.do?commId=${board.comm_id}">삭제하기</a></li>
+											href="${path}/community/BoardDelete?commId=${board.comm_id}">삭제하기</a></li>
 										<li><a class="dropdown-item" onclick="copyCurrentUrl()">URL 복사</a></li>
 									</c:when>
 									<c:when test="${isManager == 1 && isWriter == 0}">
 										<li><a class="dropdown-item"
-											href="${path}/community/BoardDelete.do?commId=${board.comm_id}">삭제하기</a></li>
+											href="${path}/community/BoardDelete?commId=${board.comm_id}">삭제하기</a></li>
 										<li><a class="dropdown-item" onclick="copyCurrentUrl()">URL 복사</a></li>
 									</c:when>
 									<c:when test="${isManager == 0 && isWriter == 1}">
 										<li><a class="dropdown-item"
-											href="${path}/community/BoardModify.do?commId=${board.comm_id}">수정하기</a></li>
+											href="${path}/community/BoardModify?commId=${board.comm_id}">수정하기</a></li>
 										<li><a class="dropdown-item"
-											href="${path}/community/BoardDelete.do?commId=${board.comm_id}">삭제하기</a></li>
+											href="${path}/community/BoardDelete?commId=${board.comm_id}">삭제하기</a></li>
 										<li><a class="dropdown-item" onclick="copyCurrentUrl()">URL 복사</a></li>
 									</c:when>
 									<c:otherwise>

@@ -25,11 +25,11 @@
 
     <div class="container2 custom-container2 mt-3">
         <div class="right-aligned-button">
-            <input type="submit" class="btn btn-primary" value="문의 목록" onClick="location.href='${path}/inquiry/InquirySelect.do'">
+            <input type="submit" class="btn btn-primary" value="문의 목록" onClick="location.href='${path}/inquiry/InquirySelect'">
             <button class="btn btn-danger" onclick="deleteInquiry(${inquiry.quest_id})">삭제</button>
         </div>
         <hr>
-        <form action="${path}/inquiry/submitAnswer.do" method="post">
+        <form action="${path}/inquiry/submitAnswer" method="post">
             <div class="form-inline mb-3 mt-3">
                 <div class="input-group col">
                     <p class="form-control" id="title">${inquiry.title}</p>
@@ -73,7 +73,7 @@
 
         function deleteInquiry(questId) {
             if (confirm("이 문의를 삭제하시겠습니까?")) {
-                location.href = '${path}/inquiry/InquiryDelete.do?questId=' + questId;
+                location.href = '${path}/inquiry/InquiryDelete?questId=' + questId;
             }
         }
     </script>

@@ -29,7 +29,7 @@ public class InquiryController {
 	private AWSS3Service s3Service;
 
 	// 문의 리스트 조회
-	@GetMapping("/InquirySelect.do")
+	@GetMapping("/InquirySelect")
 	public String InquirySelect(@RequestParam(defaultValue = "1") int page,
 			@RequestParam(defaultValue = "10") int pageSize, Model model, HttpSession session) {
 
@@ -63,9 +63,9 @@ public class InquiryController {
 	}
 
 	// 문의 글 상세조회
-	@GetMapping("/InquiryDetail.do")
+	@GetMapping("/InquiryDetail")
 	public String InquiryDetail(Integer questId, Model model, HttpSession session) {
-		System.out.println("/inquiry/InquiryDetail.do 요청");
+		System.out.println("/inquiry/InquiryDetail 요청");
 
 		// user 닉네임
 		String userid = (String) session.getAttribute("userid");
@@ -95,16 +95,16 @@ public class InquiryController {
 	}
 
 	// 답변
-	@PostMapping("/submitAnswer.do")
+	@PostMapping("/submitAnswer")
 	public String submitAnswer(@RequestParam("questid") int questId, @RequestParam("answer") String answer) {
 		iService.updateAnswer(questId, answer);
-		return "redirect:/inquiry/InquiryDetail.do?questId=" + questId;
+		return "redirect:/inquiry/InquiryDetail?questId=" + questId;
 	}
 
 	// 문의 글 등록 페이지 로드
-	@GetMapping("/InquiryInsert.do")
+	@GetMapping("/InquiryInsert")
 	public void InquiryInsert(HttpSession session) {
-		System.out.println("/inquiry/InquiryInsert.do get요청");
+		System.out.println("/inquiry/InquiryInsert get요청");
 
 		// user 닉네임
 		String userid = (String) session.getAttribute("userid");
@@ -114,7 +114,7 @@ public class InquiryController {
 		}
 	}
 
-	@PostMapping("/InquiryInsert.do")
+	@PostMapping("/InquiryInsert")
 	public String InquiryInsert(QuestionDTO question, MultipartHttpServletRequest file, HttpSession session) {
 
 		// 세션에서 사용자 ID 가져오기
@@ -141,17 +141,17 @@ public class InquiryController {
 			} catch (java.io.IOException e) {
 				e.printStackTrace();
 				// 이미지 업로드 중 오류 발생 시 처리
-				return "redirect:InquiryInsertForm.do?error=upload";
+				return "redirect:InquiryInsertForm?error=upload";
 			}
 		}
 		System.out.println(question);
 
 		iService.insertInquiry(question);
-		return "redirect:InquirySelect.do";
+		return "redirect:InquirySelect";
 	}
 
 	// 문의 글 삭제
-	@GetMapping("/InquiryDelete.do")
+	@GetMapping("/InquiryDelete")
 	public String inquiryDelete(Integer questId, HttpSession session) {
 		String userId = (String) session.getAttribute("userid");
 		int isManager = iService.checkManagerById(userId);
@@ -159,12 +159,12 @@ public class InquiryController {
 
 		if (writer.equals(userId) || isManager == 1) {
 			iService.deleteInquiry(questId);
-			return "redirect:InquirySelect.do";
+			return "redirect:InquirySelect";
 		} else {
 			session.setAttribute("errorMessage", "작성자와 관리자만 삭제할 수 있습니다.");
 		}
 
-		return "redirect:InquirySelect.do";
+		return "redirect:InquirySelect";
 	}
 
 }

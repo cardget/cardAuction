@@ -54,27 +54,27 @@
 		<div class="nav-links">
 			<c:choose>
 				<c:when test="${cat == 1}">
-					<a href="${path}/auction/auctionMain.do">카드경매</a>
-					<a href="${path}/deckMakers/pokemonDeckListMain.do">티어덱 리스트</a>
+					<a href="${path}/auction/auctionMain">카드경매</a>
+					<a href="${path}/deckMakers/pokemonDeckListMain">티어덱 리스트</a>
 				</c:when>
 				<c:when test="${cat == 2}">
-					<a href="${path}/auction/auctionYMain.do">카드경매</a>
-					<a href="${path}/deckMakers/yugiohDeckListMain.do">티어덱 리스트</a>
+					<a href="${path}/auction/auctionYMain">카드경매</a>
+					<a href="${path}/deckMakers/yugiohDeckListMain">티어덱 리스트</a>
 				</c:when>
 				<c:when test="${cat == 3}">
-					<a href="${path}/auction/auctionDMain.do">카드경매</a>
-					<a href="${path}/deckMakers/digimonDeckListMain.do">티어덱 리스트</a>
+					<a href="${path}/auction/auctionDMain">카드경매</a>
+					<a href="${path}/deckMakers/digimonDeckListMain">티어덱 리스트</a>
 				</c:when>
 				<c:when test="${cat == 4}">
-					<a href="${path}/auction/auctionOMain.do">카드경매</a>
-					<a href="${path}/deckMakers/onepieceDeckListMain.do">티어덱 리스트</a>
+					<a href="${path}/auction/auctionOMain">카드경매</a>
+					<a href="${path}/deckMakers/onepieceDeckListMain">티어덱 리스트</a>
 				</c:when>
 				<c:when test="${cat == 5}">
-					<a href="${path}/auction/auctionSMain.do">카드경매</a>
+					<a href="${path}/auction/auctionSMain">카드경매</a>
 					<a href="${path}/deckMakers/">티어덱 리스트</a>
 				</c:when>
 				<c:otherwise>
-					<a href="${path}/auction/auctionMain.do">카드경매</a>
+					<a href="${path}/auction/auctionMain">카드경매</a>
 					<a href="${path}/deckMakers/">티어덱 리스트</a>
 				</c:otherwise>
 			</c:choose>
@@ -82,7 +82,7 @@
 		</div>
 		<hr>
 		<div class="breadcrumbs">
-			<a href="../main.do">홈</a> &gt;
+			<a href="../main">홈</a> &gt;
 			<select id="catSelect" name="cat" onchange="changeCategory()">
 				<option value="null" ${cat == null ? 'selected' : ''}></option>
 				<option value="1" ${cat == 1 ? 'selected' : ''}>포켓몬</option>
@@ -95,7 +95,7 @@
 		</div>
 		<div class="form-inline">
 			<input type="submit" class="btn-primary" value="글 작성"
-				onClick="location.href='${path}/community/BoardInsert.do'">
+				onClick="location.href='${path}/community/BoardInsert'">
 			<div class="search-elements">
 				<select id="sortSelect" name="sort">
 					<option value="date" ${sort == 'date' ? 'selected' : ''}>날짜순</option>
@@ -126,7 +126,7 @@
 			<tbody>
 				<c:forEach var="board" items="${blist}">
 					<tr
-						onClick="location.href='${path}/community/BoardDetail.do?commId=${board.comm_id}'">
+						onClick="location.href='${path}/community/BoardDetail?commId=${board.comm_id}'">
 						<td><c:choose>
 								<c:when test="${board.tag == '공지'}">
 									<div class="custom-notice-icon">공지</div>
@@ -155,7 +155,7 @@
 			<c:forEach var="i" begin="1"
 				end="${(totalCount / pageSize) + (totalCount % pageSize > 0 ? 1 : 0)}">
 				<a
-					href="${path}/community/BoardSelect.do?page=${i}&pageSize=${pageSize}&sort=${sort}&keyword=${keyword}&tag=${tag}&cat=${cat}"
+					href="${path}/community/BoardSelect?page=${i}&pageSize=${pageSize}&sort=${sort}&keyword=${keyword}&tag=${tag}&cat=${cat}"
 					class="${i == currentPage ? 'active' : ''}">${i}</a>
 			</c:forEach>
 		</div>
@@ -171,7 +171,7 @@
 			if (cat === "null") {
 				cat = "";
 			}
-			var url = "${path}/community/BoardSelect.do?page=1&pageSize=${pageSize}&sort="
+			var url = "${path}/community/BoardSelect?page=1&pageSize=${pageSize}&sort="
 					+ sort
 					+ "&keyword="
 					+ encodeURIComponent(keyword)
