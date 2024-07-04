@@ -36,57 +36,54 @@ public class CommunityController {
 	// 게시글 리스트 조회 (조건검색 + 페이징)
 	@GetMapping("/BoardSelect.do")
 	public String BoardSelect(@RequestParam(defaultValue = "1") int page,
-	                          @RequestParam(defaultValue = "10") int pageSize,
-	                          @RequestParam(defaultValue = "date") String sort,
-	                          @RequestParam(required = false) String keyword,
-	                          @RequestParam(defaultValue = "all") String tag,
-	                          @RequestParam(required = false) String cat,
-	                          Model model, HttpSession session) {
-	    System.out.println("/community/BoardSelect.do get 요청");
+			@RequestParam(defaultValue = "10") int pageSize, @RequestParam(defaultValue = "date") String sort,
+			@RequestParam(required = false) String keyword, @RequestParam(defaultValue = "all") String tag,
+			@RequestParam(required = false) String cat, Model model, HttpSession session) {
+		System.out.println("/community/BoardSelect.do get 요청");
 
-	    // cat 값이 빈 문자열인 경우 null로 처리
-	    Integer category = (cat == null || cat.isEmpty() || "null".equals(cat)) ? null : Integer.parseInt(cat);
+		// cat 값이 빈 문자열인 경우 null로 처리
+		Integer category = (cat == null || cat.isEmpty() || "null".equals(cat)) ? null : Integer.parseInt(cat);
 
-	    // user 닉네임
-	    String userid = (String) session.getAttribute("userid");
-	    if (userid != null) {
-	        UserDTO user = cService.selectNicknameByUserDTOId(userid);
-	        session.setAttribute("user", user);
-	    }
-	    
-	    // 페이징
-	    int totalCount = (keyword != null && !keyword.isEmpty()) || (tag != null && !tag.equals("all"))
-	            ? cService.getTotalBoardCount(keyword, tag, category)
-	            : cService.getTotalBoardCount(category);
+		// user 닉네임
+		String userid = (String) session.getAttribute("userid");
+		if (userid != null) {
+			UserDTO user = cService.selectNicknameByUserDTOId(userid);
+			session.setAttribute("user", user);
+		}
 
-	    // 공지글
-	    List<BoardListDTO> notices = category != null ? cService.selectTopNotices(category) : cService.selectTopNotices();
+		// 페이징
+		int totalCount = (keyword != null && !keyword.isEmpty()) || (tag != null && !tag.equals("all"))
+				? cService.getTotalBoardCount(keyword, tag, category)
+				: cService.getTotalBoardCount(category);
 
-	    // 일반 게시글 (공지글 제외)
-	    List<BoardListDTO> blist = cService.selectBoardList(page, pageSize, sort, keyword, tag, category);
-	    blist.removeIf(board -> "공지".equals(board.getTag()));
+		// 공지글
+		List<BoardListDTO> notices = category != null ? cService.selectTopNotices(category)
+				: cService.selectTopNotices();
 
-	    // 일반 게시글의 sort_num을 1부터 설정
-	    int sortNum = 1;
-	    for (BoardListDTO board : blist) {
-	        board.setSort_num(sortNum++);
-	    }
+		// 일반 게시글 (공지글 제외)
+		List<BoardListDTO> blist = cService.selectBoardList(page, pageSize, sort, keyword, tag, category);
+		blist.removeIf(board -> "공지".equals(board.getTag()));
 
-	    // 공지글을 일반 게시글 상위에 병합
-	    blist.addAll(0, notices);
+		// 일반 게시글의 sort_num을 1부터 설정
+		int sortNum = 1;
+		for (BoardListDTO board : blist) {
+			board.setSort_num(sortNum++);
+		}
 
-	    model.addAttribute("blist", blist);
-	    model.addAttribute("currentPage", page);
-	    model.addAttribute("totalCount", totalCount);
-	    model.addAttribute("pageSize", pageSize);
-	    model.addAttribute("sort", sort);
-	    model.addAttribute("keyword", keyword);
-	    model.addAttribute("tag", tag);
-	    model.addAttribute("cat", category);
-	    
-	    return "community/BoardSelect";
+		// 공지글을 일반 게시글 상위에 병합
+		blist.addAll(0, notices);
+
+		model.addAttribute("blist", blist);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("pageSize", pageSize);
+		model.addAttribute("sort", sort);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("tag", tag);
+		model.addAttribute("cat", category);
+
+		return "community/BoardSelect";
 	}
-
 
 	// 게시글 상세 조회
 	@GetMapping("/BoardDetail.do")
@@ -260,18 +257,6 @@ public class CommunityController {
 		System.out.println(replie);
 
 		int result = cService.insertComment(replie);
-		if (result > 0) {
-			return "success";
-		} else {
-			return "fail";
-		}
-	}
-
-	// 댓글 삭제
-	@PostMapping("replieId")
-	@ResponseBody
-	public String deleteReplies(@RequestParam Integer replieId) {
-		int result = cService.deleteReplies(replieId);
 		if (result > 0) {
 			return "success";
 		} else {
