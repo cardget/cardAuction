@@ -36,11 +36,11 @@
 		<div class="sub-category">
 			<ul class="sub-category-box">
 				<li class="sub-category-item"><a
-					href="${path}/auction/auctionMain.do">카드경매</a></li>
+					href="${path}/auction/auctionMain">카드경매</a></li>
 				<li class="main-category-item"><a
-					href="${path}/deckMakers/pokemonDeckListMain.do">티어덱리스트</a></li>
+					href="${path}/deckMakers/pokemonDeckListMain">티어덱리스트</a></li>
 				<li class="main-category-item"><a
-					href="${path}/community/BoardSelect.do?cat=1">커뮤니티</a></li>
+					href="${path}/community/BoardSelect?cat=1">커뮤니티</a></li>
 			</ul>
 		</div>
 		<div class="sort-container">
@@ -49,7 +49,7 @@
 					<li class="sort-item"><a href="main.html">홈 > </a><a href="#">유희왕
 							> </a><a href="#">티어덱리스트</a></li>
 					<li class="sort-item">정렬기준 : <select class="sort-select"
-						onchange="location.href='${path}/deckMakers/yugiohDeckListMain.do?sort=' + this.value">
+						onchange="location.href='${path}/deckMakers/yugiohDeckListMain?sort=' + this.value">
 							<option value="create_date"
 								${sort == 'create_date' ? 'selected' : ''}>최신순</option>
 							<option value="recommend"
@@ -63,7 +63,7 @@
 			<ul class="option-box">
 				<li class="option-item">
 					<form id="conditionForm"
-						action="${path}/deckMakers/yugiohDeckListMain.do" method="get">
+						action="${path}/deckMakers/yugiohDeckListMain" method="get">
 						<input type="text" class="option-search" id="option-search"
 							name="query" placeholder="덱이름 검색">
 						<button type="submit" class="search-btn-default">검색</button>
@@ -71,7 +71,7 @@
 				</li>
 				<li class="option-item">
 					<button type="button" class="create-deck"
-						onclick="location.href='${path}/deckMakers/yugiohDeckMaker.do'">덱
+						onclick="location.href='${path}/deckMakers/yugiohDeckMaker'">덱
 						생성</button>
 				</li>
 			</ul>
@@ -83,7 +83,7 @@
 					<div class="deck-overlay-container">
 						<img src="${deck.CARD_IMAGE}" class="ycard">
 						<div class="overlay-text"
-							onclick="location.href='${pageContext.request.contextPath}/deckMakers/yugiohDeckListDetail.do?deck_id=${deck.DECK_ID}'">
+							onclick="location.href='${path}/deckMakers/yugiohDeckListDetail?deck_id=${deck.DECK_ID}'">
 							<div class="deck-number">${deck.DECK_TITLE}</div>
 							<div>
 								<div class="username">${deck.USER_ID}</div>
