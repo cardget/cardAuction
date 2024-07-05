@@ -132,8 +132,7 @@
 }
 
 .comment-div {
-    height: auto;
-    min-height: calc(100vh - 300px);
+    height: 550px !important;
     border: 2px solid #C7C8C9;
     padding: .375rem .75rem;
     border-radius: .25rem;
