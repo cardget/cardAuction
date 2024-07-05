@@ -95,7 +95,7 @@
 		</div>
 		<div class="form-inline">
 			<input type="submit" class="btn-primary" value="글 작성"
-				onClick="location.href='${path}/community/BoardInsert'">
+				onClick="location.href='${path}/community/BoardInsert.do'">
 			<div class="search-elements">
 				<select id="sortSelect" name="sort">
 					<option value="date" ${sort == 'date' ? 'selected' : ''}>날짜순</option>

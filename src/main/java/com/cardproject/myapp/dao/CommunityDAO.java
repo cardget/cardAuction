@@ -137,6 +137,7 @@ public class CommunityDAO {
 
 	// 매니저 여부
 	public int checkManagerByIdInCommunity(String userId) {
+		System.out.println(userId);
 		return sqlSession.selectOne(namespace + "checkManagerByIdInCommunity", userId);
 	}
 
