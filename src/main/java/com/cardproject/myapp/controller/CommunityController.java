@@ -166,7 +166,7 @@ public class CommunityController {
 	}
 
 	// 게시글 수정 페이지 로드
-	@GetMapping("/BoardModify")
+	@GetMapping("/BoardModify.do")
 	public String BoardModify(Integer commId, Model model) {
 		System.out.println("/community/BoardModify get 요청");
 		model.addAttribute("board", cService.selectBoardByCommId(commId));
@@ -174,7 +174,7 @@ public class CommunityController {
 	}
 
 	// 게시글 수정
-	@PostMapping("/BoardModify")
+	@PostMapping("/BoardModify.do")
 	public String BoardModify(CommunityDTO board, MultipartHttpServletRequest file, HttpSession session) {
 		System.out.println("/community/BoardModify post 요청");
 
@@ -202,7 +202,7 @@ public class CommunityController {
 	}
 
 	// 게시글 삭제
-	@GetMapping("/BoardDelete")
+	@GetMapping("/BoardDelete.do")
 	public String BoardDelete(Integer commId) {
 		cService.deleteRepliesByCommId(commId); // 게시글에 대한 댓글 전부 삭제(cascade)
 		cService.deleteBoard(commId);
@@ -210,7 +210,7 @@ public class CommunityController {
 	}
 
 	// 추천
-	@GetMapping("/recommendUp")
+	@GetMapping("/recommendUp.do")
 	@ResponseBody
 	public String Recommend(Integer commId) {
 		System.out.println("/community/recommendUp 요청");
@@ -243,7 +243,7 @@ public class CommunityController {
 	}
 
 	// 댓글 작성
-	@PostMapping("/insertReplie")
+	@PostMapping("/insertReplie.do")
 	@ResponseBody
 	public String insertReplie(@RequestParam Integer commId, @RequestParam String cmt, @RequestParam String userId) {
 		System.out.println("/community/insertReplie 요청");
@@ -273,7 +273,7 @@ public class CommunityController {
 	}
 
 	// 댓글 삭제
-	@PostMapping("/deleteComment")
+	@PostMapping("/deleteComment.do")
 	@ResponseBody
 	public String DeleteComment(@RequestParam int replyId, @RequestParam int commId) {
 		System.out.println("replyId : 테스트" + replyId);

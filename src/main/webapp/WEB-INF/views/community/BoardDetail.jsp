@@ -56,7 +56,7 @@
 	function fRecommendUp(event) {
 		event.preventDefault();
 		$.ajax({
-			url : path + "/community/recommendUp",
+			url : path + "/community/recommendUp.do",
 			data : {
 				"commId" : commId
 			},
@@ -174,7 +174,7 @@
 		event.preventDefault();
 		var cmt = $("#commentInput").val();
 		$.ajax({
-			url : path + "/community/insertReplie",
+			url : path + "/community/insertReplie.do",
 			data : {
 				"commId" : commId,
 				"cmt" : cmt,
@@ -211,7 +211,7 @@
 	function deleteComment(replyId) {
         if (confirm("댓글을 삭제하시겠습니까?")) {
             $.ajax({
-                url: path + "/community/deleteComment",
+                url: path + "/community/deleteComment.do",
                 type: "post",
                 data: {
                     "replyId": replyId,
@@ -284,21 +284,21 @@
 								<c:choose>
 									<c:when test="${isManager == 1 && isWriter == 1}">
 										<li><a class="dropdown-item"
-											href="${path}/community/BoardModify?commId=${board.comm_id}">수정하기</a></li>
+											href="${path}/community/BoardModify.do?commId=${board.comm_id}">수정하기</a></li>
 										<li><a class="dropdown-item"
-											href="${path}/community/BoardDelete?commId=${board.comm_id}">삭제하기</a></li>
+											href="${path}/community/BoardDelete.do?commId=${board.comm_id}">삭제하기</a></li>
 										<li><a class="dropdown-item" onclick="copyCurrentUrl()">URL 복사</a></li>
 									</c:when>
 									<c:when test="${isManager == 1 && isWriter == 0}">
 										<li><a class="dropdown-item"
-											href="${path}/community/BoardDelete?commId=${board.comm_id}">삭제하기</a></li>
+											href="${path}/community/BoardDelete.do?commId=${board.comm_id}">삭제하기</a></li>
 										<li><a class="dropdown-item" onclick="copyCurrentUrl()">URL 복사</a></li>
 									</c:when>
 									<c:when test="${isManager == 0 && isWriter == 1}">
 										<li><a class="dropdown-item"
-											href="${path}/community/BoardModify?commId=${board.comm_id}">수정하기</a></li>
+											href="${path}/community/BoardModify.do?commId=${board.comm_id}">수정하기</a></li>
 										<li><a class="dropdown-item"
-											href="${path}/community/BoardDelete?commId=${board.comm_id}">삭제하기</a></li>
+											href="${path}/community/BoardDelete.do?commId=${board.comm_id}">삭제하기</a></li>
 										<li><a class="dropdown-item" onclick="copyCurrentUrl()">URL 복사</a></li>
 									</c:when>
 									<c:otherwise>

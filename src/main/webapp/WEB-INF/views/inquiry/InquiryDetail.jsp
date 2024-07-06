@@ -29,7 +29,7 @@
             <button class="btn btn-danger" onclick="deleteInquiry(${inquiry.quest_id})">삭제</button>
         </div>
         <hr>
-        <form action="${path}/inquiry/submitAnswer" method="post">
+        <form action="${path}/inquiry/submitAnswer.do" method="post">
             <div class="form-inline mb-3 mt-3">
                 <div class="input-group col">
                     <p class="form-control" id="title">${inquiry.title}</p>
@@ -64,7 +64,6 @@
         $(document).ready(function() {
             <c:if test="${not empty errorMessage}">
                 alert("${errorMessage}");
-                <%-- 세션에서 에러 메시지를 제거합니다 --%>
                 <%
                     session.removeAttribute("errorMessage");
                 %>
@@ -73,7 +72,7 @@
 
         function deleteInquiry(questId) {
             if (confirm("이 문의를 삭제하시겠습니까?")) {
-                location.href = '${path}/inquiry/InquiryDelete?questId=' + questId;
+                location.href = '${path}/inquiry/InquiryDelete.do?questId=' + questId;
             }
         }
     </script>

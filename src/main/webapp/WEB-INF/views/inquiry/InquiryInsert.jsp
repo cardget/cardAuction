@@ -25,7 +25,7 @@
     </c:choose>
 
     <div class="container2 custom-container2 mt-3">
-        <form action="${path}/inquiry/InquiryInsert" method="post" id="myForm" enctype="multipart/form-data" onsubmit="setCheckboxValue()">
+        <form action="${path}/inquiry/InquiryInsert.do" method="post" id="myForm" enctype="multipart/form-data" onsubmit="setCheckboxValue()">
             <div class="right-aligned-button">
                 <input type="submit" class="btn btn-primary" value="문의하기">
             </div>
