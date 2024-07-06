@@ -132,5 +132,10 @@ public class CommunityService {
 	public String getWriterByCommId(int commId) {
 		return communityDao.getWriterByCommId(commId);
 	}
+	
+	// 댓글 삭제
+	public int deleteComment(int replyId) {
+		return communityDao.deleteComment(replyId);
+	}
 
 }

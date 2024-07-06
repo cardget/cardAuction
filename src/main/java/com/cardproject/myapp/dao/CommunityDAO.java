@@ -157,4 +157,9 @@ public class CommunityDAO {
 	public String getWriterByCommId(int commId) {
 		return sqlSession.selectOne(namespace + "getWriterByCommId", commId);
 	}
+	
+	// 댓글 삭제
+	public int deleteComment(int replyId) {
+		return sqlSession.delete(namespace + "deleteComment", replyId);
+	}
 }

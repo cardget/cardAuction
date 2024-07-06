@@ -21,6 +21,7 @@
 	var userid = '${userid}';
 	var commId = '${board.comm_id}';
 	const path = '${path}';
+	var cat = '${board.cat}';
 
 	$(function() {
 		$("#recommendUp").on("click", fRecommendUp);
@@ -87,20 +88,23 @@
             commentBox.empty();
             $.each(data, function(index, board) {
                 var profileImage = board.profile_image.startsWith('http') ? board.profile_image : path + board.profile_image;
-                if (index < 5) { // 최대 5개만 먼저 보여줌
-                    var createDate = new Date(board.create_time).toLocaleString(); // 시간 변환
-                    var card = '<div class="commentCardBorder m">'
-                            + '<div class="card-body d-flex">'
-                            + '<img src="' + profileImage + '" onerror="handleImageError(this)" alt="이미지" class="comment-image me-2">'
-                            + '<div>'
-                            + '<h5 class="card-title">' + board.nickname + '</h5>'
-                            + '<p class="card-text">' + board.cmt + '</p>'
-                            + '<p class="text-muted">작성일 : ' + createDate + '</p>'
-                            + '</div>'
-                            + '</div>'
-                            + '</div>';
-                    commentBox.append(card);
+                var createDate = new Date(board.create_time).toLocaleString(); // 시간 변환
+                var card = '<div class="commentCardBorder m">'
+                        + '<div class="card-body d-flex">'
+                        + '<img src="' + profileImage + '" onerror="handleImageError(this)" alt="이미지" class="comment-image me-2">'
+                        + '<div>'
+                        + '<h5 class="card-title">' + board.nickname + '</h5>'
+                        + '<p class="card-text">' + board.cmt + '</p>'
+                        + '<p class="text-muted">작성일 : ' + createDate + '</p>';
+                
+                if (board.user_id === userid) { // 작성자만 삭제 버튼
+                    card += '<button class="btn btn-danger btn-sm" onclick="deleteComment(' + board.reply_id + ')">삭제</button>';
                 }
+
+                card += '</div>'
+                      + '</div>'
+                      + '</div>';
+                commentBox.append(card);
             });
 
             if (data.length > 5) {
@@ -115,20 +119,23 @@
                     $(this).parent().remove(); // 더보기 버튼 제거
                     $.each(data, function(index, board) {
                         var profileImage = board.profile_image.startsWith('http') ? board.profile_image : path + board.profile_image;
-                        if (index >= 5) { // 나머지 댓글들 불러오기
-                            var createDate = new Date(board.create_time).toLocaleString(); // 시간 변환
-                            var card = '<div class="commentCardBorder">'
-                                    + '<div class="card-body d-flex">'
-                                    + '<img src="' + profileImage + '" onerror="handleImageError(this)" alt="이미지" class="comment-image me-2">'
-                                    + '<div>'
-                                    + '<h5 class="card-title">' + board.nickname + '</h5>'
-                                    + '<p class="card-text">' + board.cmt + '</p>'
-                                    + '<p class="text-muted">작성일 : ' + createDate + '</p>'
-                                    + '</div>'
-                                    + '</div>'
-                                    + '</div>';
-                            commentBox.append(card);
+                        var createDate = new Date(board.create_time).toLocaleString(); // 시간 변환
+                        var card = '<div class="commentCardBorder">'
+                                + '<div class="card-body d-flex">'
+                                + '<img src="' + profileImage + '" onerror="handleImageError(this)" alt="이미지" class="comment-image me-2">'
+                                + '<div>'
+                                + '<h5 class="card-title">' + board.nickname + '</h5>'
+                                + '<p class="card-text">' + board.cmt + '</p>'
+                                + '<p class="text-muted">작성일 : ' + createDate + '</p>';
+                        
+                        if (board.user_id === userid) { // 작성자만 삭제 버튼을 볼 수 있도록 조건 추가
+                            card += '<button class="btn btn-danger btn-sm" onclick="deleteComment(' + board.reply_id + ')">삭제</button>';
                         }
+
+                        card += '</div>'
+                              + '</div>'
+                              + '</div>';
+                        commentBox.append(card);
                     });
                 });
             }
@@ -138,6 +145,7 @@
         }
     });
 }
+
 
 	// 댓글 수 조회
 	function loadCommentsCount() {
@@ -200,28 +208,30 @@
 	}
 
 	// 댓글 삭제
-	function deleteComment(replieId) {
-		if (confirm("댓글을 삭제하시겠습니까?")) {
-			$.ajax({
-				url : path + "/community/deleteComment",
-				data : {
-					"replieId" : replieId
-				},
-				type : "post",
-				success : function(response) {
-					if (response === "success") {
-						alert("댓글이 삭제되었습니다.");
-						loadComments(); // 댓글 목록을 다시 로드하여 변경 사항 반영
-					} else {
-						alert("댓글 삭제에 실패하였습니다.");
-					}
-				},
-				error : function() {
-					alert("댓글 삭제 중 오류가 발생했습니다.");
-				}
-			});
-		}
-	}
+	function deleteComment(replyId) {
+        if (confirm("댓글을 삭제하시겠습니까?")) {
+            $.ajax({
+                url: path + "/community/deleteComment",
+                type: "post",
+                data: {
+                    "replyId": replyId,
+                    "commId": commId
+                },
+                success: function(response) {
+                    console.log(response);
+                    if (response === "success") {
+                        alert("댓글이 삭제되었습니다.");
+                        window.location.href = path + "/community/BoardDetail?commId=" + commId; //
+                    } else {
+                        alert("댓글 삭제에 실패하였습니다.");
+                    }
+                },
+                error: function() {
+                    alert("댓글 삭제 중 오류가 발생했습니다.");
+                }
+            });
+        }
+    }
 
 	// 댓글 글자수
 	function updateCharCount() {
