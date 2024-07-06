@@ -108,10 +108,10 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.7); /* 검정색, 80% 투명도 */
     display: none; /* 기본적으로 숨김 */
-    z-index: 1; /* 오버레이가 이미지 위에 표시되도록 함 */
-    display: flex;
+    z-index: 1; /* 오버레이가 이미지 위에 표시되도록 함
+    
     align-items: center;
-    justify-content: center;
+    justify-content: center; */
     color: white;
     font-size: 24px;
     font-weight: bold;

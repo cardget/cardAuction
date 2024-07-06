@@ -280,27 +280,89 @@
             #{isWin0BidIdArr}
         </foreach>
 	</update>
-	<!-- 낙찰금만 뽑는 Bid -->
+	<!-- 전부 유찰된 biddings 3로 update 
+	<update id="biddingUpdate3" parameterType="int">
+		UPDATE biddings
+		SET IS_WIN = 3
+		WHERE BID_ID IN
+		<foreach item="isWin0BidIdArr" collection="list" open="(" close=")" separator=",">
+            #{isWin0BidIdArr}
+        </foreach>
+	</update>-->
+	<!-- 유찰금보다 큰 낙찰금만 뽑는 Bid -->
 	<select id="secondPrice" resultType="biddingvo">
 		
 		SELECT BID_ID, PRICE, USER_ID, ITEM_ID, BID_TIME, IS_WIN
-		 FROM (
-		SELECT b.*,
-		DENSE_RANK() OVER ( PARTITION BY b.ITEM_ID ORDER BY b.PRICE DESC) AS RNK
-		FROM biddings b
-		WHERE IS_WIN != 0
-		ORDER BY ITEM_ID , PRICE DESC) 
+		FROM (
+		    SELECT b.BID_ID, b.PRICE, b.USER_ID, b.ITEM_ID, b.BID_TIME, b.IS_WIN,
+		           DENSE_RANK() OVER (PARTITION BY b.ITEM_ID ORDER BY b.PRICE DESC) AS RNK
+		    FROM biddings b
+		    JOIN items i ON b.item_id = i.item_id
+		    WHERE b.IS_WIN != 0
+		      AND b.PRICE <![CDATA[>]]> i.min_price
+		)
 		WHERE RNK = 2
+		
 		UNION
-		SELECT *
-		  FROM biddings
-		  WHERE IS_WIN = 1
-		      AND ITEM_ID NOT IN (SELECT ITEM_ID FROM biddings WHERE IS_WIN = 2 GROUP BY ITEM_ID)
+		
+		SELECT b.BID_ID, b.PRICE, b.USER_ID, b.ITEM_ID, b.BID_TIME, b.IS_WIN
+		FROM biddings b
+		JOIN items i ON b.item_id = i.item_id
+		WHERE b.IS_WIN = 1
+		  AND b.ITEM_ID NOT IN (
+		      SELECT ITEM_ID 
+		      FROM biddings 
+		      WHERE IS_WIN = 2 
+		      GROUP BY ITEM_ID
+		  )
+		  AND b.PRICE <![CDATA[>]]> i.min_price
 	</select>
+	<!-- 유찰금보다 작은 낙찰금만 뽑는 Bid -->
+	<select id="secondPriceNot" resultType="biddingvo">
+		
+		SELECT BID_ID, PRICE, USER_ID, ITEM_ID, BID_TIME, IS_WIN
+		FROM (
+		    SELECT b.BID_ID, b.PRICE, b.USER_ID, b.ITEM_ID, b.BID_TIME, b.IS_WIN,
+		           DENSE_RANK() OVER (PARTITION BY b.ITEM_ID ORDER BY b.PRICE DESC) AS RNK
+		    FROM biddings b
+		    JOIN items i ON b.item_id = i.item_id
+		    WHERE b.IS_WIN != 0
+		      AND b.PRICE <![CDATA[<]]> i.min_price
+		)
+		WHERE RNK = 2
+		
+		UNION
+		
+		SELECT b.BID_ID, b.PRICE, b.USER_ID, b.ITEM_ID, b.BID_TIME, b.IS_WIN
+		FROM biddings b
+		JOIN items i ON b.item_id = i.item_id
+		WHERE b.IS_WIN = 1
+		  AND b.ITEM_ID NOT IN (
+		      SELECT ITEM_ID 
+		      FROM biddings 
+		      WHERE IS_WIN = 2 
+		      GROUP BY ITEM_ID
+		  )
+		  AND b.PRICE <![CDATA[<]]> i.min_price
+	</select>
+	<!-- 전부 유찰된 biddings 3로 update -->
+	<update id="biddingUpdate3" parameterType="int">
+		UPDATE biddings
+		SET is_win = 3
+		WHERE item_id IN
+		<foreach item="isWinUpdate3ForBidIdArr" collection="list" open="(" close=")" separator=",">
+            #{isWinUpdate3ForBidIdArr}
+        </foreach>
+	</update>
 	<!-- 낙찰insert -->
 	<insert id="tradeInsert" parameterType="tradevo">
 		insert into trades(trade_id,user_id,item_id,price,trade_type,is_recommend,stage,is_success)
 		values (TRADE_SEQ.NEXTVAL, #{user_id},#{item_id},#{price},#{trade_type},#{is_recommend},#{stage},#{is_success})
+	</insert>
+	<!-- 알림 insert -->
+	<insert id="notificationInsert" parameterType="map">
+		INSERT INTO notifications (notification_id,cmt,user_id,item_id)
+		VALUES (NOTIFICATION_SEQ.NEXTVAL,#{cmt},#{user_id},#{item_id})
 	</insert>
 	<!-- 거래내역에 item_id를 가진 낙찰이 있는지 확인 -->
 	<select id="isTradeExist" parameterType="int" resultType="tradevo">
@@ -320,6 +382,7 @@
 	<select id="selectPCard" resultType="pokemonvo">
 		select * from pokemon
 	</select>
+	<!-- 포켓몬 카드 검색하기 -->
 	<select id="selectPRight" parameterType="String" resultType="pokemonvo">
 		SELECT * FROM pokemon
         WHERE card_name LIKE '%' || #{cardKeyword} || '%'

@@ -191,7 +191,7 @@ public class AuctionController {
 		}
 
 		aucs.itemInsert(item);
-		return "redirect:auctionMain.do";
+		return "redirect:auctionMain";
 
 	}
 

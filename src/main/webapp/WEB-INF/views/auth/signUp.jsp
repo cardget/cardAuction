@@ -19,7 +19,7 @@
 <body>
 	<div style="text-align: left; position: relative; margin-bottom: 30px">
 	<div class="logo-container">
-		<img src="${path}/resources/image/logo.png" alt="로고이미지" height=41 onclick="location.href='../main.do'" style="top:20px;">
+		<img src="${path}/resources/image/logo.png" alt="로고이미지" height=41 onclick="location.href='../main'" style="top:20px;">
 	</div>	    
 	    <h5 style="position: absolute; left: 435px; top: 25px; margin: 0;">회원 가입</h5>
 	</div>
@@ -66,7 +66,7 @@
 
         <h4>회원정보 입력</h4>
         <hr style="border: 1px solid blue; margin-bottom: 25px;">
-        <form action="${path}/auth/insertSignUp.do" class="custom-form" onsubmit="return checkPasswordMatch()" method="post" enctype="multipart/form-data">
+        <form action="${path}/auth/insertSignUp" class="custom-form" onsubmit="return checkPasswordMatch()" method="post" enctype="multipart/form-data">
 		    <div class="form-group">
 		        <label for="user_name" class="input-label">이름</label>
 		        <input type="text" id="user_name" name="user_name" required class="input-field" required>

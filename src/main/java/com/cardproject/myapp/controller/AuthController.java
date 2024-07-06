@@ -29,12 +29,12 @@ public class AuthController {
 	@Autowired
 	private AWSS3Service s3Service;
 
-	@GetMapping("/signUp.do")
+	@GetMapping("/signUp")
 	public void signUp() {
 		System.out.println("signUp page");
 	}	
 	
-	@PostMapping("/insertSignUp.do")
+	@PostMapping("/insertSignUp")
     public String profileUpload(@RequestParam(value= "profile_image_name", required=false) MultipartFile file, Model model, UserDTO user ) {
 		
 		String originalFileName = file.getOriginalFilename();
@@ -52,23 +52,23 @@ public class AuthController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				model.addAttribute("error","이미지 업로드 중 오류가 발생했습니다.");
-				return "redirect:signUp.do";
+				return "redirect:signUp";
 			}    		
     	}else {
     		user.setProfile_image(null);
     	}   	    
     	
     	aService.insertSignUp(user);
-    	return "redirect:login.do";
+    	return "redirect:login";
     }
 	
 	
-	@GetMapping("/login.do")
+	@GetMapping("/login")
 	public void login() {
 		System.out.println("login page");
 	}
 
-	@PostMapping("/login.do")
+	@PostMapping("/login")
 	public String loginCheck(@RequestParam("userid") String userid,
 							 @RequestParam("password") String password,
 							 HttpSession session) {
@@ -77,10 +77,10 @@ public class AuthController {
 		
 		if (user == null) {
 			session.setAttribute("loginResult", "로그인 실패 : 유효하지 않은 아이디 또는 패스워드");
-			return "redirect:login.do";
+			return "redirect:login";
 		}else if(user.getIs_able()==0) {
 			session.setAttribute("loginResult", "로그인 실패 : 해당 아이디로 된 정보를 찾을 수 없습니다.");
-			return "redirect:login.do";
+			return "redirect:login";
 		}		
 		else {
 			// login success
@@ -88,27 +88,27 @@ public class AuthController {
 			session.setAttribute("userid", user.getUser_id());
 			session.setAttribute("nickname", user.getNickname());
 			session.setAttribute("isAdmin", user.getIs_admin());
-			return "redirect:../main.do";
+			return "redirect:../main";
 		}
 	}
 	
 	@GetMapping("/logout.do")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "redirect:login.do";
+		return "redirect:login";
 	}	
 
-	@GetMapping("/findId.do")
+	@GetMapping("/findId")
 	public void findId() {
 		System.out.println("findId Page");
 	}	
 	
-	@GetMapping("/findIdResult.do")
+	@GetMapping("/findIdResult")
 	public void findIdResult() {
 		System.out.println("findIdResult page");
 	}
 	
-	@PostMapping("/findIdResult.do")
+	@PostMapping("/findIdResult")
 	@ResponseBody
 	public Map<String, String> findIdResult(@RequestParam("userName") String userName, @RequestParam("phone_number") String phoneNumber) {
 	    String userId = aService.findUserId(userName, phoneNumber);
@@ -130,19 +130,19 @@ public class AuthController {
 //		System.out.println("findPassword page");
 //	}
 
-	@GetMapping("/resetPassword.do")
+	@GetMapping("/resetPassword")
 	public String resetPassword(@RequestParam(value = "userId", required = false) String userId, Model model) {		
 		model.addAttribute("userId",userId);
 		System.out.println("resetPassword page");
 		return "auth/resetPassword";
 	}
 	
-	@PostMapping("/updatePassword.do")
+	@PostMapping("/updatePassword")
     public String updatePassword(@RequestParam("userId") String userId, @RequestParam("password") String password,
     		Model model, RedirectAttributes redirectAttributes) {        
 		aService.updatePassword(userId, password);        
         redirectAttributes.addFlashAttribute("message", "회원정보가 성공적으로 수정되었습니다.");
-        return "redirect:login.do";
+        return "redirect:login";
     }
 	
 	@GetMapping("/smsAPI")
