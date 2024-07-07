@@ -239,9 +239,11 @@ function checkPasswordMatch() {
 	if(!isValidPassword(password)){
 		message.style.color = 'red';
         message.textContent = '비밀번호는 영문, 숫자, 특수문자 중 두 가지 이상을 포함하여 6~30자로 작성해야 합니다.';
+        return false;
     }else if (password !== confirmPassword) {
         message.style.color = 'red';
         message.textContent = '비밀번호가 일치하지 않습니다. 다시 입력해주세요.';
+        return false;
     } else {
         message.style.color = 'green';
         message.textContent = '일치하는 비밀번호입니다.';
