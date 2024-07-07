@@ -271,13 +271,13 @@ document.addEventListener("DOMContentLoaded", function() {
 // 찾은 아이디값을 비밀번호 재설정 페이지로 가져감
 function goToResetPassword() {
     var userId = document.getElementById("id").value;
-    location.href = "${path}/auth/resetPassword.do?userId=" + userId;
+    location.href = "${path}/auth/resetPassword?userId=" + userId;
 }
 
 // 찾은 아이디값을 로그인 페이지로 가져감
 function goToLogin() {
     var userId = document.getElementById("id").value;
-    location.href = "${path}/auth/login.do?userId=" + userId;
+    location.href = "${path}/auth/login?userId=" + userId;
 }
 
 

@@ -75,7 +75,7 @@
 		    <div>                
 		        <div class="form-group">
 		            <label class="input-label">전화번호</label>
-		            <input type="text" id="phone_number" name="phone_number" class="input-field" required>
+		            <input type="text" id="phone_number" name="phone_number" class="input-field" placeholder="숫자만 입력" required>
 		            <button type="button" class="check-button" onclick="sendCode()">인증번호 발송</button>
 		            <span id="smsSendNotiMessage" style="margin-left: 10px; margin-top: 8px; font-size: 12px;"></span>
 		            <input type="text" id="verificationCode" class="input-field" style="margin-left: 190px;" placeholder="인증번호 입력">
