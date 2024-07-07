@@ -3,7 +3,10 @@
 
 
 body {
-	font-family: 'Pretendard Variable', sans-serif;
+	font-family: "Pretendard Variable", Pretendard, -apple-system,
+		BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
+		"Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic",
+		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 	margin: 0;
 	display: flex;
 	flex-direction: column;
@@ -434,4 +437,24 @@ select {
 }
 .sort-right span {
         margin-right: 10px;
+}
+.null-Info{
+	margin:0 auto;
+	
+	font-size:40px;
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center; 
+    
+}
+.error-icon-null{
+	width: 34px;
+    height: 34px;
+    margin-right: 8px;
+}
+.null-Info span {
+    display: inline-block;
+    vertical-align: middle; 
+    color:#CCC7C0;
 }

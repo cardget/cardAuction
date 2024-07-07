@@ -11,6 +11,8 @@
 <title>카드득</title>
 <link rel="stylesheet" href="${path }/resources/css/auctionMain.css" />
 <link rel="stylesheet" href="${path }/resources/css/main.css" />
+<link rel="stylesheet" as="style" crossorigin
+	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
@@ -34,26 +36,7 @@
         
 </script>
 <style>
-.null-Info{
-	margin:0 auto;
-	
-	font-size:40px;
-	display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center; 
-    
-}
-.error-icon-null{
-	width: 34px;
-    height: 34px;
-    margin-right: 8px;
-}
-.null-Info span {
-    display: inline-block;
-    vertical-align: middle; 
-    color:#CCC7C0;
-}
+
 </style>
 </head>
 <body>
