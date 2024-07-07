@@ -15,7 +15,7 @@
 <body>
 	<div class="find-id-container">
 		<div class="logo">
-			<img src="${path}/resources/image/logo.png" alt="로고이미지" height=41 onclick="location.href='../main.do'">
+			<img src="${path}/resources/image/logo.png" alt="로고이미지" height=41 onclick="location.href='../main'">
 		</div>
 		<div style="display: flex; justify-content: space-between; height: 40px;">
 		<h5>아이디 찾기</h5>

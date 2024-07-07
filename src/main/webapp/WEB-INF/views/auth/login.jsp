@@ -19,10 +19,10 @@
 <body>
 	<div class="login-container">
 		<div class="logo-container">
-			<img src="${path}/resources/image/logo.png" alt="로고이미지" height=41 onclick="location.href='../main.do'">			
+			<img src="${path}/resources/image/logo.png" alt="로고이미지" height=41 onclick="location.href='../main'">			
 		</div>
 		<div class="container">
-			<form id ="loginForm" action="login.do" method="POST">
+			<form id ="loginForm" action="login" method="POST">
 				<div class="form-group">
 					<div class="input-with-icon">
 			        <img alt="" src="${path}/resources/icon/loginUser.png" class="id-icon">
@@ -39,7 +39,7 @@
 				<button type="submit" class="login-btn">로그인</button>
 			</form>
 			<div class="links">
-				<a href="findId.do">아이디 찾기</a> <a href="resetPassword.do">비밀번호 재설정</a> <a href="signUp.do">회원가입</a>
+				<a href="findId">아이디 찾기</a> <a href="resetPassword">비밀번호 재설정</a> <a href="signUp">회원가입</a>
 			</div>
 		</div>
 	</div>

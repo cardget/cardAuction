@@ -24,7 +24,7 @@
 <body>
 	<div class="find-id-container">
 		<div class="logo">
-			<img src="${path}/resources/image/logo.png" alt="로고이미지" height=41 onclick="location.href='../main.do'">
+			<img src="${path}/resources/image/logo.png" alt="로고이미지" height=41 onclick="location.href='../main'">
 		</div>
 		<div style="display: flex; justify-content: space-between; height: 40px;">
 		<h5>아이디 찾기</h5>
@@ -33,7 +33,7 @@
 		<hr style="width:440px;">
 		
 		<h6 style="margin-top:0px;"><img src="${path}/resources/icon/blue_error.png">&nbsp;회원정보에 등록한 휴대전화 번호와 입력한 휴대전화 번호가 같아야 인증 번호를 받을 수 있습니다.</h6>
-		<form action="findIdResult.do "class="custom-form" method="post">
+		<form action="findIdResult "class="custom-form" method="post">
 			<div >
 				<div class="form-group">
 			        <label class="input-label" for="userName">이름</label>
@@ -57,11 +57,11 @@
 	</div>
 	<script>
     $(document).ready(function() { // 문서가 완전히 로드되었을 때 실행되는 함수
-      $('#findIdResult.do').on('submit', function(event) { // 폼 제출 이벤트를 가로챕니다.
+      $('#findIdResult').on('submit', function(event) { // 폼 제출 이벤트를 가로챕니다.
         event.preventDefault(); // 폼의 기본 제출 동작을 막습니다.
 
         $.ajax({ // jQuery의 AJAX 메서드를 사용하여 비동기 요청을 보냅니다.
-          url: '/findIdResult.do', // 요청을 보낼 URL
+          url: '/findIdResult', // 요청을 보낼 URL
           type: 'POST', // HTTP 메서드 타입
           data: $(this).serialize(), // 폼 데이터를 직렬화하여 보냅니다.
           success: function(response) { // 요청이 성공적으로 완료되었을 때 실행되는 콜백 함수

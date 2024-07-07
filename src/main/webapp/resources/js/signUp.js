@@ -32,42 +32,72 @@ function toLocalStorage(event) {
 //signUp.jsp 아이디 중복 체크
 function f_checkUserId() {
     var userId = $("#user_id").val();
+    var userIdPattern = /^[a-zA-Z0-9]{6,15}$/;
+
+    // 아이디 패턴 검사
+    if (!userIdPattern.test(userId)) {
+        document.getElementById('idMessage').innerText = "영문/숫자를 사용하여 6~15자로 작성해주세요.";
+        document.getElementById('idMessage').style.color = "red";
+        return; 
+    }
+
     $.ajax({
         url: "/myapp/auth/checkUserId",
         type: "GET",
         data: { "userId": userId },
         success: function(isDuplicate) {
+            var messageElement = document.getElementById('idMessage');
             if (isDuplicate > 0) {
-                alert("이미 사용중인 아이디입니다.");
+                messageElement.innerText = "이미 사용중인 아이디입니다.";
+                messageElement.style.color = "red";
             } else {
-                alert("사용 가능한 아이디입니다.");
+                messageElement.innerText = "사용 가능한 아이디입니다.";
+                messageElement.style.color = "green";
             }
         },
         error:function(){
-        	alert("error");
+            var messageElement = document.getElementById('idMessage');
+            messageElement.innerText = "서버 오류가 발생했습니다. 다시 시도해주세요.";
+            messageElement.style.color = "red";
         }
     });
 }
 
+
 //signUp.jsp 닉네임 중복 체크
 function f_checkNickname() {
     var nickname = $("#nickname").val();
+    var nicknamePattern = /^.{1,7}$/;
+
+    // 닉네임 패턴 검사
+    if (!nicknamePattern.test(nickname)) {
+        document.getElementById('nickMessage').innerText = "7자 이하로 작성해주세요.";
+        document.getElementById('nickMessage').style.color = "red";
+        return; 
+    }
+
     $.ajax({
         url: "/myapp/auth/checkNickname",
         type: "GET",
         data: { "nickname": nickname },
         success: function(isDuplicate) {
+            var messageElement = document.getElementById('nickMessage');
             if (isDuplicate > 0) {
-                alert("이미 사용중인 닉네임입니다.");
+                messageElement.innerText = "이미 사용중인 닉네임입니다.";
+                messageElement.style.color = "red";
             } else {
-                alert("사용 가능한 닉네임입니다.");
+                messageElement.innerText = "사용 가능한 닉네임입니다.";
+                messageElement.style.color = "green";
             }
         },
         error:function(){
-        	alert("error");
+            var messageElement = document.getElementById('nickMessage');
+            messageElement.innerText = "서버 오류가 발생했습니다. 다시 시도해주세요.";
+            messageElement.style.color = "red";
         }
     });
 }
+
 
 var contextPath = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
 // DOMContentLoaded 이벤트를 사용하여 페이지가 로드된 후에 코드를 실행
