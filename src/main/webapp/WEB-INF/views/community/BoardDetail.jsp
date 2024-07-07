@@ -76,75 +76,82 @@
 
 	// 댓글 조회
 	function loadComments() {
-    $.ajax({
-        url : path + "/community/getReplieList",
-        data : {
-            "commId" : commId
-        },
-        dataType : "json",
-        type : "get",
-        success : function(data) {
-            var commentBox = $('#comment-box');
-            commentBox.empty();
-            $.each(data, function(index, board) {
-                var profileImage = board.profile_image.startsWith('http') ? board.profile_image : path + board.profile_image;
-                var createDate = new Date(board.create_time).toLocaleString(); // 시간 변환
-                var card = '<div class="commentCardBorder m">'
-                        + '<div class="card-body d-flex">'
-                        + '<img src="' + profileImage + '" onerror="handleImageError(this)" alt="이미지" class="comment-image me-2">'
-                        + '<div>'
-                        + '<h5 class="card-title">' + board.nickname + '</h5>'
-                        + '<p class="card-text">' + board.cmt + '</p>'
-                        + '<p class="text-muted">작성일 : ' + createDate + '</p>';
-                
-                if (board.user_id === userid) { // 작성자만 삭제 버튼
-                    card += '<button class="btn btn-danger btn-sm" onclick="deleteComment(' + board.reply_id + ')">삭제</button>';
-                }
+	    $.ajax({
+	        url: path + "/community/getReplieList",
+	        data: {
+	            "commId": commId
+	        },
+	        dataType: "json",
+	        type: "get",
+	        success: function(data) {
+	            var commentBox = $('#comment-box');
+	            commentBox.empty();
 
-                card += '</div>'
-                      + '</div>'
-                      + '</div>';
-                commentBox.append(card);
-            });
+	            // 처음 5개 댓글만 렌더링
+	            var initialComments = data.slice(0, 5);
+	            $.each(initialComments, function(index, board) {
+	                var profileImage = board.profile_image.startsWith('http') ? board.profile_image : path + board.profile_image;
+	                var createDate = new Date(board.create_time).toLocaleString(); // 시간 변환
+	                var card = '<div class="commentCardBorder m">'
+	                        + '<div class="card-body d-flex">'
+	                        + '<img src="' + profileImage + '" onerror="handleImageError(this)" alt="이미지" class="comment-image me-2">'
+	                        + '<div>'
+	                        + '<h5 class="card-title">' + board.nickname + '</h5>'
+	                        + '<p class="card-text">' + board.cmt + '</p>'
+	                        + '<p class="text-muted">작성일 : ' + createDate + '</p>';
+	                
+	                if (board.user_id === userid) { // 작성자만 삭제 버튼
+	                    card += '<button class="btn btn-danger btn-sm" onclick="deleteComment(' + board.reply_id + ')">삭제</button>';
+	                }
 
-            if (data.length > 5) {
-                // 댓글 전체보기 버튼 추가
-                commentBox.append('<div class="d-flex justify-content-center mt-3">'
-                    + '<a href="#" id="loadMoreComments" class="btn btn-primary">전체 댓글보기</a>'
-                    + '</div>');
+	                card += '</div>'
+	                      + '</div>'
+	                      + '</div>';
+	                commentBox.append(card);
+	            });
 
-                // 전체보기 버튼 클릭 이벤트
-                $('#loadMoreComments').on('click', function(event) {
-                    event.preventDefault();
-                    $(this).parent().remove(); // 더보기 버튼 제거
-                    $.each(data, function(index, board) {
-                        var profileImage = board.profile_image.startsWith('http') ? board.profile_image : path + board.profile_image;
-                        var createDate = new Date(board.create_time).toLocaleString(); // 시간 변환
-                        var card = '<div class="commentCardBorder">'
-                                + '<div class="card-body d-flex">'
-                                + '<img src="' + profileImage + '" onerror="handleImageError(this)" alt="이미지" class="comment-image me-2">'
-                                + '<div>'
-                                + '<h5 class="card-title">' + board.nickname + '</h5>'
-                                + '<p class="card-text">' + board.cmt + '</p>'
-                                + '<p class="text-muted">작성일 : ' + createDate + '</p>';
-                        
-                        if (board.user_id === userid) { // 작성자만 삭제 버튼을 볼 수 있도록 조건 추가
-                            card += '<button class="btn btn-danger btn-sm" onclick="deleteComment(' + board.reply_id + ')">삭제</button>';
-                        }
+	            if (data.length > 5) {
+	                // 댓글 전체보기 버튼 추가
+	                commentBox.append('<div class="d-flex justify-content-center mt-3">'
+	                    + '<a href="#" id="loadMoreComments" class="btn btn-primary">전체 댓글보기</a>'
+	                    + '</div>');
 
-                        card += '</div>'
-                              + '</div>'
-                              + '</div>';
-                        commentBox.append(card);
-                    });
-                });
-            }
-        },
-        error : function(error) {
-            console.error("Error fetching data: ", error);
-        }
-    });
-}
+	                // 전체보기 버튼 클릭 이벤트
+	                $('#loadMoreComments').on('click', function(event) {
+	                    event.preventDefault();
+	                    $(this).parent().remove(); // 더보기 버튼 제거
+
+	                    // 나머지 댓글 렌더링
+	                    var remainingComments = data.slice(5);
+	                    $.each(remainingComments, function(index, board) {
+	                        var profileImage = board.profile_image.startsWith('http') ? board.profile_image : path + board.profile_image;
+	                        var createDate = new Date(board.create_time).toLocaleString(); // 시간 변환
+	                        var card = '<div class="commentCardBorder m">'
+	                                + '<div class="card-body d-flex">'
+	                                + '<img src="' + profileImage + '" onerror="handleImageError(this)" alt="이미지" class="comment-image me-2">'
+	                                + '<div>'
+	                                + '<h5 class="card-title">' + board.nickname + '</h5>'
+	                                + '<p class="card-text">' + board.cmt + '</p>'
+	                                + '<p class="text-muted">작성일 : ' + createDate + '</p>';
+	                        
+	                        if (board.user_id === userid) { // 작성자만 삭제 버튼
+	                            card += '<button class="btn btn-danger btn-sm" onclick="deleteComment(' + board.reply_id + ')">삭제</button>';
+	                        }
+
+	                        card += '</div>'
+	                              + '</div>'
+	                              + '</div>';
+	                        commentBox.append(card);
+	                    });
+	                });
+	            }
+	        },
+	        error: function(error) {
+	            console.error("Error fetching data: ", error);
+	        }
+	    });
+	}
+
 
 
 	// 댓글 수 조회
@@ -171,30 +178,37 @@
 
 	// 댓글 작성
 	function fInsertComment(event) {
-		event.preventDefault();
-		var cmt = $("#commentInput").val();
-		$.ajax({
-			url : path + "/community/insertReplie.do",
-			data : {
-				"commId" : commId,
-				"cmt" : cmt,
-				"userId" : userid
-			},
-			type : "post",
-			success : function(responseData) {
-				if (responseData !== "fail") {
-					loadComments();
-					loadCommentsCount();
-					$("#commentInput").val(""); // 입력창 초기화
-				} else {
-					alert("댓글 등록 실패");
-				}
-			},
-			error : function(data) {
-				alert("로그인 후 이용해주세요");
-			}
-		});
+	event.preventDefault();
+	
+	// userid null 체크
+	if (userid === null) {
+		alert("로그인 후 이용해주세요");
+		return;
 	}
+
+	var cmt = $("#commentInput").val();
+	$.ajax({
+		url : path + "/community/insertReplie.do",
+		data : {
+			"commId" : commId,
+			"cmt" : cmt,
+			"userId" : userid
+		},
+		type : "post",
+		success : function(responseData) {
+			if (responseData !== "fail") {
+				loadComments();
+				loadCommentsCount();
+				$("#commentInput").val(""); // 입력창 초기화
+			} else {
+				alert("댓글 등록 실패");
+			}
+		},
+		error : function(data) {
+			alert("로그인 후 이용해주세요");
+		}
+	});
+}
 
 	// 공유하기
 	function copyCurrentUrl() {

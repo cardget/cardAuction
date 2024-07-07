@@ -33,56 +33,66 @@ public class CommunityController {
 	@Autowired
 	private AWSS3Service s3Service;
 
+	// 게시글 리스트 조회 (조건검색 + 페이징)
 	@GetMapping("/BoardSelect")
 	public String BoardSelect(@RequestParam(defaultValue = "1") int page,
-			@RequestParam(defaultValue = "10") int pageSize, @RequestParam(defaultValue = "date") String sort,
-			@RequestParam(required = false) String keyword, @RequestParam(defaultValue = "all") String tag,
-			@RequestParam(required = false) String cat, Model model, HttpSession session) {
-		System.out.println("/community/BoardSelect get 요청");
+	                          @RequestParam(defaultValue = "10") int pageSize,
+	                          @RequestParam(defaultValue = "date") String sort,
+	                          @RequestParam(required = false) String keyword,
+	                          @RequestParam(defaultValue = "all") String tag,
+	                          @RequestParam(required = false) String cat, 
+	                          Model model, HttpSession session) {
+	    System.out.println("/community/BoardSelect get 요청");
 
-		// cat 값이 빈 문자열인 경우 null로 예외처리
-		Integer category = (cat == null || cat.isEmpty() || "null".equals(cat)) ? null : Integer.parseInt(cat);
+	    // cat 값이 빈 문자열인 경우 예외처리
+	    Integer category = (cat == null || cat.isEmpty() || "null".equals(cat)) ? null : Integer.parseInt(cat);
 
-		// user 닉네임
-		String userid = (String) session.getAttribute("userid");
-		if (userid != null) {
-			UserDTO user = cService.selectNicknameByUserDTOId(userid);
-			session.setAttribute("user", user);
-		}
+	    // user 닉네임
+	    String userid = (String) session.getAttribute("userid");
+	    if (userid != null) {
+	        UserDTO user = cService.selectNicknameByUserDTOId(userid);
+	        session.setAttribute("user", user);
+	    }
 
-		// 페이징
-		int totalCount = (keyword != null && !keyword.isEmpty()) || (tag != null && !tag.equals("all"))
-				? cService.getTotalBoardCount(keyword, tag, category)
-				: cService.getTotalBoardCount(category);
+	    // 페이징
+	    int totalCount = (keyword != null && !keyword.isEmpty()) || (tag != null && !tag.equals("all"))
+	            ? cService.getTotalBoardCount(keyword, tag, category)
+	            : cService.getTotalBoardCount(category);
 
-		// 공지글
-		List<BoardListDTO> notices = category != null ? cService.selectTopNotices(category)
-				: cService.selectTopNotices();
+	    // 공지글
+	    List<BoardListDTO> notices = category != null ? cService.selectTopNotices(category)
+	                                                  : cService.selectTopNotices();
 
-		// 일반 게시글 (공지글 제외)
-		List<BoardListDTO> blist = cService.selectBoardList(page, pageSize, sort, keyword, tag, category);
-		blist.removeIf(board -> "공지".equals(board.getTag()));
+	    // 일반 게시글 (공지글 제외)
+	    List<BoardListDTO> blist = cService.selectBoardList(page, pageSize, sort, keyword, tag, category);
+	    blist.removeIf(board -> "공지".equals(board.getTag()));
 
-		// 전체 게시글의 sort_num을 연속 번호로 설정
-		int sortNum = (page - 1) * pageSize + 1;
-		for (BoardListDTO board : blist) {
-			board.setSort_num(sortNum++);
-		}
+	    // 일반 게시글 sort_num 재설정
+	    int sortNum = (page - 1) * pageSize + 1;
+	    for (BoardListDTO board : blist) {
+	        board.setSort_num(sortNum++);
+	    }
 
-		// 공지글을 일반 게시글 상위에 병합
-		blist.addAll(0, notices);
+	    // 1번 페이지 공지글 병합
+	    if (page == 1) {
+	        blist.addAll(0, notices);
+	    }
 
-		model.addAttribute("blist", blist);
-		model.addAttribute("currentPage", page);
-		model.addAttribute("totalCount", totalCount);
-		model.addAttribute("pageSize", pageSize);
-		model.addAttribute("sort", sort);
-		model.addAttribute("keyword", keyword);
-		model.addAttribute("tag", tag);
-		model.addAttribute("cat", category);
+	    model.addAttribute("blist", blist);
+	    model.addAttribute("currentPage", page);
+	    model.addAttribute("totalCount", totalCount);
+	    model.addAttribute("pageSize", pageSize);
+	    model.addAttribute("sort", sort);
+	    model.addAttribute("keyword", keyword);
+	    model.addAttribute("tag", tag);
+	    model.addAttribute("cat", category);
 
-		return "community/BoardSelect";
+	    return "community/BoardSelect";
 	}
+
+
+
+
 
 	// 게시글 상세 조회
 	@GetMapping("/BoardDetail")
@@ -90,6 +100,7 @@ public class CommunityController {
 		System.out.println("/community/BoardDetail get 요청");
 
 		int isWriter = 0;
+		int isManager = 0;
 
 		BoardListDTO board = cService.selectBoardByCommId(commId);
 
@@ -99,13 +110,12 @@ public class CommunityController {
 		if (userId != null) {
 			UserDTO user = cService.selectNicknameByUserDTOId(userId);
 			session.setAttribute("user", user); // 세션에 user 객체 저장
+			isManager = cService.checkManagerByIdInCommunity(userId); // 매니저 1
 
 			if (userId.equals(cService.getWriterByCommId(commId))) {
 				isWriter = 1;
 			}
 		}
-
-		int isManager = cService.checkManagerByIdInCommunity(userId); // 매니저 1
 
 		cService.updateViews(commId); // 조회수 기능
 		model.addAttribute("board", board);
