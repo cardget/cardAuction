@@ -23,7 +23,7 @@
     </c:choose>
     <div class="defaultBanner"></div>
 
-    <div class="container2">
+    <div class="container3">
         <c:if test="${not empty errorMessage}">
             <div class="alert alert-danger">
                 ${errorMessage}

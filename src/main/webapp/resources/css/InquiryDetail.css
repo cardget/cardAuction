@@ -87,3 +87,10 @@
     background-color: #fff; /* 백그라운드 색상 설정 */
     color: #212529; /* 글자 색상 설정 */
 }
+
+.icon {
+	width: 16px;
+	height: 16px;
+	margin-right: 5px;
+	vertical-align: middle;
+}

@@ -67,6 +67,8 @@ public class InquiryController {
 	public String InquiryDetail(Integer questId, Model model, HttpSession session) {
 		System.out.println("/inquiry/InquiryDetail 요청");
 
+		int isManager = 0;
+		
 		// user 닉네임
 		String userid = (String) session.getAttribute("userid");
 		if (userid != null) {
@@ -78,10 +80,11 @@ public class InquiryController {
 		Integer isSecret = inquiry.getIs_secret(); // 비밀글 여부
 		String writer = iService.getWriterByQuestId(questId); // 글 작성자
 		System.out.println("문의글 작성자:" + writer);
-		int isManager = iService.checkManagerById(userid); // 매니저 여부
+		
 		String answer = iService.checkAnswerByInquiryId(questId); // 답변 여부
 
 		if (isSecret == 1) { // 비밀글일 경우 작성자, 관리자만 접근 가능
+			isManager = iService.checkManagerById(userid); // 관리자 여부
 			if (!userid.equals(writer) && isManager == 0) {
 				model.addAttribute("errorMessage", "열람할 수 없습니다.");
 				return "inquiry/InquirySelect";
