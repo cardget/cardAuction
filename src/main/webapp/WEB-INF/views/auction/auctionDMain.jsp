@@ -82,7 +82,7 @@
                     <a href="${path}/deckMakers/pokemonDeckListMain">티어덱리스트</a>
                 </li>
                 <li class="main-category-item">
-                    <a href="${path}/community/BoardSelect?cat=2">커뮤니티</a>
+                    <a href="${path}/community/BoardSelect?cat=3">커뮤니티</a>
                 </li>
             </ul>
     </div>
@@ -115,7 +115,7 @@
                         <img src="${itemd.card_image}" alt="card image" class="card-image" onclick="location.href='${path}/auction/auctionDetail.do?item_id=${itemd.item_id}'">
                     </c:when>
                     <c:otherwise>
-                        <img src="${path}/resources/image/defaultDCard.PNG" alt="card image" class="card-image" onclick="location.href='${path}/auction/auctionDetail.do?item_id=${itemd.item_id}'">
+                        <img src="${path}/resources/image/defaultDCard.png" alt="card image" class="card-image" onclick="location.href='${path}/auction/auctionDetail.do?item_id=${itemd.item_id}'">
                     </c:otherwise>
             </c:choose>
 			<div class="title-wrapper">

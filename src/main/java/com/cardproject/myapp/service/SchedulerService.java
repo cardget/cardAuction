@@ -68,7 +68,7 @@ public class SchedulerService {
 			for(ItemExpiredDTO item : expiredItems) {
 				for(BiddingDTO bid : secondPriceList) {
 					if(item.getItem_id() == bid.getItem_id()) {
-						price = bid.getPrice();
+						price = bid.getPrice()+1000;
 						if(aucDAO.isTradeExist(bid.getItem_id())== null) {
 							TradeDTO trade = new TradeDTO();
 								trade.setUser_id(bid.getUser_id());
