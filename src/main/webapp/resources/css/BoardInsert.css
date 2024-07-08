@@ -54,6 +54,15 @@
 }
 
 .boardType {
+	margin-left:20px;
+    border: none;
+    border-bottom: #C7C8C9 2px solid;
+    border-radius: 0;
+    max-width: 150px; /* 선택 박스의 최대 너비를 설정 */
+    color: #666666; /* 회색으로 설정 */
+}
+
+.categoryType {
     border: none;
     border-bottom: #C7C8C9 2px solid;
     border-radius: 0;
@@ -132,8 +141,7 @@
 }
 
 .comment-div {
-    height: auto;
-    min-height: calc(100vh - 300px);
+    height: 550px !important;
     border: 2px solid #C7C8C9;
     padding: .375rem .75rem;
     border-radius: .25rem;

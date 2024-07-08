@@ -1,7 +1,10 @@
 @charset "UTF-8";
 
 body {
-	font-family: 'Apple SD Gothic Neo', sans-serif;
+	font-family: "Pretendard Variable", Pretendard, -apple-system,
+		BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
+		"Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic",
+		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 	margin: 0;
 	display: flex;
 	flex-direction: column;
@@ -446,3 +449,105 @@ h2{
             width:140px;
 			height:34px;
         }
+.like-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 10px 20px;
+	border: 1px solid #007FFF;
+	border-radius: 5px;
+	background-color: white;
+	color: #007FFF;
+	cursor: pointer;
+	width: 140px;
+	height: 34px;
+}
+
+.like-btn.act {
+	border: 1px solid #007FFF;
+	border-radius: 5px;
+	background-color: #007FFF;
+	color: white;
+	font-weight: bold;
+	width: 140px;
+	height: 34px;
+}
+
+.bidding-wrapper {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 18px;
+}
+.bidding-wrapper2 {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 18px;
+	width:800px;
+}
+
+.bidding-form {
+	display: grid;
+	grid-template-columns: auto auto auto;
+	gap: 10px;
+}
+
+.hidden-input-itemId, .hidden-input-sellerId {
+	display: none;
+}
+.end-tag{
+	border:1px solid #FE3838;
+	border-radius: 30px;
+	background-color: #FE3838;
+	color:white;
+	width:90px;
+	height:30px;
+	pointer-events: none; 
+    cursor: default;
+}
+.detail-header {
+    display: flex;
+    align-items: center; /* 수직 중앙 정렬 */
+    
+    
+}
+
+.detail-header .end-tag {
+    margin-right: 10px; /* 버튼과 제목 사이의 간격 조정 */
+}
+
+.bidding-update-form {
+	
+    display: none !important; /* 기본 상태에서 숨기기 */
+}
+.my-bid-price{
+	margin-left:10px;
+	display: inline-block;
+	font-size:14px;
+}
+.cmtArea{
+	resize: none;
+	width:680px;
+	height: 100px;
+	padding:10px;
+	border-radius: 5px;
+	pointer-events: none;
+}
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* 검정색, 80% 투명도 */
+    display: none; /* 기본적으로 숨김 */
+    z-index: 1; /* 오버레이가 이미지 위에 표시되도록 함
+    
+    align-items: center;
+    justify-content: center; */
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}

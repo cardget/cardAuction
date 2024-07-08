@@ -21,6 +21,7 @@
 	var userid = '${userid}';
 	var commId = '${board.comm_id}';
 	const path = '${path}';
+	var cat = '${board.cat}';
 
 	$(function() {
 		$("#recommendUp").on("click", fRecommendUp);
@@ -55,7 +56,7 @@
 	function fRecommendUp(event) {
 		event.preventDefault();
 		$.ajax({
-			url : path + "/community/recommendUp",
+			url : path + "/community/recommendUp.do",
 			data : {
 				"commId" : commId
 			},
@@ -75,69 +76,83 @@
 
 	// 댓글 조회
 	function loadComments() {
-    $.ajax({
-        url : path + "/community/getReplieList",
-        data : {
-            "commId" : commId
-        },
-        dataType : "json",
-        type : "get",
-        success : function(data) {
-            var commentBox = $('#comment-box');
-            commentBox.empty();
-            $.each(data, function(index, board) {
-                var profileImage = board.profile_image.startsWith('http') ? board.profile_image : path + board.profile_image;
-                if (index < 5) { // 최대 5개만 먼저 보여줌
-                    var createDate = new Date(board.create_time).toLocaleString(); // 시간 변환
-                    var card = '<div class="commentCardBorder m">'
-                            + '<div class="card-body d-flex">'
-                            + '<img src="' + profileImage + '" onerror="handleImageError(this)" alt="이미지" class="comment-image me-2">'
-                            + '<div>'
-                            + '<h5 class="card-title">' + board.nickname + '</h5>'
-                            + '<p class="card-text">' + board.cmt + '</p>'
-                            + '<p class="text-muted">작성일 : ' + createDate + '</p>'
-                            + '</div>'
-                            + '</div>'
-                            + '</div>';
-                    commentBox.append(card);
-                }
-            });
+	    $.ajax({
+	        url: path + "/community/getReplieList",
+	        data: {
+	            "commId": commId
+	        },
+	        dataType: "json",
+	        type: "get",
+	        success: function(data) {
+	            var commentBox = $('#comment-box');
+	            commentBox.empty();
 
-            if (data.length > 5) {
-                // 댓글 전체보기 버튼 추가
-                commentBox.append('<div class="d-flex justify-content-center mt-3">'
-                    + '<a href="#" id="loadMoreComments" class="btn btn-primary">전체 댓글보기</a>'
-                    + '</div>');
+	            // 처음 5개 댓글만 렌더링
+	            var initialComments = data.slice(0, 5);
+	            $.each(initialComments, function(index, board) {
+	                var profileImage = board.profile_image.startsWith('http') ? board.profile_image : path + board.profile_image;
+	                var createDate = new Date(board.create_time).toLocaleString(); // 시간 변환
+	                var card = '<div class="commentCardBorder m">'
+	                        + '<div class="card-body d-flex">'
+	                        + '<img src="' + profileImage + '" onerror="handleImageError(this)" alt="이미지" class="comment-image me-2">'
+	                        + '<div>'
+	                        + '<h5 class="card-title">' + board.nickname + '</h5>'
+	                        + '<p class="card-text">' + board.cmt + '</p>'
+	                        + '<p class="text-muted">작성일 : ' + createDate + '</p>';
+	                
+	                if (board.user_id === userid) { // 작성자만 삭제 버튼
+	                    card += '<button class="btn btn-danger btn-sm" onclick="deleteComment(' + board.reply_id + ')">삭제</button>';
+	                }
 
-                // 전체보기 버튼 클릭 이벤트
-                $('#loadMoreComments').on('click', function(event) {
-                    event.preventDefault();
-                    $(this).parent().remove(); // 더보기 버튼 제거
-                    $.each(data, function(index, board) {
-                        var profileImage = board.profile_image.startsWith('http') ? board.profile_image : path + board.profile_image;
-                        if (index >= 5) { // 나머지 댓글들 불러오기
-                            var createDate = new Date(board.create_time).toLocaleString(); // 시간 변환
-                            var card = '<div class="commentCardBorder">'
-                                    + '<div class="card-body d-flex">'
-                                    + '<img src="' + profileImage + '" onerror="handleImageError(this)" alt="이미지" class="comment-image me-2">'
-                                    + '<div>'
-                                    + '<h5 class="card-title">' + board.nickname + '</h5>'
-                                    + '<p class="card-text">' + board.cmt + '</p>'
-                                    + '<p class="text-muted">작성일 : ' + createDate + '</p>'
-                                    + '</div>'
-                                    + '</div>'
-                                    + '</div>';
-                            commentBox.append(card);
-                        }
-                    });
-                });
-            }
-        },
-        error : function(error) {
-            console.error("Error fetching data: ", error);
-        }
-    });
-}
+	                card += '</div>'
+	                      + '</div>'
+	                      + '</div>';
+	                commentBox.append(card);
+	            });
+
+	            if (data.length > 5) {
+	                // 댓글 전체보기 버튼 추가
+	                commentBox.append('<div class="d-flex justify-content-center mt-3">'
+	                    + '<a href="#" id="loadMoreComments" class="btn btn-primary">전체 댓글보기</a>'
+	                    + '</div>');
+
+	                // 전체보기 버튼 클릭 이벤트
+	                $('#loadMoreComments').on('click', function(event) {
+	                    event.preventDefault();
+	                    $(this).parent().remove(); // 더보기 버튼 제거
+
+	                    // 나머지 댓글 렌더링
+	                    var remainingComments = data.slice(5);
+	                    $.each(remainingComments, function(index, board) {
+	                        var profileImage = board.profile_image.startsWith('http') ? board.profile_image : path + board.profile_image;
+	                        var createDate = new Date(board.create_time).toLocaleString(); // 시간 변환
+	                        var card = '<div class="commentCardBorder m">'
+	                                + '<div class="card-body d-flex">'
+	                                + '<img src="' + profileImage + '" onerror="handleImageError(this)" alt="이미지" class="comment-image me-2">'
+	                                + '<div>'
+	                                + '<h5 class="card-title">' + board.nickname + '</h5>'
+	                                + '<p class="card-text">' + board.cmt + '</p>'
+	                                + '<p class="text-muted">작성일 : ' + createDate + '</p>';
+	                        
+	                        if (board.user_id === userid) { // 작성자만 삭제 버튼
+	                            card += '<button class="btn btn-danger btn-sm" onclick="deleteComment(' + board.reply_id + ')">삭제</button>';
+	                        }
+
+	                        card += '</div>'
+	                              + '</div>'
+	                              + '</div>';
+	                        commentBox.append(card);
+	                    });
+	                });
+	            }
+	        },
+	        error: function(error) {
+	            console.error("Error fetching data: ", error);
+	        }
+	    });
+	}
+
+
 
 	// 댓글 수 조회
 	function loadCommentsCount() {
@@ -163,30 +178,37 @@
 
 	// 댓글 작성
 	function fInsertComment(event) {
-		event.preventDefault();
-		var cmt = $("#commentInput").val();
-		$.ajax({
-			url : path + "/community/insertReplie",
-			data : {
-				"commId" : commId,
-				"cmt" : cmt,
-				"userId" : userid
-			},
-			type : "post",
-			success : function(responseData) {
-				if (responseData !== "fail") {
-					loadComments();
-					loadCommentsCount();
-					$("#commentInput").val(""); // 입력창 초기화
-				} else {
-					alert("댓글 등록 실패");
-				}
-			},
-			error : function(data) {
-				alert("로그인 후 이용해주세요");
-			}
-		});
+	event.preventDefault();
+	
+	// userid null 체크
+	if (userid === null) {
+		alert("로그인 후 이용해주세요");
+		return;
 	}
+
+	var cmt = $("#commentInput").val();
+	$.ajax({
+		url : path + "/community/insertReplie.do",
+		data : {
+			"commId" : commId,
+			"cmt" : cmt,
+			"userId" : userid
+		},
+		type : "post",
+		success : function(responseData) {
+			if (responseData !== "fail") {
+				loadComments();
+				loadCommentsCount();
+				$("#commentInput").val(""); // 입력창 초기화
+			} else {
+				alert("댓글 등록 실패");
+			}
+		},
+		error : function(data) {
+			alert("로그인 후 이용해주세요");
+		}
+	});
+}
 
 	// 공유하기
 	function copyCurrentUrl() {
@@ -200,28 +222,30 @@
 	}
 
 	// 댓글 삭제
-	function deleteComment(replieId) {
-		if (confirm("댓글을 삭제하시겠습니까?")) {
-			$.ajax({
-				url : path + "/community/deleteComment",
-				data : {
-					"replieId" : replieId
-				},
-				type : "post",
-				success : function(response) {
-					if (response === "success") {
-						alert("댓글이 삭제되었습니다.");
-						loadComments(); // 댓글 목록을 다시 로드하여 변경 사항 반영
-					} else {
-						alert("댓글 삭제에 실패하였습니다.");
-					}
-				},
-				error : function() {
-					alert("댓글 삭제 중 오류가 발생했습니다.");
-				}
-			});
-		}
-	}
+	function deleteComment(replyId) {
+        if (confirm("댓글을 삭제하시겠습니까?")) {
+            $.ajax({
+                url: path + "/community/deleteComment.do",
+                type: "post",
+                data: {
+                    "replyId": replyId,
+                    "commId": commId
+                },
+                success: function(response) {
+                    console.log(response);
+                    if (response === "success") {
+                        alert("댓글이 삭제되었습니다.");
+                        window.location.href = path + "/community/BoardDetail?commId=" + commId; //
+                    } else {
+                        alert("댓글 삭제에 실패하였습니다.");
+                    }
+                },
+                error: function() {
+                    alert("댓글 삭제 중 오류가 발생했습니다.");
+                }
+            });
+        }
+    }
 
 	// 댓글 글자수
 	function updateCharCount() {
@@ -274,21 +298,21 @@
 								<c:choose>
 									<c:when test="${isManager == 1 && isWriter == 1}">
 										<li><a class="dropdown-item"
-											href="${path}/community/BoardModify?commId=${board.comm_id}">수정하기</a></li>
+											href="${path}/community/BoardModify.do?commId=${board.comm_id}">수정하기</a></li>
 										<li><a class="dropdown-item"
-											href="${path}/community/BoardDelete?commId=${board.comm_id}">삭제하기</a></li>
+											href="${path}/community/BoardDelete.do?commId=${board.comm_id}">삭제하기</a></li>
 										<li><a class="dropdown-item" onclick="copyCurrentUrl()">URL 복사</a></li>
 									</c:when>
 									<c:when test="${isManager == 1 && isWriter == 0}">
 										<li><a class="dropdown-item"
-											href="${path}/community/BoardDelete?commId=${board.comm_id}">삭제하기</a></li>
+											href="${path}/community/BoardDelete.do?commId=${board.comm_id}">삭제하기</a></li>
 										<li><a class="dropdown-item" onclick="copyCurrentUrl()">URL 복사</a></li>
 									</c:when>
 									<c:when test="${isManager == 0 && isWriter == 1}">
 										<li><a class="dropdown-item"
-											href="${path}/community/BoardModify?commId=${board.comm_id}">수정하기</a></li>
+											href="${path}/community/BoardModify.do?commId=${board.comm_id}">수정하기</a></li>
 										<li><a class="dropdown-item"
-											href="${path}/community/BoardDelete?commId=${board.comm_id}">삭제하기</a></li>
+											href="${path}/community/BoardDelete.do?commId=${board.comm_id}">삭제하기</a></li>
 										<li><a class="dropdown-item" onclick="copyCurrentUrl()">URL 복사</a></li>
 									</c:when>
 									<c:otherwise>

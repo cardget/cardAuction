@@ -19,7 +19,7 @@
 	<c:set var="path" value="${pageContext.servletContext.contextPath}" />
 	
 	<div class="container custom-container mt-3">
-		<form action="${path}/community/BoardModify" method="post"
+		<form action="${path}/community/BoardModify.do" method="post"
 			id="myForm" enctype="multipart/form-data">
 			<input name=comm_id type="hidden" value="${board.comm_id}">
 			<div class="right-aligned-button">

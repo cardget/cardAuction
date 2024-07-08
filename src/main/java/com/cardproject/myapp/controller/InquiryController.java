@@ -67,6 +67,8 @@ public class InquiryController {
 	public String InquiryDetail(Integer questId, Model model, HttpSession session) {
 		System.out.println("/inquiry/InquiryDetail 요청");
 
+		int isManager = 0;
+		
 		// user 닉네임
 		String userid = (String) session.getAttribute("userid");
 		if (userid != null) {
@@ -78,10 +80,11 @@ public class InquiryController {
 		Integer isSecret = inquiry.getIs_secret(); // 비밀글 여부
 		String writer = iService.getWriterByQuestId(questId); // 글 작성자
 		System.out.println("문의글 작성자:" + writer);
-		int isManager = iService.checkManagerById(userid); // 매니저 여부
+		
 		String answer = iService.checkAnswerByInquiryId(questId); // 답변 여부
 
 		if (isSecret == 1) { // 비밀글일 경우 작성자, 관리자만 접근 가능
+			isManager = iService.checkManagerById(userid); // 관리자 여부
 			if (!userid.equals(writer) && isManager == 0) {
 				model.addAttribute("errorMessage", "열람할 수 없습니다.");
 				return "inquiry/InquirySelect";
@@ -95,14 +98,14 @@ public class InquiryController {
 	}
 
 	// 답변
-	@PostMapping("/submitAnswer")
+	@PostMapping("/submitAnswer.do")
 	public String submitAnswer(@RequestParam("questid") int questId, @RequestParam("answer") String answer) {
 		iService.updateAnswer(questId, answer);
 		return "redirect:/inquiry/InquiryDetail?questId=" + questId;
 	}
 
 	// 문의 글 등록 페이지 로드
-	@GetMapping("/InquiryInsert")
+	@GetMapping("/InquiryInsert.do")
 	public void InquiryInsert(HttpSession session) {
 		System.out.println("/inquiry/InquiryInsert get요청");
 
@@ -114,7 +117,8 @@ public class InquiryController {
 		}
 	}
 
-	@PostMapping("/InquiryInsert")
+	// 문의 글 등록
+	@PostMapping("/InquiryInsert.do")
 	public String InquiryInsert(QuestionDTO question, MultipartHttpServletRequest file, HttpSession session) {
 
 		// 세션에서 사용자 ID 가져오기
@@ -151,7 +155,7 @@ public class InquiryController {
 	}
 
 	// 문의 글 삭제
-	@GetMapping("/InquiryDelete")
+	@GetMapping("/InquiryDelete.do")
 	public String inquiryDelete(Integer questId, HttpSession session) {
 		String userId = (String) session.getAttribute("userid");
 		int isManager = iService.checkManagerById(userId);

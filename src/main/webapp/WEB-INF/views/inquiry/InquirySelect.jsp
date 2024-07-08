@@ -23,7 +23,7 @@
     </c:choose>
     <div class="defaultBanner"></div>
 
-    <div class="container2">
+    <div class="container3">
         <c:if test="${not empty errorMessage}">
             <div class="alert alert-danger">
                 ${errorMessage}
@@ -35,7 +35,7 @@
                 <a href="${path}/main">홈</a> &gt; <span>문의</span>
             </div>
             <div class="form-inline">
-                <input type="submit" class="btn-primary" value="문의하기" onClick="location.href='${path}/inquiry/InquiryInsert'">
+                <input type="submit" class="btn-primary" value="문의하기" onClick="location.href='${path}/inquiry/InquiryInsert.do'">
             </div>
             <table class="table">
                 <thead>

@@ -11,12 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cardproject.myapp.dto.BiddingDTO;
+import com.cardproject.myapp.dto.DigimonDTO;
 import com.cardproject.myapp.dto.ItemDTO;
 import com.cardproject.myapp.dto.ItemDetailDTO;
 import com.cardproject.myapp.dto.ItemExpiredDTO;
 import com.cardproject.myapp.dto.LikeDTO;
+import com.cardproject.myapp.dto.OnepieceDTO;
 import com.cardproject.myapp.dto.PokemonDTO;
+import com.cardproject.myapp.dto.SportDTO;
 import com.cardproject.myapp.dto.TradeDTO;
+import com.cardproject.myapp.dto.YugiohDTO;
 
 @Repository
 public class AuctionDAO {
@@ -26,7 +30,7 @@ public class AuctionDAO {
 	String namespace = "com.cardproject.myapp.dao.";
 
 	Logger logger = LoggerFactory.getLogger(AuctionDAO.class);
-	//경매리스트 검색해서 조회
+	//포켓몬 경매리스트 검색해서 조회
 	public List<ItemDetailDTO> selectItemForName(int page, int pageSize,String keyword,String sortOption) {
 		int offset = (page - 1) * pageSize;
 		Map<String, Object> params = new HashMap<>();
@@ -39,7 +43,7 @@ public class AuctionDAO {
 		return itemDlistForName;
 
 	}
-	// 경매리스트 조회 ( 조건에 따라 조회 )
+	//포켓몬 경매리스트 조회 ( 조건에 따라 조회 )
 	public List<ItemDetailDTO> selectItemRecent(int page, int pageSize,String sortOption) {
 		int offset = (page - 1) * pageSize;
 		Map<String, Object> params = new HashMap<>();
@@ -51,54 +55,30 @@ public class AuctionDAO {
 		return itemDlist;
 
 	}
-	//전체 item 수 
+	//pokemon 전체 item 수 
 	public int getTotalItemCount() {
 		return sqlSession.selectOne(namespace + "getTotalItemCount");
 	}
-	//검색 item 수 
+	//pokemon 검색 item 수 
 	public int getTotalItemCountByKeyword(String keyword) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("keyword", keyword);
 		return sqlSession.selectOne(namespace + "getTotalItemCountByKeyword", params);
 		
 	}
-	// 경매리스트 조회 ( 최신순 )
-//	public List<ItemDetailDTO> selectItemRecent() {
-//		List<ItemDetailDTO> itemDlist = sqlSession.selectList(namespace + "selectItemRecent");
-//		logger.info(itemDlist.size() + "건 조회됨.");
-//		return itemDlist;
-//
-//	}
-	
-//	// 경매리스트 조회 ( 종료임박순 )
-//	public List<ItemDetailDTO> selectItemEnding() {
-//		List<ItemDetailDTO> itemDlist = sqlSession.selectList(namespace + "selectItemEnding");
-//		logger.info(itemDlist.size() + "건 조회됨.");
-//		return itemDlist;
-//
-//	}
-//
-//	// 경매리스트 조회 ( 참여자많은순 )
-//	public List<ItemDetailDTO> selectItemMost() {
-//		List<ItemDetailDTO> itemDlist = sqlSession.selectList(namespace + "selectItemMost");
-//		logger.info(itemDlist.size() + "건 조회됨.");
-//		return itemDlist;
-//
-//	}
-//
-//	// 경매리스트 조회 ( 참여자적은순 )
-//	public List<ItemDetailDTO> selectItemLeast() {
-//		List<ItemDetailDTO> itemDlist = sqlSession.selectList(namespace + "selectItemLeast");
-//		logger.info(itemDlist.size() + "건 조회됨.");
-//		return itemDlist;
-//
-//	}
+
 	//경매물품 하나 Detail조회
 	public ItemDetailDTO selectItemOne(int item_id) {
 		ItemDetailDTO itemDetail = sqlSession.selectOne(namespace+"selectItemOne", item_id);
 		logger.info(itemDetail.toString());
 		return itemDetail;
 	}
+	//포켓몬 카드 검색
+    public List<PokemonDTO> selectPRight(String cardKeyword){
+    	List<PokemonDTO> pSelectlist = sqlSession.selectList(namespace + "selectPRight",cardKeyword);
+		logger.info(pSelectlist.size() + "건 조회됨.");
+		return pSelectlist;
+    }
 
 	// 경매물품 등록 items Insert
 	public int itemInsert(ItemDTO item) {
@@ -106,6 +86,11 @@ public class AuctionDAO {
 		logger.info(result + "건 추가됨.");
 		return result;
 	}
+	//카테고리 select
+	public int selectCat(int item_id) {
+		return sqlSession.selectOne(namespace+"selectCat",item_id);
+	}
+	
 	// 입찰 biddings insert
 	public int biddingInsert(BiddingDTO bid) {
 		int result = sqlSession.insert(namespace + "biddingInsert", bid);
@@ -188,11 +173,7 @@ public class AuctionDAO {
     public int updateIsWin1(List<Integer> bidIdArr) {
     	return sqlSession.update(namespace + "updateIsWin1", bidIdArr);
     }
-    public List<PokemonDTO> selectPRight(String cardKeyword){
-    	List<PokemonDTO> pSelectlist = sqlSession.selectList(namespace + "selectPRight",cardKeyword);
-		logger.info(pSelectlist.size() + "건 조회됨.");
-		return pSelectlist;
-    }
+    
     // 낙찰 처리 후 나머지 입찰 내역
     public List<ItemExpiredDTO> getExpiredIsWin0() {
     	return sqlSession.selectList(namespace + "getExpiredIsWin0");
@@ -201,11 +182,220 @@ public class AuctionDAO {
     public int biddingUpdate2(List<Integer> isWin0BidIdArr) {
     	return sqlSession.update(namespace + "biddingUpdate2", isWin0BidIdArr);
     }
+    public int biddingUpdate3(List<Integer> isWinUpdate3ForBidIdArr) {
+    	return sqlSession.update(namespace + "biddingUpdate3", isWinUpdate3ForBidIdArr);
+    }
     public List<BiddingDTO> secondPrice(){
     	return sqlSession.selectList(namespace+"secondPrice");
     }
+    public List<BiddingDTO> secondPriceNot(){
+    	return sqlSession.selectList(namespace+"secondPriceNot");
+    }
+    public int notificationInsert(Map<String, Object> params) {
+    	return sqlSession.insert(namespace+"notificationInsert", params);
+    }
+    
     public TradeDTO isTradeExist(int item_id) {
     	return sqlSession.selectOne(namespace+"isTradeExist",item_id);
     	
     }
+    
+    //@@@@@@@@@@디지몬
+    //디지몬 경매리스트 검색해서 조회
+  	public List<ItemDetailDTO> selectItemForNameDigimon(int page, int pageSize,String keyword,String sortOption) {
+  		int offset = (page - 1) * pageSize;
+  		Map<String, Object> params = new HashMap<>();
+  		params.put("offset", offset);
+  		params.put("pageSize", pageSize);
+  		params.put("keyword", keyword);
+  		params.put("sortOption", sortOption);
+  		List<ItemDetailDTO> itemDlistForName = sqlSession.selectList(namespace + "selectItemForNameDigimon",params);
+  		logger.info(itemDlistForName.size() + "건 조회됨.");
+  		return itemDlistForName;
+
+  	}
+    //디지몬 경매리스트 조회 ( 조건에 따라 조회 )
+  	public List<ItemDetailDTO> selectItemDigimon(int page, int pageSize,String sortOption) {
+  		int offset = (page - 1) * pageSize;
+  		Map<String, Object> params = new HashMap<>();
+  		params.put("offset", offset);
+  		params.put("pageSize", pageSize);
+  		params.put("sortOption", sortOption);
+  		List<ItemDetailDTO> itemDlist = sqlSession.selectList(namespace + "selectItemDigimon",params);
+  		logger.info(itemDlist.size() + "건 조회됨.");
+  		return itemDlist;
+
+  	}
+    //digimon 전체 item 수 
+  	public int getTotalItemCountDigimon() {
+  		return sqlSession.selectOne(namespace + "getTotalItemCountDigimon");
+  	}
+    //digimon 검색 item 수 
+  	public int getTotalItemCountByKeywordDigimon(String keyword) {
+  		Map<String, Object> params = new HashMap<>();
+  		params.put("keyword", keyword);
+  		return sqlSession.selectOne(namespace + "getTotalItemCountByKeywordDigimon", params);
+  		
+  	}
+  	//digimon 경매물품 하나 Detail조회
+  	public ItemDetailDTO selectItemOneDigimon(int item_id) {
+  		ItemDetailDTO itemDetail = sqlSession.selectOne(namespace+"selectItemOneDigimon", item_id);
+  		logger.info(itemDetail.toString());
+  		return itemDetail;
+  	}
+    //디지몬 카드 검색
+    public List<DigimonDTO> selectDRight(String cardKeyword){
+    	List<DigimonDTO> dSelectlist = sqlSession.selectList(namespace + "selectDRight",cardKeyword);
+		logger.info(dSelectlist.size() + "건 조회됨.");
+		return dSelectlist;
+    }
+    //@@@@@@@@@@원피스
+    //원피스 경매리스트 검색해서 조회
+  	public List<ItemDetailDTO> selectItemForNameOnepiece(int page, int pageSize,String keyword,String sortOption) {
+  		int offset = (page - 1) * pageSize;
+  		Map<String, Object> params = new HashMap<>();
+  		params.put("offset", offset);
+  		params.put("pageSize", pageSize);
+  		params.put("keyword", keyword);
+  		params.put("sortOption", sortOption);
+  		List<ItemDetailDTO> itemDlistForName = sqlSession.selectList(namespace + "selectItemForNameOnepiece",params);
+  		logger.info(itemDlistForName.size() + "건 조회됨.");
+  		return itemDlistForName;
+
+  	}
+    //원피스 경매리스트 조회 ( 조건에 따라 조회 )
+  	public List<ItemDetailDTO> selectItemOnepiece(int page, int pageSize,String sortOption) {
+  		int offset = (page - 1) * pageSize;
+  		Map<String, Object> params = new HashMap<>();
+  		params.put("offset", offset);
+  		params.put("pageSize", pageSize);
+  		params.put("sortOption", sortOption);
+  		List<ItemDetailDTO> itemDlist = sqlSession.selectList(namespace + "selectItemOnepiece",params);
+  		logger.info(itemDlist.size() + "건 조회됨.");
+  		return itemDlist;
+
+  	}
+    //원피스 전체 item 수 
+  	public int getTotalItemCountOnepiece() {
+  		return sqlSession.selectOne(namespace + "getTotalItemCountOnepiece");
+  	}
+    //원피스 검색 item 수 
+  	public int getTotalItemCountByKeywordOnepiece(String keyword) {
+  		Map<String, Object> params = new HashMap<>();
+  		params.put("keyword", keyword);
+  		return sqlSession.selectOne(namespace + "getTotalItemCountByKeywordOnepiece", params);
+  		
+  	}
+  	//원피스 경매물품 하나 Detail조회
+  	public ItemDetailDTO selectItemOneOnepiece(int item_id) {
+  		ItemDetailDTO itemDetail = sqlSession.selectOne(namespace+"selectItemOneOnepiece", item_id);
+  		logger.info(itemDetail.toString());
+  		return itemDetail;
+  	}
+    //원피스 카드 검색
+    public List<OnepieceDTO> selectORight(String cardKeyword){
+    	List<OnepieceDTO> oSelectlist = sqlSession.selectList(namespace + "selectORight",cardKeyword);
+		logger.info(oSelectlist.size() + "건 조회됨.");
+		return oSelectlist;
+    }
+  //@@@@@@@@@@유희왕
+    //유희왕 경매리스트 검색해서 조회
+  	public List<ItemDetailDTO> selectItemForNameYugioh(int page, int pageSize,String keyword,String sortOption) {
+  		int offset = (page - 1) * pageSize;
+  		Map<String, Object> params = new HashMap<>();
+  		params.put("offset", offset);
+  		params.put("pageSize", pageSize);
+  		params.put("keyword", keyword);
+  		params.put("sortOption", sortOption);
+  		List<ItemDetailDTO> itemDlistForName = sqlSession.selectList(namespace + "selectItemForNameYugioh",params);
+  		logger.info(itemDlistForName.size() + "건 조회됨.");
+  		return itemDlistForName;
+
+  	}
+    //유희왕 경매리스트 조회 ( 조건에 따라 조회 )
+  	public List<ItemDetailDTO> selectItemYugioh(int page, int pageSize,String sortOption) {
+  		int offset = (page - 1) * pageSize;
+  		Map<String, Object> params = new HashMap<>();
+  		params.put("offset", offset);
+  		params.put("pageSize", pageSize);
+  		params.put("sortOption", sortOption);
+  		List<ItemDetailDTO> itemDlist = sqlSession.selectList(namespace + "selectItemYugioh",params);
+  		logger.info(itemDlist.size() + "건 조회됨.");
+  		return itemDlist;
+
+  	}
+    //유희왕 전체 item 수 
+  	public int getTotalItemCountYugioh() {
+  		return sqlSession.selectOne(namespace + "getTotalItemCountYugioh");
+  	}
+    //유희왕 검색 item 수 
+  	public int getTotalItemCountByKeywordYugioh(String keyword) {
+  		Map<String, Object> params = new HashMap<>();
+  		params.put("keyword", keyword);
+  		return sqlSession.selectOne(namespace + "getTotalItemCountByKeywordYugioh", params);
+  		
+  	}
+  	//유희왕 경매물품 하나 Detail조회
+  	public ItemDetailDTO selectItemOneYugioh(int item_id) {
+  		ItemDetailDTO itemDetail = sqlSession.selectOne(namespace+"selectItemOneYugioh", item_id);
+  		logger.info(itemDetail.toString());
+  		return itemDetail;
+  	}
+    //유희왕 카드 검색
+    public List<YugiohDTO> selectYRight(String cardKeyword){
+    	List<YugiohDTO> ySelectlist = sqlSession.selectList(namespace + "selectYRight",cardKeyword);
+		logger.info(ySelectlist.size() + "건 조회됨.");
+		return ySelectlist;
+    }
+  //@@@@@@@@@@스포츠
+    //스포츠 경매리스트 검색해서 조회
+  	public List<ItemDetailDTO> selectItemForNameSport(int page, int pageSize,String keyword,String sortOption) {
+  		int offset = (page - 1) * pageSize;
+  		Map<String, Object> params = new HashMap<>();
+  		params.put("offset", offset);
+  		params.put("pageSize", pageSize);
+  		params.put("keyword", keyword);
+  		params.put("sortOption", sortOption);
+  		List<ItemDetailDTO> itemDlistForName = sqlSession.selectList(namespace + "selectItemForNameSport",params);
+  		logger.info(itemDlistForName.size() + "건 조회됨.");
+  		return itemDlistForName;
+
+  	}
+    //스포츠 경매리스트 조회 ( 조건에 따라 조회 )
+  	public List<ItemDetailDTO> selectItemSport(int page, int pageSize,String sortOption) {
+  		int offset = (page - 1) * pageSize;
+  		Map<String, Object> params = new HashMap<>();
+  		params.put("offset", offset);
+  		params.put("pageSize", pageSize);
+  		params.put("sortOption", sortOption);
+  		List<ItemDetailDTO> itemDlist = sqlSession.selectList(namespace + "selectItemSport",params);
+  		logger.info(itemDlist.size() + "건 조회됨.");
+  		return itemDlist;
+
+  	}
+    //스포츠 전체 item 수 
+  	public int getTotalItemCountSport() {
+  		return sqlSession.selectOne(namespace + "getTotalItemCountSport");
+  	}
+    //스포츠 검색 item 수 
+  	public int getTotalItemCountByKeywordSport(String keyword) {
+  		Map<String, Object> params = new HashMap<>();
+  		params.put("keyword", keyword);
+  		return sqlSession.selectOne(namespace + "getTotalItemCountByKeywordSport", params);
+  		
+  	}
+  	//스포츠 경매물품 하나 Detail조회
+  	public ItemDetailDTO selectItemOneSport(int item_id) {
+  		ItemDetailDTO itemDetail = sqlSession.selectOne(namespace+"selectItemOneSport", item_id);
+  		logger.info(itemDetail.toString());
+  		return itemDetail;
+  	}
+    //스포츠 카드 검색
+    public List<SportDTO> selectSRight(String cardKeyword){
+    	List<SportDTO> sSelectlist = sqlSession.selectList(namespace + "selectSRight",cardKeyword);
+		logger.info(sSelectlist.size() + "건 조회됨.");
+		return sSelectlist;
+    }
+    
+    
 }
