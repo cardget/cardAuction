@@ -3,7 +3,10 @@
 body {
 	display: flex;
 	justify-content: center;
-	font-family: 'Apple SD Gothic Neo', sans-serif;
+	font-family: "Pretendard Variable", Pretendard, -apple-system,
+		BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
+		"Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic",
+		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 	align-items: center;
 	height: 100vh;
 	margin: 0;
@@ -66,6 +69,27 @@ body {
 	border-radius: 4px;
 	margin-right: 10px;
 	margin-bottom: 5px;
+	background-color: #F8F9FC;
+}
+
+.email-select {
+	color: gray;
+	width: 100px; /* 이메일 입력 필드의 너비를 200px로 지정 */
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box; /* 패딩과 테두리를 포함하여 너비 계산 */
+	margin-bottom: 6px;
+}
+
+.email-input-field {
+	width: 216px;
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	margin-bottom: 5px;
+	background-color: #F8F9FC;
 }
 
 .check-button {

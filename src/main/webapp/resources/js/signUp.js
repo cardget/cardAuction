@@ -251,6 +251,19 @@ function checkPasswordMatch() {
     }
 }
 
+function validateForm(event) {
+    var formValid = checkPasswordMatch();
+    var submitMessage = document.getElementById("submitMessage");
+    if (!formValid) {
+        submitMessage.style.color = 'red';
+        submitMessage.textContent = '비밀번호를 다시 확인해주세요.';
+        event.preventDefault(); // 폼 제출 막기
+    } else {
+        submitMessage.textContent = '';
+    }
+    return formValid;
+}
+
 // 이메일 선택 js
 function checkEmail(select) {
     document.getElementById('domain').value = select.value;
@@ -270,16 +283,6 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-// 찾은 아이디값을 비밀번호 재설정 페이지로 가져감
-function goToResetPassword() {
-    var userId = document.getElementById("id").value;
-    location.href = "${path}/auth/resetPassword?userId=" + userId;
-}
 
-// 찾은 아이디값을 로그인 페이지로 가져감
-function goToLogin() {
-    var userId = document.getElementById("id").value;
-    location.href = "${path}/auth/login?userId=" + userId;
-}
 
 
