@@ -252,3 +252,9 @@ ul.category-box{
 .category-item .dropdown .dropdown-toggle img{
 	margin-bottom: 15px;
 }
+
+.commentCardBorder .btn-danger {
+    position: absolute;
+    top: 10px; /* 상단 여백 */
+    right: 10px; /* 오른쪽 끝 여백 */
+}
