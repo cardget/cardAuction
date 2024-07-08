@@ -536,3 +536,32 @@ tbody tr {
 	border-radius: 4px;
 	cursor: pointer;
 }
+
+/* 배송 관리 검색 */
+.delivery-search-box {
+	border: 1px solid #2c2c2c;
+	border-radius: 5px;
+	padding: 5px;
+}
+
+.delivery-search-box:hover {
+	border: 1px solid #007FFF;
+}
+
+.delivery-search-box:focus {
+	border: 1px solid #007FFF;
+}
+
+.delivery-search button {
+	border: solid 1px #007FFF;
+	border-color: #007FFF;
+	border-radius: 3px;
+	padding: 3px 10px;
+	color: #007FFF;
+	background-color: #FFF;
+}
+
+.delivery-search button:hover {
+	background-color: #007FFF;
+	color: #FFF;
+}
