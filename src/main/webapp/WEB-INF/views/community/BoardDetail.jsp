@@ -26,12 +26,18 @@
 	var cat = '${board.cat}';
 
 	$(function() {
-		$("#recommendUp").on("click", fRecommendUp);
-		$("#insertComment").on("click", fInsertComment);
-		loadComments();
-		loadCommentsCount();
-		fselectNicknameById();
+	    $("#recommendUp").on("click", fRecommendUp);
+	    $("#insertComment").on("click", fInsertComment);
+	    $("#commentInput").on("keyup", function(event) {
+	        if (event.key === "Enter" && !event.shiftKey) {
+	            fInsertComment(event);
+	        }
+	    });
+	    loadComments();
+	    loadCommentsCount();
+	    fselectNicknameById();
 	});
+
 
 	// 세션으로 닉네임 조회
 	function fselectNicknameById() {
