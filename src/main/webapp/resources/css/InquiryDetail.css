@@ -94,3 +94,14 @@
 	margin-right: 5px;
 	vertical-align: middle;
 }
+
+.dropdown-content .no-unread-noti h3{
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.dropdown-toggle::after {
+	content: none;
+}

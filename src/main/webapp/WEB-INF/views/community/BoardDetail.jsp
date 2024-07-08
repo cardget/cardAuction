@@ -12,7 +12,9 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
 	rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="../resources/css/main.css?after" rel="stylesheet">
 <link href="../resources/css/BoardDetail.css?after" rel="stylesheet">
+
 <link rel="shortcut icon" href="#">
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -274,8 +276,8 @@
 
 	<div class="container2 custom-container mt-3">
 		<div class="right-aligned-button">
-			<input type="submit" class="btn btn-primary" value="게시글 목록"
-				onClick="location.href='${path}/community/BoardSelect?cat=${cat}'">
+			<%-- <input type="submit" class="btn btn-primary" value="게시글 목록"
+				onClick="location.href='${path}/community/BoardSelect?cat=${cat}'"> --%>
 		</div>
 		<div class="card p-3 mt-3">
 			<form id="myForm">

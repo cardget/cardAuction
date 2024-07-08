@@ -199,7 +199,7 @@ tbody tr:hover {
 	height: 283px;
 	top: 0;
 	left: 0;
-	background-image: url('../images/default/pokemon_banner.png');
+	background-image: url('../image/pokemon_banner.png');
 }
 
 .yugiohBanner {
@@ -310,5 +310,9 @@ button:not(:disabled) {
     font-size: 18px;
     font-weight: bold;
     margin-top: 20px;
+}
+
+.dropdown-toggle::after {
+	content: none;
 }
 	
