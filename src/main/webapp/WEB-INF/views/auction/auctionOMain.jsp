@@ -82,7 +82,7 @@
                     <a href="${path}/deckMakers/pokemonDeckListMain">티어덱리스트</a>
                 </li>
                 <li class="main-category-item">
-                    <a href="${path}/community/BoardSelect?cat=3">커뮤니티</a>
+                    <a href="${path}/community/BoardSelect?cat=4">커뮤니티</a>
                 </li>
             </ul>
     </div>
