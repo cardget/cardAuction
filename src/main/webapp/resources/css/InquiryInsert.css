@@ -142,3 +142,21 @@
     width: 100%;
     box-sizing: border-box;
 }
+
+.dropdown-content .no-unread-noti h3{
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.dropdown-toggle::after {
+	content: none;
+}
+
+.icon {
+	width: 16px;
+	height: 16px;
+	margin-right: 5px;
+	vertical-align: middle;
+}
