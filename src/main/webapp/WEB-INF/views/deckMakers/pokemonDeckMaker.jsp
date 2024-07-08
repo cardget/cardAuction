@@ -82,8 +82,8 @@
 					<div class="accordion-content active" id="deckList">
 						<c:forEach items="${pCardList}" var="card">
 							<div class="card-count">
-								<img src="${card.card_id}" alt="${card.card_id}"
-									onclick="call('${card.card_id}','${card.card_id}')" class="listCard">
+								<img src="${card.card_image}" alt="${card.card_id}"
+									onclick="call('${card.card_image}','${card.card_id}')" class="listCard">
 							</div>
 						</c:forEach>
 					</div>
@@ -148,7 +148,7 @@
 	                var cardDiv = document.createElement("div");
 	                cardDiv.classList.add("card-count");
 	                cardDiv.innerHTML = `
-	                    <img src="\${card.card_id}" alt="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}','\${card.card_id}')">
+	                    <img src="\${card.card_image}" alt="\${card.card_id}" class="listCard" onclick="call('\${card.card_image}','\${card.card_id}')">
 	                `;
 	                here.appendChild(cardDiv);
 	            });
@@ -219,7 +219,7 @@
 		                var cardDiv = document.createElement("div");
 		                cardDiv.classList.add("card-count");
 		                cardDiv.innerHTML += `
-		                    <img src="\${card.card_id}" alt="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}','\${card.card_id}')">
+		                    <img src="\${card.card_image}" alt="\${card.card_id}" class="listCard" onclick="call('\${card.card_image}','\${card.card_id}')">
 		                `;
 		                here.appendChild(cardDiv);
 		            });
@@ -232,7 +232,7 @@
 		//카드리스트에추가
 		function call(card_image, card_id){
 			document.querySelector("#deckListContainer").innerHTML += `
-                <li class="addCard"><img src="\${card_id}" alt="\${card_id}" data-card="\${card_id}" onclick="removeCard(this)"></li>
+                <li class="addCard"><img src="\${card_image}" alt="\${card_id}" data-card="\${card_id}" onclick="removeCard(this)"></li>
             `;
 		}
 		
