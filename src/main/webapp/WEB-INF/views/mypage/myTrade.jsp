@@ -72,7 +72,6 @@
 								<img src="${path}/resources/icon/isAlarm.png" alt="알림" height=30>
 							</c:otherwise>
 						</c:choose>
-						
 					</a>
 					<div class="dropdown-content">
 						<c:choose>

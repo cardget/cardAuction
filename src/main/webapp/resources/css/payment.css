@@ -74,6 +74,10 @@ hr {
     margin-top: 5px;
 }
 
+a {
+	color: #007FFF;
+}
+
 .trade-section div {
 	display: flex;
 	flex-direction: row;
