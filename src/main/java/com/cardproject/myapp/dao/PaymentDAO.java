@@ -52,11 +52,12 @@ public class PaymentDAO{
 	}
 	
 	// 포인트 추가
-	public int getPoint(int amount, String cmt, String userid) {
+	public int getPoint(int amount, String cmt, String userid, int cat) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("amount", amount);
 		params.put("cmt", cmt);
 		params.put("userid", userid);
+		params.put("cat", cat);
 		return sqlSession.insert(namespace + ".getPoint", params);
 	}
 	

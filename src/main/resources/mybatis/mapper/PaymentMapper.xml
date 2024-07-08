@@ -119,7 +119,7 @@
 			#{cmt},
 			#{userid},
 			1,
-			1
+			#{cat}
 		)
 	</insert>
 	

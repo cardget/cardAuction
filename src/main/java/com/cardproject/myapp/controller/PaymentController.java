@@ -68,8 +68,8 @@ public class PaymentController {
         }
         pService.updatePaid(tradeId);
         pService.insertDelivery(tradeId, buyerAddr);
-        pService.getPoint((int) (paidAmount*POINT_RATE), "[구매] " + itemName, userid);
-        pService.getPoint((int) (paidAmount*POINT_RATE), "[판매] " + itemName, seller);
+        pService.getPoint((int) (paidAmount*POINT_RATE), "[구매] " + itemName, userid, 1);
+        pService.getPoint((int) (paidAmount*POINT_RATE), "[판매] " + itemName, seller, 2);
         
         return "payment/paymentResult";
     }
