@@ -58,6 +58,8 @@ public class PaymentController {
         String itemName = paymentRequest.getItem_name();
         String buyerAddr = paymentRequest.getBuyer_addr();
         
+        String seller = pService.selectSeller(tradeId);
+        
         final double POINT_RATE = 0.02;
         
         // 로직 처리
@@ -66,7 +68,8 @@ public class PaymentController {
         }
         pService.updatePaid(tradeId);
         pService.insertDelivery(tradeId, buyerAddr);
-        pService.getPoint((int) (paidAmount*POINT_RATE), "[구매] " + itemName, userid);
+        pService.getPoint((int) (paidAmount*POINT_RATE), "[구매] " + itemName, userid, 1);
+        pService.getPoint((int) (paidAmount*POINT_RATE), "[판매] " + itemName, seller, 2);
         
         return "payment/paymentResult";
     }

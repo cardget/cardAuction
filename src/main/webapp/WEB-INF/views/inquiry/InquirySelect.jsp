@@ -9,7 +9,16 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/BoardSelect.css" type="text/css" rel="stylesheet">
 <link rel="icon" href="${path}/resources/icon/favicon.ico" type="image/x-icon">
+
+<link rel="stylesheet" href="${path}/resources/css/header.css">
+<link rel="stylesheet" as="style" crossorigin
+	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
 </head>
+<style>
+    body {
+        zoom: 90%;
+    }
+</style>
 <body>
     <c:set var="path" value="${pageContext.servletContext.contextPath}" />
     <!--header-->
