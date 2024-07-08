@@ -53,14 +53,14 @@ $(function() {
 			});
 		});
 		
-		$('.item-section').on('click', function() {
+		$('.noti-section').on('click', function() {
             var element = $(this);
             var notiId = element.data('noti-id');
             var itemId = element.data('item-id');
             
             element.addClass('already-read');
             
-            window.location.href = '${path}/mypage/markAsRead.do?notiId=' + notiId + '&itemId=' + itemId;
+            window.location.href = '/myapp/mypage/markAsRead.do?notiId=' + notiId + '&itemId=' + itemId;
             
         });
 	});

@@ -16,7 +16,7 @@
 /* 포인트 사용 */
 function usingPoint() {
 	// trade.price 값 가져오기
-	var tradePrice = parseInt(${trade.price}, 10);
+	var tradePrice = parseInt(`${trade.price}`, 10);
 	console.log(tradePrice);
 
 	// point-used 클래스의 input 값 가져오기
@@ -24,7 +24,7 @@ function usingPoint() {
 	console.log(pointUsed);
 	
 	// 전체 포인트 값 가져오기
-	var point = parseInt(${point}, 10);
+	var point = parseInt(`${point}`, 10);
 	console.log(point);
 	
 	// NaN 체크
@@ -174,13 +174,13 @@ function postRequest(url, data) {
 			<hr>
 				<div>
 					<p>배송비</p>
-					<p><fmt:formatNumber value=3000 pattern="#,###"/> 원</p>
+					<p>3,000 원</p>
 				</div>
 			<hr>
 			<div>
 				<p>최종결제금액</p>
 				<div>
-					<input type="number" class="total-payment" value="${trade.price} + 3000" disabled>
+					<input type="number" class="total-payment" value="${trade.price + 3000}" disabled>
 					<P>원</P>
 				</div>
 			</div>
