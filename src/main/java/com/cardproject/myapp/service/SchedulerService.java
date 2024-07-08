@@ -87,6 +87,7 @@ public class SchedulerService {
 						    	params.put("item_id", bid.getItem_id());
 						    	params.put("cmt",cmt);
 						    	aucDAO.notificationInsert(params);
+					
 						    	//구매자에게 
 						    	cmt = "입찰한 물품이 낙찰되었습니다.";
 						    	Map<String, Object> params2 = new HashMap<>();

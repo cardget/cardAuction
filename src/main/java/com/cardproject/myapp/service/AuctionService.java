@@ -16,6 +16,7 @@ import com.cardproject.myapp.dto.ItemDTO;
 import com.cardproject.myapp.dto.ItemDetailDTO;
 import com.cardproject.myapp.dto.LikeDTO;
 import com.cardproject.myapp.dto.OnepieceDTO;
+import com.cardproject.myapp.dto.PointDTO;
 import com.cardproject.myapp.dto.PokemonDTO;
 import com.cardproject.myapp.dto.SportDTO;
 import com.cardproject.myapp.dto.YugiohDTO;
@@ -25,6 +26,8 @@ public class AuctionService {
 
 	@Autowired
 	AuctionDAO aucDAO;
+	
+	
 	 //포켓몬 경매리스트 검색해서 조회
 	public List<ItemDetailDTO> selectItemForName(int page, int pageSize,String keyword,String sortOption) {
 		return aucDAO.selectItemForName(page,pageSize,keyword,sortOption);

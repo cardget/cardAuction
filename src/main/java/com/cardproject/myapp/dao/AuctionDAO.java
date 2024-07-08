@@ -17,6 +17,7 @@ import com.cardproject.myapp.dto.ItemDetailDTO;
 import com.cardproject.myapp.dto.ItemExpiredDTO;
 import com.cardproject.myapp.dto.LikeDTO;
 import com.cardproject.myapp.dto.OnepieceDTO;
+import com.cardproject.myapp.dto.PointDTO;
 import com.cardproject.myapp.dto.PokemonDTO;
 import com.cardproject.myapp.dto.SportDTO;
 import com.cardproject.myapp.dto.TradeDTO;
@@ -199,7 +200,9 @@ public class AuctionDAO {
     	return sqlSession.selectOne(namespace+"isTradeExist",item_id);
     	
     }
-    
+    public int pointInsert(PointDTO point) {
+    	return sqlSession.insert(namespace+"pointInsert",point);
+    }
     //@@@@@@@@@@디지몬
     //디지몬 경매리스트 검색해서 조회
   	public List<ItemDetailDTO> selectItemForNameDigimon(int page, int pageSize,String keyword,String sortOption) {
