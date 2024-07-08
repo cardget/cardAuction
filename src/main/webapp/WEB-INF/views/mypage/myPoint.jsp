@@ -123,12 +123,6 @@
 								</p>
 							</div>
 							<div>
-								<p>위로 포인트</p>
-								<p>
-									<fmt:formatNumber value="${sorry}" pattern="#,###"/>P
-								</p>
-							</div>
-							<div>
 								<p>이벤트 포인트</p>
 								<p>
 									<fmt:formatNumber value="${event}" pattern="#,###"/>P

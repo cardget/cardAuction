@@ -41,7 +41,7 @@
                 <thead>
                     <tr>
                         <th></th>
-                        <th>비밀글 여부</th>
+                        <!-- <th>비밀글 여부</th> -->
                         <th>제목</th>
                         <th>작성자</th>
                         <th>답변</th>
@@ -52,10 +52,19 @@
                     <c:forEach var="question" items="${ilist}">
                         <tr onClick="location.href='${path}/inquiry/InquiryDetail?questId=${question.quest_id}'">
                             <td>${question.sort_num}</td>
-                            <td><c:if test="${question.is_secret == 1}">
+                            <%-- <td><c:if test="${question.is_secret == 1}">
                                     <img src="${path}/resources/icon/logout.png" alt="" style="width: 20px; height: 20px;">
-                                </c:if></td>
-                            <td class="titleText">${question.title}</td>
+                                </c:if></td> --%>
+                            <td class="titleText">
+                                <c:choose>
+                                    <c:when test="${question.is_secret == 1}">
+                                        비밀글입니다
+                                    </c:when>
+                                    <c:otherwise>
+                                        ${question.title}
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
                             <td>${question.nickname}</td>
                             <td>${question.answer_exist}</td>
                             <td>${question.create_date}</td>
