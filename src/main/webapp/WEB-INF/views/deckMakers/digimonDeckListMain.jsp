@@ -46,7 +46,7 @@
 		<div class="sort-container">
 			<div class="sort-nav">
 				<ul class="sort-box">
-					<li class="sort-item"><a href="main.html">홈 > </a><a href="#">디지몬
+					<li class="sort-item"><a href="${path}/main">홈 > </a><a href="#">디지몬
 							> </a><a href="#">티어덱리스트</a></li>
 					<li class="sort-item">정렬기준 : <select class="sort-select"
 						onchange="location.href='${path}/deckMakers/digimonDeckListMain?sort=' + this.value">
