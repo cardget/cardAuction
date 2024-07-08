@@ -1,5 +1,5 @@
 .body {
-	font-family: 'Apple SD Gothic Neo', sans-serif;
+	font-family: "Pretendard Variable";
 }
 
 .right-aligned-button {
@@ -194,7 +194,7 @@ p {
 }
 
 .detailContent {
-	min-height: 400px;
+	min-height: 300px;
 }
 
 .comment-card {
