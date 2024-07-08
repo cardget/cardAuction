@@ -154,7 +154,7 @@
 	</select>
 	
 	<delete id="deleteAllLikes" parameterType="string">
-		DELETE * FROM LIKES WHERE USER_ID = #{userid}
+		DELETE FROM LIKES WHERE USER_ID = #{userid}
 	</delete>
 	
 	<!-- 배송조회 -->
