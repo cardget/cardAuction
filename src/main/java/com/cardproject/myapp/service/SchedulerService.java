@@ -25,7 +25,7 @@ public class SchedulerService {
 
 
 
-	@Scheduled(cron="0 0 0 * * *")
+	@Scheduled(cron="0 0/1 * * * *")
 	@Transactional
 	public void scheduleRun() {
 		System.out.println("scheduled task running...");
@@ -47,7 +47,7 @@ public class SchedulerService {
 		
 		List<ItemExpiredDTO> otherItems = aucDAO.getExpiredIsWin0();
 		List<Integer> isWin0BidIdArr = new ArrayList<Integer>();
-		
+		List<Integer> isWinUpdate3ForBidIdArr = new ArrayList<Integer>();
 		if(otherItems.size() != 0) {
 			for(ItemExpiredDTO item: otherItems) {
 				isWin0BidIdArr.add(item.getBid_id());
@@ -61,7 +61,7 @@ public class SchedulerService {
 		//해당낙찰금으로 set 
 		List<BiddingDTO> secondPriceList = aucDAO.secondPrice();
 		List<BiddingDTO> secondPriceListNot = aucDAO.secondPriceNot();
-		List<Integer> isWinUpdate3ForBidIdArr = new ArrayList<Integer>();
+		
 		int price = 0;
 		String cmt = "";
 		if(expiredItems.size() != 0) {
@@ -103,7 +103,9 @@ public class SchedulerService {
 				
 				for(BiddingDTO bid2 : secondPriceListNot) {
 					if(item.getItem_id() == bid2.getItem_id()) {
-						isWinUpdate3ForBidIdArr.add(item.getItem_id());
+						
+						aucDAO.biddingUpdate3(item.getItem_id());
+						
 						//유찰된 item 판매자에게 알림 
 						cmt = "입찰한 물품이 유찰되었습니다.";
 						Map<String, Object> params = new HashMap<>();
@@ -114,9 +116,7 @@ public class SchedulerService {
 					}
 				}
 			}
-			int isWin3Result = aucDAO.biddingUpdate3(isWinUpdate3ForBidIdArr);
 			
-			System.out.println("3으로 총 " + isWin3Result + "건 업데이트 됨");
 		}
 		
 

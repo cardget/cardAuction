@@ -79,7 +79,7 @@
                     <a href="${path}/auction/auctionDMain">카드경매</a>
                 </li>
                 <li class="main-category-item">
-                    <a href="${path}/deckMakers/pokemonDeckListMain">티어덱리스트</a>
+                    <a href="${path}/deckMakers/digimonDeckListMain">티어덱리스트</a>
                 </li>
                 <li class="main-category-item">
                     <a href="${path}/community/BoardSelect?cat=3">커뮤니티</a>

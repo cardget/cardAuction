@@ -182,8 +182,8 @@ public class AuctionDAO {
     public int biddingUpdate2(List<Integer> isWin0BidIdArr) {
     	return sqlSession.update(namespace + "biddingUpdate2", isWin0BidIdArr);
     }
-    public int biddingUpdate3(List<Integer> isWinUpdate3ForBidIdArr) {
-    	return sqlSession.update(namespace + "biddingUpdate3", isWinUpdate3ForBidIdArr);
+    public int biddingUpdate3(Integer isWinUpdate3ForBidId) {
+    	return sqlSession.update(namespace + "biddingUpdate3", isWinUpdate3ForBidId);
     }
     public List<BiddingDTO> secondPrice(){
     	return sqlSession.selectList(namespace+"secondPrice");

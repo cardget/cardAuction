@@ -245,12 +245,12 @@ ul {
 	height: 24px;
 	padding-right: 5px;
 }
-
+/*
 select {
 	-webkit-appearance: none;
 	background: url('../icon/underArrow.png') no-repeat 85% 50%/16px auto;
 	cursor: pointer;
-}
+}*/
 
 /*footer*/
 .info-page {
