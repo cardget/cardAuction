@@ -345,10 +345,7 @@
 	<update id="biddingUpdate3" parameterType="int">
 		UPDATE biddings
 		SET is_win = 3
-		WHERE item_id IN
-		<foreach item="isWinUpdate3ForBidIdArr" collection="list" open="(" close=")" separator=",">
-            #{isWinUpdate3ForBidIdArr}
-        </foreach>
+		WHERE item_id =#{item_id}
 	</update>
 	<!-- 낙찰insert -->
 	<insert id="tradeInsert" parameterType="tradevo">

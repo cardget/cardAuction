@@ -78,9 +78,8 @@
                 <li class="sub-category-item">
                     <a href="${path}/auction/auctionSMain">카드경매</a>
                 </li>
-                <li class="main-category-item">
-                    <a href="${path}/deckMakers/pokemonDeckListMain">티어덱리스트</a>
-                </li>
+                
+               
                 <li class="main-category-item">
                     <a href="${path}/community/BoardSelect?cat=5">커뮤니티</a>
                 </li>
