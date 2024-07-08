@@ -25,7 +25,7 @@ public class SchedulerService {
 
 
 
-	@Scheduled(cron="0 0/2 * * * *")
+	@Scheduled(cron="0 0 0 * * *")
 	@Transactional
 	public void scheduleRun() {
 		System.out.println("scheduled task running...");

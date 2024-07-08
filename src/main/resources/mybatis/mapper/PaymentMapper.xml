@@ -98,7 +98,7 @@
 		)
 		VALUES (
 			DELIVERY_SEQ.NEXTVAL,
-			#{tradeId}
+			#{tradeId},
 			#{address}
 		)
 	</insert>
@@ -123,7 +123,7 @@
 		)
 	</insert>
 	
-	<select id="selectSeller" parameterType = "int">
+	<select id="selectSeller" parameterType = "int" resultType="java.lang.String">
 		SELECT 
 			i.USER_ID 
 		FROM 

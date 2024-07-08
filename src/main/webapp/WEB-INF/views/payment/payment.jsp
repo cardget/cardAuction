@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,47 +10,11 @@
 <link rel="stylesheet" href="${path}/resources/css/payment.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<link rel="stylesheet" as="style" crossorigin
+	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+<script src="${path}/resources/js/payment.js"></script>
 <script>
-/* 포인트 사용 */
-function usingPoint() {
-	// trade.price 값 가져오기
-	var tradePrice = parseInt(${trade.price}, 10);
-	console.log(tradePrice);
-
-	// point-used 클래스의 input 값 가져오기
-	var pointUsed = parseInt($('.point-used').val(), 10);
-	console.log(pointUsed);
-	
-	// 전체 포인트 값 가져오기
-	var point = parseInt(${point}, 10);
-	console.log(point);
-	
-	// NaN 체크
-	if (isNaN(tradePrice) || isNaN(pointUsed) || isNaN(point)) {
-		alert("가격 또는 포인트 정보가 유효하지 않습니다.");
-		return;
-	}
-	
-	// 계산된 결제 금액
-	var totalPayment = tradePrice - pointUsed;
-
-	// 계산된 잔여 포인트
-	var remainingPoint = point - pointUsed;
-
-	// 잔여 포인트 음수 확인
-	if (remainingPoint < 0) {
-		alert("포인트 입력을 다시 한번 확인해주세요");
-		return;
-	}
-
-	// 잔여 포인트 업데이트
-	document.getElementById("remainingPoint").innerText = remainingPoint.toLocaleString() + " P";
-
-	// total-payment 클래스의 input에 값 설정
-	$('.total-payment').val(totalPayment);
-}
-	
 /* 결제 */
 function pay() {
     var totalPayment = parseInt($('.total-payment').val());
@@ -59,12 +22,12 @@ function pay() {
     if (totalPayment == 0) {
         var postData = {
             trade_id: `${trade.trade_id}`,
-            point_used: parseInt($('.point-used').val(), 10),
+            used_point: parseInt($('.point-used').val(), 10),
             paid_amount: 0,
             buyer_name: `${user.user_name}`
         };
 
-        postRequest('result', postData).then(() => {
+        postRequest('result.do', postData).then(() => {
             window.location.href = '/myapp/payment/result'; // 결과 페이지로 이동
         });
         return; // totalPayment가 0인 경우 이후 코드를 실행하지 않도록 return
@@ -87,7 +50,7 @@ function pay() {
         if (rsp.success) {
             var postData = {
                 trade_id: rsp.merchant_uid,
-                point_used: parseInt($('.point-used').val(), 10),
+                used_point: parseInt($('.point-used').val(), 10),
                 item_name: rsp.name,
                 amount: rsp.paid_amount,
                 buyer_name: rsp.buyer_name,
@@ -104,29 +67,14 @@ function pay() {
                 pg_type: rsp.pg_type,
                 receipt_url: rsp.receipt_url,
                 status: rsp.status
-                buyer_addr: `${user.address} ${user.address_detail}`
             };
 
-            postRequest('/myapp/payment/result', postData)
+            postRequest('/myapp/payment/result', postData).then(() => {
+                window.location.href = '/myapp/payment/result'; // 결과 페이지로 이동
+            });
         } else {
             // 결제 실패 시 처리할 로직 추가
             alert("결제에 실패하였습니다. 다시 시도해주세요.");
-        }
-    });
-}
-
-/* 결제 결과 */
-function postRequest(url, data) {
-    $.ajax({
-        url: url,
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(data),
-        success: function(response) {
-            window.location.href = 'result';
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.error('Error:', errorThrown);
         }
     });
 }
@@ -150,13 +98,13 @@ function postRequest(url, data) {
 			<div>
 				<p>낙찰금</p>
 				<div>
-					<p id=tradePrice><fmt:formatNumber value="${trade.price}" pattern="#,###"/> 원</p>
+					<p id=tradePrice>${trade.price}원</p>
 				</div>
 			</div>
 			<div>
 				<p>전체 포인트</p>
 				<div>
-					<p id=totalPoint><fmt:formatNumber value="${point}" pattern="#,###"/> P</p>
+					<p id=totalPoint>${point}P</p>
 				</div>
 			</div>
 			<div>
@@ -164,23 +112,25 @@ function postRequest(url, data) {
 				<div>
 					<input type="number" class="point-used" value=0 name="pointUsed">
 					<p>P</p>
-					<button type="button" class="btn-blue btn-use" onclick="usingPoint()">사용</button>
+					<button type="button" class="btn-blue btn-use"
+						onclick="usingPoint()">사용</button>
 				</div>
 			</div>
 			<div>
 				<p>잔여 포인트</p>
-				<p id="remainingPoint"><fmt:formatNumber value="${point}" pattern="#,###"/> P</p>
+				<p id="remainingPoint">${point}P</p>
 			</div>
 			<hr>
-				<div>
-					<p>배송비</p>
-					<p><fmt:formatNumber value=3000 pattern="#,###"/> 원</p>
-				</div>
+			<div>
+				<p>배송비</p>
+				<p>3000 원</p>
+			</div>
 			<hr>
 			<div>
 				<p>최종결제금액</p>
 				<div>
-					<input type="number" class="total-payment" value="${trade.price} + 3000" disabled>
+					<input type="number" class="total-payment"
+						value="${trade.price + 3000}" disabled>
 					<P>원</P>
 				</div>
 			</div>
@@ -189,5 +139,6 @@ function postRequest(url, data) {
 			<button type="button" class="btn-payment btn-blue" onclick="pay()">결제하기</button>
 		</div>
 	</div>
+	
 </body>
 </html>
