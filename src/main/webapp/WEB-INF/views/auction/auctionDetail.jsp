@@ -11,112 +11,13 @@
 	href="https://fonts.googleapis.com/css2?family=Apple+SD+Gothic+Neo&display=swap">
 <link rel="stylesheet" href="${path }/resources/css/auctionDetail.css" />
 <link rel="stylesheet" href="${path }/resources/css/main.css" />
+<link rel="stylesheet" as="style" crossorigin
+	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <title>카드득</title>
 <style>
-.like-btn {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding: 10px 20px;
-	border: 1px solid #007FFF;
-	border-radius: 5px;
-	background-color: white;
-	color: #007FFF;
-	cursor: pointer;
-	width: 140px;
-	height: 34px;
-}
 
-.like-btn.act {
-	border: 1px solid #007FFF;
-	border-radius: 5px;
-	background-color: #007FFF;
-	color: white;
-	font-weight: bold;
-	width: 140px;
-	height: 34px;
-}
-
-.bidding-wrapper {
-	display: flex;
-	align-items: center;
-	gap: 10px;
-	font-size: 18px;
-}
-.bidding-wrapper2 {
-	display: flex;
-	align-items: center;
-	gap: 10px;
-	font-size: 18px;
-	width:800px;
-}
-
-.bidding-form {
-	display: grid;
-	grid-template-columns: auto auto auto;
-	gap: 10px;
-}
-
-.hidden-input-itemId, .hidden-input-sellerId {
-	display: none;
-}
-.end-tag{
-	border:1px solid #FE3838;
-	border-radius: 30px;
-	background-color: #FE3838;
-	color:white;
-	width:90px;
-	height:30px;
-	pointer-events: none; 
-    cursor: default;
-}
-.detail-header {
-    display: flex;
-    align-items: center; /* 수직 중앙 정렬 */
-    
-    
-}
-
-.detail-header .end-tag {
-    margin-right: 10px; /* 버튼과 제목 사이의 간격 조정 */
-}
-
-.bidding-update-form {
-	
-    display: none !important; /* 기본 상태에서 숨기기 */
-}
-.my-bid-price{
-	margin-left:10px;
-	display: inline-block;
-	font-size:14px;
-}
-.cmtArea{
-	resize: none;
-	width:680px;
-	height: 100px;
-	padding:10px;
-	border-radius: 5px;
-	pointer-events: none;
-}
-.overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); /* 검정색, 80% 투명도 */
-    display: none; /* 기본적으로 숨김 */
-    z-index: 1; /* 오버레이가 이미지 위에 표시되도록 함 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
-}
 </style>
 
 </head>
@@ -136,24 +37,29 @@
 	
 	
 	<!-- 상단 이미지 -->
-	<div class="topimage">
-		<!-- <div class="search-area">
-		<div class="search-input-wrapper">
-                <input type="text" class="search-box" placeholder="검색어를 입력하세요.">
-                <button type="submit" class="search-btn">
-                    <img src="../static/icon/searchimg.png" alt="search" class="search-icon">
-                </button>
-         </div>
-         <div class="auction-insert-wrapper">
-            	<button onclick="" class="insert-btn">판매 물품 등록</button>
-         </div>
-	</div> 
-	-->
+	<div class="header-image">
+		<img src="${path }/resources/images/default/pokemon_banner.png">
 	</div>
 
 	<div class="back-wrap">
-		<button onclick="location.href='${path}/auction/auctionMain'"
-			class="back-btn">목록으로 돌아가기</button>
+		<c:choose>
+			<c:when test="${itemDetailOne.cat == 0}">
+				<button onclick="location.href='${path}/auction/auctionMain'" class="back-btn">목록으로 돌아가기</button>
+			</c:when>
+			<c:when test="${itemDetailOne.cat == 1}">
+				<button onclick="location.href='${path}/auction/auctionDMain'" class="back-btn">목록으로 돌아가기</button>
+			</c:when>
+			<c:when test="${itemDetailOne.cat == 2}">
+				<button onclick="location.href='${path}/auction/auctionYMain'" class="back-btn">목록으로 돌아가기</button>
+			</c:when>
+			<c:when test="${itemDetailOne.cat == 3}">
+				<button onclick="location.href='${path}/auction/auctionOMain'" class="back-btn">목록으로 돌아가기</button>
+			</c:when>
+			<c:when test="${itemDetailOne.cat == 4}">
+				<button onclick="location.href='${path}/auction/auctionSMain'" class="back-btn">목록으로 돌아가기</button>
+			</c:when>
+		</c:choose>
+		
 	</div>
 	<div class="container">
 

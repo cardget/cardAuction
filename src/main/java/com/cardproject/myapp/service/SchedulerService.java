@@ -31,9 +31,6 @@ public class SchedulerService {
 		System.out.println("scheduled task running...");
 		List<ItemExpiredDTO> expiredItems = aucDAO.selectExpired();
 		List<Integer> updateIsWinArr = new ArrayList<Integer>();
-		//item_id가 똑같은 항목이 하나밖에 없으면 해당 금액으로 낙찰 
-		//item_id가 같은 항목이 2개 이상이면 제일높은 금액의 biddings 낙찰 -> is_win=1로 update
-		//item_id가 같은 항목의 biddings가 is_win 0인 것들은 2로 update
 		
 		System.out.println("***********************items:" + expiredItems);
 		System.out.println("***********************size:" +expiredItems.size());
@@ -63,7 +60,10 @@ public class SchedulerService {
 		//item_id 마다 해당 낙찰금 뽑기 
 		//해당낙찰금으로 set 
 		List<BiddingDTO> secondPriceList = aucDAO.secondPrice();
+		List<BiddingDTO> secondPriceListNot = aucDAO.secondPriceNot();
+		List<Integer> isWinUpdate3ForBidIdArr = new ArrayList<Integer>();
 		int price = 0;
+		String cmt = "";
 		if(expiredItems.size() != 0) {
 			for(ItemExpiredDTO item : expiredItems) {
 				for(BiddingDTO bid : secondPriceList) {
@@ -80,95 +80,46 @@ public class SchedulerService {
 			                    trade.setIs_success(0);
 			                    int insertResult = aucDAO.tradeInsert(trade);
 			                    System.out.println(insertResult+"건 trade insert");
+			                    //판매자에게 낙찰알림
+			                    cmt = "경매등록했던 물품이 낙찰되었습니다.";
+			                    Map<String, Object> params = new HashMap<>();
+								params.put("user_id", item.getSeller_id());
+						    	params.put("item_id", bid.getItem_id());
+						    	params.put("cmt",cmt);
+						    	aucDAO.notificationInsert(params);
+						    	//구매자에게 
+						    	cmt = "입찰한 물품이 낙찰되었습니다.";
+						    	Map<String, Object> params2 = new HashMap<>();
+								params2.put("user_id", item.getCustomer_id());
+						    	params2.put("item_id", bid.getItem_id());
+						    	params2.put("cmt",cmt);
+						    	aucDAO.notificationInsert(params2);
 						}else {
 							System.out.println("이미 거래내역에 있는 item_id");
 						}
 						
 					}
 				}
+				
+				for(BiddingDTO bid2 : secondPriceListNot) {
+					if(item.getItem_id() == bid2.getItem_id()) {
+						isWinUpdate3ForBidIdArr.add(item.getItem_id());
+						//유찰된 item 판매자에게 알림 
+						cmt = "입찰한 물품이 유찰되었습니다.";
+						Map<String, Object> params = new HashMap<>();
+						params.put("user_id", item.getSeller_id());
+				    	params.put("item_id", bid2.getItem_id());
+				    	params.put("cmt",cmt);
+				    	aucDAO.notificationInsert(params);
+					}
+				}
 			}
+			int isWin3Result = aucDAO.biddingUpdate3(isWinUpdate3ForBidIdArr);
+			
+			System.out.println("3으로 총 " + isWin3Result + "건 업데이트 됨");
 		}
-		//trades insert
-//		Map<Integer, ItemExpiredDTO> maxPriceBids = new HashMap<>();
-//		for (ItemExpiredDTO item : expiredItems) {
-//	        int itemId = item.getItem_id();
-//	        if (!maxPriceBids.containsKey(itemId) || item.getPrice() > maxPriceBids.get(itemId).getPrice()) {
-//	                maxPriceBids.put(itemId, item);
-//	                System.out.println("maxpricebids: "+maxPriceBids);
-//	        }
-//	    }
-//		for (ItemExpiredDTO bid : maxPriceBids.values()) {
-//			System.out.println("bid: " + bid);
-//		}
 		
-		
-//		int count;
-//		//sysdate 지난 itemlist select
-//		List<ItemDTO> expiredItems = aucDAO.selectExpiredItem();
-//		for(ItemDTO item : expiredItems) {
-//			System.out.println("expired item: " + item);
-//			
-//			//입찰조회
-//			List<BiddingDTO> bids = aucDAO.selectBid(item.getItem_id());
-//			System.out.println("입찰 : "+bids.size()+"건");
-//			
-//			
-//			
-//			if(bids.size() == 1) {
-//				BiddingDTO singleBid = bids.get(0);
-//                System.out.println("1개 입찰 정보 : " + singleBid);
-//                if(singleBid.getIs_win() == 0) {
-//                	 int updateResult = aucDAO.biddingUpdate(singleBid.getItem_id());
-//                	 System.out.println(updateResult + "건 bidding update");
-//                	 TradeDTO trade = new TradeDTO();
-//                     trade.setUser_id(singleBid.getUser_id());
-//                     trade.setItem_id(singleBid.getItem_id());
-//                     trade.setPrice(singleBid.getPrice());
-//                     trade.setTrade_type(0);
-//                     trade.setIs_recommend(0);
-//                     trade.setStage(0);
-//                     trade.setIs_success(0);
-//                     int insertResult = aucDAO.tradeInsert(trade);
-//                     System.out.println(insertResult + "건 trade insert (단일 입찰에 대한 낙찰)");
-//                }else {
-//                	System.out.println("is_win=1 (이미 낙찰된 입찰정보)");
-//                }
-//                
-//			}else {
-//			count=0;
-//			for(BiddingDTO bid : bids) {
-//				System.out.println("Bid: " + bid);
-//				//이미 낙찰상태인 bidding이 있는지 조회
-//				BiddingDTO bidVerification = aucDAO.bidVerification(bid.getItem_id());
-//				if(bidVerification!=null) {
-//					count=1;
-//				}
-//				
-//			}
-//			if(count==0) {
-//			//is_win 1로 update
-//			int updateResult = aucDAO.biddingUpdate(item.getItem_id());
-//			System.out.println(updateResult + "건 bidding update");
-//			//낙찰 된 bidding가져오기
-//			BiddingDTO bidOne = aucDAO.bidVerification(item.getItem_id());
-//			//2번째 price 조회 
-//			int secondPrice = aucDAO.secondPrice(item.getItem_id());
-//			//trade set
-//			TradeDTO trade = new TradeDTO();
-//			trade.setUser_id(bidOne.getUser_id());
-//			trade.setItem_id(bidOne.getItem_id());
-//			trade.setPrice(secondPrice);
-//			trade.setTrade_type(0);
-//			trade.setIs_recommend(0);
-//			trade.setStage(0);
-//			trade.setIs_success(0);
-//			//낙찰 insert
-//			int insertResult = aucDAO.tradeInsert(trade);
-//			System.out.println(insertResult+"건 trade insert");
-//			}
-//			}
-//		
-//		}
+
 		
 		
 	}
