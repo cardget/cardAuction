@@ -49,27 +49,27 @@
 			<!--메인선택-->
 			<div class="row-content">
 				<div class="cardType">
-					<a href="auction/auctionMain.do"> <img
+					<a href="auction/auctionMain"> <img
 						src="${path}/resources/image/pokemon.png">
 					</a>
 				</div>
 				<div class="cardType">
-					<a href="auction/auctionYMain.do"> <img
+					<a href="auction/auctionYMain"> <img
 						src="${path}/resources/image/yugigo.png">
 					</a>
 				</div>
 				<div class="cardType">
-					<a href="auction/auctionDMain.do"> <img
+					<a href="auction/auctionDMain"> <img
 						src="${path}/resources/image/digimon.png">
 					</a>
 				</div>
 				<div class="cardType">
-					<a href="auction/auctionOMain.do"> <img
+					<a href="auction/auctionOMain"> <img
 						src="${path}/resources/image/onepiece.png">
 					</a>
 				</div>
 				<div class="cardType">
-					<a href="auction/auctionSMain.do"> <img
+					<a href="auction/auctionSMain"> <img
 						src="${path}/resources/image/sport.png">
 					</a>
 				</div>

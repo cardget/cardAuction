@@ -18,7 +18,7 @@
 <div class="container">
 		<div class="sidebar">
 			<div class="logo">
-				<img src="${path}/resources/image/logo.png" alt="로고이미지" height=41 onclick="location.href='../main.do'">
+				<img src="${path}/resources/image/logo.png" alt="로고이미지" height=41 onclick="location.href='../main'">
 				<h1>관리자페이지</h1>
 			</div>		
 			<div class="sidemenu">
@@ -35,7 +35,7 @@
 			<h2>${user.nickname}</h2>
 			<div class="bottom-div">
 				<div>
-					<a href="../auth/logout.do" class="grayfont">로그아웃</a> 					
+					<a href="../auth/logout" class="grayfont">로그아웃</a> 					
 				</div>
 			</div>
 		</div>

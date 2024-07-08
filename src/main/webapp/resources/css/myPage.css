@@ -187,6 +187,7 @@ li {
 .profile-image {
 	display: flex;
 	justify-content: center;
+	height: 150px;
 }
 
 .imageinfo {
@@ -507,38 +508,6 @@ tbody tr {
 	text-align: center;
 	padding: 30px;
 	border-radius: 10px;
-}
-.point-per-month {
-	margin-left: 10%;
-	margin-right: 10%;
-}
-
-.select-month {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    margin: 0 auto;
-    padding: 10px;
-}
-
-.select-month a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px; /* 필요에 따라 조정 가능 */
-    height: 30px; /* 필요에 따라 조정 가능 */
-}
-
-.select-month img {
-    height: 30px;
-}
-
-.select-month h3 {
-    margin: 0;
-    font-size: 16px;
-    text-align: center;
-    flex: 1;
 }
 
 .point-summary {

@@ -75,6 +75,11 @@
 	 </error-page>
 	 
 	 <error-page>    
+	 	<error-code>403</error-code>    
+	 	<location>/WEB-INF/views/error/error403.jsp</location>
+	 </error-page>
+	 
+	 <error-page>    
 	 	<error-code>404</error-code>    
 	 	<location>/WEB-INF/views/error/error404.jsp</location>
 	 </error-page>
@@ -84,4 +89,7 @@
 	 	<location>/WEB-INF/views/error/error500.jsp</location>
 	 </error-page>
 
+	<session-config>
+             <session-timeout>60</session-timeout>
+      </session-config>
 </web-app>

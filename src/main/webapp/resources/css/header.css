@@ -178,3 +178,16 @@ ul {
     margin: 2px 0;
     text-align: left;
 }
+
+.already-read {
+	background-color: #E1E6EC!important;
+}
+
+.no-unread-noti {
+	text-align: center!important;
+	border-bottom: 1px solid #ddd;
+}
+
+.mainColor {
+	color: #007FFF!important;
+}

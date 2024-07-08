@@ -16,18 +16,13 @@ public class AdminFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        String uri = request.getRequestURI();
-        
-        // 관리자 페이지 URL을 확인
-        if (uri.startsWith("/admin")) {
-            // 세션에서 관리자 여부를 확인
-            HttpSession session = request.getSession(false);
-            Integer isAdmin = (session != null) ? (Integer) session.getAttribute("is_admin") : null;
-            if (isAdmin == null || isAdmin != 1) {
-                // 관리자가 아닐 경우 접근 금지
-                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied");
-                return;
-            }
+        // 세션에서 관리자 여부를 확인
+        HttpSession session = request.getSession(false);
+        int isAdmin = (int) session.getAttribute("isAdmin");
+        if (isAdmin == 0) {
+            // 관리자가 아닐 경우 접근 금지
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied");
+            return;
         }
         
         // 필터 체인 계속

@@ -11,12 +11,14 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="${path}/resources/js/myPage.js"></script>
+<link rel="stylesheet" as="style" crossorigin
+	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
 </head>
 <body>
 	<div class="container">
 		<div class="sidebar">
 			<div class="logo">
-				<img src="${path}/resources/image/logo.png" alt="로고이미지" height=41 onclick="location.href='../main.do'">
+				<img src="${path}/resources/image/logo.png" alt="로고이미지" height=41 onclick="location.href='../main'">
 				<h1>회원정보</h1>
 			</div>
 			<div class="profile">
@@ -52,7 +54,7 @@
 			<hr class="grayfont">
 			<div class="bottom-div">
 				<div>
-					<a href="../auth/logout.do" class="grayfont">로그아웃</a> 
+					<a href="../auth/logout" class="grayfont">로그아웃</a> 
 					<span class="grayfont"> | </span> 
 					<a href="updateUserDisabled.do" class="grayfont withdrawl">회원탈퇴</a>
 				</div>
