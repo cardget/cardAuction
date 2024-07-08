@@ -63,7 +63,8 @@
 	padding: 5px 10px;
 	border-radius: 10px;
 	color: #2c2c2c;
-	font-weight: bold;
+	font-weight: normal;
+	font-size: 18px;
 }
 
 .breadcrumbs {

@@ -227,6 +227,7 @@ p {
 }
 
 .commentCardBorder {
+	position: relative;
 	border-bottom: solid 1px #dddddd;
 }
 
