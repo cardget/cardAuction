@@ -89,11 +89,7 @@ public class CommunityController {
 
 	    return "community/BoardSelect";
 	}
-
-
-
-
-
+	
 	// 게시글 상세 조회
 	@GetMapping("/BoardDetail")
 	public String BoardDetail(Integer commId, Model model, HttpSession session) {
@@ -190,21 +186,22 @@ public class CommunityController {
 		System.out.println("/community/BoardModify post 요청");
 
 		// 이미지 등록 or 수정
-		HttpServletRequest request = (HttpServletRequest) file;
-		String path = request.getSession().getServletContext().getRealPath("/");
-		long time = System.currentTimeMillis();
 		MultipartFile image = file.getFile("imageFile");
-		File fileDir = new File(path);
-		if (!fileDir.exists()) {
-			fileDir.mkdirs();
-		}
-		String originFileName = image.getOriginalFilename();
-		String saveFileName = String.format("%d_%s", time, originFileName);
-		board.setImage(saveFileName);
-		try {
-			image.transferTo(new File(path, saveFileName)); // wtp 서버 경로에 저장되므로, 이후에 s3 필요
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (image != null && !image.isEmpty()) {
+			String fileName = "community/" + System.currentTimeMillis() + "_" + image.getOriginalFilename();
+			try {
+				String imageUrl = s3Service.uploadObject(image, fileName);
+
+				// 이미지 URL이 https로 시작하는 경우 http로 변경
+				if (imageUrl.startsWith("https")) {
+					imageUrl = "http" + imageUrl.substring(5);
+				}
+				board.setImage(imageUrl);
+			} catch (java.io.IOException e) {
+				e.printStackTrace();
+				// 이미지 업로드 중 오류 발생 시 처리
+				return "redirect:BoardInsertForm?error=upload";
+			}
 		}
 
 		int commId = board.getComm_id();
