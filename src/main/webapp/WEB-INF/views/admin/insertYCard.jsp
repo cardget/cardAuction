@@ -30,8 +30,7 @@
 					<li><a href="manageDelivery.do">배송관리</a></li>
 				</ul>
 			</div>
-			<hr class="grayfont" style="margin-top: 20px; margin-bottom: 20px;">
-			<h2>${user.nickname}</h2>
+			<hr class="grayfont" style="margin-top: 20px; margin-bottom: 10px;">
 			<div class="bottom-div">
 				<div>
 					<a href="../auth/logout" class="grayfont">로그아웃</a> 					

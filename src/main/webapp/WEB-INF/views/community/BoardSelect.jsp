@@ -82,7 +82,7 @@
 			</c:choose>
 			<a href="#" class="active">커뮤니티</a>
 		</div>
-		<hr>
+		<br>
 		<div class="breadcrumbs">
 			<a href="../main">홈</a> &gt;
 			<c:choose>
