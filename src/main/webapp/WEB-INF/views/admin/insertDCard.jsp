@@ -44,7 +44,7 @@
 			    <div class="basicInfo">
 			        <h3 class="grayfont">ⓘ 디지몬 카드 등록</h3>
 			        <hr class="grayfont">  
-			        <form action="${path}/admin/insertDigimonCard.do" method="post" enctype="multipart/form-data">            
+			        <form action="${path}/admin/insertDCard.do" method="post" enctype="multipart/form-data">            
 			            <div class="form-group">
 			                <label for="digimon_card_name" class ="input-label">카드 이름:</label>
 			                <input type="text" id="card_name" name="card_name" class="input-field" required>

@@ -241,7 +241,7 @@ public class MyPageController {
 		}
 
 		model.addAttribute(message);
-		return "redirect:mypage/myInterest";
+		return "mypage/myInterest";
 	}
 
 	// 포인트 조회
