@@ -79,6 +79,7 @@
                     <a href="${path}/auction/auctionSMain">카드경매</a>
                 </li>
                 
+               
                 <li class="main-category-item">
                     <a href="${path}/community/BoardSelect?cat=5">커뮤니티</a>
                 </li>
