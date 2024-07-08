@@ -340,6 +340,7 @@ select {
 	-webkit-appearance: none;
 	background: url('../icon/fullArrow.png') no-repeat 85% 50%/14px auto;
 	cursor: pointer;
+	font-family: "Pretendard Variable";
 }
 
 .option-select {

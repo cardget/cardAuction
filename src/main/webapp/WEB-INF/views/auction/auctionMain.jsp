@@ -93,7 +93,7 @@
         </div>
         <div class="sort-right">
             <span>정렬기준:</span>
-            <form action="${path}/auction/auctionMain" method="get" id="sortForm">
+            <form action="${path}/auction/auctionMain" method="get" id="sortForm" >
             	<input type="hidden" name="keyword" value="${keyword}">
                 <select class="sort-select" name="sortOption" onchange="document.getElementById('sortForm').submit()"> 
                     <option value="recent" <c:if test="${sortOption == 'recent'}">selected</c:if>>최신순</option>

@@ -25,7 +25,7 @@ public class SchedulerService {
 
 
 
-	@Scheduled(cron="0 0 0 * * *")
+	@Scheduled(cron="0 0/1 * * * *")
 	@Transactional
 	public void scheduleRun() {
 		System.out.println("scheduled task running...");
@@ -68,8 +68,10 @@ public class SchedulerService {
 			for(ItemExpiredDTO item : expiredItems) {
 				for(BiddingDTO bid : secondPriceList) {
 					if(item.getItem_id() == bid.getItem_id()) {
-						price = bid.getPrice()+1000;
+						price = bid.getPrice();
 						if(aucDAO.isTradeExist(bid.getItem_id())== null) {
+							price =price + 1000;
+							System.out.println("@@@@@@@@@@"+price);
 							TradeDTO trade = new TradeDTO();
 								trade.setUser_id(bid.getUser_id());
 			                    trade.setItem_id(bid.getItem_id());
@@ -111,7 +113,7 @@ public class SchedulerService {
 						cmt = "입찰한 물품이 유찰되었습니다.";
 						Map<String, Object> params = new HashMap<>();
 						params.put("user_id", item.getSeller_id());
-				    	params.put("item_id", bid2.getItem_id());
+				    	params.put("item_id", item.getItem_id());
 				    	params.put("cmt",cmt);
 				    	aucDAO.notificationInsert(params);
 					}
