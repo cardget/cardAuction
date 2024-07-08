@@ -14,7 +14,7 @@ $(function() {
 				}
 			});
 		});
-		
+		/*
 		$(".header a").click(function(event) {
 			event.preventDefault();
 			
@@ -33,7 +33,7 @@ $(function() {
 				}
 			});
 		});
-		
+		*/
 		$(".noti-control a").click(function(event) {
 			event.preventDefault();
 			
