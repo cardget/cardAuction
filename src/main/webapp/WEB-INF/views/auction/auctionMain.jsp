@@ -32,7 +32,7 @@
             window.location.href = `${path}/auction/auctionMain?sortOption=${sortOption}&keyword=${keyword}`;
         }
         
-        
+    
         
 </script>
 <style>
@@ -110,14 +110,26 @@
 	
 	<c:forEach var="itemd" items="${itemDlist}">
 		<div class="auction-item" >
-			<c:choose>
+			
+			  
+			
+				<c:choose>
+	                    <c:when test="${itemd.card_image != null}">
+	                        <img src="${itemd.card_image}" alt="card image" class="card-image" onclick="location.href='${path}/auction/auctionDetail.do?item_id=${itemd.item_id}'">
+	                    </c:when>
+	                    <c:otherwise>
+	                        <img src="${path}/resources/image/defaultPCard.png" alt="card image" class="card-image" onclick="location.href='${path}/auction/auctionDetail.do?item_id=${itemd.item_id}'">
+	                    </c:otherwise>
+	            </c:choose><!--
+            <c:choose>
                     <c:when test="${itemd.card_image != null}">
-                        <img src="${itemd.card_image}" alt="card image" class="card-image" onclick="location.href='${path}/auction/auctionDetail.do?item_id=${itemd.item_id}'">
+                        <div class="card-image" style="background-image: url('${itemd.card_image}');" onclick="location.href='${path}/auction/auctionDetail.do?item_id=${itemd.item_id}'"></div>
                     </c:when>
                     <c:otherwise>
                         <img src="${path}/resources/image/defaultPCard.png" alt="card image" class="card-image" onclick="location.href='${path}/auction/auctionDetail.do?item_id=${itemd.item_id}'">
                     </c:otherwise>
-            </c:choose>
+            </c:choose>-->
+           
 			<div class="title-wrapper">
 				${itemd.item_name}
 			</div>
@@ -171,6 +183,7 @@
 		</div>
 </div>
 <script>
+
 
 $(document).ready(function() {
 	

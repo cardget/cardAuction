@@ -149,6 +149,7 @@ public class CommunityController {
 		// 세션에서 사용자 ID 가져오기
 		String userId = (String) session.getAttribute("userid");
 		board.setUser_id(userId);
+		int cat = board.getCat();
 
 		// S3에 이미지 등록
 		MultipartFile image = file.getFile("imageFile");
@@ -172,7 +173,7 @@ public class CommunityController {
 
 		// 게시글 등록
 		cService.insertBoard(board);
-		return "redirect:BoardSelect";
+		return "redirect:BoardSelect?cat=" + cat;
 	}
 
 	// 게시글 수정 페이지 로드

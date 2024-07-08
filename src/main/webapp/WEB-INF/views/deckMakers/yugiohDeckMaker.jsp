@@ -78,8 +78,8 @@
 					<div class="accordion-content active" id="deckList">
 						<c:forEach items="${yCardList}" var="card">
 							<div class="card-count">
-								<img src="${card.card_id}" onclick="call('${card.card_id}','${card.card_id}')"
-									class="listCard">
+								<img src="${card.card_image}" alt="${card.card_id}"
+									onclick="call('${card.card_image}','${card.card_id}')" class="listCard">
 							</div>
 						</c:forEach>
 					</div>
@@ -143,7 +143,7 @@
 	                var cardDiv = document.createElement("div");
 	                cardDiv.classList.add("card-count");
 	                cardDiv.innerHTML = `
-	                    <img src="\${card.card_id}" alt="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}','\${card.card_id}')">
+	                    <img src="\${card.card_image}" alt="\${card.card_id}" class="listCard" onclick="call('\${card.card_image}','\${card.card_id}')">
 	                `;
 	                here.appendChild(cardDiv);
 	            });
@@ -213,7 +213,7 @@
 		                var cardDiv = document.createElement("div");
 		                cardDiv.classList.add("card-count");
 		                cardDiv.innerHTML += `
-		                    <img src="\${card.card_id}" alt="\${card.card_id}" class="listCard" onclick="call('\${card.card_id}','\${card.card_id}')">
+		                    <img src="\${card.card_image}" alt="\${card.card_id}" class="listCard" onclick="call('\${card.card_image}','\${card.card_id}')">
 		                `;
 		                here.appendChild(cardDiv);
 		            });

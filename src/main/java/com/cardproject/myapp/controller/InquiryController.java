@@ -83,9 +83,20 @@ public class InquiryController {
 		
 		String answer = iService.checkAnswerByInquiryId(questId); // 답변 여부
 
-		if (isSecret == 1) { // 비밀글일 경우 작성자, 관리자만 접근 가능
+		if (isSecret == 1) { // 비밀글일 경우
 			isManager = iService.checkManagerById(userid); // 관리자 여부
-			if (!userid.equals(writer) || isManager == 0) {
+			
+			if (userid.equals(writer)) { // 작성자 접근
+				model.addAttribute("inquiry", inquiry);
+				model.addAttribute("answer", answer);
+				model.addAttribute("isManager", isManager);
+				return "inquiry/InquiryDetail";
+			} else if (isManager == 1) { // 관리자 접근
+				model.addAttribute("inquiry", inquiry);
+				model.addAttribute("answer", answer);
+				model.addAttribute("isManager", isManager);
+				return "inquiry/InquiryDetail";
+			} else { // 그외 접근 불가
 				model.addAttribute("errorMessage", "열람할 수 없습니다.");
 				return "inquiry/InquirySelect";
 			}
