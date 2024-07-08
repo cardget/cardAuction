@@ -15,7 +15,15 @@
 <link rel="stylesheet" href="${path}/resources/css/login.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="${path}/resources/js/signUp.js"></script>
-
+<script type="text/javascript">
+    $(document).ready(function() {
+        var loginResult = "${sessionScope.loginResult}";
+        if (loginResult) {
+            alert(loginResult);
+            <c:remove var="loginResult" scope="session"/>
+        }
+    });
+</script>
 </head>
 <body>
 	<div class="login-container">

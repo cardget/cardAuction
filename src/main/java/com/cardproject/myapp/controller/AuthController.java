@@ -84,7 +84,7 @@ public class AuthController {
 		}		
 		else {
 			// login success
-			session.setAttribute("loginResult", "Login Success");
+			//session.setAttribute("loginResult", "Login Success");
 			session.setAttribute("userid", user.getUser_id());
 			session.setAttribute("nickname", user.getNickname());
 			session.setAttribute("isAdmin", user.getIs_admin());

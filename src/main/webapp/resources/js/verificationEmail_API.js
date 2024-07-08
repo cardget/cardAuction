@@ -45,8 +45,15 @@ function verifyCodeEmail() {
     .then(response => response.text())
     .then(data => {
         var messageElement = document.getElementById('emailVerifyNotiMessage');
-        messageElement.innerText = data;
-        messageElement.style.color = data.includes("인증 성공") ? "green" : "red";
+        if (data.includes("인증 성공")) {
+            messageElement.innerText = "인증 성공";
+            messageElement.style.color = "green";
+            return true;
+        } else {
+            messageElement.innerText = "인증 실패";
+            messageElement.style.color = "red";
+            return false;
+        }
     })
     .catch(error => console.error("Error:", error));
 }

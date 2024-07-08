@@ -27,6 +27,7 @@ public class EmailController {
     public ResponseEntity<String> sendVerificationEmail(@RequestParam("email") String email, HttpSession session) {
         int generatedCode = Integer.parseInt(mailSendService.joinEmail(email));
         session.setAttribute("generatedCode", generatedCode);
+        session.setAttribute("isVerified", false);  // 인증 완료 여부 저장
         
         System.out.println("세션에 저장된 인증 코드: " + session.getAttribute("generatedCode"));
         
@@ -41,9 +42,13 @@ public class EmailController {
     public ResponseEntity<String> verifyCode(@RequestParam("code") String code, HttpSession session) {
         String message;
         Integer generatedCode = (Integer) session.getAttribute("generatedCode");
-        if (generatedCode != null && generatedCode.toString().equals(code)) {
+        Boolean isVerified = (Boolean) session.getAttribute("isVerified");
+        
+        if (isVerified != null && isVerified) {
+            message = "이미 인증이 완료되었습니다.";
+        } else if (generatedCode != null && generatedCode.toString().equals(code)) {
             message = "인증 성공";
-            session.removeAttribute("generatedCode");  // 인증이 성공하면 세션에서 제거
+            session.setAttribute("isVerified", true);  // 인증 완료 상태로 설정
         } else {
             message = "인증 실패";
         }

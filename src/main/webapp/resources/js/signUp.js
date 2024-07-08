@@ -263,6 +263,18 @@ function validateForm(event) {
     }
     return formValid;
 }
+function signUpValidateForm(event) {
+    var formValid = checkPasswordMatch() && verifyCodeEmail();
+    var submitMessage = document.getElementById("signUpsubmitMessage");
+    if (!formValid) {
+        submitMessage.style.color = 'red';
+        submitMessage.textContent = '입력을 다시 확인해주세요.';
+        event.preventDefault(); // 폼 제출 막기
+    } else {
+        submitMessage.textContent = '';
+    }
+    return formValid;
+}
 
 // 이메일 선택 js
 function checkEmail(select) {

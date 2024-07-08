@@ -68,7 +68,7 @@
 
         <h4>회원정보 입력</h4>
         <hr style="border: 1px solid blue; margin-bottom: 25px;">
-        <form action="${path}/auth/insertSignUp" class="custom-form" onsubmit="return validateForm(event)" method="post" enctype="multipart/form-data">
+        <form action="${path}/auth/insertSignUp" class="custom-form" onsubmit="return signUpValidateForm(event)" method="post" enctype="multipart/form-data">
 		    <div class="form-group">
 		        <label for="user_name" class="input-label">이름</label>
 		        <input type="text" id="user_name" name="user_name" required class="input-field" required>
@@ -121,7 +121,7 @@
 		        <label for="pw" class="input-label">비밀번호</label>
 		        <input type="password" id="pw" name="pw" required class="input-field" onkeyup="checkPasswordMatch()" required>
 		    </div>
-		    <p class="noti-info-text">※ 영문/숫자/특수문자(!,@,#,$,~)를 2가지 이상 포함하여 6~30자로 작성해주세요. </p>
+		    <p class="noti-info-text">※ 영문/숫자/특수문자(!,@,#,$,~)를 2가지 이상 포함하여 6~15자로 작성해주세요. </p>
 		    <hr class="form-divider">
 		    <div class="form-group">
 		        <label for="confirmPassword" class="input-label">비밀번호 확인</label>
@@ -173,9 +173,12 @@
 		    <p class="noti-info-text">※ 알림 서비스에 동의하시면 인기 경매 물품과 회원님의 관심 정보와 관련된 알람을 보내드립니다.<br>가입 후 마이페이지에서 수신 동의 여부를 변경하실 수 있습니다.</p>
 		    <hr class="form-divider">
 		    <br>
+		    <p id="signUpsubmitMessage" style="margin-left: 640px; margin-top: 8px; font-size: 15px;"></p>
 		    <div class="button-container">
 		        <button type="submit" id="submitButton" class="submit-button disabled-button" style="align-items: center;" disabled>회원가입하기</button>
+		   
 		    </div>
+		    
 		</form>
 
     </div>
