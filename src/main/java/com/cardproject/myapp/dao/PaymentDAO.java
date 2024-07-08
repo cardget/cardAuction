@@ -59,4 +59,9 @@ public class PaymentDAO{
 		params.put("userid", userid);
 		return sqlSession.insert(namespace + ".getPoint", params);
 	}
+	
+	// 판매자 조회
+	public String selectSeller(int tradeId) {
+		return sqlSession.selectOne(namespace + ".selectSeller", tradeId);
+	}
 }

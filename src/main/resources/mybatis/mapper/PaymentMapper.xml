@@ -122,4 +122,16 @@
 			1
 		)
 	</insert>
+	
+	<select id="selectSeller" parameterType = "int">
+		SELECT 
+			i.USER_ID 
+		FROM 
+			ITEMS i
+		INNER JOIN 
+	        TRADES t
+	    ON 
+	        i.item_id = t.item_id
+		WHERE t.TRADE_ID = #{tradeId}
+	</select>
 </mapper>

@@ -46,4 +46,9 @@ public class PaymentService {
  	public int getPoint(int amount, String cmt, String userid) {
  		return paymentDAO.getPoint(amount, cmt, userid);
  	}
+ 	
+ 	// 판매자 조회
+ 	public String selectSeller(int tradeId) {
+ 		return paymentDAO.selectSeller(tradeId);
+ 	}
 }
