@@ -229,3 +229,10 @@ p {
 .commentCardBorder {
 	border-bottom: solid 1px #dddddd;
 }
+
+.icon {
+	width: 16px;
+	height: 16px;
+	margin-right: 5px;
+	vertical-align: middle;
+}
