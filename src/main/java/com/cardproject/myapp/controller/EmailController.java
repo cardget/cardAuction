@@ -2,6 +2,8 @@ package com.cardproject.myapp.controller;
 
 import java.nio.charset.StandardCharsets;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +22,15 @@ public class EmailController {
     @Autowired
     private MailSendService mailSendService;
 
-    private int generatedCode;
-
     @PostMapping("/send")
     @ResponseBody
-    public ResponseEntity<String> sendVerificationEmail(@RequestParam("email") String email) {
-        generatedCode = Integer.parseInt(mailSendService.joinEmail(email));
-        String message = "인증번호 전송을 완료하였습니다. " + email;
+    public ResponseEntity<String> sendVerificationEmail(@RequestParam("email") String email, HttpSession session) {
+        int generatedCode = Integer.parseInt(mailSendService.joinEmail(email));
+        session.setAttribute("generatedCode", generatedCode);
+        
+        System.out.println("세션에 저장된 인증 코드: " + session.getAttribute("generatedCode"));
+        
+        String message = "인증번호가 발송되었습니다.";
         return ResponseEntity.ok()
                 .contentType(new MediaType("text", "plain", StandardCharsets.UTF_8))
                 .body(message);
@@ -34,12 +38,14 @@ public class EmailController {
 
     @PostMapping("/verify")
     @ResponseBody
-    public ResponseEntity<String> verifyCode(@RequestParam("code") String code) {
+    public ResponseEntity<String> verifyCode(@RequestParam("code") String code, HttpSession session) {
         String message;
-        if (Integer.toString(generatedCode).equals(code)) {
-            message = "인증에 성공하였습니다!";
+        Integer generatedCode = (Integer) session.getAttribute("generatedCode");
+        if (generatedCode != null && generatedCode.toString().equals(code)) {
+            message = "인증 성공";
+            session.removeAttribute("generatedCode");  // 인증이 성공하면 세션에서 제거
         } else {
-            message = "유효하지 않은 인증번호입니다.";
+            message = "인증 실패";
         }
         return ResponseEntity.ok()
                 .contentType(new MediaType("text", "plain", StandardCharsets.UTF_8))

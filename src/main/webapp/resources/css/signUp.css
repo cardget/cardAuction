@@ -12,8 +12,8 @@ body {
 	margin: 0;	
 }
 .container {
-	padding-left: 270px;
-	padding-right: 270px;
+	padding-left: 260px;
+	padding-right: 260px;
 }
 
 .logo-container {
@@ -124,6 +124,7 @@ body {
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	box-sizing: border-box; /* 패딩과 테두리를 포함하여 너비 계산 */
+	margin-bottom: 6px;
 }
 
 .email-input-field {
