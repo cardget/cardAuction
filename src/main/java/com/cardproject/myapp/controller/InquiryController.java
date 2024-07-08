@@ -79,13 +79,15 @@ public class InquiryController {
 		QuestionDTO inquiry = iService.selectByInquiryId(questId); // 문의 글 정보
 		Integer isSecret = inquiry.getIs_secret(); // 비밀글 여부
 		String writer = iService.getWriterByQuestId(questId); // 글 작성자
-		System.out.println("문의글 작성자:" + writer);
-		
 		String answer = iService.checkAnswerByInquiryId(questId); // 답변 여부
 
+		if (userid == null) { // 비로그인
+			model.addAttribute("errorMessage", "열람할 수 없습니다.");
+			return "inquiry/InquirySelect";
+		}
+		
 		if (isSecret == 1) { // 비밀글일 경우
 			isManager = iService.checkManagerById(userid); // 관리자 여부
-			
 			if (userid.equals(writer)) { // 작성자 접근
 				model.addAttribute("inquiry", inquiry);
 				model.addAttribute("answer", answer);
@@ -96,6 +98,9 @@ public class InquiryController {
 				model.addAttribute("answer", answer);
 				model.addAttribute("isManager", isManager);
 				return "inquiry/InquiryDetail";
+			} else if (userid.equals(null)) {
+				model.addAttribute("errorMessage", "열람할 수 없습니다.");
+				return "inquiry/InquirySelect";
 			} else { // 그외 접근 불가
 				model.addAttribute("errorMessage", "열람할 수 없습니다.");
 				return "inquiry/InquirySelect";
