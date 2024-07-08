@@ -10,8 +10,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>카드득 로그인 페이지</title>
 <c:set var="path" value="${pageContext.servletContext.contextPath}"/>
+<link rel="stylesheet" as="style" crossorigin
+	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
 <link rel="stylesheet" href="${path}/resources/css/login.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Apple+SD+Gothic+Neo&display=swap">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="${path}/resources/js/signUp.js"></script>
 

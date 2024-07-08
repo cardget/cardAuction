@@ -33,7 +33,6 @@ function goToLogin() {
 		</div>
 		<div style="display: flex; justify-content: space-between; height: 40px;">
 		<h5>아이디 찾기</h5>
-		<h6 >회원정보에 등록한 휴대전화로 인증</h6>
 		</div>		
 		<hr style="width:440px;">
 		
@@ -41,21 +40,26 @@ function goToLogin() {
             <c:when test="${userFound}">
                 <h6 style="margin-top:0px;">
                     <img src="${path}/resources/icon/blue_error.png">&nbsp;고객님의 정보와 일치하는 ID입니다.
+                                
                 </h6>
             </c:when>
             <c:otherwise>
                 <h6 style="margin-top:0px;">
-                    <img src="${path}/resources/icon/blue_error.png">&nbsp;정보를 찾을 수 없습니다.
+                    <img src="${path}/resources/icon/red_error.png">&nbsp;정보를 찾을 수 없습니다.
                 </h6>
             </c:otherwise>
         </c:choose>			
 		
 		<form>	
 			<input type="text" id="id" name="id" class="input-field" value="${userId}" readonly>
-			<img src="${path}/resources/icon/CheckBox_Blue.png">
-			<button type="button" class="check-button" onclick="goToLogin()">로그인 하러가기</button>
-			<button type="button" class="check-button" onclick="goToResetPassword()">비밀번호 재설정</button>			
-		</form>		
+			<img src="${path}/resources/icon/CheckBox_Blue.png" style="display: inline-block; vertical-align: middle">
+			<div style="margin-left: 82px;">
+				<button type="button" class="check-button" onclick="goToLogin()" >로그인 하러가기</button>
+				<button type="button" class="check-button" onclick="goToResetPassword()">비밀번호 재설정</button>	
+			</div>
+					
+		</form>	
+			
 	</div>
 	
 </body>
