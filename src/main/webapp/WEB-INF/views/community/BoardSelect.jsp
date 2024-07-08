@@ -51,7 +51,7 @@
 		</c:otherwise>
 	</c:choose>
 
-	<div class="container2">
+	<div class="container2"> 
 		<br>
 		<div class="nav-links">
 			<c:choose>
