@@ -53,7 +53,7 @@
 	
 <!-- Body -->
 <div class="header-image">
-		<img src="${path }/resources/images/default/pokemon_banner.png">
+		<img src="${path }/resources/images/default/sport.png">
 	</div>
 <!-- 검색창 -->
 <div class="containerM">
@@ -82,7 +82,7 @@
                     <a href="${path}/deckMakers/pokemonDeckListMain">티어덱리스트</a>
                 </li>
                 <li class="main-category-item">
-                    <a href="${path}/community/BoardSelect?cat=4">커뮤니티</a>
+                    <a href="${path}/community/BoardSelect?cat=5">커뮤니티</a>
                 </li>
             </ul>
     </div>
