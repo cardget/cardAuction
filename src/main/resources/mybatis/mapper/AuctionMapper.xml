@@ -61,7 +61,7 @@
 	            GROUP BY item_id
 	        ) b ON i.item_id = b.item_id
 	        LEFT JOIN pokemon p ON i.p_card_id = p.card_id
-	        WHERE i.end_date > SYSDATE AND  i.item_name LIKE '%' || #{keyword} || '%'
+	        WHERE i.end_date > SYSDATE AND  i.item_name LIKE '%' || #{keyword} || '%' and cat=0
 	    ) subquery
 	    WHERE ROWNUMBER BETWEEN #{offset} + 1 AND #{offset} + #{pageSize}
 	</select>
@@ -120,7 +120,7 @@
 	            GROUP BY item_id
 	        ) b ON i.item_id = b.item_id
 	        LEFT JOIN pokemon p ON i.p_card_id = p.card_id
-	        WHERE i.end_date > SYSDATE
+	        WHERE i.end_date > SYSDATE and cat=0
 	    ) subquery
 	    WHERE ROWNUMBER BETWEEN #{offset} + 1 AND #{offset} + #{pageSize}
 	</select>

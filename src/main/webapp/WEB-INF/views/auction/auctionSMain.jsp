@@ -36,7 +36,19 @@
         
 </script>
 <style>
-
+.topimage {
+	
+	width: 1920px;
+	height: 283px;
+	top: 0;
+	left: 0;
+	background-image: 
+		url('${path}/resources/image/sport_banner.png');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;	
+		
+}
 </style>
 </head>
 <body>
