@@ -80,23 +80,24 @@ public class InquiryController {
 		Integer isSecret = inquiry.getIs_secret(); // 비밀글 여부
 		String writer = iService.getWriterByQuestId(questId); // 글 작성자
 		String answer = iService.checkAnswerByInquiryId(questId); // 답변 여부
-
+		isManager = iService.checkManagerById(userid); // 관리자 여부
+		
+		model.addAttribute("inquiry", inquiry);
+		model.addAttribute("answer", answer);
+		model.addAttribute("isManager", isManager);
 		if (userid == null) { // 비로그인
-			model.addAttribute("errorMessage", "열람할 수 없습니다.");
-			return "inquiry/InquirySelect";
+			if (isSecret == 1) {
+				model.addAttribute("errorMessage", "열람할 수 없습니다.");
+				return "inquiry/InquirySelect";
+			} else {
+				return "inquiry/InquiryDetail";
+			}
 		}
 		
 		if (isSecret == 1) { // 비밀글일 경우
-			isManager = iService.checkManagerById(userid); // 관리자 여부
 			if (userid.equals(writer)) { // 작성자 접근
-				model.addAttribute("inquiry", inquiry);
-				model.addAttribute("answer", answer);
-				model.addAttribute("isManager", isManager);
 				return "inquiry/InquiryDetail";
 			} else if (isManager == 1) { // 관리자 접근
-				model.addAttribute("inquiry", inquiry);
-				model.addAttribute("answer", answer);
-				model.addAttribute("isManager", isManager);
 				return "inquiry/InquiryDetail";
 			} else if (userid.equals(null)) {
 				model.addAttribute("errorMessage", "열람할 수 없습니다.");
@@ -106,10 +107,6 @@ public class InquiryController {
 				return "inquiry/InquirySelect";
 			}
 		}
-
-		model.addAttribute("inquiry", inquiry);
-		model.addAttribute("answer", answer);
-		model.addAttribute("isManager", isManager);
 		return "inquiry/InquiryDetail";
 	}
 
