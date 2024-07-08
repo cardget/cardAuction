@@ -75,11 +75,13 @@
 		    <div>                
 		        <div class="form-group">
 		            <label class="input-label">전화번호</label>
-		            <input type="text" id="phone_number" name="phone_number" class="input-field" required>
+		            <input type="text" id="phone_number" name="phone_number" class="input-field" placeholder="숫자만 입력" required>
 		            <button type="button" class="check-button" onclick="sendCode()">인증번호 발송</button>
+		            <span id="smsSendNotiMessage" style="margin-left: 10px; margin-top: 8px; font-size: 12px;"></span>
 		            <input type="text" id="verificationCode" class="input-field" style="margin-left: 190px;" placeholder="인증번호 입력">
 		            <button type="button" class="check-button" onclick="verifyCode()">확인</button>  
-		            <p id="P_result"></p>            
+		            <span id="smsVerifyNotiMessage" style="margin-left: 10px; margin-top: 8px; font-size: 12px;"></span>
+		                      
 		        </div>                
 		    </div>          
 		    <hr class="form-divider">      
@@ -87,6 +89,7 @@
 		        <label for="user_id" class="input-label">아이디</label>
 		        <input type="text" id="user_id" name="user_id" class="input-field" required>
 		        <button type="button" class="check-button" id="checkUserId" onclick="f_checkUserId()">중복확인</button>
+		        <span id="idMessage" style="margin-left: 10px; margin-top: 8px; font-size: 12px;"></span>
 		    </div>
 		    <p class="noti-info-text">※ 영문/숫자를 사용하여 6~15자로 작성해주세요. </p>
 		    <hr class="form-divider">
@@ -105,7 +108,8 @@
 		    <div class="form-group">
 		        <label for="nickname" class="input-label">닉네임</label>
 		        <input type="text" id="nickname" name="nickname" required class="input-field" required>
-		        <button type="button" class="check-button" id="checkNickname" onclick="f_checkNickname()">중복확인</button>		       
+		        <button type="button" class="check-button" id="checkNickname" onclick="f_checkNickname()">중복확인</button>
+		        <span id="nickMessage" style="margin-left: 10px; margin-top: 8px; font-size: 12px;"></span>		       
 		    </div>
 		     <p class="noti-info-text">※ 7자 이하로 작성해주세요. </p>
 		    <hr class="form-divider">
@@ -122,9 +126,10 @@
 		            <option value="nate.com">nate.com</option>
 		        </select>
 		        <button type="button" id="mail-Check-Btn" class="check-button" onclick="sendVerificationEmail()" style="margin-left: 10px;">인증번호 발송</button>
+		        <span id="emailSendNotiMessage" style="margin-left: -2px; margin-top: 8px; font-size: 12px;"></span>
 			    <input type="text" id="verificationCodeEmail" class="input-field" style="margin-left: 190px;" placeholder="인증번호 입력">
 			    <button type="button" class="check-button" onclick="verifyCodeEmail()">확인</button>   
-			    <p id="E_result"></p>	    
+			    <span id="emailVerifyNotiMessage" style="margin-left: 10px; margin-top: 8px; font-size: 12px;"></span>	    
 		    </div>
 		    <!-- 이메일을 결합하여 숨겨진 필드에 저장 -->
             <input type="hidden" id="email" name="email" required>            

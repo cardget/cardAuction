@@ -92,7 +92,7 @@ public class AuthController {
 		}
 	}
 	
-	@GetMapping("/logout.do")
+	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:login";
@@ -109,23 +109,22 @@ public class AuthController {
 	}
 	
 	@PostMapping("/findIdResult")
-	@ResponseBody
-	public Map<String, String> findIdResult(@RequestParam("userName") String userName, @RequestParam("phone_number") String phoneNumber) {
-	    String userId = aService.findUserId(userName, phoneNumber);
-	    Map<String, String> response = new HashMap<>();
+    public String findIdResult(@RequestParam("userName") String userName,
+                               @RequestParam("phone_number") String phoneNumber,
+                               Model model) {
+        String userId = aService.findUserId(userName, phoneNumber);
+        if (userId != null && !userId.isEmpty()) {
+        	model.addAttribute("userId", userId);
+            model.addAttribute("userFound", true);
+        } else {
+        	userId = "해당 정보와 일치하는 아이디가 없습니다.";
+            model.addAttribute("userFound", false);
+        }
+        
+        return "auth/findIdResult";
+    }
 
-	    if (userId != null && !userId.isEmpty()) {
-	        response.put("status", "success");
-	        response.put("userId", userId);
-	    } else {
-	        response.put("status", "error");
-	        response.put("message", "해당 정보로 등록된 아이디가 없습니다.");
-	    }
-
-	    return response;
-	}
-
-//	@GetMapping("/findPassword.do")
+//	@GetMapping("/findPassword")
 //	public void findPassword() {
 //		System.out.println("findPassword page");
 //	}

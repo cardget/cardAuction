@@ -11,12 +11,27 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Apple+SD+Gothic+Neo&display=swap">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="${path}/resources/js/signUp.js"></script>
+<script>
+function validateForm(event) {
+    var formValid = checkPasswordMatch();
+    var submitMessage = document.getElementById("submitMessage");
+    if (!formValid) {
+        submitMessage.style.color = 'red';
+        submitMessage.textContent = '비밀번호를 다시 확인해주세요.';
+        event.preventDefault(); // 폼 제출 막기
+    } else {
+        submitMessage.textContent = '';
+    }
+    return formValid;
+}
+</script>
+
 
 </head>
 <body>
 	<div class="find-pw-container">
 		<div class="logo">
-			<img src="${path}/resources/image/logo.png" alt="로고이미지" height=41 onclick="location.href='../main.do'">
+			<img src="${path}/resources/image/logo.png" alt="로고이미지" height=41 onclick="location.href='../main'">
 		</div>
 		<div style="display: flex; justify-content: space-between; height: 40px;">
 		<h5>비밀번호 재설정</h5>
@@ -24,7 +39,7 @@
 		<hr style="width:440px;">
 		<h6 style="margin-top:0px;"><img src="${path}/resources/icon/blue_error.png">&nbsp;영문/숫자/특수문자(!,@,#,$,~)를 2가지 이상 포함하여 6~30자로 작성해주세요.</h6>
 		
-		<form action="${path}/auth/updatePassword.do" method="post" class="custom-form" onsubmit="return checkPasswordMatch()">
+		<form action="${path}/auth/updatePassword" method="post" class="custom-form" onsubmit="return validateForm(event)">
 			<div >
 				<div class="form-group">
 					<label class="input-label" >아이디  </label>
@@ -48,8 +63,10 @@
 			        <span id="passwordMessage" style="margin-left: 120px; margin-top: 8px; font-size: 10px;"></span>			        
 			    </div>
 			    
-			</div>							
+			</div>	
+									
 			<button type="submit" class="submit-button">비밀번호 수정</button>
+			<span id="submitMessage" style="margin-left: 120px; font-size: 15px;"></span>
 		</form>
 		
 	</div>
