@@ -24,7 +24,11 @@ function sendVerificationEmail() {
         body: "email=" + encodeURIComponent(email)
     })
     .then(response => response.text())
-    .then(data => alert(data))
+    .then(data => {
+        var messageElement = document.getElementById('emailSendNotiMessage');
+        messageElement.innerText = data;
+        messageElement.style.color = data.includes("인증번호가 발송되었습니다.") ? "green" : "red";
+    })
     .catch(error => console.error("Error:", error));
 }
 
@@ -39,6 +43,10 @@ function verifyCodeEmail() {
         body: "code=" + encodeURIComponent(code)
     })
     .then(response => response.text())
-    .then(data => alert(data))
+    .then(data => {
+        var messageElement = document.getElementById('emailVerifyNotiMessage');
+        messageElement.innerText = data;
+        messageElement.style.color = data.includes("인증 성공") ? "green" : "red";
+    })
     .catch(error => console.error("Error:", error));
 }

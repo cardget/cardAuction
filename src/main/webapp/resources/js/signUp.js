@@ -32,42 +32,72 @@ function toLocalStorage(event) {
 //signUp.jsp 아이디 중복 체크
 function f_checkUserId() {
     var userId = $("#user_id").val();
+    var userIdPattern = /^[a-zA-Z0-9]{6,15}$/;
+
+    // 아이디 패턴 검사
+    if (!userIdPattern.test(userId)) {
+        document.getElementById('idMessage').innerText = "영문/숫자를 사용하여 6~15자로 작성해주세요.";
+        document.getElementById('idMessage').style.color = "red";
+        return; 
+    }
+
     $.ajax({
         url: "/myapp/auth/checkUserId",
         type: "GET",
         data: { "userId": userId },
         success: function(isDuplicate) {
+            var messageElement = document.getElementById('idMessage');
             if (isDuplicate > 0) {
-                alert("이미 사용중인 아이디입니다.");
+                messageElement.innerText = "이미 사용중인 아이디입니다.";
+                messageElement.style.color = "red";
             } else {
-                alert("사용 가능한 아이디입니다.");
+                messageElement.innerText = "사용 가능한 아이디입니다.";
+                messageElement.style.color = "green";
             }
         },
         error:function(){
-        	alert("error");
+            var messageElement = document.getElementById('idMessage');
+            messageElement.innerText = "서버 오류가 발생했습니다. 다시 시도해주세요.";
+            messageElement.style.color = "red";
         }
     });
 }
 
+
 //signUp.jsp 닉네임 중복 체크
 function f_checkNickname() {
     var nickname = $("#nickname").val();
+    var nicknamePattern = /^.{1,7}$/;
+
+    // 닉네임 패턴 검사
+    if (!nicknamePattern.test(nickname)) {
+        document.getElementById('nickMessage').innerText = "7자 이하로 작성해주세요.";
+        document.getElementById('nickMessage').style.color = "red";
+        return; 
+    }
+
     $.ajax({
         url: "/myapp/auth/checkNickname",
         type: "GET",
         data: { "nickname": nickname },
         success: function(isDuplicate) {
+            var messageElement = document.getElementById('nickMessage');
             if (isDuplicate > 0) {
-                alert("이미 사용중인 닉네임입니다.");
+                messageElement.innerText = "이미 사용중인 닉네임입니다.";
+                messageElement.style.color = "red";
             } else {
-                alert("사용 가능한 닉네임입니다.");
+                messageElement.innerText = "사용 가능한 닉네임입니다.";
+                messageElement.style.color = "green";
             }
         },
         error:function(){
-        	alert("error");
+            var messageElement = document.getElementById('nickMessage');
+            messageElement.innerText = "서버 오류가 발생했습니다. 다시 시도해주세요.";
+            messageElement.style.color = "red";
         }
     });
 }
+
 
 var contextPath = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
 // DOMContentLoaded 이벤트를 사용하여 페이지가 로드된 후에 코드를 실행
@@ -209,9 +239,11 @@ function checkPasswordMatch() {
 	if(!isValidPassword(password)){
 		message.style.color = 'red';
         message.textContent = '비밀번호는 영문, 숫자, 특수문자 중 두 가지 이상을 포함하여 6~30자로 작성해야 합니다.';
+        return false;
     }else if (password !== confirmPassword) {
         message.style.color = 'red';
         message.textContent = '비밀번호가 일치하지 않습니다. 다시 입력해주세요.';
+        return false;
     } else {
         message.style.color = 'green';
         message.textContent = '일치하는 비밀번호입니다.';
@@ -241,13 +273,13 @@ document.addEventListener("DOMContentLoaded", function() {
 // 찾은 아이디값을 비밀번호 재설정 페이지로 가져감
 function goToResetPassword() {
     var userId = document.getElementById("id").value;
-    location.href = "${path}/auth/resetPassword.do?userId=" + userId;
+    location.href = "${path}/auth/resetPassword?userId=" + userId;
 }
 
 // 찾은 아이디값을 로그인 페이지로 가져감
 function goToLogin() {
     var userId = document.getElementById("id").value;
-    location.href = "${path}/auth/login.do?userId=" + userId;
+    location.href = "${path}/auth/login?userId=" + userId;
 }
 
 
