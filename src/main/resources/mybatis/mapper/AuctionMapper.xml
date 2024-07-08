@@ -375,8 +375,14 @@
 	<!-- 포켓몬 카드 검색하기 -->
 	<select id="selectPRight" parameterType="String" resultType="pokemonvo">
 		SELECT * FROM pokemon
-        WHERE card_name LIKE '%' || #{cardKeyword} || '%'
+        WHERE UPPER(card_name) LIKE UPPER('%' || #{cardKeyword} || '%')
 	</select>
+	<!-- point insert -->
+	<insert id="pointInsert" parameterType="pointvo">
+		insert into points (point_id,amount,cmt,user_id,is_add,cat)
+		values (POINT_SEQ.NEXTVAL,#{amount},#{cmt},#{user_id},#{is_add},#{cat})
+	</insert>
+	
 	<!-- @@@@@@@디지몬@@@@@@@@@@@ -->
 	
 	<!-- 디지몬 카드 검색하기 -->
@@ -540,7 +546,7 @@
 	<!-- 원피스 카드 검색하기 -->
 	<select id="selectORight" parameterType="String" resultType="onepiecevo">
 		SELECT * FROM onepiece
-        WHERE card_name LIKE '%' || #{cardKeyword} || '%'
+        WHERE UPPER(card_name) LIKE UPPER('%' || #{cardKeyword} || '%')
 	</select>
 	<!-- 원피스 물품 검색 -->
 	<select id="selectItemForNameOnepiece" parameterType="Map" resultType="itemdetailvo">
@@ -698,7 +704,7 @@
 	<!-- 유희왕 카드 검색하기 -->
 	<select id="selectYRight" parameterType="String" resultType="yugiohvo">
 		SELECT * FROM yugioh
-        WHERE card_name LIKE '%' || #{cardKeyword} || '%'
+        WHERE UPPER(card_name) LIKE UPPER('%' || #{cardKeyword} || '%')
 	</select>
 	<!-- 유희왕 물품 검색 -->
 	<select id="selectItemForNameYugioh" parameterType="Map" resultType="itemdetailvo">
