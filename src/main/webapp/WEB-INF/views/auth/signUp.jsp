@@ -8,6 +8,8 @@
 <c:set var="path" value="${pageContext.servletContext.contextPath}"/>
 
 <link rel="stylesheet" href="${path}/resources/css/signUp.css">
+<link rel="stylesheet" as="style" crossorigin
+	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="${path}/resources/js/signUp.js"></script>
@@ -66,7 +68,7 @@
 
         <h4>회원정보 입력</h4>
         <hr style="border: 1px solid blue; margin-bottom: 25px;">
-        <form action="${path}/auth/insertSignUp" class="custom-form" onsubmit="return checkPasswordMatch()" method="post" enctype="multipart/form-data">
+        <form action="${path}/auth/insertSignUp" class="custom-form" onsubmit="return validateForm(event)" method="post" enctype="multipart/form-data">
 		    <div class="form-group">
 		        <label for="user_name" class="input-label">이름</label>
 		        <input type="text" id="user_name" name="user_name" required class="input-field" required>
@@ -76,14 +78,36 @@
 		        <div class="form-group">
 		            <label class="input-label">전화번호</label>
 		            <input type="text" id="phone_number" name="phone_number" class="input-field" placeholder="숫자만 입력" required>
-		            <button type="button" class="check-button" onclick="sendCode()">인증번호 발송</button>
+		            <!-- <button type="button" class="check-button" onclick="sendCode()">인증번호 발송</button>
 		            <span id="smsSendNotiMessage" style="margin-left: 10px; margin-top: 8px; font-size: 12px;"></span>
 		            <input type="text" id="verificationCode" class="input-field" style="margin-left: 190px;" placeholder="인증번호 입력">
 		            <button type="button" class="check-button" onclick="verifyCode()">확인</button>  
-		            <span id="smsVerifyNotiMessage" style="margin-left: 10px; margin-top: 8px; font-size: 12px;"></span>
+		            <span id="smsVerifyNotiMessage" style="margin-left: 10px; margin-top: 8px; font-size: 12px;"></span> -->
 		                      
 		        </div>                
-		    </div>          
+		    </div>        
+		    <hr class="form-divider">  
+		    <div class="form-group">
+		        <label for="email" class="input-label">이메일</label>
+		        <input type="text" id="emailName" name="emailName" required class="email-input-field" required>
+		        <span>@</span>
+		        <input type="text" id="domain" name="domain" required class="email-input-field">
+		        <select class="email-select" name="emailList" size="1" onchange="checkEmail(this)">
+		            <option value="">직접 입력</option>
+		            <option value="naver.com">naver.com</option>
+		            <option value="gmail.com">gmail.com</option>
+		            <option value="daum.net">daum.net</option>
+		            <option value="nate.com">nate.com</option>
+		        </select>
+		        <button type="button" id="mail-Check-Btn" class="check-button" onclick="sendVerificationEmail()" style="margin-left: 10px;">인증번호 발송</button>
+		        <span id="emailSendNotiMessage" style="margin-left: 10px; margin-top: 8px; font-size: 12px;"></span>
+			    <input type="text" id="verificationCodeEmail" class="input-field" style="margin-left: 190px;" placeholder="인증번호 입력">
+			    <button type="button" class="check-button" onclick="verifyCodeEmail()">확인</button>   
+			    <span id="emailVerifyNotiMessage" style="margin-left: 10px; margin-top: 8px; font-size: 12px;"></span>	    
+		    </div>
+		    <!-- 이메일을 결합하여 숨겨진 필드에 저장 -->
+            <input type="hidden" id="email" name="email" required>		    
+		    
 		    <hr class="form-divider">      
 		    <div class="form-group">
 		        <label for="user_id" class="input-label">아이디</label>
@@ -111,29 +135,7 @@
 		        <button type="button" class="check-button" id="checkNickname" onclick="f_checkNickname()">중복확인</button>
 		        <span id="nickMessage" style="margin-left: 10px; margin-top: 8px; font-size: 12px;"></span>		       
 		    </div>
-		     <p class="noti-info-text">※ 7자 이하로 작성해주세요. </p>
-		    <hr class="form-divider">
-		    <div class="form-group">
-		        <label for="email" class="input-label">이메일</label>
-		        <input type="text" id="emailName" name="emailName" required class="email-input-field" required>
-		        <span>@</span>
-		        <input type="text" id="domain" name="domain" required class="email-input-field">
-		        <select class="email-select" name="emailList" size="1" onchange="checkEmail(this)">
-		            <option value="">직접 입력</option>
-		            <option value="naver.com">naver.com</option>
-		            <option value="gmail.com">gmail.com</option>
-		            <option value="daum.net">daum.net</option>
-		            <option value="nate.com">nate.com</option>
-		        </select>
-		        <button type="button" id="mail-Check-Btn" class="check-button" onclick="sendVerificationEmail()" style="margin-left: 10px;">인증번호 발송</button>
-		        <span id="emailSendNotiMessage" style="margin-left: -2px; margin-top: 8px; font-size: 12px;"></span>
-			    <input type="text" id="verificationCodeEmail" class="input-field" style="margin-left: 190px;" placeholder="인증번호 입력">
-			    <button type="button" class="check-button" onclick="verifyCodeEmail()">확인</button>   
-			    <span id="emailVerifyNotiMessage" style="margin-left: 10px; margin-top: 8px; font-size: 12px;"></span>	    
-		    </div>
-		    <!-- 이메일을 결합하여 숨겨진 필드에 저장 -->
-            <input type="hidden" id="email" name="email" required>            
-            
+		     <p class="noti-info-text">※ 7자 이하로 작성해주세요. </p>          
 		    
 		    <hr class="form-divider"> 
 		    <div class="form-group address-group">
@@ -161,15 +163,10 @@
 		        <label class="input-label">알림 서비스</label>
 		        <div class="notification-options">
 		            <div class="notification-option">
-		                <label class="phone-notification">휴대폰 알림 수신</label>
+		                <label class="phone-notification">알림 수신</label>
 		                <label><input type="radio" name="phone_agreement" value="1" required> 동의</label>
 		                <label><input type="radio" name="phone_agreement" value="0" required> 비동의</label>
-		            </div>
-		            <div class="notification-option">
-		                <label class="email-notification">이메일 알림 수신</label>
-		                <label><input type="radio" name="email_agreement" value="1" required> 동의</label>
-		                <label><input type="radio" name="email_agreement" value="0" required> 비동의</label>                        
-		            </div>                               
+		            </div>		                                         
 		        </div>
 		        <br>		        
 		    </div>

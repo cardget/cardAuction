@@ -183,6 +183,7 @@
 	<!-- 댓글 리스트 조회 -->
 	<select id="selectReplie" parameterType="int" resultType="replievo">
 		SELECT
+		R.REPLY_ID,
 		R.CMT,
 		R.CREATE_TIME,
 		U.NICKNAME,
@@ -290,6 +291,12 @@
     <select id="getWriterByCommId" parameterType="int" resultType="String">
     	SELECT USER_ID FROM COMMUNITY WHERE COMM_ID=#{commId}
     </select>
+    
+    <!-- 댓글 삭제 -->
+	<delete id="deleteComment" parameterType="int">
+		DELETE FROM REPLIES WHERE REPLY_ID=#{replyId}
+	</delete>
+    
 
 </mapper>
 

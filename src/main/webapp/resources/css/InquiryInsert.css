@@ -132,8 +132,7 @@
 }
 
 .comment-div {
-    height: auto;
-    min-height: calc(100vh - 300px);
+    height: 550px !important;
     border: 2px solid #C7C8C9;
     padding: .375rem .75rem;
     border-radius: .25rem;
@@ -142,4 +141,22 @@
     overflow-wrap: break-word;
     width: 100%;
     box-sizing: border-box;
+}
+
+.dropdown-content .no-unread-noti h3{
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.dropdown-toggle::after {
+	content: none;
+}
+
+.icon {
+	width: 16px;
+	height: 16px;
+	margin-right: 5px;
+	vertical-align: middle;
 }

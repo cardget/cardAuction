@@ -179,6 +179,15 @@ tbody tr:hover {
 
 .container2 {
 	margin: 0 auto;
+	margin-bottom:200px;
+	width: 60%;
+	justify-content: center;
+	align-items: center;
+	min-height: calc(100vh - 100px); /* 헤더 높이를 고려한 최소 높이 */
+}
+
+.container3 {
+	margin: 0 auto;
 	width: 60%;
 	justify-content: center;
 	align-items: center;
@@ -190,7 +199,7 @@ tbody tr:hover {
 	height: 283px;
 	top: 0;
 	left: 0;
-	background-image: url('../images/default/pokemon_banner.png');
+	background-image: url('../image/pokemon_banner.png');
 }
 
 .yugiohBanner {
@@ -285,3 +294,25 @@ button:not(:disabled) {
 	font-weight: bold;
 	font-size: 12px;
 }
+
+.container2 .nav-links a {
+    /* color: #ECECEC; */
+    color: black;
+}
+
+.container2 .nav-links a.active {
+    color: blue;
+}
+
+
+.dropdown-content .no-unread-noti h3{
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.dropdown-toggle::after {
+	content: none;
+}
+	

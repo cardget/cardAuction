@@ -41,7 +41,7 @@ $(function() {
 	<div class="container">
 		<div class="sidebar">
 			<div class="logo">
-				<img src="${path}/resources/image/logo.png" alt="로고이미지" height=41 onclick="location.href='../main.do'">
+				<img src="${path}/resources/image/logo.png" alt="로고이미지" height=41 onclick="location.href='../main'">
 				<h1>관리자페이지</h1>
 			</div>		
 			<div class="sidemenu">
@@ -58,7 +58,7 @@ $(function() {
 			<h2>${user.nickname}</h2>
 			<div class="bottom-div">
 				<div>
-					<a href="../auth/logout.do" class="grayfont">로그아웃</a> 					
+					<a href="../auth/logout" class="grayfont">로그아웃</a> 					
 				</div>
 			</div>
 		</div>
@@ -66,8 +66,8 @@ $(function() {
 			<div class="content">
 				<div class="header">
 					<h2>배송 관리</h2>
-					<div>
-						<input type="text" name="buyer" placeholder="조회할 아이디를 입력하세요">
+					<div class="delivery-search">
+						<input type="text" name="buyer" placeholder="조회할 아이디를 입력하세요" class="delivery-search-box">
 						<button id="search-button">검색</button>
 						<label for="noInvoice">송장 미등록만 보기</label>
 						<input type="checkbox" name="noInvoice">

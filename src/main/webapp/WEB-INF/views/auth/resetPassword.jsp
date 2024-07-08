@@ -8,21 +8,21 @@
 <title>비밀번호 재설정 페이지</title>
 <c:set var="path" value="${pageContext.servletContext.contextPath}"/>
 <link rel="stylesheet" href="${path}/resources/css/resetPassword.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Apple+SD+Gothic+Neo&display=swap">
+<link rel="stylesheet" as="style" crossorigin
+	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="${path}/resources/js/signUp.js"></script>
 <script>
-function validateForm(event) {
-    var formValid = checkPasswordMatch();
-    var submitMessage = document.getElementById("submitMessage");
-    if (!formValid) {
-        submitMessage.style.color = 'red';
-        submitMessage.textContent = '비밀번호를 다시 확인해주세요.';
-        event.preventDefault(); // 폼 제출 막기
-    } else {
-        submitMessage.textContent = '';
-    }
-    return formValid;
+//찾은 아이디값을 비밀번호 재설정 페이지로 가져감
+function goToResetPassword() {
+    var userId = document.getElementById("id").value;
+    location.href = "${path}/auth/resetPassword?userId=" + userId;
+}
+
+// 찾은 아이디값을 로그인 페이지로 가져감
+function goToLogin() {
+    var userId = document.getElementById("id").value;
+    location.href = "${path}/auth/login?userid=" + userId;
 }
 </script>
 

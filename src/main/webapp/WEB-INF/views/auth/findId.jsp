@@ -7,9 +7,11 @@
 <meta charset="UTF-8">
 <title>아이디 찾기 페이지</title>
 <c:set var="path" value="${pageContext.servletContext.contextPath}"/>
+<link rel="stylesheet" as="style" crossorigin
+	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
 <link rel="stylesheet" href="${path}/resources/css/findId.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Apple+SD+Gothic+Neo&display=swap">
 <script src="${path}/resources/js/verificationSMS_API.js"></script>
+<script src="${path}/resources/js/verificationEmail_API.js"></script>
 </head>
 
 <body>
@@ -30,6 +32,7 @@
 			        <label class="input-label" for="userName">이름</label>
 			        <input type="text" id="userName" name="userName" class="input-field" required>
 			    </div>
+			    <!-- 시험용 계정이라 계정주만 테스트가능한 이슈가 있음 -->
 			    <div class="form-group">
 			        <label class="input-label">전화번호</label>
 			        <input type="text" id="phone_number" name="phone_number" class="input-field" placeholder="숫자만 입력" required>
@@ -40,8 +43,9 @@
 			        <input type="text" id="verificationCode" class="input-field" style="margin-left: 80px;" placeholder="인증번호 입력" >
 			   	 	<button type="button" class="check-button" onclick="verifyCode()">확인</button>
 			   	 	<span id="smsVerifyNotiMessage" style="margin-left: 80px; font-size: 12px;"></span>
-			    </div>			    
-			</div>					
+			    </div>		        
+		    </div>         
+				
 			<button type="submit" class="submit-button">아이디 찾기</button>
 		</form>		
 	</div>

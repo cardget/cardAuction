@@ -26,7 +26,7 @@
     </c:choose>
 
     <div class="container2 custom-container2 mt-3">
-        <form action="${path}/community/BoardInsert" method="post" id="myForm" enctype="multipart/form-data">
+        <form action="${path}/community/BoardInsert.do" method="post" id="myForm" enctype="multipart/form-data">
             <div class="right-aligned-button">
                 <input type="submit" class="btn btn-primary" value="글 작성">
             </div>
