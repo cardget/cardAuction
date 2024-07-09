@@ -1,9 +1,7 @@
 package com.cardproject.myapp.controller;
 
-import java.io.File;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,17 +42,18 @@ public class CommunityController {
 	                          Model model, HttpSession session) {
 	    System.out.println("/community/BoardSelect get 요청");
 
-	    // cat 값이 빈 문자열인 경우 예외처리
-	    Integer category = (cat == null || cat.isEmpty() || "null".equals(cat)) ? null : Integer.parseInt(cat);
-
-	    // user 닉네임
+	 // user 닉네임
 	    String userid = (String) session.getAttribute("userid");
 	    if (userid != null) {
 	        UserDTO user = cService.selectNicknameByUserDTOId(userid);
 	        session.setAttribute("user", user);
 	    }
+	    
+	    // cat 값이 빈 문자열인 경우 예외처리
+	    Integer category = (cat == null || cat.isEmpty() || "null".equals(cat)) ? null : Integer.parseInt(cat);
 
-	    // 페이징
+
+	    // 페이징 + 조건검색
 	    int totalCount = (keyword != null && !keyword.isEmpty()) || (tag != null && !tag.equals("all"))
 	            ? cService.getTotalBoardCount(keyword, tag, category)
 	            : cService.getTotalBoardCount(category);
