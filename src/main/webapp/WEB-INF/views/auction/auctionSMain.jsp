@@ -9,8 +9,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Apple+SD+Gothic+Neo&display=swap">
 <title>카드득</title>
-<link rel="stylesheet" href="${path }/resources/css/auctionMain.css" />
 <link rel="stylesheet" href="${path }/resources/css/main.css" />
+<link rel="stylesheet" href="${path }/resources/css/auctionMain.css" />
 <link rel="stylesheet" as="style" crossorigin
 	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
 <script
@@ -36,7 +36,19 @@
         
 </script>
 <style>
-
+.topimage {
+	
+	width: 1920px;
+	height: 283px;
+	top: 0;
+	left: 0;
+	background-image: 
+		url('${path}/resources/image/sport_banner.png');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;	
+		
+}
 </style>
 </head>
 <body>
@@ -52,9 +64,7 @@
 	</c:choose>
 	
 <!-- Body -->
-<div class="header-image">
-		<img src="${path }/resources/images/default/sport.png">
-	</div>
+<div class="topimage"></div>
 <!-- 검색창 -->
 <div class="containerM">
 	<div class="search-area">

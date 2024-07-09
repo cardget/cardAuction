@@ -44,7 +44,7 @@
 			        <h3 class="grayfont">ⓘ 원피스 카드 등록</h3>
 			        <hr class="grayfont">  
 					
-			        <form action="${path}/admin/insertOnepieceCard.do" method="post" enctype="multipart/form-data"> 
+			        <form action="${path}/admin/insertOCard.do" method="post" enctype="multipart/form-data"> 
 			            <div class="form-group">
 			                <label for="onepiece_card_name" class ="input-label">카드 이름:</label>
 			                <input type="text" id="card_name" name="card_name" class="input-field" required>

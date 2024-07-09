@@ -140,6 +140,7 @@ select {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    
 }
 .sort-box,
 .option-box,
@@ -199,16 +200,7 @@ select {
 	height: 300px;
 }
 
-.topimage {
-	
-	width: 1920px;
-	height: 283px;
-	top: 0;
-	left: 0;
-	background-image: 
-		url('../image/pokemon_banner.png');
-		
-}
+
 /* 물품 판매 등록 버튼*/
 .auction-insert-wrapper {
 	position:relative;

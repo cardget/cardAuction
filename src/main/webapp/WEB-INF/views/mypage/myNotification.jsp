@@ -62,61 +62,6 @@
 		</div>
 		<div class="main">
 			<div class="main-header">
-				<!--
-				<div class="dropdown">
-					<a href="#" class="dropdown-toggle"> 
-						<img src="${path}/resources/icon/uncheckedchat.png" alt="채팅" height=30>
-					</a>
-					<div class="dropdown-content">
-						<div class="noti-brief">
-							<div class="noti-image">
-								<img src="${path}/resources/images/test/pikachucard.png" alt="Product Image">
-							</div>
-							<div class="noti-content">
-								<h3>[포켓몬] 1998 피카츄 일러스트레이터...</h3>
-								<p>네고가능한가요?</p>
-							</div>
-						</div>
-						<div class="noti-brief">
-							<div class="noti-image">
-								<img src="${path}/resources/images/test/pikachucard.png" alt="Product Image">
-							</div>
-							<div class="noti-content">
-								<h3>[포켓몬] 1998 피카츄 일러스트레이터...</h3>
-								<p>이거 경맨데요?</p>
-							</div>
-						</div>
-						<div class="noti-brief">
-							<div class="noti-image">
-								<img src="${path}/resources/images/test/pikachucard.png" alt="Product Image">
-							</div>
-							<div class="noti-content">
-								<h3>[포켓몬] 1998 피카츄 일러스트레이터...</h3>
-								<p>너무 비싸게 낙찰돼서요 ㅠ</p>
-							</div>
-						</div>
-						<div class="noti-brief">
-							<div class="noti-image">
-								<img src="${path}/resources/images/test/pikachucard.png" alt="Product Image">
-							</div>
-							<div class="noti-content">
-								<h3>[포켓몬] 1998 피카츄 일러스트레이터...</h3>
-								<p>차단하고 신고할게요</p>
-							</div>
-						</div>
-						<div class="noti-brief">
-							<div class="noti-image">
-								<img src="${path}/resources/images/test/pikachucard.png" alt="Product Image">
-							</div>
-							<div class="noti-content">
-								<h3>[포켓몬] 1998 피카츄 일러스트레이터...</h3>
-								<p>저도 차단하고 신고할게요</p>
-							</div>
-						</div>
-						<a class="mainColor" href="#">모든 채팅 보기</a>
-					</div>
-				</div>
-				-->
 				<div class="dropdown">
 					<a href="#" class="dropdown-toggle"> 
 						<c:choose>
@@ -164,7 +109,7 @@
 				</div>
 				<c:choose>
 					<c:when test="${empty nlist}">
-						<div class="item-section">
+						<div class="noti-section">
 							<div class="info-section">
 								<h3>알림이 없습니다</h3>
 							</div>
@@ -172,7 +117,7 @@
 					</c:when>
 					<c:otherwise>
 						<c:forEach var="noti" items="${nlist}">
-					        <div class="${noti.is_read == 1 ? 'item-section already-read' : 'item-section'}" data-noti-id="${noti.notification_id}" data-item-id="${noti.item_id}">
+					        <div class="${noti.is_read == 1 ? 'noti-section already-read' : 'noti-section'}" data-noti-id="${noti.notification_id}" data-item-id="${noti.item_id}">
 					            <div class="image-section">
 									<img src="${noti.image1}" alt="Product Image">
 								</div>
