@@ -10,6 +10,7 @@ function checkEmail(select) {
 }
 
 function sendVerificationEmail() {
+	console.log("verifyCodeEmail");
     var emailName = document.getElementById("emailName").value;
     var domain = document.getElementById("domain").value;
     var email = emailName + "@" + domain;
@@ -34,7 +35,7 @@ function sendVerificationEmail() {
 
 function verifyCodeEmail() {
     var code = document.getElementById("verificationCodeEmail").value;
-
+	console.log("verifyCodeEmail");
     fetch("http://localhost:9090/myapp/email/verify", {
         method: "POST",
         headers: {
@@ -44,14 +45,19 @@ function verifyCodeEmail() {
     })
     .then(response => response.text())
     .then(data => {
+    console.log(data);
         var messageElement = document.getElementById('emailVerifyNotiMessage');
         if (data.includes("인증 성공")) {
             messageElement.innerText = "인증 성공";
             messageElement.style.color = "green";
             return true;
-        } else {
-            messageElement.innerText = "인증 실패";
+        }else if(data.includes("인증 실패")){
+        	messageElement.innerText = "인증 실패";
             messageElement.style.color = "red";
+        }        
+        else {
+            messageElement.innerText = data;
+            messageElement.style.color = "green";
             return false;
         }
     })

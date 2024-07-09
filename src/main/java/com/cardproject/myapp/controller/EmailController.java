@@ -43,7 +43,8 @@ public class EmailController {
         String message;
         Integer generatedCode = (Integer) session.getAttribute("generatedCode");
         Boolean isVerified = (Boolean) session.getAttribute("isVerified");
-        
+        System.out.println(isVerified);
+        System.out.println(generatedCode);
         if (isVerified != null && isVerified) {
             message = "이미 인증이 완료되었습니다.";
         } else if (generatedCode != null && generatedCode.toString().equals(code)) {

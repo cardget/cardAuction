@@ -144,11 +144,6 @@ public class AuthController {
         return "redirect:login";
     }
 	
-	@GetMapping("/smsAPI")
-	public String verificationSMS_API(){
-		return "auth/Twilio_Verification";
-	}
-	
 	@GetMapping("/checkUserId")
 	@ResponseBody
     public String checkUserId(@RequestParam String userId) {		

@@ -99,17 +99,6 @@ function f_checkNickname() {
 }
 
 
-var contextPath = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
-// DOMContentLoaded 이벤트를 사용하여 페이지가 로드된 후에 코드를 실행
-document.addEventListener('DOMContentLoaded', function () {    
-    var checkboxes = document.querySelectorAll('.agree');    
-    checkboxes.forEach(function (checkbox) {
-        checkbox.addEventListener('change', function () {            
-            checkAllAgreed();
-        });
-    });
-});
-
 document.addEventListener("DOMContentLoaded", function() {
     let currentFormCheckboxId = '';
 
@@ -251,6 +240,7 @@ function checkPasswordMatch() {
     }
 }
 
+//resetPassword.jsp용
 function validateForm(event) {
     var formValid = checkPasswordMatch();
     var submitMessage = document.getElementById("submitMessage");
@@ -263,8 +253,11 @@ function validateForm(event) {
     }
     return formValid;
 }
+
 function signUpValidateForm(event) {
-    var formValid = checkPasswordMatch() && verifyCodeEmail();
+    var emailVerifyNotiMessage = document.getElementById('emailVerifyNotiMessage').innerHTML;
+
+    var formValid = checkPasswordMatch() && (emailVerifyNotiMessage == "인증 성공" ||emailVerifyNotiMessage == "이미 인증이 완료되었습니다.");
     var submitMessage = document.getElementById("signUpsubmitMessage");
     if (!formValid) {
         submitMessage.style.color = 'red';
