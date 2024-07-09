@@ -245,7 +245,7 @@ tbody tr:hover {
 	height: 220px;
 	top: 0;
 	left: 0;
-	background-image: url('../image/sport_banner.png');
+	background-image: url('../images/default/sport_banner.png');
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -264,7 +264,7 @@ tbody tr:hover {
 
 /* footer */
 .info-page {
-	background-color: #002E5B;
+	background-color: #002E5B; 
 	color: #ffffff;
 	padding: 30px 270px;
 	font-size: 12px;

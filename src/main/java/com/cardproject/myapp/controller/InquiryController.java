@@ -80,7 +80,9 @@ public class InquiryController {
 		Integer isSecret = inquiry.getIs_secret(); // 비밀글 여부
 		String writer = iService.getWriterByQuestId(questId); // 글 작성자
 		String answer = iService.checkAnswerByInquiryId(questId); // 답변 여부
+		if (userid != null) {
 		isManager = iService.checkManagerById(userid); // 관리자 여부
+		}
 		
 		model.addAttribute("inquiry", inquiry);
 		model.addAttribute("answer", answer);
