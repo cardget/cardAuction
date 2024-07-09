@@ -84,7 +84,7 @@ public class AuthController {
 		}		
 		else {
 			// login success
-			session.setAttribute("loginResult", "Login Success");
+			//session.setAttribute("loginResult", "Login Success");
 			session.setAttribute("userid", user.getUser_id());
 			session.setAttribute("nickname", user.getNickname());
 			session.setAttribute("isAdmin", user.getIs_admin());
@@ -143,11 +143,6 @@ public class AuthController {
         redirectAttributes.addFlashAttribute("message", "회원정보가 성공적으로 수정되었습니다.");
         return "redirect:login";
     }
-	
-	@GetMapping("/smsAPI")
-	public String verificationSMS_API(){
-		return "auth/Twilio_Verification";
-	}
 	
 	@GetMapping("/checkUserId")
 	@ResponseBody
