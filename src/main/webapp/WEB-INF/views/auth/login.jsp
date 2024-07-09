@@ -16,6 +16,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="${path}/resources/js/signUp.js"></script>
 
+
 </head>
 <body>
 	<div class="login-container">
@@ -27,7 +28,15 @@
 				<div class="form-group">
 					<div class="input-with-icon">
 			        <img alt="" src="${path}/resources/icon/loginUser.png" class="id-icon">
-			        <input type="text" id="userid" name="userid" placeholder="아이디" required>
+			        <c:choose>
+			        	<c:when test="${not empty userId}">
+			        		<input type="text" id="userid" name="userid" value="${userId}" required>
+			        	</c:when>
+			        	<c:otherwise>
+			        		<input type="text" id="userid" name="userid" placeholder="아이디" required>
+			        	</c:otherwise>
+			        </c:choose>
+			        
 			    </div>
 			    <div class="input-with-icon">
 			        <img alt="" src="${path}/resources/icon/lock.png" class="pw-icon">

@@ -21,7 +21,7 @@ function goToResetPassword() {
 // 찾은 아이디값을 로그인 페이지로 가져감
 function goToLogin() {
     var userId = document.getElementById("id").value;
-    location.href = "${path}/auth/login?userId=" + userId;
+    location.href = "${path}/auth/login?userid=" + userId;
 }
 </script>
 
