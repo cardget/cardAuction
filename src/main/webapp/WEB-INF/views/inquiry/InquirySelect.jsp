@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="path" value="${pageContext.servletContext.contextPath}" />
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -20,17 +21,17 @@
     }
 </style>
 <body>
-    <c:set var="path" value="${pageContext.servletContext.contextPath}" />
+    
     <!--header-->
     <c:choose>
         <c:when test="${empty userid}">
             <%@ include file="/WEB-INF/views/main/defaultHeader.jsp" %>
         </c:when>
         <c:otherwise>
-            <%@ include file="/WEB-INF/views/main/loginHeader.jsp" %>
+            <%@ include file="/WEB-INF/views/main/loginHeader.jsp" %> 
         </c:otherwise>
     </c:choose>
-    <div class="defaultBanner"></div>
+    <div class="inquiryBanner"></div>
 
     <div class="container3">
         <c:if test="${not empty errorMessage}">
