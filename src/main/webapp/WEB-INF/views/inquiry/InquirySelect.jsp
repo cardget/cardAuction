@@ -16,6 +16,8 @@
     body {
         font-family: "Pretendard Variable";
     }
+    
+    
 </style>
 <body>
     
