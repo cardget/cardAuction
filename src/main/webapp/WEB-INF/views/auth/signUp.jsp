@@ -68,7 +68,7 @@
 
         <h4>회원정보 입력</h4>
         <hr style="border: 1px solid blue; margin-bottom: 25px;">
-        <form action="${path}/auth/insertSignUp" class="custom-form" onsubmit="return validateForm(event)" method="post" enctype="multipart/form-data">
+        <form action="${path}/auth/insertSignUp" class="custom-form" onsubmit="return signUpValidateForm(event)" method="post" enctype="multipart/form-data">
 		    <div class="form-group">
 		        <label for="user_name" class="input-label">이름</label>
 		        <input type="text" id="user_name" name="user_name" required class="input-field" required>
@@ -85,7 +85,7 @@
 		            <span id="smsVerifyNotiMessage" style="margin-left: 10px; margin-top: 8px; font-size: 12px;"></span> -->
 		                      
 		        </div>                
-		    </div>        
+		    </div>         
 		    <hr class="form-divider">  
 		    <div class="form-group">
 		        <label for="email" class="input-label">이메일</label>
@@ -99,10 +99,10 @@
 		            <option value="daum.net">daum.net</option>
 		            <option value="nate.com">nate.com</option>
 		        </select>
-		        <button type="button" id="mail-Check-Btn" class="check-button" onclick="sendVerificationEmail()" style="margin-left: 10px;">인증번호 발송</button>
+		        <input type="button" id="mail-Check-Btn" class="check-button" onclick="sendVerificationEmail()" style="margin-left: 10px;" value="인증번호 발송">
 		        <span id="emailSendNotiMessage" style="margin-left: 10px; margin-top: 8px; font-size: 12px;"></span>
 			    <input type="text" id="verificationCodeEmail" class="input-field" style="margin-left: 190px;" placeholder="인증번호 입력">
-			    <button type="button" class="check-button" onclick="verifyCodeEmail()">확인</button>   
+			    <input type="button" class="check-button" onclick="verifyCodeEmail()" value="확인">  
 			    <span id="emailVerifyNotiMessage" style="margin-left: 10px; margin-top: 8px; font-size: 12px;"></span>	    
 		    </div>
 		    <!-- 이메일을 결합하여 숨겨진 필드에 저장 -->
@@ -112,7 +112,7 @@
 		    <div class="form-group">
 		        <label for="user_id" class="input-label">아이디</label>
 		        <input type="text" id="user_id" name="user_id" class="input-field" required>
-		        <button type="button" class="check-button" id="checkUserId" onclick="f_checkUserId()">중복확인</button>
+		        <input type="button" class="check-button" id="checkUserId" onclick="f_checkUserId()" value="중복확인">
 		        <span id="idMessage" style="margin-left: 10px; margin-top: 8px; font-size: 12px;"></span>
 		    </div>
 		    <p class="noti-info-text">※ 영문/숫자를 사용하여 6~15자로 작성해주세요. </p>
@@ -121,7 +121,7 @@
 		        <label for="pw" class="input-label">비밀번호</label>
 		        <input type="password" id="pw" name="pw" required class="input-field" onkeyup="checkPasswordMatch()" required>
 		    </div>
-		    <p class="noti-info-text">※ 영문/숫자/특수문자(!,@,#,$,~)를 2가지 이상 포함하여 6~30자로 작성해주세요. </p>
+		    <p class="noti-info-text">※ 영문/숫자/특수문자(!,@,#,$,~)를 2가지 이상 포함하여 6~15자로 작성해주세요. </p>
 		    <hr class="form-divider">
 		    <div class="form-group">
 		        <label for="confirmPassword" class="input-label">비밀번호 확인</label>
@@ -132,7 +132,7 @@
 		    <div class="form-group">
 		        <label for="nickname" class="input-label">닉네임</label>
 		        <input type="text" id="nickname" name="nickname" required class="input-field" required>
-		        <button type="button" class="check-button" id="checkNickname" onclick="f_checkNickname()">중복확인</button>
+		        <input type="button" class="check-button" id="checkNickname" onclick="f_checkNickname()" value="중복확인">
 		        <span id="nickMessage" style="margin-left: 10px; margin-top: 8px; font-size: 12px;"></span>		       
 		    </div>
 		     <p class="noti-info-text">※ 7자 이하로 작성해주세요. </p>          
@@ -156,7 +156,7 @@
 			        <img id="profile-image" src="${path}/resources/image/profile.png" alt="Profile Image" onclick="document.getElementById('profile_image').click()">
 			    </div>
 			    <input type="file" id="profile_image_id" name="profile_image_name" onchange="previewImage(this, '${path}')" accept="image/*" class="input-field" style="margin-left:10px;" multiple>
-			    <button type="button" onclick="resetProfileImage('profile-image', '${path}')" class="check-button">삭제</button>
+			    <input type="button" onclick="resetProfileImage('profile-image', '${path}')" class="check-button" value="삭제">
 			</div>
 		    <hr class="form-divider">
 		    <div class="form-group">
@@ -173,9 +173,12 @@
 		    <p class="noti-info-text">※ 알림 서비스에 동의하시면 인기 경매 물품과 회원님의 관심 정보와 관련된 알람을 보내드립니다.<br>가입 후 마이페이지에서 수신 동의 여부를 변경하실 수 있습니다.</p>
 		    <hr class="form-divider">
 		    <br>
+		    <p id="signUpsubmitMessage" style="margin-left: 640px; margin-top: 8px; font-size: 15px;"></p>
 		    <div class="button-container">
-		        <button type="submit" id="submitButton" class="submit-button disabled-button" style="align-items: center;" disabled>회원가입하기</button>
+		        <input type="submit" id="submitButton" class="submit-button disabled-button" style="align-items: center;" disabled value="회원가입하기">
+		   
 		    </div>
+		    
 		</form>
 
     </div>

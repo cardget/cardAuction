@@ -54,7 +54,7 @@ public class SmsController {
 	
 	
 	private String formatPhoneNumber(String phoneNumber) {
-        // 전화번호 형식을 통일하는 로직을 추가합니다.
+        // 전화번호 형식을 통일하는 로직을 추가
         if (!phoneNumber.startsWith("+")) {
             if (phoneNumber.startsWith("0")) {
                 // 지역번호로 시작하는 경우 +82 추가 후 첫 번째 0 제거
