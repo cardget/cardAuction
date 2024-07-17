@@ -21,3 +21,9 @@
 <br>
 
 ## 💻실행 화면
+![Frame 305](https://github.com/user-attachments/assets/65ac9238-751d-4bee-b8e3-bab0cba3e407)
+![Frame 306](https://github.com/user-attachments/assets/064b26ac-f192-446b-87e2-b5fb1d770536)
+![Frame 309](https://github.com/user-attachments/assets/d4d78e58-9d0a-4994-9bef-6aa613ef0b5a)
+![Frame 307](https://github.com/user-attachments/assets/6106d9a3-c173-42d6-aaab-eb7b1131746f)
+![Frame 308](https://github.com/user-attachments/assets/94636f87-beb3-435d-9223-b775ee4aeae6)
+![Frame 310](https://github.com/user-attachments/assets/862e5452-1d77-433d-a4eb-eaccbc6a6510)
