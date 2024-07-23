@@ -47,6 +47,10 @@ public class AuthController {
     		String fileName="profile/"+rawFileName+System.currentTimeMillis()+"."+extension;
 	    	try {
 				String url=s3Service.uploadObject(file, fileName);
+				// 이미지 URL이 https로 시작하는 경우 http로 변경
+				if (url.startsWith("https")) {
+					url = "http" + url.substring(5);
+				}
 				user.setProfile_image(url);	// 이미지 URL을 UserDTO 에 설정
 			} catch (java.io.IOException e) {
 				// TODO Auto-generated catch block
