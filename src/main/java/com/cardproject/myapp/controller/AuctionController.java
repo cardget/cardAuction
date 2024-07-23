@@ -172,6 +172,10 @@ public class AuctionController {
 			try {
 				String fileName = "items/" + file.getOriginalFilename();
 				String url = s3Service.uploadObject(file, fileName);
+				// 이미지 URL이 https로 시작하는 경우 http로 변경
+				if (url.startsWith("https")) {
+					url = "http" + url.substring(5);
+				}
 				uploadedImageUrls.add(url);
 			} catch (IOException e) {
 				e.printStackTrace();
